@@ -1,0 +1,119 @@
+.button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+    background: transparent;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-family: var(--font-button);
+    border: 0;
+    margin: 0;
+    outline: 0;
+    padding: 0 16px;
+    border-radius: 12px;
+    overflow: visible;
+    text-align: center;
+    text-decoration: none;
+    touch-action: manipulation;
+    user-select: none;
+    white-space: nowrap;
+    cursor: pointer;
+    -moz-user-focus: ignore;
+
+    &Text {
+        position: relative;
+        resize: none;
+        white-space: nowrap;
+        pointer-events: none;
+    }
+
+    &Icon {
+        position: relative;
+        pointer-events: none;
+        flex-shrink: 0;
+
+        svg {
+            display: flex;
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    // &Spin {
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    // }
+}
+
+// States
+.button.block {
+    width: 100%;
+}
+
+.button.loading {
+    pointer-events: none;
+    user-select: none;
+
+    .buttonIcon,
+    .buttonText {
+        visibility: hidden;
+    }
+}
+
+.button.disabled {
+    pointer-events: none;
+    user-select: none;
+}
+
+// Colors
+.button.primary {
+    color: var(--color-typo-base);
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    box-shadow: 0px 8px 12px rgba(60, 227, 97, 0.1);
+    transition: border-color 0.15s linear, box-shadow 0.15s linear;
+
+    @include hover {
+        border-color: var(--color-base);
+        box-shadow: 0px 8px 12px rgba(255, 255, 255, 0.1);
+    }
+
+    &:active {
+        background-color: var(--color-essential);
+    }
+}
+
+.button.secondary {
+    color: var(--color-typo-base);
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-stroke);
+    transition: border-color 0.15s linear, box-shadow 0.15s linear;
+
+    @include hover {
+        border-color: var(--color-base);
+    }
+
+    &:active {
+        background-color: var(--color-essential);
+    }
+}
+
+@include max767 {
+    .button {
+        height: 44px;
+        font-size: 14px;
+
+        &Icon {
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}
