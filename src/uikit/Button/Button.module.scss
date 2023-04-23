@@ -33,14 +33,9 @@
 
     &Icon {
         position: relative;
+        display: flex;
         pointer-events: none;
         flex-shrink: 0;
-
-        svg {
-            display: flex;
-            width: 18px;
-            height: 18px;
-        }
     }
 
     // &Spin {
@@ -108,12 +103,5 @@
     .button {
         height: 44px;
         font-size: 14px;
-
-        &Icon {
-            svg {
-                width: 16px;
-                height: 16px;
-            }
-        }
     }
 }
