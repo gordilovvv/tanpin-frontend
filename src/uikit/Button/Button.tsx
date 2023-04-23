@@ -22,7 +22,7 @@ declare function ButtonFn<Tag extends 'a' | 'button'>(props: PropsWithChildren<B
 // TODO:
 // 1. Add loading
 export const Button = forwardRef<HTMLElement, PropsWithChildren<any>>(
-    ({ as: Tag = 'button', view = 'primary', block, loading, disabled, iconSlot, onClick, children, className }, ref) => {
+    ({ as: Tag = 'button', view = 'primary', block, loading, disabled, iconSlot, onClick, children, className, ...props }, ref) => {
         const isLoading = !disabled && loading;
 
         const handleClick = () => {
@@ -42,6 +42,7 @@ export const Button = forwardRef<HTMLElement, PropsWithChildren<any>>(
                     [styles.disabled]: disabled
                 })}
                 onClick={handleClick}
+                {...props}
             >
                 {/* {isLoading && <Spin className={styles.spin} />} */}
 

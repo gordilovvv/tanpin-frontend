@@ -1,0 +1,161 @@
+.footer {
+    padding: 48px 0;
+    background-color: var(--color-essential);
+    border-top: 1px solid var(--color-stroke);
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 48px;
+}
+
+.project {
+    display: flex;
+}
+
+.logo {
+    display: flex;
+    color: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-decoration: none;
+    margin-right: 24px;
+}
+
+.about {
+    color: var(--color-typo-ghost);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: -0.014em;
+}
+
+.community {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+}
+
+.title {
+    color: var(--color-typo-base);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: -0.018em;
+
+    @include min768 {
+        text-align: right;
+    }
+}
+
+.menu {
+    @include min768 {
+        display: flex;
+        align-items: center;
+    }
+
+    &Link {
+        color: var(--color-typo-ghost);
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+        text-decoration: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        transition: color 0.15s linear;
+        margin-right: 58px;
+
+        @include hover {
+            color: var(--color-typo-base);
+        }
+    }
+}
+
+.copyright {
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+@include min768 {
+    .socials {
+        display: flex;
+        align-items: center;
+        column-gap: 16px;
+        justify-content: flex-end;
+
+        &Item {
+            padding: 0 13px !important;
+        }
+    }
+
+    .stack {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+}
+
+@include max767 {
+    .footer {
+        padding: 36px 0;
+    }
+
+    .stack {
+        display: grid;
+        grid-template-columns: minmax(0, auto);
+        gap: 52px;
+    }
+
+    .project {
+        align-items: center;
+    }
+
+    .logo {
+        margin-right: 16px;
+
+        svg {
+            width: 59px;
+            height: 56px;
+        }
+    }
+
+    .about {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .community {
+        gap: 16px;
+    }
+
+    .socials {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .menu {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: minmax(0, auto);
+        justify-content: flex-start;
+
+        &Link {
+            font-size: 14px;
+            letter-spacing: -0.01em;
+            margin-right: 0;
+        }
+    }
+
+    .copyright {
+        font-size: 12px;
+    }
+}

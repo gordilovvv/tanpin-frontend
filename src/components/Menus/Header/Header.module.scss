@@ -68,6 +68,12 @@
 }
 
 @include max767 {
+    .logo {
+        svg {
+            width: 34px;
+            height: 32px;
+        }
+    }
 
     .menu,
     .wallet {
