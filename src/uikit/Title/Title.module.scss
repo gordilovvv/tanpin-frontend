@@ -1,0 +1,19 @@
+.title {
+    font-family: var(--font-title);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+
+
+    color: #FFFFFF;
+
+}
+
+@include max767 {
+    .title {
+        font-size: 20px;
+        line-height: 1.4;
+    }
+}
