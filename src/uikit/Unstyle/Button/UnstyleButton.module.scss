@@ -1,0 +1,10 @@
+.button {
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    user-select: none;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
