@@ -8,3 +8,15 @@
     padding-left: var(--page-padding);
     padding-right: var(--page-padding);
 }
+
+@include max1200 {
+    .container {
+        --page-padding: 48px;
+    }
+}
+
+@include max767 {
+    .container {
+        --page-padding: 24px;
+    }
+}
