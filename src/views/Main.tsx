@@ -8,9 +8,12 @@ export function Main() {
       <Container>
         <PromoComponent />
       </Container>
-      <Container>
-        <SliderComponent />
-      </Container>
+
+      <div style={{overflow: "hidden", transform: "translateZ(0)"}}>
+        <Container>
+          <SliderComponent />
+        </Container>
+      </div>
     </main>
   )
 }

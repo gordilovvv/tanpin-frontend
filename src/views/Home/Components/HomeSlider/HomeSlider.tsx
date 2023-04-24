@@ -1,71 +1,127 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-
-import { MEDIA_SIZES } from '@/config/constants';
-
-import { GameCard } from "@/components/Game/GameCard"
-import { Title,Button } from "@/uikit"
-
-import styles from './HomeSlider.module.scss'
-import {Arrow} from '@/uikit/Icons'
+import { GameCard } from '@/components/Game';
+import { Title, Button } from '@/uikit';
+import styles from './HomeSlider.module.scss';
+import { Arrow } from '@/uikit/Icons';
+import { CollectionPreview } from '@/components/Collections';
 
 
-export const SliderComponent = ()=>{
+
+export const SliderComponent = () => {
+    const setSwiper = (swiper) => {
+        swiperComp = (swiper);
+    };
+    let swiperComp;
     return (
         <>
             <div className={styles.header}>
                 <Title>Featured Games</Title>
+
                 <div className={styles.btnWrapper}>
-                    <Button className={styles.arrowBtn} view="secondary">
-                        <Arrow />
+                    <Button
+                        className={styles.arrowBtn}
+                        view="secondary"
+                        iconSlot={<Arrow />}
+                        onClick={() => swiperComp.slidePrev()}
+                    >
+
                     </Button>
-                    <Button className={styles.arrowBtn} view="secondary">
-                        <Arrow className={styles.rotate} />
+
+                    <Button
+                        className={styles.arrowBtn}
+                        view="secondary"
+                        onClick={() => swiperComp.slideNext()}
+                        iconSlot={<Arrow className={styles.rotate} />}
+                    >
+
                     </Button>
                 </div>
             </div>
+
             <Swiper
-               slidesPerView={2}
+                slidesPerView={2}
                 onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
+                onSwiper={(swiper) => setSwiper(swiper)}
                 breakpoints={{
                     0: {
-                        spaceBetween:8,
-                      slidesPerView: 1,
+                        spaceBetween: 8,
+                        slidesPerView: 1,
                     },
-                    [MEDIA_SIZES.phone]:{
+                    1000: {
                         //   width: 768,
-                        spaceBetween:24,
-                          slidesPerView: 2,
-                        },
-                   
-                    [MEDIA_SIZES.tablet]:{
-                    //   width: 768,
-                        spaceBetween:30,
-                      slidesPerView: 2,
+                        spaceBetween: 24,
+                        slidesPerView: 2,
+                    },
+
+                    1400: {
+                        //   width: 768,
+                        spaceBetween: 30,
+                        slidesPerView: 2,
                     }
-                  }}
-                >
-                     <SwiperSlide>
+                }}
+            >
+
+                <SwiperSlide>
+                    <div className={styles.slideWrapper}>
                         <GameCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
+
+                        <div className={styles.collectionWrapper}>
+                            <CollectionPreview />
+                            <CollectionPreview />
+                            <CollectionPreview />
+                            <CollectionPreview />
+                        </div>
+                    </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <div className={styles.slideWrapper}>
                         <GameCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
+
+                        <div className={styles.collectionWrapper}>
+                            <CollectionPreview />
+                            <CollectionPreview />
+                            <CollectionPreview />
+                            <CollectionPreview />
+                        </div>
+                    </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <div className={styles.slideWrapper}>
                         <GameCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <GameCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <GameCard />
-                     </SwiperSlide>
-                     <SwiperSlide>
-                        <GameCard />
-                     </SwiperSlide>
+
+                        <div className={styles.collectionWrapper}>
+                            <CollectionPreview />
+                            <CollectionPreview />
+                            <CollectionPreview />
+                            <CollectionPreview />
+                        </div>
+                    </div>
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <GameCard />
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <GameCard />
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <GameCard />
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <GameCard />
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <GameCard />
+                </SwiperSlide>
             </Swiper>
-            </>
-        
-    )
-}
+        </>
+
+    );
+};

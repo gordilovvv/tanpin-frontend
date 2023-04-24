@@ -17,12 +17,29 @@
     width: 64px;
     height: 48px;
 }
+.collectionWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.slideWrapper {
+    display: flex;
+    flex-direction: column;
+    @include gapY(16px)
+}
 
 
 
 @include max1200 {
     .container {
         --page-padding: 48px;
+    }
+    .collectionWrapper {
+        &>*:nth-child(n+3) {
+            display: none;
+        }
+        grid-template-columns: 1fr;
     }
 }
 
@@ -37,5 +54,9 @@
         display: flex;
         justify-content: center;
         margin-bottom: 24px;
+    }
+    .slideWrapper {
+       
+        @include gapY(8px)
     }
 }

@@ -1,0 +1,11 @@
+@mixin gapX($x){
+    &>*:not(:last-child) {
+        margin-right: $x;
+    }
+}
+
+@mixin gapY($y){
+    &>*:not(:last-child) {
+        margin-bottom: $y;
+    }
+}
