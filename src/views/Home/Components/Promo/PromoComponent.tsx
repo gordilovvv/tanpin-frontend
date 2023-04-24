@@ -2,17 +2,17 @@ import { HTMLAttributes } from 'react';
 import classNames from 'classnames';
 import styles from './PromoComponent.module.scss';
 
-import { Container } from '@/components/Layout';
-import { Title } from '@/uikit';
+import Promo from '@/app/assets/bg/promo.png';
 
-import { Button } from '@/uikit';
+
+import { Title, Button } from '@/uikit';
+
 
 export function PromoComponent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     return (
-        <Container>
             <div
                 className={classNames(styles.promo, className)}
-                // style={{ backgroundImage: `url(${Cat})` }}
+                style={{ backgroundImage: `url(${Promo})` }}
                 {...props}
             >
                 <div className={styles.inner}>
@@ -100,6 +100,5 @@ export function PromoComponent({ className, ...props }: HTMLAttributes<HTMLDivEl
 
                 </div>
             </div>
-        </Container>
     );
 }
