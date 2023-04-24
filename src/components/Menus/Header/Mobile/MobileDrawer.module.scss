@@ -1,0 +1,76 @@
+.drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-flow: column;
+    background-color: var(--color-essential);
+    padding-top: 64px;
+    z-index: 19;
+    will-change: transform, opacity;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+    padding: 24px;
+    overflow-y: scroll;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+
+    &Link {
+        color: var(--color-typo-base);
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.014em;
+        text-decoration: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+}
+
+.socials {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+// Animation
+.drawer:global(.appear) {
+    // animation: drawerAppear 0.3s cubic-bezier(0.46, 0.32, 0.2, 0.9) forwards;
+    animation: drawerAppear 0.2s ease-in-out forwards;
+}
+
+.drawer:global(.disappear) {
+    animation: drawerDisappear 0.15s ease-in-out forwards;
+}
+
+@keyframes drawerAppear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes drawerDisappear {
+    from {
+        opacity: 1;
+        transform: translate(0%, 0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(100%, 0);
+    }
+}
