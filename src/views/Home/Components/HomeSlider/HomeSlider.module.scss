@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.btnWrapper {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.rotate {
+    transform: rotate(180deg);
+}
+.arrowBtn {
+    width: 64px;
+    height: 48px;
+}
+
+
+
+@include max1200 {
+    .container {
+        --page-padding: 48px;
+    }
+}
+
+@include max767 {
+    .container {
+        --page-padding: 24px;
+    }
+    .btnWrapper {
+        display: none;
+    }
+    .header {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+    }
+}

@@ -22,3 +22,28 @@ body {
 #root {
     width: 100%;
 }
+
+.swiper  {
+    overflow: visible;
+    .swiper-slide {
+        opacity: 0.25;
+        transition: opacity .3s ease; //??
+    }
+    
+    .swiper-slide-next {
+        opacity: 1;
+    }
+    .swiper-slide-active {
+        opacity: 1;
+    }
+    @include max767 {
+        .swiper-slide-next {
+            opacity: 0.25;
+        }
+        .swiper-slide-active {
+            opacity: 1;
+        }
+    }
+   
+   
+}
