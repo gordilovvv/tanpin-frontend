@@ -74,6 +74,9 @@
     .inner {
         gap: 24px;
     }
+    .wrapperBtn {
+        gap: 12px;
+    }
    
 }
 @include max1200 {
