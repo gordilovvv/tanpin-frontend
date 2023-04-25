@@ -17,7 +17,10 @@ export function GameCard() {
                 <div className={styles.content}>
                     <div className={styles.info}>
                         <div className={styles.header}>
-                            <CollectionLogo image={'https://lh3.googleusercontent.com/GezP5_0gEdPqOeat9AOiimDfpboI9BactEOg1QNP4Go2oTLdpQu2nK2eUbHiDjsYsL2fyNeNEEURjwZx6jmmb43InnM=w640-h400-e365-rj-sc0x00ffffff'} />
+                            <CollectionLogo
+                                size='xs'
+                                image={'https://lh3.googleusercontent.com/GezP5_0gEdPqOeat9AOiimDfpboI9BactEOg1QNP4Go2oTLdpQu2nK2eUbHiDjsYsL2fyNeNEEURjwZx6jmmb43InnM=w640-h400-e365-rj-sc0x00ffffff'}
+                            />
 
                             <div className={styles.headerTitle}>
                                 NFTGTA
@@ -48,7 +51,7 @@ export function GameCard() {
                     >
                         Open collections
                     </Button>
-                
+
                 </div>
             </div>
         </div>
