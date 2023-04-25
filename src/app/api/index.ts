@@ -1,6 +1,6 @@
-import axios from 'axios';
+import ax from 'axios';
 
-export const instance = axios.create({
+export const axios = ax.create({
     baseURL: API_URL,
     headers: {
         'Accept': 'application/json',
