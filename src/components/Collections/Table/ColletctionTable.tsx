@@ -1,16 +1,15 @@
 import { ReactNode } from 'react';
 import styles from './ColletctionTable.module.scss';
-import { CollectionTableRow } from './components/Row/CollectionTableRow';
 import './_tableRow.scss';
 
-type ColletctionTable = {
+type CollectionTable = {
+    bottom: ReactNode
     children: ReactNode
 }
 
 const HEADER_ITEMS = ['#', 'Collections', 'Floor Price', 'Items', 'Owners', 'Volume', '1D Change'];
 
-
-export function ColletctionTable({ children }: ColletctionTable) {
+export function CollectionTable({ children, bottom }: CollectionTable) {
     return (
         <>
             <div className={styles.table}>
@@ -28,16 +27,10 @@ export function ColletctionTable({ children }: ColletctionTable) {
 
                 </div>
 
-                {
-                    ((new Array(10)).fill(1)).map((el, idx) => {
-                        return (<CollectionTableRow />);
-
-                    })
-                }
-
+                {children}
             </div>
 
-            {children}
+            {bottom}
         </>
 
     );

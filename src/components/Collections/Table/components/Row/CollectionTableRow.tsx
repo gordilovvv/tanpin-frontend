@@ -4,14 +4,16 @@ import classNames from 'classnames';
 
 
 type CollectionTableRowProps = {
-}
+    title: string;
+    description: string;
+    imageURL: string;
+};
 
-export function CollectionTableRow({ }: CollectionTableRowProps) {
+export function CollectionTableRow({ title, description, imageURL }: CollectionTableRowProps) {
     return (
 
         <div
             className={styles.tableRow}
-
         >
             <div className={classNames(styles.tableRowItem, styles.tableRowCounter)}>1</div>
 
@@ -19,12 +21,12 @@ export function CollectionTableRow({ }: CollectionTableRowProps) {
                 <CollectionLogo
                     className={styles.tableRowImg}
                     size="s"
-                    image='https://media.istockphoto.com/id/1322123064/photo/portrait-of-an-adorable-white-cat-in-sunglasses-and-an-shirt-lies-on-a-fabric-hammock.jpg?s=612x612&w=0&k=20&c=-G6l2c4jNI0y4cenh-t3qxvIQzVCOqOYZNvrRA7ZU5o='
+                    image={imageURL}
                 />
 
                 <div className={styles.tableRowInner}>
-                    <div className={styles.tableRowTitle}>Axies Drop 2</div>
-                    <div className={styles.tableRowText}>Axie Infinity</div>
+                    <div className={styles.tableRowTitle}>{title}</div>
+                    <div className={styles.tableRowText}>{description}</div>
                 </div>
             </div>
 

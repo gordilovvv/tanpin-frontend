@@ -1,11 +1,6 @@
 import useSWR from 'swr';
-import { axios } from '@/app/api';
-import { CollectionQueryBody, CollectionResponse } from '../types';
-
-async function collectionFetch(body: CollectionQueryBody) {
-    const { data } = await axios.post<CollectionResponse>('/collections.get.list', body);
-    return data;
-}
+import { CollectionQueryBody } from '../types';
+import { collectionFetch } from '../fetch/fetchCollections';
 
 export const useCollectionQuery = (body: CollectionQueryBody) => {
     // TODO Igor swr key
