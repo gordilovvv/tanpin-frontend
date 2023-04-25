@@ -1,19 +1,25 @@
 
-import { PromoComponent } from "./Home/Components/Promo/PromoComponent";
-import { SliderComponent } from "./Home/Components/HomeSlider/HomeSlider";
 import { Container } from '@/components/Layout';
-export function Main() {
-  return (
-    <main>
-      <Container>
-        <PromoComponent />
-      </Container>
+import { Footer, Header } from '@/components/Menus';
+import { GamesCarousel } from './Home/components/GamesCarousel/GamesCarousel';
+import { PromoComponent } from './Home/components/Promo/PromoComponent';
 
-      <div style={{overflow: "hidden", transform: "translateZ(0)"}}>
-        <Container>
-          <SliderComponent />
-        </Container>
-      </div>
-    </main>
-  )
+export function Main() {
+    return (
+        <main>
+            <Header />
+
+            <div style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>
+                <Container>
+                    <GamesCarousel data={[1, 2, 3]} />
+                </Container>
+            </div>
+
+            <Container>
+                <PromoComponent />
+            </Container>
+
+            <Footer />
+        </main>
+    );
 }
