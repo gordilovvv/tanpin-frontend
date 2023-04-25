@@ -2,12 +2,14 @@
     $gap: 10px;
 
     $small: calc(34px - $gap);
-    $medium: calc(72px -  $gap);
+    $medium: calc(82px -  $gap);
     $big: calc(160px -  $gap);
     gap:  $gap;
     
     display: grid;
-    grid-template-columns: minmax($small,$small) minmax( 200px,100%) minmax( 164px,$big) minmax( $medium, $big) minmax( $medium, $big) minmax( $big, $big) minmax( $medium, $big); 
+    grid-template-columns: minmax($small,$small) minmax( 200px,100%) minmax( 164px,$big) 
+    repeat(2,minmax( $medium, $big)) minmax( $big, $big) minmax( $medium, $big); 
+
     align-items: center;
     &>*:nth-child(n+3) {
         text-align: right;

@@ -1,8 +1,5 @@
 @import './_tableRow.scss';
 
-.wrapper {
-    @include gapY(32px)
-}
 
 
 
@@ -20,5 +17,17 @@
         
     }
     overflow-x: auto;
+    
 }
 
+
+
+@include max767 {
+    .table {
+        &Header {
+          display: none;
+        }
+        
+
+        }
+}

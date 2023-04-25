@@ -1,5 +1,6 @@
 import { CollectionLogo } from '@/components/Collections';
 import styles from './CollectionTableRow.module.scss';
+import classNames from 'classnames';
 
 
 type CollectionTableRowProps = {
@@ -12,9 +13,9 @@ export function CollectionTableRow({ }: CollectionTableRowProps) {
             className={styles.tableRow}
 
         >
-            <div className={styles.tableRowCounter}>1</div>
+            <div className={classNames(styles.tableRowItem, styles.tableRowCounter)}>1</div>
 
-            <div className={styles.tableRowCollection}>
+            <div className={classNames(styles.tableRowItem, styles.tableRowCollection)}>
                 <CollectionLogo
                     className={styles.tableRowImg}
                     size="s"
@@ -27,10 +28,10 @@ export function CollectionTableRow({ }: CollectionTableRowProps) {
                 </div>
             </div>
 
-            <div className={styles.tableRowItem}>74.84 USDT</div>
-            <div className={styles.tableRowItem}>215</div>
-            <div className={styles.tableRowItem}>18</div>
-            <div className={styles.tableRowItem}>1233.17 USDT</div>
+            <div className={styles.tableRowItem}><span className={styles.tableRowItemName}>Floor Price</span> 74.84 USDT</div>
+            <div className={styles.tableRowItem}><span className={styles.tableRowItemName}>Items</span>215</div>
+            <div className={styles.tableRowItem}><span className={styles.tableRowItemName}>Owners</span>18</div>
+            <div className={styles.tableRowItem}><span className={styles.tableRowItemName}>Volume</span>1233.17 USDT</div>
             <div className={styles.tableRowItem}>-100.4%</div>
         </div>
     );

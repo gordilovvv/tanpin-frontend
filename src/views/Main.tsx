@@ -3,7 +3,7 @@ import { Container } from '@/components/Layout';
 import { Footer, Header } from '@/components/Menus';
 import { GamesCarousel } from './Home/components/GamesCarousel/GamesCarousel';
 import { PromoComponent } from './Home/components/Promo/PromoComponent';
-import { ColletctionTable } from '@/components/Collections';
+import { Table } from './Home/Components/Table/Table';
 
 export function Main() {
     return (
@@ -18,7 +18,7 @@ export function Main() {
             </div>
 
             <Container>
-                <ColletctionTable />
+                <Table />
             </Container>
 
             <Container>
