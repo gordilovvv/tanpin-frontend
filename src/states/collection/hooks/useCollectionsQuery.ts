@@ -10,7 +10,38 @@ type CollectionQueryBody = Partial<{
     pageNum: number,
 }>
 
-const collectionsFethcer = async (body: CollectionQueryBody) => {
+type CollectionResponse = {
+    page: number;
+    countPage: number;
+    collections: Collection[];
+}
+
+type Collection = {
+    ID: string;
+    name: string;
+    symbol: string;
+    description: string;
+    logoURL: string;
+    coverURL: string;
+    stats: {
+        items: number
+        sales: number
+        volume: {
+            amount: string
+            currency: 'USDT' | 'CUSTOM_TOKEN'
+        }
+        floor: {
+            amount: string
+            currency: 'USDT' | 'CUSTOM_TOKEN'
+        }
+    },
+    attributes: {
+        traitType: string
+        values: string[]
+    }[]
+}
+
+const collectionsFethcer = async (body: CollectionQueryBody): Promise<CollectionResponse> => {
     // TODO: fix URL
     const result = await fetch('/collections.get.list', {
         method: 'POST',
@@ -20,7 +51,11 @@ const collectionsFethcer = async (body: CollectionQueryBody) => {
         },
         body: JSON.stringify(body),
     });
-    return (await result.json());
+    if (!result.ok) {
+        throw new Error(await result.text());
+    }
+    const collectionResponse = (await result.json()) as CollectionResponse;
+    return collectionResponse;
 };
 
 export const useCollectionQuery = (body: CollectionQueryBody) => {
