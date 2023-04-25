@@ -1,2 +1,3 @@
 export { Container } from './Container/Container';
-export { PageLayout } from './PageLayout/PageLayout';
+export { PageLayout } from './Page/PageLayout';
+export { AppError } from './Error/AppError';
