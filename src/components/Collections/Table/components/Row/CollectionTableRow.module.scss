@@ -1,0 +1,53 @@
+@import '../../_tableRow.scss';
+
+.table {
+    &Row {
+        @include tableRow;
+       
+        padding: 18px 0;
+        &>* {
+            
+            @include ellipsis;
+        }
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+    }
+    &RowItem {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: right;
+        color: var(--color-typo-base)
+    }
+    &RowImg {
+        margin-right: 16px;
+    }
+
+    &RowInner {
+        overflow: hidden;
+    }
+    
+    &RowCollection {
+        display: flex;
+        align-items: center;
+        
+    }
+    &RowTitle {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.5;
+        color: var(--color-typo-base);
+        @include ellipsis;
+       
+    }
+    &RowText {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.43;
+        color: var(--color-typo-ghost);
+        @include ellipsis;
+        
+    }
+}

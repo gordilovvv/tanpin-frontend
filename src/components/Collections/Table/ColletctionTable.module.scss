@@ -1,0 +1,24 @@
+@import './_tableRow.scss';
+
+.wrapper {
+    @include gapY(32px)
+}
+
+
+
+.table {
+    &Header {
+       @include tableRow;
+    }
+    &HeaderItem {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.43;
+
+        color: var(--color-typo-ghost);
+        white-space: nowrap;
+        
+    }
+    overflow-x: auto;
+}
+
