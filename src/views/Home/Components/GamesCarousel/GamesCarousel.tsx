@@ -14,8 +14,6 @@ export function GamesCarousel({ data }: GamesCarouselProps) {
 
     return (
         <div>
-            {JSON.stringify(carouselState)}
-
             <div className={styles.head}>
                 <Title>Featured Games</Title>
 
@@ -38,6 +36,11 @@ export function GamesCarousel({ data }: GamesCarouselProps) {
 
             <Carousel
                 data={data}
+                options={{
+                    breakpoints: {
+                        '(min-width: 1000px)': { slidesToScroll: 2 }
+                    }
+                }}
                 onNavigate={(state) => setCarouselState(state)}
                 renderSlide={({ data }) => <div className={styles.slide}>
                     <GameCard />

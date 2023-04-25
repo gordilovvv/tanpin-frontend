@@ -33,7 +33,6 @@ export const Carousel = ({
     ...props
 }: CarouselProps & HTMLAttributes<HTMLDivElement>) => {
     const emblaOptions = useMemo<EmblaOptionsType>(() => ({
-        slidesToScroll: 1,
         align: 'start',
         containScroll: 'keepSnaps',
         startIndex: 0,
