@@ -1,10 +1,10 @@
-import { ErrorView, Main } from "@/views";
-import { createBrowserRouter } from "react-router-dom";
+import { ErrorView, Main } from '@/views';
+import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Main />,
-    errorElement: <ErrorView />
-  }
+    {
+        path: '/',
+        element: <Main />,
+        errorElement: <ErrorView />
+    }
 ]);
