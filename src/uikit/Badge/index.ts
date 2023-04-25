@@ -1,0 +1,1 @@
+export { PercentBadge } from './PercentBadge/PercentBadge';

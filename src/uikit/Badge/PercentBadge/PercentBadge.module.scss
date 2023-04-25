@@ -1,0 +1,56 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px 2px 6px;
+    background-color: var(--color-surface);
+    border-radius: 8px;
+}
+
+.icon {
+    display: flex;
+    margin-right: 6px;
+}
+
+.text {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.badge.green {
+    background-color: var(--color-success-10);
+
+    .icon,
+    .text {
+        color: var(--color-success);
+    }
+}
+
+.badge.red {
+    background-color: var(--color-danger-10);
+
+    .icon,
+    .text {
+        color: var(--color-danger);
+    }
+}
+
+@include max767 {
+    .badge {
+        padding-left: 4px;
+        padding-right: 6px;
+    }
+
+    .icon {
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    .text {
+        font-size: 14px;
+    }
+}
