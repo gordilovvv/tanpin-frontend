@@ -1,11 +1,26 @@
 import { SvgProps } from '..';
 
-export function Arrow(props: SvgProps) {
+export function Arrow({ direction, ...props }: { direction: 'left' | 'right' } & SvgProps) {
     return (
-        <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-            <path d="M1.66669 9L9.66669 17M1.66669 9L9.66669 1M1.66669 9L20.3334 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            {direction === 'left' ? <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M15.3738 24.7071C14.9833 25.0976 14.3501 25.0976 13.9596 24.7071L5.95958 16.7071C5.56906 16.3166 5.56906 15.6834 5.95958 15.2929L13.9596 7.29289C14.3501 6.90237 14.9833 6.90237 15.3738 7.29289C15.7643 7.68342 15.7643 8.31658 15.3738 8.70711L9.0809 15H25.3334C25.8856 15 26.3334 15.4477 26.3334 16C26.3334 16.5523 25.8856 17 25.3334 17H9.0809L15.3738 23.2929C15.7643 23.6834 15.7643 24.3166 15.3738 24.7071Z"
+                fill="currentColor"
+            /> : <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M16.6262 7.29289C17.0167 6.90237 17.6499 6.90237 18.0404 7.29289L26.0404 15.2929C26.431 15.6834 26.431 16.3166 26.0404 16.7071L18.0404 24.7071C17.6499 25.0976 17.0167 25.0976 16.6262 24.7071C16.2357 24.3166 16.2357 23.6834 16.6262 23.2929L22.9191 17H6.66666C6.11437 17 5.66666 16.5523 5.66666 16C5.66666 15.4477 6.11437 15 6.66666 15H22.9191L16.6262 8.70711C16.2357 8.31658 16.2357 7.68342 16.6262 7.29289Z"
+                fill="currentColor"
+            />}
         </svg>
-
     );
 }
 
