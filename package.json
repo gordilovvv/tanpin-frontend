@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "classnames": "^2.3.2",
+    "embla-carousel": "^7.1.0",
+    "embla-carousel-react": "^7.1.0",
     "ethers": "^5.7.2",
     "framer-motion": "^10.12.4",
     "moment": "^2.29.4",

@@ -1,0 +1,62 @@
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+
+    &Controls {
+        display: flex;
+        align-items: center;
+
+        button+button {
+            margin-left: 16px;
+        }
+    }
+}
+
+.carousel {
+    --carousel-gap: 32px;
+    --carousel-slide-width: 50%;
+
+    @include max1000 {
+        --carousel-gap: 24px;
+        --carousel-slide-width: 100%;
+    }
+
+    @include max767 {
+        --carousel-gap: 8px;
+    }
+}
+
+.slide {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 16px;
+}
+
+.collections {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@include max1400 {
+    .collections {
+        &>*:nth-child(n+3) {
+            display: none;
+        }
+
+        grid-template-columns: minmax(0, auto);
+    }
+}
+
+@include max767 {
+    .head {
+        justify-content: center;
+        margin-bottom: 24px;
+
+        &Controls {
+            display: none;
+        }
+    }
+}
