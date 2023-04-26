@@ -1,7 +1,7 @@
-import { PageLayout } from "@/components/Layout";
-import { useUserStore } from "@/states/user/store";
-import { ErrorView, Main } from "@/views";
-import { createBrowserRouter, redirect } from "react-router-dom";
+import { PageLayout } from '@/components/Layout';
+import { useUserStore } from '@/states/user/store';
+import { ErrorView, MainView, GamesView, CollectionsView } from '@/views';
+import { createBrowserRouter, redirect } from 'react-router-dom';
 
 const isAuthenticatedLoader = () => {
     const { isLoggedIn } = useUserStore.getState();
@@ -18,7 +18,15 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Main />
+                element: <MainView />
+            },
+            {
+                path: '/games',
+                element: <GamesView />
+            },
+            {
+                path: '/collections',
+                element: <CollectionsView />
             },
             {
                 path: 'protected',
