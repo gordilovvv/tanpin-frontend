@@ -4,22 +4,14 @@ import { GameCard } from '@/components/Game';
 
 import { useInput } from '@/hooks/useInput';
 
-
-type GamesSearchingProps = {
-}
-
-
 // const options = [
 //     { value: 'option1', label: 'Option 1' },
 //     { value: 'option2', label: 'Option 2' },
 //     { value: 'option3', label: 'Option 3' },
 // ];
 
-export function GamesSearching({ }: GamesSearchingProps) {
+export function GamesSearching() {
     const nameInput = useInput('');
-
-
-
 
     return (
         <div>
@@ -33,7 +25,6 @@ export function GamesSearching({ }: GamesSearchingProps) {
                 value={selectedOption}
                 onChange={handleSelectChange}
             /> */}
-
 
 
             <div className={styles.text}>Explore NFT collections from your favorite games</div>

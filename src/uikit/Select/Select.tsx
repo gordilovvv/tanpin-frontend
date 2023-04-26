@@ -3,7 +3,6 @@ import styles from './Select.module.scss';
 import { ArrowSmall } from '@/uikit';
 
 
-
 interface Option {
     value: string;
     label: string;
@@ -16,8 +15,7 @@ interface SelectProps {
 }
 
 
-
-export function Select({ options, value, onChange }: React.FC<SelectProps>) {
+export function Select({ options, value, onChange }: FC<SelectProps>) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {

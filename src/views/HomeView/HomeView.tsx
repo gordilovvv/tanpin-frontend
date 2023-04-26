@@ -1,9 +1,9 @@
 import { Container } from '@/components/Layout';
-import { GamesCarousel } from './Home/components/GamesCarousel/GamesCarousel';
-import { PromoComponent } from './Home/components/Promo/PromoComponent';
-import { Table } from './Home/Components/Table/Table';
+import { GamesCarousel } from './components/GamesCarousel/GamesCarousel';
+import { PromoComponent } from './components/Promo/PromoComponent';
+import { Table } from './Components/Table/Table';
 
-export function Main() {
+export function MainView() {
     return (
         <>
             <div style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>

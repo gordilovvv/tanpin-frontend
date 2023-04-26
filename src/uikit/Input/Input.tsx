@@ -11,11 +11,6 @@ type InputProps = {
     icon?: React.ReactNode; // проп для передачи иконки через слот
 }
 
-Input.defaultProps = {
-    type: 'text',
-    placeholder: '',
-
-};
 
 export function Input({ value, icon, type, onChange, placeholder, className }: FC<InputProps>) {
     const [isFocused, setIsFocused] = useState<boolean>(false);

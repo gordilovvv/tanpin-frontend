@@ -1,4 +1,4 @@
 export { ErrorView } from "./Error";
-export { Main } from "./Main";
-export { Games } from "./Games";
-export { Collections } from "./Collections";
+export { MainView } from "./HomeView/HomeView";
+export { GamesView } from "./GamesView";
+export { CollectionsView } from "./CollectionsView";

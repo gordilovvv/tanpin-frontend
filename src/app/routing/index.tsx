@@ -1,6 +1,6 @@
 import { PageLayout } from '@/components/Layout';
 import { useUserStore } from '@/states/user/store';
-import { ErrorView, Main, Games, Collections } from '@/views';
+import { ErrorView, MainView, GamesView, CollectionsView } from '@/views';
 import { createBrowserRouter, redirect } from 'react-router-dom';
 
 const isAuthenticatedLoader = () => {
@@ -18,15 +18,15 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Main />
+                element: <MainView />
             },
             {
                 path: '/games',
-                element: <Games />
+                element: <GamesView />
             },
             {
                 path: '/collections',
-                element: <Collections />
+                element: <CollectionsView />
             },
             {
                 path: 'protected',
