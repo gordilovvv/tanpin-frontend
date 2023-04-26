@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import styles from './CollectionPreview.module.scss';
 import { CollectionLogo } from '..';
+import { Collection } from '@/states/collection/types';
 
-export const CollectionPreview = () => {
+type CollectionPreviewProps = Collection;
+
+export const CollectionPreview = ({ name, logoURL, stats: { volume, floor } }: CollectionPreviewProps) => {
     return (
         <Link
             to='/'
@@ -10,12 +13,12 @@ export const CollectionPreview = () => {
         >
             <CollectionLogo
                 size='m'
-                image='https://lh3.googleusercontent.com/GezP5_0gEdPqOeat9AOiimDfpboI9BactEOg1QNP4Go2oTLdpQu2nK2eUbHiDjsYsL2fyNeNEEURjwZx6jmmb43InnM=w640-h400-e365-rj-sc0x00ffffff'
+                image={logoURL}
                 className={styles.logo}
             />
 
             <div className={styles.content}>
-                <div className={styles.name}>2023 Cars</div>
+                <div className={styles.name}>{name}</div>
 
                 <div className={styles.stats}>
                     <div className={styles.item}>
@@ -24,17 +27,17 @@ export const CollectionPreview = () => {
                         </div>
 
                         <div className={styles.itemValue}>
-                            1.40 <span>USDT</span>
+                            {floor.amount} <span>{floor.currency}</span>
                         </div>
                     </div>
 
                     <div className={styles.item}>
                         <div className={styles.itemLabel}>
-                            Floor price
+                            Volume (1D)
                         </div>
 
                         <div className={styles.itemValue}>
-                            1.40 <span>USDT</span>
+                            {volume.amount} <span>{volume.currency}</span>
                         </div>
                     </div>
                 </div>

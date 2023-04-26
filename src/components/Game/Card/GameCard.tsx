@@ -1,14 +1,19 @@
 import { Button } from '@/uikit';
 import { CollectionLogo } from '@/components/Collections/Logo/CollectionLogo';
 import styles from './GameCard.module.scss';
+import { Game, GameStats } from '@/states/game/types';
 
-export function GameCard() {
+type GameCardProps = Game & {
+    stats: GameStats
+};
+
+export function GameCard({ name, logoURL, imageURL, stats: { items, volume, collections } }: GameCardProps) {
     return (
         <div className={styles.card}>
             <div className={styles.background}>
                 <img
                     className={styles.backgroundImage}
-                    src="https://storage.yandexcloud.net/stage01-metronews-transfer/media/20220618/13/20/858x540_60e21547_dvindb8d.jpg"
+                    src={imageURL}
                     alt=""
                 />
             </div>
@@ -19,28 +24,28 @@ export function GameCard() {
                         <div className={styles.header}>
                             <CollectionLogo
                                 size='xs'
-                                image={'https://lh3.googleusercontent.com/GezP5_0gEdPqOeat9AOiimDfpboI9BactEOg1QNP4Go2oTLdpQu2nK2eUbHiDjsYsL2fyNeNEEURjwZx6jmmb43InnM=w640-h400-e365-rj-sc0x00ffffff'}
+                                image={logoURL}
                             />
 
                             <div className={styles.headerTitle}>
-                                NFTGTA
+                                {name}
                             </div>
                         </div>
 
                         <div className={styles.stats}>
                             <div className={styles.item}>
                                 <div className={styles.itemTitle}>Volume (1 day)</div>
-                                <div className={styles.itemBody}>188 421 USDT</div>
+                                <div className={styles.itemBody}>{volume.amount} {volume.currency}</div>
                             </div>
 
                             <div className={styles.item}>
                                 <div className={styles.itemTitle}>Items</div>
-                                <div className={styles.itemBody}>10 000</div>
+                                <div className={styles.itemBody}>{items}</div>
                             </div>
 
                             <div className={styles.item}>
                                 <div className={styles.itemTitle}>Collections</div>
-                                <div className={styles.itemBody}>7</div>
+                                <div className={styles.itemBody}>{collections}</div>
                             </div>
                         </div>
                     </div>
