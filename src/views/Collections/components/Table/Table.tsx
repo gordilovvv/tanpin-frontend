@@ -11,7 +11,8 @@ function CollectionPage({ pageNum, onLoading }: { pageNum: number, onLoading: (i
     });
     useEffect(() => {
         onLoading(isLoading);
-    });
+
+    }, [isLoading]);
 
     if (isLoading) {
         return;
