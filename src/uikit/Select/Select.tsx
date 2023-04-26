@@ -1,21 +1,19 @@
-import { FC, useState } from 'react';
-import styles from './Select.module.scss';
+import { useState } from 'react';
 import { ArrowSmall } from '@/uikit';
+import styles from './Select.module.scss';
 
-
-interface Option {
+type Option = {
     value: string;
     label: string;
 }
 
-interface SelectProps {
+type SelectProps = {
     options: Option[];
     value: string;
     onChange: (value: string) => void;
 }
 
-
-export function Select({ options, value, onChange }: FC<SelectProps>) {
+export function Select({ options, value, onChange }: SelectProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -55,10 +53,3 @@ export function Select({ options, value, onChange }: FC<SelectProps>) {
     );
 
 }
-
-
-
-
-
-
-//////
