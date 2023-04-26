@@ -79,10 +79,10 @@ export async function fetchGames(body: GamesQueryBody): Promise<GamesQueryRespon
                 }
             },]
         }, {
-            ID: '0',
-            name: 'NFTGTA',
-            imageURL: 'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
-            logoURL: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1680286272',
+            ID: '1',
+            name: 'Minecraft',
+            imageURL: 'https://img.redbull.com/images/c_fill,w_1200,h_630,g_auto,f_auto,q_auto/redbullcom/2020/4/28/bjoyslzjb3uxqyg82uz2/minecraft',
+            logoURL: 'https://img.icons8.com/color/512/minecraft-logo--v1.png',
             stats: {
                 volume: {
                     currency: 'USDT',
@@ -154,9 +154,9 @@ export async function fetchGames(body: GamesQueryBody): Promise<GamesQueryRespon
             },]
         }, {
             ID: '2',
-            name: 'NFTGTA',
-            imageURL: 'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
-            logoURL: 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1680286272',
+            name: 'Fortnite',
+            imageURL: 'https://cdn2.unrealengine.com/social-image-battlepass-3840x2160-19b42864f188.jpg',
+            logoURL: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png',
             stats: {
                 volume: {
                     currency: 'USDT',
