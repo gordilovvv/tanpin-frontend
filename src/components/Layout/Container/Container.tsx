@@ -2,10 +2,16 @@ import { HTMLAttributes, PropsWithChildren } from 'react';
 import classNames from 'classnames';
 import styles from './Container.module.scss';
 
-export function Container({ children, className, ...props }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+type ContainerProps = {
+    space?: boolean // Bottom Padding
+}
+
+export function Container({ space = false, children, className, ...props }: ContainerProps & PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
     return (
         <div
-            className={classNames(styles.container, className)}
+            className={classNames(styles.container, className, {
+                [styles.space]: space
+            })}
             {...props}
         >
             {children}

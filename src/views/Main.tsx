@@ -1,27 +1,24 @@
 import { Container } from '@/components/Layout';
-import { Footer, Header } from '@/components/Menus';
+import { GamesCarousel } from './Home/components/GamesCarousel/GamesCarousel';
+import { PromoComponent } from './Home/components/Promo/PromoComponent';
 import { Table } from './Home/Components/Table/Table';
-import { GamesCarousel } from './Home/Components/GamesCarousel/GamesCarousel';
-import { PromoComponent } from './Home/Components/Promo/PromoComponent';
 
 export function Main() {
     return (
-        <main>
-
+        <>
             <div style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>
-                <Container>
+                <Container space>
                     <GamesCarousel data={[1, 2, 3]} />
                 </Container>
             </div>
 
-            <Container>
+            <Container space>
                 <Table />
             </Container>
 
-            <Container>
+            <Container space>
                 <PromoComponent />
             </Container>
-
-        </main>
+        </>
     );
 }
