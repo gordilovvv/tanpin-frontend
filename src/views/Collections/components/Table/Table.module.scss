@@ -1,0 +1,35 @@
+.title {
+    margin-bottom: 16px;
+}
+.text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.44;
+    
+    color: var(--color-typo-ghost);
+    margin-bottom: 32px;
+    
+}
+
+.inner {
+    display: flex;
+    flex-direction: column;
+    @include gapY(32px)
+}
+
+
+
+@include max767 { 
+    .title {
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    .text {
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+    .inner {
+        @include gapY(24px)
+    }
+}

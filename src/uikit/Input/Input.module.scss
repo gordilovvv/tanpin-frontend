@@ -1,0 +1,53 @@
+.input {
+    display: block;
+    width: 100%;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+
+    color: var(--color-type-base);
+    padding: 12px;
+
+    background: var(--color-essential);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+
+    transition: all .3s ease;
+}
+.icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: all .3s ease;
+    padding-left: 15px;
+}
+
+.focused {
+    .input {
+        border: 2px solid #fff;
+    }
+    .icon {
+        color: #fff;
+    }
+}
+.hasIcon {
+    .input {
+        padding-left: 44px;
+    }
+}
+
+.icon {
+    color: #333;
+}
+.wrapper {
+    position: relative;
+}
+
+@include max767 {
+    .input {
+        font-size: 14px;
+        line-height: 1.43;
+    }
+}

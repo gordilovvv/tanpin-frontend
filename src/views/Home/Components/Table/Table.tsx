@@ -16,7 +16,12 @@ function CollectionPage({ pageNum, onLoading }: { pageNum: number, onLoading: (i
         return;
     }
 
-    return <>{collection!.collections.map((c) => <CollectionTableRow imageURL={c.logoURL} description={c.description} title={c.name} key={c.ID} />)}</>;
+    return <>{collection!.collections.map((c) => <CollectionTableRow
+        imageURL={c.logoURL}
+        description={c.description}
+        title={c.name}
+        key={c.ID}
+    />)}</>;
 }
 
 export function Table() {
