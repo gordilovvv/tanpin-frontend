@@ -9,19 +9,25 @@ export type GamesQueryBody = {
     }
 }
 
-export type GamesQueryResponse = {
+export type GamesQueryResponse = Game & {
+    stats: GameStats
+    popularCollections?: Collection[]
+}
+
+export type Game = {
     ID: string
     name: string
     logoURL: string
     imageURL: string
-    stats: {
-        items: number
-        collections: number
-        // Объем торгов (1 DAY)
-        volume: {
-            amount: string
-            currency: 'USDT' | 'CUSTOM_TOKEN'
-        }
-    }
-    popularCollections?: Collection[]
 }
+
+export type GameStats = {
+    items: number
+    collections: number
+    // Объем торгов (1 DAY)
+    volume: {
+        amount: string
+        currency: 'USDT' | 'CUSTOM_TOKEN'
+    }
+}
+
