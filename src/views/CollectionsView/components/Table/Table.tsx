@@ -9,13 +9,13 @@ function CollectionPage({ pageNum, onLoading }: { pageNum: number, onLoading: (i
     const { collection, isLoading } = useCollectionQuery({
         pageNum
     });
+
     useEffect(() => {
         onLoading(isLoading);
-
-    }, [isLoading]);
+    }, [onLoading, isLoading]);
 
     if (isLoading) {
-        return;
+        return null;
     }
 
     return <>{collection!.collections.map((c) => <CollectionTableRow
