@@ -3,6 +3,7 @@ import { Title, Input, Search } from '@/uikit';
 import { GameCard } from '@/components/Game';
 
 import { useInput } from '@/hooks/useInput';
+import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 // const options = [
 //     { value: 'option1', label: 'Option 1' },
 //     { value: 'option2', label: 'Option 2' },
@@ -11,6 +12,8 @@ import { useInput } from '@/hooks/useInput';
 
 export function GamesSearching() {
     const nameInput = useInput('');
+
+    const { games } = useGamesQuery({ filter: {} });
 
     return (
         <div>
@@ -36,13 +39,12 @@ export function GamesSearching() {
             />
 
             <div className={styles.inner}>
-                <GameCard />
-                <GameCard />
-                <GameCard />
-                <GameCard />
-                <GameCard />
-                <GameCard />
-                <GameCard />
+                {games?.map(game => (
+                    <GameCard
+                        key={game.ID}
+                        {...game}
+                    />
+                ))}
             </div>
 
         </div>

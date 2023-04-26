@@ -9,7 +9,7 @@ export function MainView() {
         <>
             <div style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>
                 <Container space>
-                    <GamesCarousel data={[1, 2, 3]} />
+                    <GamesCarousel />
                 </Container>
             </div>
 

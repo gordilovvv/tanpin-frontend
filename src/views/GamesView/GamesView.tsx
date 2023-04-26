@@ -1,4 +1,4 @@
-import styles from './GamesView.module.scss';
+// import styles from './GamesView.module.scss';
 import { GamesSearching } from './components/Searching/GamesSearching';
 import { Container } from '@/components/Layout';
 

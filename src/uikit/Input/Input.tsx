@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import styles from './Input.module.scss';
 import classNames from 'classnames';
 
@@ -8,11 +8,12 @@ type InputProps = {
     value: string;
     placeholder?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    icon?: React.ReactNode; // проп для передачи иконки через слот
+    className: string;
+    icon?: React.ReactElement; // проп для передачи иконки через слот
 }
 
 
-export function Input({ value, icon, type, onChange, placeholder, className }: FC<InputProps>) {
+export function Input({ value, icon, type, onChange, placeholder, className }: InputProps) {
     const [isFocused, setIsFocused] = useState<boolean>(false);
 
     const handleFocus = () => {

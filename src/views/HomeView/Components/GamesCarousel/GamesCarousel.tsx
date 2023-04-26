@@ -6,11 +6,8 @@ import { Carousel, CarouselState } from '@/components/Carousel';
 import styles from './GamesCarousel.module.scss';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 
-type GamesCarouselProps = {
-    data: any[]
-}
 
-export function GamesCarousel({ data }: GamesCarouselProps) {
+export function GamesCarousel() {
     const { games, isLoading } = useGamesQuery({ filter: { popular: true, includePopularCollections: true } });
 
     const [carouselState, setCarouselState] = useState<CarouselState | undefined>();
@@ -56,8 +53,11 @@ export function GamesCarousel({ data }: GamesCarouselProps) {
 
                         <div className={styles.collections}>
                             {data.popularCollections?.map(collection => (
-                                <CollectionPreview {...collection} key={collection.ID} />)
-                            )}
+                                <CollectionPreview
+                                    key={collection.ID}
+                                    {...collection}
+                                />
+                            ))}
                         </div>
                     </div>
                 )}
