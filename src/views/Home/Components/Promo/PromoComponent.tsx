@@ -1,6 +1,5 @@
 import { HTMLAttributes } from 'react';
-import { Title, Button } from '@/uikit';
-import { Cat } from './Cat';
+import { Title, Button, Cat } from '@/uikit';
 import classNames from 'classnames';
 import styles from './PromoComponent.module.scss';
 import promoImg from '@/app/assets/bg/promo.png';

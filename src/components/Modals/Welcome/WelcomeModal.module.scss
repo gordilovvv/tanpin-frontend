@@ -1,0 +1,56 @@
+.body {
+    background-repeat: no-repeat;
+    background-size: 538px auto;
+    background-position: top center;
+}
+
+.wrap {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.image {
+    display: flex;
+    margin: 0 auto;
+
+    svg {
+        width: 161px;
+        height: 152px;
+    }
+}
+
+.title {
+    font-weight: 800;
+    font-size: 36px;
+    letter-spacing: -0.018em;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.text {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    letter-spacing: -0.01em;
+
+    a {
+        color: var(--color-primary);
+
+        @include hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+@include max767 {
+    .title {
+        font-size: 24px;
+    }
+
+    .text {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

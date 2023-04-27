@@ -1,0 +1,26 @@
+.body {
+    position: relative;
+    flex-shrink: 1;
+    overflow: auto;
+    padding: 20px 32px 32px;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 2px;
+    }
+}
+
+@include max767 {
+    .body {
+        padding: 14px 24px 24px;
+    }
+}

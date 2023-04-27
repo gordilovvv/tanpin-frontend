@@ -1,4 +1,5 @@
 import ax from 'axios';
+import { API_URL } from '@/config';
 
 export const axios = ax.create({
     baseURL: 'API_URL',

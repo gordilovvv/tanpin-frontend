@@ -1,0 +1,26 @@
+.spin {
+    position: relative;
+    margin: auto;
+    animation: 0.66s linear 0s infinite normal none running rotate;
+    border-style: solid;
+    border-color: var(--color-stroke) var(--color-stroke) var(--color-stroke) var(--color-base);
+    transform: translateZ(0px);
+    user-select: none;
+
+    &.s {
+        width: 24px;
+        height: 24px;
+        border-radius: 20px;
+        border-width: 2px;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

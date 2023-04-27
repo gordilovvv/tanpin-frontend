@@ -1,0 +1,24 @@
+.wrap {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.text {
+    color: var(--color-danger);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center;
+}
+
+@include max767 {
+    .wrap {
+        gap: 24px;
+    }
+
+    .text {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

@@ -1,0 +1,17 @@
+.wrap {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.list {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: minmax(0, auto);
+}
+
+@include max767 {
+    .wrap {
+        gap: 24px;
+    }
+}

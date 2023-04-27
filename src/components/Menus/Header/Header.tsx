@@ -8,8 +8,12 @@ import { useOpenedState } from '@/hooks/useOpenedState';
 import { headerLinks } from '../config';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
+import { ConnectWalletButton } from '../ConnectWalletButton/ConnectWalletButton';
+import { useAccount } from 'wagmi';
+import { WalletButton } from '../WalletButton/WalletButton';
 
 export function Header() {
+    const { isConnected } = useAccount();
     const mobileDrawerState = useOpenedState();
 
     return (
@@ -38,9 +42,12 @@ export function Header() {
                     </div>
 
                     <div className={styles.stack}>
-                        <Button className={styles.wallet}>
-                            Connect wallet
-                        </Button>
+                        <div className={styles.wallet}>
+                            {/* TODO: wallet menu */}
+                            {isConnected
+                                ? <WalletButton onClick={() => { }} />
+                                : <ConnectWalletButton />}
+                        </div>
 
                         <div className={styles.mobileStack}>
                             <Burger
