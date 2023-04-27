@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, LazyMotion, domMax, motion } from 'framer-motion';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { ModalContext, ModalState } from './Context';
 import styles from './Modal.module.scss';
 
@@ -83,6 +83,8 @@ export function Modal({ isOpen, onClose, closeOnOverlayClick = true, children }:
             return () => {
                 if (scrollableBodyRef.current) {
                     enableBodyScroll(scrollableBodyRef.current);
+                } else {
+                    return clearAllBodyScrollLocks();
                 }
             };
         } else {
