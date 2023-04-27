@@ -51,7 +51,6 @@ type CollectionTableViewProps = {
 }
 
 function CollectionTableView({ isFirstLoad, loadNextPage, isLoading, collections }: CollectionTableViewProps) {
-
     return (
         <>
             <div className={styles.table}>
@@ -86,9 +85,10 @@ function CollectionTableView({ isFirstLoad, loadNextPage, isLoading, collections
             <Button
                 view='secondary'
                 block
+                loading={isLoading}
                 onClick={loadNextPage}
             >
-                {isLoading ? 'Loading...' : 'Load More'}
+                Load More
             </Button>
         </>
     );
