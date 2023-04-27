@@ -6,3 +6,4 @@ export { Select } from './Select/Select';
 export * from './Icons';
 export * from './Unstyle';
 export * from './Badge';
+export * from './Skeleton';
