@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactNode, forwardRef } from 'react';
 import { LinkProps, useNavigate } from 'react-router-dom';
+import { Spin } from '..';
 import classNames from 'classnames';
 import styles from './Button.module.scss';
 
@@ -49,7 +50,9 @@ export const Button = forwardRef<HTMLElement, PropsWithChildren<any>>(
                 onClick={handleClick}
                 {...props}
             >
-                {/* {isLoading && <Spin className={styles.spin} />} */}
+                {isLoading && <span className={styles.buttonSpin}>
+                    <Spin size='s' />
+                </span>}
 
                 {iconSlot && <span className={styles.buttonIcon}>
                     {iconSlot}
