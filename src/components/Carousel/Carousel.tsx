@@ -4,11 +4,11 @@ import { CarouselSlide } from './Slide/CarouselSlide';
 import { CarouselState, SlideProps } from './types';
 import styles from './Carousel.module.scss';
 
-type CarouselProps<T> = {
-    data: T[],
+type CarouselProps = {
+    data: any[],
     options?: EmblaOptionsType,
     onNavigate: (state: CarouselState) => void,
-    renderSlide: (props: SlideProps<T>) => JSX.Element
+    renderSlide: (props: SlideProps) => JSX.Element
 }
 
 /**
@@ -24,14 +24,14 @@ type CarouselProps<T> = {
  * --carousel-slide-width: 50%;
  * ```
  */
-export const Carousel = <T,>({
+export function Carousel({
     data,
     onNavigate,
     renderSlide,
     options = {},
     className,
     ...props
-}: CarouselProps<T> & HTMLAttributes<HTMLDivElement>) => {
+}: CarouselProps & HTMLAttributes<HTMLDivElement>) {
     const emblaOptions = useMemo<EmblaOptionsType>(() => ({
         align: 'start',
         containScroll: 'keepSnaps',
@@ -126,4 +126,4 @@ export const Carousel = <T,>({
             </div>
         </div>
     );
-};
+}
