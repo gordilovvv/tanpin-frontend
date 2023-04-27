@@ -4,25 +4,25 @@ import styles from './Select.module.scss';
 import classNames from 'classnames';
 import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 
-type Option = {
+type SelectOption = {
     value: string;
     label: string;
 }
 
 type SelectProps = {
-    options: Option[];
+    SelectOption: SelectOption[];
     value: string;
-    placeholder?: string;
-    onChange: (value: string) => void;
+    placeHolderText?: string;
+    onOptionChange: (value: string) => void;
 }
 
-export function Select({ options, value, onChange, placeholder = '' }: SelectProps) {
+export function Select({ SelectOption, value, onOptionChange, placeHolderText = '' }: SelectProps) {
     const select = useRef(null);
 
     useOnClickOutside(select, () => {
         if (isOpen) {
             setIsOpen(false);
-            onChange(value);
+            onOptionChange(value);
         }
     });
 
@@ -34,7 +34,7 @@ export function Select({ options, value, onChange, placeholder = '' }: SelectPro
 
     const handleOptionClick = (optionValue: string) => {
         setIsOpen(false);
-        onChange(optionValue);
+        onOptionChange(optionValue);
     };
 
     return (
@@ -49,14 +49,14 @@ export function Select({ options, value, onChange, placeholder = '' }: SelectPro
                 className={styles.selectHeader}
 
             >
-                <div className="selected-value">{options.find(el => el.value === value)?.label || <span className={styles.selectPlaceholder}>{placeholder}</span>}</div>
+                <div className="selected-value">{SelectOption.find(el => el.value === value)?.label || <span className={styles.selectPlaceholder}>{placeHolderText}</span>}</div>
                 <ArrowSmall className={styles.selectArrow} />
 
             </div>
 
             {(
                 <div className={classNames(styles.selectOptions,)}>
-                    {options.map((option) => (
+                    {SelectOption.map((option) => (
                         <div
                             key={option.value}
                             className={classNames(styles.selectOption, {

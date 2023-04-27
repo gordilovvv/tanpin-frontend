@@ -44,10 +44,10 @@ export function GamesSearching() {
                 />
 
                 <Select
-                    options={options}
+                    SelectOption={options}
                     value={option}
-                    placeholder={'Выбрать'}
-                    onChange={(val) => setOption(val)}
+                    placeHolderText={'Выбрать'}
+                    onOptionChange={(val) => setOption(val)}
                 />
             </div>
 
