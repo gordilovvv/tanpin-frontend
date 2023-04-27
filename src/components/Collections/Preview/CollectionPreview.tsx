@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
-import styles from './CollectionPreview.module.scss';
 import { CollectionLogo } from '..';
 import { Collection } from '@/states/collection/types';
+import { formatTokenAmount } from '@/utils/formatTokenAmount';
+import styles from './CollectionPreview.module.scss';
 
-type CollectionPreviewProps = Collection;
+type CollectionPreviewProps = {
+    collection: Collection
+};
 
-export const CollectionPreview = ({ name, logoURL, stats: { volume, floor } }: CollectionPreviewProps) => {
+export const CollectionPreview = ({ collection }: CollectionPreviewProps) => {
+    const { name, logoURL, stats } = collection;
+
     return (
         <Link
             to='/'
@@ -27,7 +32,7 @@ export const CollectionPreview = ({ name, logoURL, stats: { volume, floor } }: C
                         </div>
 
                         <div className={styles.itemValue}>
-                            {floor.amount} <span>{floor.currency}</span>
+                            {formatTokenAmount(stats.floor.amount)} <span>{stats.floor.currency}</span>
                         </div>
                     </div>
 
@@ -37,7 +42,7 @@ export const CollectionPreview = ({ name, logoURL, stats: { volume, floor } }: C
                         </div>
 
                         <div className={styles.itemValue}>
-                            {volume.amount} <span>{volume.currency}</span>
+                            {formatTokenAmount(stats.volume.amount)} <span>{stats.volume.currency}</span>
                         </div>
                     </div>
                 </div>
