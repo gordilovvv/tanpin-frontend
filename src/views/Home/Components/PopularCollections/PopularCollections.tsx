@@ -4,30 +4,13 @@ import { useCollectionQuery } from '@/states/collection/hooks/useCollectionsQuer
 import styles from './PopularCollections.module.scss';
 
 export function PopularCollections() {
-    const { collection, isLoading } = useCollectionQuery({
-        filter: {
-            popular: true
-        }
-    });
-
     return (
         <div className={styles.wrapper}>
             <Title className={styles.title}>
                 Trending Collections
             </Title>
 
-            <CollectionTable
-                items={collection?.collections ?? []}
-                loading={isLoading}
-                button={
-                    <Button
-                        view='secondary'
-                        block
-                    >
-                        Explore Collections
-                    </Button>
-                }
-            />
+            <CollectionTable />
         </div>
     );
 

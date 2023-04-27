@@ -1,6 +1,7 @@
 import { axios } from '@/app/api';
 import { Collection, CollectionQueryBody, CollectionResponse } from '../types';
 import { MOCK_API_CALLS } from '@/config';
+import { PAGE_SIZE } from '@/config/constants';
 
 export async function collectionFetch(body: CollectionQueryBody): Promise<CollectionResponse> {
     if (MOCK_API_CALLS) {
@@ -9,9 +10,9 @@ export async function collectionFetch(body: CollectionQueryBody): Promise<Collec
         return {
             page: 1,
             countPage: 2,
-            collections: [...Array(2).keys()].map(id => {
+            collections: [...Array(PAGE_SIZE).keys()].map(id => {
                 return {
-                    ID: `${ (id + (10 * (body?.pageNum ?? 0))) }`,
+                    ID: `${(id + (10 * (body?.pageNum ?? 0)))}`,
                     name: 'Hello',
                     description: 'World',
                     logoURL: 'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
@@ -36,7 +37,7 @@ export async function collectionFetch(body: CollectionQueryBody): Promise<Collec
     }
 
     const { data } = await axios.post<CollectionResponse>('/collections.get.list', body);
-    
+
     return data;
 }
 
