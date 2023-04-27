@@ -6,7 +6,7 @@ export const useCollectionQuery = (body: CollectionQueryBody) => {
     // TODO Igor swr key
     const { data, error, isLoading } = useSWR(
         `/collections/page/${body.pageNum}`,
-        () => collectionFetch(body)
+        () => collectionFetch(body),
     );
 
     return {

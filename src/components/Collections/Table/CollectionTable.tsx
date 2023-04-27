@@ -20,6 +20,7 @@ function useCollectionTable() {
     const [collectionsData, setCollectionsData] = useState<Collection[]>([]);
     const { collection, isLoading } = useCollectionQuery({ pageNum });
 
+    // TODO: use SWR's callbacks instead of useEffect
     useEffect(() => {
         if (collection === undefined) {
             return;
@@ -39,8 +40,6 @@ function useCollectionTable() {
         isLoading,
     };
 }
-
-
 
 const HEADER_ITEMS = ['#', 'Collections', 'Floor Price', 'Items', 'Sales (7D)', 'Volume', '1D Change'];
 
