@@ -1,0 +1,31 @@
+@import './_tableRow.scss';
+
+.table {
+    margin: 0 -9px;
+    overflow-x: auto;
+}
+
+.head {
+    padding: 0 9px;
+    @include tableRow;
+
+    &Item {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.43;
+        color: var(--color-typo-ghost);
+        white-space: nowrap;
+    }
+}
+
+.body {
+    display: flex;
+    flex-flow: column;
+    padding: 0 9px;
+}
+
+@include max767 {
+    .head {
+        display: none;
+    }
+}

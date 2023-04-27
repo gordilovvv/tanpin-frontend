@@ -9,6 +9,19 @@
     text-decoration: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
+    @include min768 {
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--color-stroke);
+        }
+    }
+
+    &.loading {
+        cursor: default;
+        pointer-events: none;
+    }
+}
+
+a.row {
     &::before {
         content: "";
         position: absolute;
@@ -28,12 +41,6 @@
         &::before {
             opacity: 1;
             transform: scale(1);
-        }
-    }
-
-    @include min768 {
-        &:not(:last-child) {
-            border-bottom: 1px solid var(--color-stroke);
         }
     }
 }
@@ -106,16 +113,30 @@
     }
 }
 
+.skeleton {
+    &Metadata {
+        height: 48px;
+    }
+
+    &Text {
+        height: 19px;
+    }
+}
+
 @include max767 {
     .row {
         &:not(:last-child) {
             margin-bottom: 8px;
         }
+
+        &.loading {
+            background-color: var(--color-surface);
+        }
     }
 
     .wrap {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr auto;
         grid-row: auto;
         grid-template-areas:
             'collection change'
@@ -185,6 +206,31 @@
         &Description {
             font-size: 12px;
             text-align: left;
+        }
+    }
+
+    .skeleton {
+        &Metadata {
+            height: 40px;
+            margin-bottom: 12px;
+        }
+
+        &Text {
+            height: 16px;
+        }
+    }
+
+    .row.loading .wrap {
+        grid-template-columns: 1fr;
+        grid-template-areas: 'collection collection'
+            'price price'
+            'items items'
+            'owners owners'
+            'volume volume'
+            'change change';
+
+        .col:nth-child(6) {
+            margin-bottom: 6px;
         }
     }
 }

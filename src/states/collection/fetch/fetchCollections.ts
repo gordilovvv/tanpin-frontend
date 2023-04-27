@@ -4,7 +4,7 @@ import { MOCK_API_CALLS } from '@/config';
 
 export async function collectionFetch(body: CollectionQueryBody): Promise<CollectionResponse> {
     if (MOCK_API_CALLS) {
-        await new Promise((res) => setTimeout(res, 400));
+        await new Promise((res) => setTimeout(res, 3000));
 
         return {
             page: 1,
