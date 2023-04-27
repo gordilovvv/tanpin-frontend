@@ -1,4 +1,5 @@
 import { PropsWithChildren, ReactNode, forwardRef } from 'react';
+import { LinkProps, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import styles from './Button.module.scss';
 
@@ -9,6 +10,7 @@ enum View {
 
 type ButtonProps<T extends 'a' | 'button'> = {
     as?: T,
+    to?: LinkProps['to'],
     view?: `${View}`
     block?: boolean
     loading?: boolean
@@ -19,15 +21,18 @@ type ButtonProps<T extends 'a' | 'button'> = {
 
 declare function ButtonFn<Tag extends 'a' | 'button'>(props: PropsWithChildren<ButtonProps<Tag>>): JSX.Element;
 
-// TODO:
-// 1. Add loading
 export const Button = forwardRef<HTMLElement, PropsWithChildren<any>>(
-    ({ as: Tag = 'button', view = 'primary', block, loading, disabled, iconSlot, onClick, children, className, ...props }, ref) => {
+    ({ as: Tag = 'button', view = 'primary', to, block, loading, disabled, iconSlot, onClick, children, className, ...props }, ref) => {
         const isLoading = !disabled && loading;
+        const navigate = useNavigate();
 
         const handleClick = () => {
             if (isLoading || disabled) {
                 return;
+            }
+
+            if (to) {
+                navigate(to);
             }
 
             onClick?.();
