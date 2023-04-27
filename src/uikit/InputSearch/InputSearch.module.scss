@@ -1,35 +1,35 @@
 .input {
     display: block;
     width: 100%;
-
     font-weight: 500;
     font-size: 16px;
     line-height: 1.5;
-
     color: var(--color-type-base);
     padding: 12px;
-
     background: var(--color-essential);
-    border: 1px solid var(--color-stroke); 
+    border: 2px solid var(--color-stroke); 
     border-radius: 12px;
-
     transition: all .3s ease;
+    
+    &::placeholder {
+        font-size: 16px;
+        color: var(--color-typo-ghost);
+    }
 }
 .icon {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    transition: all .3s ease;
-    padding-left: 15px;
-}
+    left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}   
 
 .focused {
     .input {
-        border: 2px solid #fff;
+        border: 2px solid var(--color-base);
     }
     .icon {
-        color: #fff;
+        color: var(--color-type-base);
     }
 }
 .hasIcon {
@@ -39,15 +39,21 @@
 }
 
 .icon {
-    color: #333;
+    color: var(--color-typo-ghost);
 }
 .wrapper {
     position: relative;
+    display: flex;
+    align-items: center;
+    
 }
 
 @include max767 {
     .input {
         font-size: 14px;
         line-height: 1.43;
+    }
+    .icon {
+        left: 14px;
     }
 }

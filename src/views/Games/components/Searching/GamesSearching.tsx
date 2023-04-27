@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import styles from './GamesSearching.module.scss';
-import { Title, Input, Search } from '@/uikit';
+import { Title, InputSearch, Search } from '@/uikit';
 import { GameCard } from '@/components/Game';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 // const options = [
@@ -12,13 +13,16 @@ const SKELETON_GAMES = 4;
 
 export function GamesSearching() {
     const { games, isLoading } = useGamesQuery({ filter: {} });
+    const [search, setSearch] = useState('');
+
+
 
     return (
         <div>
 
             <Title className={styles.title}>
                 Games
-
+                {search}
             </Title >
 
             {/* <Select
@@ -30,10 +34,13 @@ export function GamesSearching() {
 
             <div className={styles.text}>Explore NFT collections from your favorite games</div>
 
-            <Input
+            <InputSearch
                 icon={<Search />}
                 placeholder="Search"
                 className={styles.input}
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                timeout={500}
 
             />
 
