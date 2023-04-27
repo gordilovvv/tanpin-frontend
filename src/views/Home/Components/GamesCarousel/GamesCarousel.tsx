@@ -3,12 +3,16 @@ import { Title, Button, Arrow } from '@/uikit';
 import { GameCard } from '@/components/Game';
 import { CollectionPreview } from '@/components/Collections';
 import { Carousel, CarouselState } from '@/components/Carousel';
-import styles from './GamesCarousel.module.scss';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
-
+import styles from './GamesCarousel.module.scss';
 
 export function GamesCarousel() {
-    const { games, isLoading } = useGamesQuery({ filter: { popular: true, includePopularCollections: true } });
+    const { games, isLoading } = useGamesQuery({
+        filter: {
+            popular: true,
+            includePopularCollections: true
+        }
+    });
 
     const [carouselState, setCarouselState] = useState<CarouselState | undefined>();
 
@@ -55,7 +59,7 @@ export function GamesCarousel() {
                             {data.popularCollections?.map(collection => (
                                 <CollectionPreview
                                     key={collection.ID}
-                                    {...collection}
+                                    collection={collection}
                                 />
                             ))}
                         </div>
