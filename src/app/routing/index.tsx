@@ -1,6 +1,10 @@
 import { PageLayout } from '@/components/Layout';
 import { useUserStore } from '@/states/user/store';
-import { ErrorView, MainView, GamesView, CollectionsView } from '@/views';
+import { CollectionsView } from '@/views/Collections/CollectionsView';
+import { ErrorView } from '@/views/Error';
+import { GamesView } from '@/views/Games/GamesView';
+import { MainView } from '@/views/Home/HomeView';
+
 import { createBrowserRouter, redirect } from 'react-router-dom';
 
 const isAuthenticatedLoader = () => {

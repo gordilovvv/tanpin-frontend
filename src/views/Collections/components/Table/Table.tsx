@@ -1,6 +1,6 @@
 import styles from './Table.module.scss';
 import { CollectionTable } from '@/components/Collections';
-import { CollectionTableRow } from '@/components/Collections/Table/components/Row/CollectionTableRow';
+// import { CollectionTableRow } from '@/components/Collections/Table/Row/CollectionRow';
 import { useCollectionQuery } from '@/states/collection/hooks/useCollectionsQuery';
 import { Title, Button } from '@/uikit';
 import { ReactElement, useState, useEffect } from 'react';
@@ -18,12 +18,12 @@ function CollectionPage({ pageNum, onLoading }: { pageNum: number, onLoading: (i
         return null;
     }
 
-    return <>{collection!.collections.map((c) => <CollectionTableRow
-        imageURL={c.logoURL}
-        description={c.description}
-        title={c.name}
-        key={c.ID}
-    />)}</>;
+    // return <>{collection!.collections.map((c) => <CollectionTableRow
+    //     imageURL={c.logoURL}
+    //     description={c.description}
+    //     title={c.name}
+    //     key={c.ID}
+    // />)}</>;
 }
 
 export function Table() {
@@ -51,7 +51,7 @@ export function Table() {
             </div>
 
             <div className={styles.inner}>
-                <CollectionTable
+                {/* <CollectionTable
                     bottom={
                         <Button
                             view='secondary'
@@ -63,7 +63,7 @@ export function Table() {
                     }
                 >
                     {pages}
-                </CollectionTable>
+                </CollectionTable> */}
             </div>
 
         </div>
