@@ -1,10 +1,44 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Title, Button, Arrow } from '@/uikit';
 import { GameCard } from '@/components/Game';
 import { CollectionPreview } from '@/components/Collections';
-import { Carousel, CarouselState } from '@/components/Carousel';
+import { Carousel, CarouselState, SlideProps } from '@/components/Carousel';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
+import { Game } from '@/states/game/types';
 import styles from './GamesCarousel.module.scss';
+
+const SKELETON_SlIDES = 2;
+const SKELETON_COLLECTIONS = 4;
+
+const Slide = ({ loading, data }: { loading?: boolean } & SlideProps<Game | undefined>) => {
+    if (loading || !data) {
+        return (
+            <div className={styles.slide}>
+                <GameCard game={undefined} />
+
+                <div className={styles.collections}>
+                    {[...Array(SKELETON_COLLECTIONS).keys()].map(index => <CollectionPreview
+                        key={index}
+                        collection={undefined}
+                    />)}
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className={styles.slide}>
+            <GameCard game={data} />
+
+            <div className={styles.collections}>
+                {data.popularCollections!.map(collection => <CollectionPreview
+                    key={collection.ID}
+                    collection={collection}
+                />)}
+            </div>
+        </div>
+    );
+};
 
 export function GamesCarousel() {
     const { games, isLoading } = useGamesQuery({
@@ -14,12 +48,15 @@ export function GamesCarousel() {
         }
     });
 
-    const [carouselState, setCarouselState] = useState<CarouselState | undefined>();
+    const carouselData = useMemo(() => {
+        if (isLoading) {
+            return [...Array(SKELETON_SlIDES).keys()];
+        } else {
+            return games ?? [];
+        }
+    }, [games, isLoading]);
 
-    // TODO: isLoading and error handling 
-    if (isLoading || games === undefined) {
-        return null;
-    }
+    const [carouselState, setCarouselState] = useState<CarouselState | undefined>();
 
     return (
         <div>
@@ -44,27 +81,21 @@ export function GamesCarousel() {
             </div>
 
             <Carousel
-                data={games}
+                data={carouselData}
                 options={{
                     breakpoints: {
                         '(min-width: 1000px)': { slidesToScroll: 2 }
                     }
                 }}
                 onNavigate={(state) => setCarouselState(state)}
-                renderSlide={({ data }) => (
-                    <div className={styles.slide}>
-                        <GameCard {...data} />
-
-                        <div className={styles.collections}>
-                            {data.popularCollections?.map(collection => (
-                                <CollectionPreview
-                                    key={collection.ID}
-                                    collection={collection}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )}
+                renderSlide={
+                    (slideProps: SlideProps<Game | undefined>) => isLoading
+                        ? <Slide
+                            loading={true}
+                            {...slideProps}
+                        />
+                        : <Slide {...slideProps} />
+                }
                 className={styles.carousel}
             />
         </div>

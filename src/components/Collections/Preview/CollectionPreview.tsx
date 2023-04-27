@@ -3,14 +3,20 @@ import { CollectionLogo } from '..';
 import { Collection } from '@/states/collection/types';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import styles from './CollectionPreview.module.scss';
+import classNames from 'classnames';
 
 type CollectionPreviewProps = {
-    collection: Collection
+    collection: Collection | undefined,
 };
 
 export const CollectionPreview = ({ collection }: CollectionPreviewProps) => {
-    const { name, logoURL, stats } = collection;
+    if (!collection) {
+        return (
+            <div className={classNames(styles.wrap, styles.loader)}></div>
+        );
+    }
 
+    const { name, logoURL, stats } = collection;
     return (
         <Link
             to='/'

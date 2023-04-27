@@ -1,8 +1,6 @@
 import styles from './GamesSearching.module.scss';
 import { Title, Input, Search } from '@/uikit';
 import { GameCard } from '@/components/Game';
-
-import { useInput } from '@/hooks/useInput';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 // const options = [
 //     { value: 'option1', label: 'Option 1' },
@@ -10,16 +8,17 @@ import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 //     { value: 'option3', label: 'Option 3' },
 // ];
 
-export function GamesSearching() {
-    const nameInput = useInput('');
+const SKELETON_GAMES = 4;
 
-    const { games } = useGamesQuery({ filter: {} });
+export function GamesSearching() {
+    const { games, isLoading } = useGamesQuery({ filter: {} });
 
     return (
         <div>
 
             <Title className={styles.title}>
-                Games  {nameInput.value}
+                Games
+
             </Title >
 
             {/* <Select
@@ -35,16 +34,20 @@ export function GamesSearching() {
                 icon={<Search />}
                 placeholder="Search"
                 className={styles.input}
-                {...nameInput}
+
             />
 
             <div className={styles.inner}>
-                {games?.map(game => (
-                    <GameCard
-                        key={game.ID}
-                        {...game}
-                    />
-                ))}
+                {
+                    isLoading
+                        ?
+                        ([...Array(SKELETON_GAMES).keys()].map(i => <GameCard key={i} />))
+                        : games?.map(game => (
+                            <GameCard
+                                key={game.ID}
+                                game={game}
+                            />
+                        ))}
             </div>
 
         </div>

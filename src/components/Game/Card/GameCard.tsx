@@ -1,19 +1,56 @@
-import { Button } from '@/uikit';
+import { Button, Skeleton } from '@/uikit';
 import { CollectionLogo } from '@/components/Collections/Logo/CollectionLogo';
+import { formatTokenAmount } from '@/utils/formatTokenAmount';
+import { Game } from '@/states/game/types';
+import classNames from 'classnames';
 import styles from './GameCard.module.scss';
-import { Game, GameStats } from '@/states/game/types';
 
-type GameCardProps = Game & {
-    stats: GameStats
-};
+type GameCardProps = {
+    game?: Game
+}
 
-export function GameCard({ name, logoURL, imageURL, stats: { items, volume, collections } }: GameCardProps) {
+export function GameCard({ game }: GameCardProps) {
+    if (!game) {
+        return (
+            <div className={classNames(styles.card, styles.skeletonWrapper)}>
+                <div className={styles.skeletonInner}>
+                    <Skeleton
+                        className={styles.skeletonMain}
+                    />
+
+                    <div className={styles.skeletonRow}>
+                        <div
+                            className={styles.skeletonItem}
+                        >
+                            <Skeleton className={styles.skeletonHeader} />
+                            <Skeleton className={styles.skeletonBody} />
+                        </div>
+
+                        <div
+                            className={styles.skeletonItem}
+                        >
+                            <Skeleton className={styles.skeletonHeader} />
+                            <Skeleton className={styles.skeletonBody} />
+                        </div>
+
+                        <div
+                            className={styles.skeletonItem}
+                        >
+                            <Skeleton className={styles.skeletonHeader} />
+                            <Skeleton className={styles.skeletonBody} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={styles.card}>
             <div className={styles.background}>
                 <img
                     className={styles.backgroundImage}
-                    src={imageURL}
+                    src={game.imageURL}
                     alt=""
                 />
             </div>
@@ -24,28 +61,28 @@ export function GameCard({ name, logoURL, imageURL, stats: { items, volume, coll
                         <div className={styles.header}>
                             <CollectionLogo
                                 size='xs'
-                                image={logoURL}
+                                image={game.logoURL}
                             />
 
                             <div className={styles.headerTitle}>
-                                {name}
+                                {game.name}
                             </div>
                         </div>
 
                         <div className={styles.stats}>
                             <div className={styles.item}>
                                 <div className={styles.itemTitle}>Volume (1 day)</div>
-                                <div className={styles.itemBody}>{volume.amount} {volume.currency}</div>
+                                <div className={styles.itemBody}>{formatTokenAmount(game.stats.volume.amount)} {game.stats.volume.currency}</div>
                             </div>
 
                             <div className={styles.item}>
                                 <div className={styles.itemTitle}>Items</div>
-                                <div className={styles.itemBody}>{items}</div>
+                                <div className={styles.itemBody}>{game.stats.items}</div>
                             </div>
 
                             <div className={styles.item}>
                                 <div className={styles.itemTitle}>Collections</div>
-                                <div className={styles.itemBody}>{collections}</div>
+                                <div className={styles.itemBody}>{game.stats.collections}</div>
                             </div>
                         </div>
                     </div>
@@ -56,7 +93,6 @@ export function GameCard({ name, logoURL, imageURL, stats: { items, volume, coll
                     >
                         Open collections
                     </Button>
-
                 </div>
             </div>
         </div>
