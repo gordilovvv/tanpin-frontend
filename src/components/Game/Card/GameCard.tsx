@@ -1,13 +1,52 @@
-import { Button } from '@/uikit';
+import { Button, Skeleton } from '@/uikit';
 import { CollectionLogo } from '@/components/Collections/Logo/CollectionLogo';
 import styles from './GameCard.module.scss';
-import { Game, GameStats } from '@/states/game/types';
+import { Game } from '@/states/game/types';
+import classNames from 'classnames';
 
-type GameCardProps = Game & {
-    stats: GameStats
+type GameCardProps = {
+    game: Game | undefined,
 };
 
-export function GameCard({ name, logoURL, imageURL, stats: { items, volume, collections } }: GameCardProps) {
+export function GameCard({ game }: GameCardProps) {
+
+    if (!game) {
+        return (
+            <div className={classNames(styles.card, styles.skeletonWrapper)}>
+                <div className={styles.skeletonInner}>
+                    <Skeleton
+                        className={styles.skeletonMain}
+                    />
+
+                    <div className={styles.skeletonRow}>
+                        <div
+                            className={styles.skeletonItem}
+                        >
+                            <Skeleton className={styles.skeletonHeader} />
+                            <Skeleton className={styles.skeletonBody} />
+                        </div>
+
+                        <div
+                            className={styles.skeletonItem}
+                        >
+                            <Skeleton className={styles.skeletonHeader} />
+                            <Skeleton className={styles.skeletonBody} />
+                        </div>
+
+                        <div
+                            className={styles.skeletonItem}
+                        >
+                            <Skeleton className={styles.skeletonHeader} />
+                            <Skeleton className={styles.skeletonBody} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const { name, logoURL, imageURL, stats } = game;
+    const { items, volume, collections } = stats;
     return (
         <div className={styles.card}>
             <div className={styles.background}>

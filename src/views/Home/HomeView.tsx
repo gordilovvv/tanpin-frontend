@@ -3,6 +3,7 @@ import { GamesCarousel } from './Components/GamesCarousel/GamesCarousel';
 import { PromoComponent } from './Components/Promo/PromoComponent';
 import { PopularCollections } from './Components/PopularCollections/PopularCollections';
 
+
 export function MainView() {
     return (
         <>

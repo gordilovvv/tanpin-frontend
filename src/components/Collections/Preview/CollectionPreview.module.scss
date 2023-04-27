@@ -13,9 +13,11 @@
     box-shadow: 0 0 0 0 var(--color-base) inset;
     transition: border-color 0.15s linear, box-shadow 0.15s linear;
 
-    @include hover {
-        border-color: var(--color-base);
-        box-shadow: 0 0 0 1px var(--color-base) inset;
+    &:not(.loader) {
+        @include hover {
+            border-color: var(--color-base);
+            box-shadow: 0 0 0 1px var(--color-base) inset;
+        }
     }
 }
 
@@ -76,6 +78,12 @@
     margin-left: 24px;
 }
 
+.loader {
+    background: var(--color-surface);
+    border: 1px solid var(--color-stroke); 
+    height: 104px;
+}
+
 @include max767 {
     .wrap {
         gap: 16px;
@@ -100,5 +108,8 @@
             font-size: 14px;
             line-height: 1.4;
         }
+    }
+    .loader {
+        height: 92px;
     }
 }

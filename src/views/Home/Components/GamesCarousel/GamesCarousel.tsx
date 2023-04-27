@@ -6,20 +6,18 @@ import { Carousel, CarouselState } from '@/components/Carousel';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 import styles from './GamesCarousel.module.scss';
 
+const SKELETON_SlIDES = 4;
+const SKELETON_COLLECTIONS = 4;
+
 export function GamesCarousel() {
+
     const { games, isLoading } = useGamesQuery({
         filter: {
             popular: true,
             includePopularCollections: true
         }
     });
-
     const [carouselState, setCarouselState] = useState<CarouselState | undefined>();
-
-    // TODO: isLoading and error handling 
-    if (isLoading || games === undefined) {
-        return null;
-    }
 
     return (
         <div>
@@ -44,7 +42,7 @@ export function GamesCarousel() {
             </div>
 
             <Carousel
-                data={games}
+                data={games ?? [...Array(SKELETON_SlIDES).keys()]}
                 options={{
                     breakpoints: {
                         '(min-width: 1000px)': { slidesToScroll: 2 }
@@ -53,15 +51,25 @@ export function GamesCarousel() {
                 onNavigate={(state) => setCarouselState(state)}
                 renderSlide={({ data }) => (
                     <div className={styles.slide}>
-                        <GameCard {...data} />
+
+                        <GameCard
+                            game={isLoading ? undefined : data}
+                        />
 
                         <div className={styles.collections}>
-                            {data.popularCollections?.map(collection => (
-                                <CollectionPreview
-                                    key={collection.ID}
-                                    collection={collection}
-                                />
-                            ))}
+                            {
+                                isLoading
+                                    ?
+                                    [...Array(SKELETON_COLLECTIONS).keys()].map(i => <CollectionPreview
+                                        key={i}
+                                        collection={undefined}
+                                    />)
+                                    :
+                                    data.popularCollections!.map(collection => <CollectionPreview
+                                        key={collection.ID}
+                                        collection={collection}
+                                    />)
+                            }
                         </div>
                     </div>
                 )}

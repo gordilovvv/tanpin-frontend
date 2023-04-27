@@ -115,6 +115,43 @@
     gap: 8px;
 }
 
+.skeleton {
+    &Wrapper {
+        background: var(--color-surface);
+        //border
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 32px;
+    }
+    &Main {
+        width: 320px;
+        height: 42px;
+        margin-bottom: 16px;
+    }
+    &Item {
+        display: grid;
+        grid-template-columns: minmax(0, auto);
+        gap: 6px;
+    }
+    &Row {
+        display: flex;
+        grid-template-rows: minmax(0, auto);
+        gap: 32px;
+    }
+    &Header {
+        width: 64px;
+        height: 16px;
+    }
+    &Body {
+        width: 128px;
+        height: 32px;
+    }
+    
+}
+
+
 @include max1400 {
     .content {
         display: grid;
@@ -132,6 +169,9 @@
 @include max767 {
     .contentWrap {
         padding: 16px;
+    }
+    .card {
+        height: 280px;
     }
 
     .header {
@@ -156,5 +196,23 @@
 
     .item + .item {
         margin-left: 16px;
+    }
+    
+    .skeleton {
+        &Main {
+            width: 180px;
+            height: 32px;
+        }
+        &Header {
+            width: 48px;
+            height: 12px;
+        }
+        &Body {
+            width: 64px;
+            height: 26px;
+        }
+        &Row {
+            gap: 16px;
+        }
     }
 }
