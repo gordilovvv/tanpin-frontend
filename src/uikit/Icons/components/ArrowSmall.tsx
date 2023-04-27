@@ -16,6 +16,5 @@ export function ArrowSmall(props: SvgProps) {
                 fill="currentColor"
             />
         </svg>
-
     );
 }

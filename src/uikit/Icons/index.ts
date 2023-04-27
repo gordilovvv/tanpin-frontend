@@ -5,6 +5,7 @@ export { Search } from './components/Search';
 export { Telegram } from './components/Telegram';
 export { Twitter } from './components/Twitter';
 export { Arrow } from './components/Arrow';
+export { ArrowSmall } from './components/ArrowSmall';
 export { Close } from './components/Close';
 export { Cat } from './components/Cat';
 export { Metamask } from './components/Metamask';
