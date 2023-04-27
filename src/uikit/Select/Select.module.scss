@@ -1,11 +1,99 @@
 .select {
     background: var(--color-essential);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     padding: 12px 16px;
+    position: relative;
+    user-select: none;
+    transition: all .3s ease;
+    &Placeholder {
+        color: var(--color-typo-ghost);
+    }
+
+    @include hover { 
+        border: 2px solid var(--color-base);
+        .selectArrow {
+            color: var(--color-type-base);
+        }
+    }
+    
+    &Arrow {
+        color: var(--color-typo-ghost);
+        transition: all .3s ease;
+       
+    }
     &Header {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
+    &Options {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        transform: translateZ(0);
+        background: var(--color-essential);
+        pointer-events: none;
+        border: 1px solid var(--color-stroke);
+        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
+        border-radius: 12px;
+        z-index: 10;
+        bottom: 0;
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all .3s ease;
+        max-height: 30vh;
+        overflow-y: auto;
+    }
+    &Option {
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.5;
+        color: var(--color-type-base);
+
+        &Mark {
+            color: #3CE361;
+            margin-right: 9px;
+            display: none;
+        }
+        &.selected {
+           .selectOptionMark {
+            display: block;
+           }
+        }
+       
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        &:not(.selected) {
+            @include hover {
+                background: var(--color-surface);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                border-top: 1px solid rgba(255, 255, 255, 0.15);
+                &:first-child {
+                    border-top: 1px solid transparent;
+                }
+                &:last-child {
+                    border-bottom: 1px solid transparent;
+                }
+            }
+        }
+
+    }
+   &.isOpen {
+    .select {
+        &Options {
+            transform: translateY(calc(100% + 8px));
+            opacity: 1;
+            pointer-events: all;
+        }
+        &Arrow {
+            transform: rotate(180deg);
+        }
+    }
+   }
 }
+
