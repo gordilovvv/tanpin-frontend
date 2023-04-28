@@ -14,7 +14,7 @@ export type GamesQueryBody = {
     }
 }
 
-export type GamesQueryResponse = Game[]
+export type GamesQueryResponse = Game[];
 
 export type Game = {
     ID: string
