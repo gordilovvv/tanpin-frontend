@@ -1,97 +1,41 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import { Input } from '../Input/Input';
+import { Search } from '..';
+import { useDebounce } from './hooks';
 import styles from './InputSearch.module.scss';
-import classNames from 'classnames';
-
-
-
 
 type InputProps = {
-    type?: string;
-    value: string;
-    placeholder?: string;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    className?: string;
-    icon?: React.ReactElement; // проп для передачи иконки через слот
-    timeout?: number,
+    value: string
+    placeholder?: string
+    onChange: (value: string) => void
 }
 
+export function InputSearch({ value, onChange, placeholder }: InputProps) {
+    const [inputValue, setInputValue] = useState(value);
 
-
-
-export function InputSearch({ value, icon, type, onChange, placeholder, className, timeout = 300 }: InputProps) {
-    const [isFocused, setIsFocused] = useState<boolean>(false);
-
-    const {
-        debouncedValue,
-        handleOnChange,
-    } = useDebouncedOnChange(onChange, value, timeout);
-
-    const handleFocus = () => {
-        setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-        setIsFocused(false);
-    };
-
-
-
-    return (<div
-        className={classNames(styles.wrapper, className, {
-            [styles.focused]: isFocused,
-            [styles.hasIcon]: icon,
-        })}
-    >
-
-        {(icon) && <span className={styles.icon}>{icon}</span>}
-
-        <input
-            className={styles.input}
-            type={type}
-            value={debouncedValue}
-            onChange={handleOnChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            placeholder={placeholder}
-        />
-    </div>);
-}
-
-
-const debounce = (fn, ms = 300) => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-    return function (this: any, ...args: any[]) {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => fn.apply(this, args), ms);
-    };
-};
-
-
-const useDebouncedOnChange = (setter, value, timeout) => {
-    const [debouncedValue, setDebouncedValue] = useState(value);
+    const debounceTimeout = 300;
+    const debouncedValue = useDebounce(
+        inputValue,
+        debounceTimeout
+    );
 
     useEffect(() => {
-        setDebouncedValue(value);
-    }, [value]);
+        onChange(debouncedValue);
+    }, [debouncedValue]);
 
-    const debouncedOnChange = useMemo(
-        () =>
-            debounce((e) => {
-                setter(e);
-            }, timeout),
-        [setter]
-    );
+    return (<div
+        className={styles.wrap}
+    >
+        <Input
+            className={styles.input}
+            type='text'
+            value={inputValue}
+            onInput={(event) => setInputValue(event.currentTarget.value)}
+            placeholder={placeholder}
+        />
 
-    const handleOnChange = useCallback(
-        (e) => {
-            setDebouncedValue(e.target.value);
-            debouncedOnChange(e);
-        },
-        [debouncedOnChange]
-    );
-
-    return {
-        debouncedValue,
-        handleOnChange,
-    };
-};
+        <div className={styles.icon}>
+            {<Search />}
+        </div>
+    </div>);
+}
