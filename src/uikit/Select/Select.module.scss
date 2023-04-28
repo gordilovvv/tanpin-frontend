@@ -1,4 +1,8 @@
 .select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     background: var(--color-essential);
     border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
@@ -6,6 +10,8 @@
     position: relative;
     user-select: none;
     transition: all .3s ease;
+    cursor: pointer;
+    
     &Placeholder {
         color: var(--color-typo-ghost);
     }
@@ -13,7 +19,7 @@
     @include hover { 
         border: 2px solid var(--color-base);
         .selectArrow {
-            color: var(--color-type-base);
+            color: var(--color-typo-base);
         }
     }
     
@@ -26,6 +32,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
     }
     &Options {
         position: absolute;
@@ -53,7 +60,7 @@
         font-weight: 500;
         font-size: 16px;
         line-height: 1.5;
-        color: var(--color-type-base);
+        color: var(--color-typo-base);
 
         &Mark {
             color: #3CE361;

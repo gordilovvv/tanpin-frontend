@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { CollectionRow } from './Row/CollectionRow';
 import { Collection } from '@/states/collection/types';
 import { PAGE_SIZE } from '@/config/constants';
@@ -6,21 +6,46 @@ import styles from './CollectionTable.module.scss';
 import { useCollectionQuery } from '@/states/collection/hooks/useCollectionsQuery';
 import { Button } from '@/uikit';
 
+type CollectionTableProps = {
+    sort?: string;
+    customButtonDown?: ReactNode;
+}
+
+
+
 // TODO: add more props for proper data fetching
-export function CollectionTable() {
-    const viewProps = useCollectionTable();
+export function CollectionTable({ sort = '', customButtonDown }: CollectionTableProps) {
+    const filter = {
+        sort
+    };
+
+    const viewProps = useCollectionTable(filter);
 
     return (
-        <CollectionTableView {...viewProps} />
+        <CollectionTableView
+            {...viewProps}
+            sort={sort}
+            customButtonDown={customButtonDown}
+        />
     );
 }
 
-function useCollectionTable() {
+
+function useCollectionTable(filter) {
     const [pageNum, setPageNum] = useState(0);
     const [collectionsData, setCollectionsData] = useState<Collection[]>([]);
-    const { collection, isLoading } = useCollectionQuery({ pageNum });
+    const { collection, isLoading } = useCollectionQuery({
+        pageNum,
+        filter
+    });
 
-    // TODO: use SWR's callbacks instead of useEffect
+    // сбрасываем старницы и коллекции при изменении сортировки
+    useEffect(() => {
+        setPageNum(0);
+        setCollectionsData([]);
+    }, [filter.sort]);
+
+    // обновляем коллекции при изменении данных
     useEffect(() => {
         if (collection === undefined) {
             return;
@@ -41,6 +66,7 @@ function useCollectionTable() {
     };
 }
 
+
 const HEADER_ITEMS = ['#', 'Collections', 'Floor Price', 'Items', 'Sales (7D)', 'Volume', '1D Change'];
 
 type CollectionTableViewProps = {
@@ -48,11 +74,17 @@ type CollectionTableViewProps = {
     isFirstLoad: boolean
     isLoading: boolean
     loadNextPage: () => void
+    sort: string;
+    customButtonDown?: ReactNode
 }
 
-function CollectionTableView({ isFirstLoad, loadNextPage, isLoading, collections }: CollectionTableViewProps) {
+function CollectionTableView({ isFirstLoad, loadNextPage, isLoading, collections, customButtonDown }: CollectionTableViewProps) {
+
+
     return (
         <>
+
+
             <div className={styles.table}>
                 <div className={styles.head}>
                     {
@@ -82,14 +114,22 @@ function CollectionTableView({ isFirstLoad, loadNextPage, isLoading, collections
                 </div>
             </div>
 
-            <Button
-                view='secondary'
-                block
-                loading={isLoading}
-                onClick={loadNextPage}
-            >
-                Load More
-            </Button>
+            {
+                customButtonDown
+                    ?
+                    customButtonDown
+                    :
+                    <Button
+                        view='secondary'
+                        block
+                        loading={isLoading}
+                        onClick={loadNextPage}
+                    >
+                        Load More
+                    </Button>
+
+            }
+
         </>
     );
 }

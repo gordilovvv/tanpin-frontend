@@ -4,15 +4,8 @@ import { Title, InputSearch, Select, Search } from '@/uikit';
 import { GameCard } from '@/components/Game';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-    { value: 'option4', label: 'Option 3' },
-    { value: 'option5', label: 'Option 3' },
-    { value: 'option6', label: 'Option 3' },
-    { value: 'option7', label: 'Option 3' },
-    { value: 'option8', label: 'Option 3' },
-    { value: 'option9', label: 'Option 3' },
+    { value: 'TRENDING', label: 'Trending' },
+    { value: 'RECENTLY_ADDED', label: 'Recently Added' },
 ];
 
 const SKELETON_GAMES = 4;
@@ -21,6 +14,10 @@ export function GamesSearching() {
     const { games, isLoading } = useGamesQuery({ filter: {} });
     const [search, setSearch] = useState('');
     const [option, setOption] = useState('');
+
+    const changeOption = (value) => {
+        setOption(value);
+    };
 
 
     return (
@@ -47,7 +44,7 @@ export function GamesSearching() {
                     SelectOption={options}
                     value={option}
                     placeHolderText={'Выбрать'}
-                    onOptionChange={(val) => setOption(val)}
+                    onOptionChange={changeOption}
                 />
             </div>
 

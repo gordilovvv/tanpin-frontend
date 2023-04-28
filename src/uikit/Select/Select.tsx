@@ -14,9 +14,10 @@ type SelectProps = {
     value: string;
     placeHolderText?: string;
     onOptionChange: (value: string) => void;
+    className?: string;
 }
 
-export function Select({ SelectOption, value, onOptionChange, placeHolderText = '' }: SelectProps) {
+export function Select({ SelectOption, value, onOptionChange, placeHolderText = '', className }: SelectProps) {
     const select = useRef(null);
 
     useOnClickOutside(select, () => {
@@ -39,7 +40,7 @@ export function Select({ SelectOption, value, onOptionChange, placeHolderText = 
 
     return (
         <div
-            className={classNames(styles.select, {
+            className={classNames(styles.select, className, {
                 [styles.isOpen]: isOpen
             })}
             ref={select}

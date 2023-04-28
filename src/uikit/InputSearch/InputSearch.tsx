@@ -10,7 +10,7 @@ type InputProps = {
     value: string;
     placeholder?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    className: string;
+    className?: string;
     icon?: React.ReactElement; // проп для передачи иконки через слот
     timeout?: number,
 }
