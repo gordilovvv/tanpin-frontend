@@ -1,23 +1,20 @@
 import { useState } from 'react';
-import styles from './Table.module.scss';
-import { CollectionTable } from '@/components/Collections';
 import { Title, Select } from '@/uikit';
-
-const options = [
-    { value: 'TRENDING', label: 'Trending' },
-    { value: 'RECENTLY_ADDED', label: 'Recently Added' },
-];
+import { CollectionTable } from '@/components/Collections';
+import { CollectionsSort } from '@/states/collection/types';
+import styles from './Table.module.scss';
 
 export function Table() {
-    const [option, setOption] = useState('');
+    const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');
 
-    const selectChange = (value: string) => {
-        setOption(value);
-    };
+    const options: { value: `${CollectionsSort}`, label: string }[] = [
+        { value: 'TRENDING', label: 'Trending' },
+        { value: 'RECENTLY_ADDED', label: 'Recently Added' },
+    ];
 
     return (
-        <div>
-            <div className={styles.headerWrapper}>
+        <div className={styles.wrap}>
+            <div className={styles.head}>
                 <div className={styles.left}>
                     <Title className={styles.title}>Collections</Title>
 
@@ -26,17 +23,20 @@ export function Table() {
                     </div>
                 </div>
 
-                <Select
-                    className={styles.select}
-                    SelectOption={options}
-                    value={option}
-                    placeHolderText={'Выбрать'}
-                    onOptionChange={selectChange}
-                />
+                <div className={styles.right}>
+                    <Select
+                        options={options}
+                        selectedValue={sort}
+                        onChange={(value) => setSort(value as CollectionsSort)}
+                    />
+                </div>
             </div>
 
             <div className={styles.inner}>
-                <CollectionTable sort={option} />
+                <CollectionTable
+                    filter={{ sort }}
+                    hasMoreButton={true}
+                />
             </div>
 
         </div >

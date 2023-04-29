@@ -22,10 +22,19 @@
     display: flex;
     flex-flow: column;
     padding: 0 9px;
+    margin-bottom: 32px;
+}
+
+.footer {
+    padding: 0 9px;
 }
 
 @include max767 {
     .head {
         display: none;
+    }
+
+    .body {
+        margin-bottom: 24px;
     }
 }
