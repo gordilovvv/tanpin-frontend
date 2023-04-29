@@ -1,6 +1,5 @@
 import { Container } from '@/components/Layout';
 import { Link, NavLink } from 'react-router-dom';
-import { Button } from '@/uikit';
 import { Logo } from './Logo';
 import { Burger } from './Burger/Burger';
 import { MobileDrawer } from './Mobile/MobileDrawer';
