@@ -9,7 +9,7 @@ type NavLink = {
 export const headerLinks: NavLink[] = [
     { to: '/games', text: 'Games' },
     { to: '/collections', text: 'Collections' },
-    { to: '/nft', text: 'NFT' },
+    // { to: '/nft', text: 'NFT' },
 ];
 
 export const footerLinks: NavLink[] = [
