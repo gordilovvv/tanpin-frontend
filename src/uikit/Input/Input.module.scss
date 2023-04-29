@@ -1,53 +1,33 @@
 .input {
-    display: block;
-    width: 100%;
-
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.5;
-
-    color: var(--color-type-base);
-    padding: 12px;
-
-    background: var(--color-essential);
-    border: 1px solid var(--color-stroke); 
-    border-radius: 12px;
-
-    transition: all .3s ease;
-}
-.icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    transition: all .3s ease;
-    padding-left: 15px;
-}
-
-.focused {
-    .input {
-        border: 2px solid #fff;
-    }
-    .icon {
-        color: #fff;
-    }
-}
-.hasIcon {
-    .input {
-        padding-left: 44px;
-    }
-}
-
-.icon {
-    color: #333;
-}
-.wrapper {
+    -webkit-appearance: none;
+    appearance: none;
     position: relative;
+    width: 100%;
+    font-family: var(--font-primary);
+    color: var(--color-typo-base);
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    padding: 12px;
+    background-color: var(--color-essential);
+    border: 2px solid var(--color-stroke);
+    border-radius: 12px;
+    transition: border-color 0.15s linear;
+
+    @include hover {
+        border-color: var(--color-base);
+    }
+
+    &:enabled:focus {
+        border-color: var(--color-base);
+    }
 }
 
 @include max767 {
     .input {
         font-size: 14px;
-        line-height: 1.43;
+        line-height: 1.4;
+        line-height: 16px;
     }
 }

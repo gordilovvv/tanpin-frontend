@@ -10,7 +10,7 @@ export function Search(props: SvgProps) {
 
             {...props}
         >
-            <g opacity="0.5">
+            <g>
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"

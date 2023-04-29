@@ -5,15 +5,15 @@ import { PAGE_SIZE } from '@/config/constants';
 
 export async function collectionFetch(body: CollectionQueryBody): Promise<CollectionResponse> {
     if (MOCK_API_CALLS) {
-        await new Promise((res) => setTimeout(res, 3000));
+        await new Promise((res) => setTimeout(res, 300));
 
         return {
-            page: 1,
+            page: body.pageNum,
             countPage: 2,
             collections: [...Array(PAGE_SIZE).keys()].map(id => {
                 return {
                     ID: `${(id + (10 * (body?.pageNum ?? 0)))}`,
-                    name: 'Hello',
+                    name: `Hello ${ body.pageNum } ${ body.filter?.sort }`,
                     description: 'World',
                     logoURL: 'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                     coverURL: '',

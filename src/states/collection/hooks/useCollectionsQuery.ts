@@ -1,17 +1,41 @@
-import useSWR from 'swr';
-import { CollectionQueryBody } from '../types';
+import { useEffect, useState } from 'react';
+import useSWRImmutable from 'swr/immutable';
 import { collectionFetch } from '../fetch/fetchCollections';
+import { Collection, CollectionQueryBody } from '../types';
 
-export const useCollectionQuery = (body: CollectionQueryBody) => {
-    // TODO Igor swr key
-    const { data, error, isLoading } = useSWR(
-        `/collections/page/${body.pageNum}`,
-        () => collectionFetch(body),
+export const useCollectionsQuery = (body: CollectionQueryBody) => {
+    const [collections, setCollections] = useState<{ [page: number]: Collection[] }>([]);
+    const { data, isLoading } = useSWRImmutable(
+        ['collectionsList', body],
+        () => collectionFetch(body)
     );
 
+    // On filter update - reset collections
+    useEffect(() => {
+        setCollections({});
+    }, [body.filter]);
+
+    // On get new collections contact it with previous
+    useEffect(() => {
+        if (data?.collections && data.page) {    
+            setCollections(hashMap => ({
+                ...hashMap,
+                [data.page]: data.collections
+            }));
+        }
+    }, [data?.collections, data?.page]);
+
+    // Create list
+    const collectionsList: Collection[] = [];
+
+    for (const list of Object.values(collections)) {
+        collectionsList.push(...list);
+    }
+
     return {
-        collection: data,
-        error,
+        collections: collectionsList,
+        page: data?.page,
+        countPage: data?.countPage,
         isLoading
     };
 };

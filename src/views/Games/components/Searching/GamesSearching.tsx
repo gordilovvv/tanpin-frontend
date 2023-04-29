@@ -1,55 +1,63 @@
-import styles from './GamesSearching.module.scss';
-import { Title, Input, Search } from '@/uikit';
+import { InputSearch, Select } from '@/uikit';
+import { CatalogHead } from '@/components/Layout';
 import { GameCard } from '@/components/Game';
+import { useGamesStore } from '@/states/game/store';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
-// const options = [
-//     { value: 'option1', label: 'Option 1' },
-//     { value: 'option2', label: 'Option 2' },
-//     { value: 'option3', label: 'Option 3' },
-// ];
+import { GamesSort } from '@/states/game/types';
+import styles from './GamesSearching.module.scss';
 
 const SKELETON_GAMES = 4;
 
 export function GamesSearching() {
-    const { games, isLoading } = useGamesQuery({ filter: {} });
+    const [activeSort, typedSearchQuery, changeSort, typeSearch] = useGamesStore(state => [
+        state.activeSort,
+        state.typedSearchQuery,
+        state.changeSort,
+        state.typeSearch
+    ]);
+
+    const { games, isLoading } = useGamesQuery({
+        filter: {
+            sort: activeSort,
+            search: typedSearchQuery
+        }
+    });
+
+    const options: { value: `${GamesSort}`, label: string }[] = [
+        { value: 'TRENDING', label: 'Trending' },
+        { value: 'RECENTLY_ADDED', label: 'Recently Added' },
+    ];
 
     return (
-        <div>
+        <div className={styles.wrap}>
+            <CatalogHead
+                title='Games'
+                description='Explore NFT collections from your favorite games'
+                addonBottom={<div className={styles.filter}>
+                    <InputSearch
+                        placeholder="Search"
+                        value={typedSearchQuery}
+                        onChange={typeSearch}
+                    />
 
-            <Title className={styles.title}>
-                Games
-
-            </Title >
-
-            {/* <Select
-                options={options}
-                value={selectedOption}
-                onChange={handleSelectChange}
-            /> */}
-
-
-            <div className={styles.text}>Explore NFT collections from your favorite games</div>
-
-            <Input
-                icon={<Search />}
-                placeholder="Search"
-                className={styles.input}
-
+                    <Select
+                        options={options}
+                        selectedValue={activeSort}
+                        onChange={(sort) => changeSort(sort as GamesSort)}
+                    />
+                </div>}
             />
 
-            <div className={styles.inner}>
-                {
-                    isLoading
-                        ?
-                        ([...Array(SKELETON_GAMES).keys()].map(i => <GameCard key={i} />))
-                        : games?.map(game => (
-                            <GameCard
-                                key={game.ID}
-                                game={game}
-                            />
-                        ))}
+            <div className={styles.list}>
+                {games && !isLoading
+                    ? games.map(game => (
+                        <GameCard
+                            key={game.ID}
+                            game={game}
+                        />
+                    ))
+                    : ([...Array(SKELETON_GAMES).keys()].map(i => <GameCard key={i} />))}
             </div>
-
         </div>
     );
 }

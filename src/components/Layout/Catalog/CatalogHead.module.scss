@@ -1,0 +1,53 @@
+.head {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.main {
+    @include min768 {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    @include max767 {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, auto);
+    }
+}
+
+.left {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--color-typo-ghost);
+}
+
+@include max767 {
+    .head {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: minmax(0, auto);
+    }
+
+    .left {
+        gap: 8px;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .text {
+        font-size: 14px;
+        text-align: center;
+    }
+}

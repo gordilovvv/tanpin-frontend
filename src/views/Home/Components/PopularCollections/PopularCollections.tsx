@@ -1,6 +1,5 @@
 import { Title, Button } from '@/uikit';
 import { CollectionTable } from '@/components/Collections';
-import { useCollectionQuery } from '@/states/collection/hooks/useCollectionsQuery';
 import styles from './PopularCollections.module.scss';
 
 export function PopularCollections() {
@@ -10,7 +9,16 @@ export function PopularCollections() {
                 Trending Collections
             </Title>
 
-            <CollectionTable />
+            <CollectionTable
+                customButtonDown={<Button
+                    to='/collections'
+                    view='secondary'
+                    block
+                >
+                    View collections
+                </Button>}
+
+            />
         </div>
     );
 

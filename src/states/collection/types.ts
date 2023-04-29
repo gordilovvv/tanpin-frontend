@@ -1,3 +1,8 @@
+export enum CollectionsSort {
+    TRENDING = 'TRENDING',
+    RECENTLY_ADDED = 'RECENTLY_ADDED'
+}
+
 export type Collection = {
     ID: string
     name: string
@@ -23,20 +28,20 @@ export type Collection = {
     }[]
 };
 
-export type CollectionQueryBody = Partial<{
-    filter: Partial<{
-        gameID: string,
-        search: string,
-        sort: 'TRENDING' | 'RECENTLY_ADDED',
-        popular: boolean,
-    }>,
-    pageNum: number,
-}>
+export type CollectionQueryBody = {
+    filter?: {
+        gameID?: string
+        search?: string
+        sort?: `${ CollectionsSort }`
+        popular?: boolean
+    }
+    pageNum: number
+}
 
 export type CollectionResponse = {
-    page: number;
-    countPage: number;
-    collections: Collection[];
+    page: number
+    countPage: number
+    collections: Collection[]
 }
 
 

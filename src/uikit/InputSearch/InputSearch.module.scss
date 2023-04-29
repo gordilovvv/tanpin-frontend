@@ -1,0 +1,48 @@
+.wrap {
+    position: relative;
+    display: flex;
+
+    .input {
+        padding-left: 46px;
+    }
+
+    @include hover {
+        .icon {
+            color: var(--color-typo-base);
+        }
+    }
+}
+
+.icon {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translate(0, -50%);
+    color: var(--color-typo-ghost);
+    transition: color 0.15s linear;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.input:enabled:focus+.icon {
+    color: var(--color-typo-base);
+}
+
+@include max767 {
+    .wrap {
+        .input {
+            padding-left: 38px;
+        }
+    }
+
+    .icon {
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
