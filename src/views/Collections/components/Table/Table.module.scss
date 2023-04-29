@@ -4,37 +4,10 @@
     grid-template-columns: minmax(0, auto);
 }
 
-.head {
-    @include min768 {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
-
-    @include max767 {
-        display: grid;
-        gap: 24px;
-        grid-template-columns: minmax(0, auto);
-    }
-}
-
-.left {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: minmax(0, auto);
-}
-
-.right {
+.select {
     display: flex;
     flex-flow: column;
     width: 240px;
-}
-
-.text {
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 1.4;
-    color: var(--color-typo-ghost);
 }
 
 .inner {
@@ -48,20 +21,7 @@
         gap: 24px;
     }
 
-    .left {
-        gap: 8px;
-    }
-
-    .title {
-        text-align: center;
-    }
-
-    .text {
-        font-size: 14px;
-        text-align: center;
-    }
-
-    .right {
+    .select {
         width: 100%;
     }
 }
