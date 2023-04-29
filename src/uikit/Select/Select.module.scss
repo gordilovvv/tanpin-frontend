@@ -1,106 +1,134 @@
 .select {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     background: var(--color-essential);
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    width: 100%;
+    border: 2px solid var(--color-stroke);
+    height: 48px;
+    padding: 0 16px;
     border-radius: 12px;
-    padding: 12px 16px;
-    position: relative;
-    user-select: none;
-    transition: all .3s ease;
-    cursor: pointer;
-    
-    &Placeholder {
-        color: var(--color-typo-ghost);
+    outline: none;
+    transition: border-color 0.15s linear;
+
+    &Text {
+        color: var(--color-typo-base);
+        font-family: var(--font-primary);
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        margin-right: 12px;
     }
 
-    @include hover { 
-        border: 2px solid var(--color-base);
-        .selectArrow {
-            color: var(--color-typo-base);
+    svg {
+        color: var(--color-typo-base);
+        width: 24px;
+        height: 24px;
+        transition: transform 0.15s linear;
+    }
+
+    @include hover {
+        border-color: var(--color-base);
+    }
+
+    &.opened {
+        border-color: var(--color-base);
+
+        svg {
+            transform: scaleY(-1);
         }
     }
-    
-    &Arrow {
-        color: var(--color-typo-ghost);
-        transition: all .3s ease;
-       
-    }
-    &Header {
+}
+
+.placeholder {
+    color: var(--color-typo-ghost)
+}
+
+.dropdown {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 8px);
+    width: 100%;
+    overflow: hidden;
+    transform: translateZ(0);
+    background: var(--color-essential);
+    border: 1px solid var(--color-stroke);
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    z-index: 10;
+    transition: transform 0.2s ease-in-out, opacity 0.15s linear;
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    &Icon {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
+        color: var(--color-success);
+        margin-right: 8px;
     }
-    &Options {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        overflow: hidden;
-        transform: translateZ(0);
-        background: var(--color-essential);
-        pointer-events: none;
-        border: 1px solid var(--color-stroke);
-        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
-        border-radius: 12px;
-        z-index: 10;
-        bottom: 0;
-        transform: translateY(100%);
-        opacity: 0;
-        transition: all .3s ease;
-        max-height: 30vh;
-        overflow-y: auto;
-    }
-    &Option {
-        padding: 12px 16px;
-        display: flex;
-        align-items: center;
+
+    &Text {
+        color: var(--color-typo-base);
         font-weight: 500;
         font-size: 16px;
         line-height: 1.5;
-        color: var(--color-typo-base);
+        letter-spacing: -0.01em;
+    }
 
-        &Mark {
-            color: #3CE361;
-            margin-right: 9px;
-            display: none;
+    &+.option {
+        border-top: 1px solid var(--color-stroke);
+    }
+
+    // &.selected {
+    //     cursor: default;
+    //     pointer-events: none;
+    // }
+}
+
+@include max767 {
+    .button {
+        height: 44px;
+
+        &Text {
+            font-size: 14px;
+            line-height: 16px;
         }
-        &.selected {
-           .selectOptionMark {
-            display: block;
-           }
+
+        svg {
+            width: 20px;
+            height: 20px;
         }
-       
-        border-top: 1px solid transparent;
-        border-bottom: 1px solid transparent;
-        &:not(.selected) {
-            @include hover {
-                background: var(--color-surface);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-                border-top: 1px solid rgba(255, 255, 255, 0.15);
-                &:first-child {
-                    border-top: 1px solid transparent;
-                }
-                &:last-child {
-                    border-bottom: 1px solid transparent;
-                }
+    }
+
+    .option {
+        height: 44px;
+
+        &Icon {
+            svg {
+                width: 16px;
+                height: 16px;
             }
         }
 
-    }
-   &.isOpen {
-    .select {
-        &Options {
-            transform: translateY(calc(100% + 8px));
-            opacity: 1;
-            pointer-events: all;
-        }
-        &Arrow {
-            transform: rotate(180deg);
+        &Text {
+            font-size: 14px;
+            line-height: 1.4;
         }
     }
-   }
 }
-
