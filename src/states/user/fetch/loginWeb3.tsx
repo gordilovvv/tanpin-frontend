@@ -1,4 +1,4 @@
-import { axios } from '@/app/api';
+import { api } from '@/app/api';
 import { MOCK_API_CALLS } from '@/config';
 
 export async function loginWeb3(body: {
@@ -15,10 +15,10 @@ export async function loginWeb3(body: {
         };
     }
 
-    const { data } = await axios.post<{
+    const { data } = await api.post<{
         accessToken: string
         rulesAccept: boolean
-    }>('auth.login.web3', body);
+    }>('/auth/login.web3', body);
 
     return data;
 }

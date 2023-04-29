@@ -21,7 +21,7 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
         filter
     });
 
-    const isLoading = isQueryLoading && !collections.length;
+    const isLoading = isQueryLoading || !collections.length;
     const isLoadingMore = isQueryLoading && pageNum > 0 && !!collections?.length;
 
     const hasMorePages = useMemo(() => {

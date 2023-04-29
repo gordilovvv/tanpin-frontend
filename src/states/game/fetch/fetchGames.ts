@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '@/app/api';
 import { MOCK_API_CALLS } from '@/config';
 import type { GamesQueryBody, GamesQueryResponse } from '../types';
 
@@ -381,8 +381,8 @@ export async function fetchGames(
         });
     }
 
-    const { data } = await axios.post<GamesQueryResponse>(
-        '/game.get.list',
+    const { data } = await api.post<GamesQueryResponse>(
+        '/game/get.list',
         body
     );
 

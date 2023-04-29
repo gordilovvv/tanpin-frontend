@@ -41,12 +41,14 @@ const Slide = ({ loading, data }: { loading?: boolean } & SlideProps<Game | unde
 };
 
 export function GamesCarousel() {
-    const { games, isLoading } = useGamesQuery({
+    const { games, isLoading: isLoadingQuery } = useGamesQuery({
         filter: {
             popular: true,
             includePopularCollections: true
         }
     });
+
+    const isLoading = isLoadingQuery || !games;
 
     const carouselData = useMemo(() => {
         if (isLoading) {
