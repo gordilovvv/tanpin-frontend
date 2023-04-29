@@ -4,9 +4,11 @@ import type { GamesQueryBody, GamesQueryResponse } from '../types';
 
 export async function fetchGames(
     body: GamesQueryBody
-): Promise<GamesQueryResponse[]> {
+): Promise<GamesQueryResponse> {
     if (MOCK_API_CALLS) {
-        await new Promise((res) => setTimeout(res, 3000));
+        await new Promise((res) => setTimeout(res, 300));
+
+        // @ts-ignore
         return [
             {
                 ID: '0',
@@ -370,10 +372,16 @@ export async function fetchGames(
                     },
                 ],
             },
-        ];
+        ].filter(game => {
+            if (body.filter.search) {
+                return game.name.includes(body.filter.search);
+            }
+
+            return true;
+        });
     }
 
-    const { data } = await axios.post<GamesQueryResponse[]>(
+    const { data } = await axios.post<GamesQueryResponse>(
         '/game.get.list',
         body
     );
