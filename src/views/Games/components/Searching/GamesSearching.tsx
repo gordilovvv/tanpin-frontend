@@ -28,6 +28,31 @@ export function GamesSearching() {
         { value: 'RECENTLY_ADDED', label: 'Recently Added' },
     ];
 
+    const renderList = () => {
+        if (isLoading) {
+            return <div className={styles.list}>
+                {[...Array(SKELETON_GAMES).keys()].map(index => (
+                    <GameCard key={index} />
+                ))}
+            </div>;
+        }
+
+        if (games?.length) {
+            return <div className={styles.list}>
+                {games.map(game => (
+                    <GameCard
+                        key={game.ID}
+                        game={game}
+                    />
+                ))}
+            </div>;
+        }
+
+        return <div className={styles.empty}>
+            Collections not found
+        </div>;
+    };
+
     return (
         <div className={styles.wrap}>
             <CatalogHead
@@ -48,16 +73,7 @@ export function GamesSearching() {
                 </div>}
             />
 
-            <div className={styles.list}>
-                {games && !isLoading
-                    ? games.map(game => (
-                        <GameCard
-                            key={game.ID}
-                            game={game}
-                        />
-                    ))
-                    : ([...Array(SKELETON_GAMES).keys()].map(i => <GameCard key={i} />))}
-            </div>
+            {renderList()}
         </div>
     );
 }
