@@ -32,7 +32,7 @@
         bottom: 0;
         left: 0;
         object-fit: cover;
-        min-width: 100%;
+        width: 100%;
         object-position: center;
     }
 }
@@ -97,7 +97,7 @@
     }
 }
 
-.item + .item {
+.item+.item {
     margin-left: 32px;
 }
 
@@ -124,30 +124,35 @@
         justify-content: flex-end;
         padding: 32px;
     }
+
     &Main {
         width: 320px;
         height: 42px;
         margin-bottom: 16px;
     }
+
     &Item {
         display: grid;
         grid-template-columns: minmax(0, auto);
         gap: 6px;
     }
+
     &Row {
         display: flex;
         grid-template-rows: minmax(0, auto);
         gap: 32px;
     }
+
     &Header {
         width: 64px;
         height: 16px;
     }
+
     &Body {
         width: 128px;
         height: 32px;
     }
-    
+
 }
 
 
@@ -169,6 +174,7 @@
     .contentWrap {
         padding: 16px;
     }
+
     .card {
         height: 280px;
     }
@@ -193,23 +199,26 @@
         }
     }
 
-    .item + .item {
+    .item+.item {
         margin-left: 16px;
     }
-    
+
     .skeleton {
         &Main {
             width: 180px;
             height: 32px;
         }
+
         &Header {
             width: 48px;
             height: 12px;
         }
+
         &Body {
             width: 64px;
             height: 26px;
         }
+
         &Row {
             gap: 16px;
         }
