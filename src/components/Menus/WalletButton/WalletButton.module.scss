@@ -15,6 +15,10 @@
     &:active {
         background-color: var(--color-essential);
     }
+
+    &.active {
+        border-color: var(--color-base);
+    }
 }
 
 .icon {

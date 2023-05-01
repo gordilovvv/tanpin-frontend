@@ -5,15 +5,16 @@ import classNames from 'classnames';
 import styles from './PopoverMenu.module.scss';
 
 type PopoverProps = {
-    state: MenuStore,
-    width?: number,
-    maxHeight?: number,
-    className?: string,
-    animate?: MotionProps['animate'];
-    transition?: MotionProps['transition'];
-    variants?: MotionProps['variants'];
-    initial?: MotionProps['initial'];
-    exit?: MotionProps['exit'];
+    state: MenuStore
+    width?: number
+    maxHeight?: number
+    className?: string
+    animate?: MotionProps['animate']
+    transition?: MotionProps['transition']
+    variants?: MotionProps['variants']
+    initial?: MotionProps['initial']
+    exit?: MotionProps['exit']
+    onAnimationStart?: () => void
 }
 
 export const PopoverMenu = forwardRef<HTMLDivElement, PropsWithChildren<PopoverProps>>(

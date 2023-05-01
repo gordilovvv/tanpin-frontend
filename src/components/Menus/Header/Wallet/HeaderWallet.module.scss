@@ -1,0 +1,39 @@
+.wallet {
+    position: relative;
+
+    @include max767 {
+        display: none;
+    }
+}
+
+.popover {
+    transform-origin: top right;
+
+    &:global(.appear) {
+        animation: popoverAppear 0.1s linear forwards;
+    }
+
+    &:global(.disappear) {
+        animation: popoverDisappear 0.1s linear forwards;
+    }
+}
+
+@keyframes popoverAppear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popoverDisappear {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
