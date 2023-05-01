@@ -1,0 +1,108 @@
+.wrap {
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(0, auto);
+}
+
+.head {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    padding: 10px 16px;
+
+    &Logo {
+        display: flex;
+    }
+
+    &Content {
+        display: flex;
+        flex-flow: column;
+        padding-right: 30px;
+    }
+
+    &Chain {
+        color: var(--color-typo-ghost);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: -0.01em;
+    }
+
+    &Address {
+        color: var(--color-typo-base);
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+    }
+
+    &Close {
+        position: absolute;
+        top: 50%;
+        right: 13px;
+        width: 24px;
+        height: 24px;
+        color: var(--color-typo-ghost);
+        transform: translate(0, -50%);
+
+        svg {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+
+.balancesWrap {
+    padding: 12px;
+}
+
+.balances {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.menu {
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(0, auto);
+}
+
+.footer {
+    display: flex;
+    flex-flow: column;
+    padding: 12px;
+}
+
+@include max767 {
+    .wrap {
+        width: auto;
+        border: 1px solid var(--color-stroke);
+        border-radius: 12px;
+        margin-top: 24px;
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+
+    .head {
+        &Chain {
+            font-size: 12px;
+            line-height: 16px;
+        }
+
+        &Address {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+
+    .balancesWrap {
+        padding: 0 12px;
+    }
+}

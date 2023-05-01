@@ -1,0 +1,47 @@
+.token {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: center;
+}
+
+.img {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
+.amount {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    span {
+        font-weight: 500;
+        color: var(--color-typo-ghost);
+    }
+
+    &Loader {
+        width: 160px;
+        height: 20px;
+    }
+}
+
+@include max767 {
+    .token {
+        gap: 8px;
+    }
+
+    .img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .amount {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

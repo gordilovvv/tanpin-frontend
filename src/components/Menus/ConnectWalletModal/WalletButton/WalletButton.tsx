@@ -12,14 +12,16 @@ type WalletButtonProps = {
 
 export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
     const { icon: Icon, title, installed, deepLink } = wallet;
-    const isLink = isTouchDevice && deepLink && !installed;
+    const isLink = isTouchDevice && deepLink && installed === false;
     const [isLoading, setIsLoading] = useState(false);
 
     const handleClick = () => {
-        if (installed) {
-            setIsLoading(true);
-            onConnect().then(() => setIsLoading(false));
+        if (installed === false) {
+            return;
         }
+
+        setIsLoading(true);
+        onConnect().then(() => setIsLoading(false));
     };
 
     if (isLink) {
@@ -41,7 +43,7 @@ export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
         <UnstyleButton
             className={classNames(styles.button, {
                 [styles.loading]: isLoading,
-                [styles.disabled]: !installed
+                [styles.disabled]: installed === false
             })}
             onClick={handleClick}
         >

@@ -40,7 +40,7 @@ export type CollectionQueryBody = {
 
 export type CollectionResponse = {
     page: number
-    countPage: number
+    pageCount: number
     collections: Collection[]
 }
 

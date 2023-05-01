@@ -1,4 +1,5 @@
-import { NavLinkProps } from 'react-router-dom';
+import { Activity, Assets } from '@/uikit';
+import { NavLink, NavLinkProps } from 'react-router-dom';
 
 type NavLink = {
     text: string,
@@ -16,4 +17,9 @@ export const footerLinks: NavLink[] = [
     { to: '/about', text: 'About' },
     { to: 'https://docs.tanpin.org/whitepaper', text: 'Whitepaper', target: '_blank' },
     { to: 'https://blog.tanpin.org', text: 'Blog', target: '_blank' }
+];
+
+export const walletMenuLinks: (NavLink & { icon: (...args: any) => JSX.Element })[] = [
+    { to: '/owned/assets', text: 'My Assets', icon: Assets },
+    { to: '/owned/activity', text: 'Activity', icon: Activity }
 ];
