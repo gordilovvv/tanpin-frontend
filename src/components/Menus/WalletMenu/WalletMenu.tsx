@@ -1,10 +1,11 @@
 import { Button, Buy, Close, InjectedWallet, Logout, Swap, UnstyleButton } from '@/uikit';
-import { Address, useDisconnect } from 'wagmi';
-import { walletMenuLinks } from '../config';
 import { MenuLink } from './Link/MenuLink';
 import { TokenInfo } from './Token/TokenInfo';
+import { useAuth } from '@/states/user/hooks/useAuth';
 import { useTokenBalance } from '@/hooks/useTokenBalance';
 import { useNativeBalance } from '@/hooks/useNativeBalance';
+import { Address } from 'wagmi';
+import { walletMenuLinks } from '../config';
 import { activeChain, activeChainId } from '@/config/chain';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { CONTRACTS } from '@/config/constants/contracts';
@@ -18,7 +19,7 @@ type WalletMenuProps = {
 }
 
 export function WalletMenu({ address, onClose }: WalletMenuProps) {
-    const { disconnectAsync } = useDisconnect();
+    const { logout } = useAuth();
 
     const usdtBalance = useTokenBalance(
         CONTRACTS.usdt[activeChainId].address,
@@ -94,7 +95,7 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                 <Button
                     view='danger'
                     iconSlot={<Logout />}
-                    onClick={() => disconnectAsync()}
+                    onClick={logout}
                 >
                     Log out
                 </Button>
