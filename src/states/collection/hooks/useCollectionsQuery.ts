@@ -35,7 +35,7 @@ export const useCollectionsQuery = (body: CollectionQueryBody) => {
     return {
         collections: collectionsList,
         page: data?.page,
-        countPage: data?.countPage,
+        pageCount: data?.pageCount,
         isLoading
     };
 };
