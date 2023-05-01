@@ -6,7 +6,8 @@ import styles from './Button.module.scss';
 
 enum View {
     PRIMARY = 'primary',
-    SECONDARY = 'secondary'
+    SECONDARY = 'secondary',
+    DANGER = 'danger'
 }
 
 type ButtonProps<T extends 'a' | 'button'> = {

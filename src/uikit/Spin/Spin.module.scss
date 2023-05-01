@@ -1,9 +1,12 @@
 .spin {
+    --spin-fill: var(--color-stroke);
+    --spin-active: var(--color-base);
+
     position: relative;
     margin: auto;
     animation: 0.66s linear 0s infinite normal none running rotate;
     border-style: solid;
-    border-color: var(--color-stroke) var(--color-stroke) var(--color-stroke) var(--color-base);
+    border-color: var(--spin-fill) var(--spin-fill) var(--spin-fill) var(--spin-active);
     transform: translateZ(0px);
     user-select: none;
 
