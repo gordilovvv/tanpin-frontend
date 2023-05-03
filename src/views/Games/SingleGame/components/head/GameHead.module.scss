@@ -1,102 +1,141 @@
 .wrapper {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     position: relative;
-    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 0;
 }
+
 .cover {
     position: absolute;
-    left: 0;
     top: 0;
-    bottom: 0;
-    right: 0;
+    left: 0;
+    width: 100%;
+    height: 360px;
+
     &::after {
         content: '';
         position: absolute;
         left: 0;
-        top:0 ;
-        right: 0;bottom: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
         background: linear-gradient(180deg, rgba(12, 12, 12, 0.5) 0%, #0C0C0C 100%);
     }
+
     &Img {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 100%;
+        max-width: 100%;
+        max-height: 100%;
         object-fit: cover;
     }
 }
+
 .content {
-    padding-top: 168px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     position: relative;
-   
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 32px;
+    padding-top: 168px;
+
+    &Wrap {
+        display: grid;
+        grid-template-columns: minmax(0, auto);
+        gap: 16px;
+    }
+
     &Header {
         display: flex;
         align-items: center;
-        margin-bottom: 16px;
     }
+
     &Img {
         margin-right: 24px;
     }
+
     &Title {
         margin-right: 48px;
     }
-    &Socials {
-        display: grid;
-        grid-auto-flow: column;
-        gap: 24px;
-       
-    }
-    &Link {
-        width: 32px;
-        height: 32px;
-    }
-    &LinkImg {
-        color: var(--color-typo-ghost);
-        transition: color .3s ease;
-        width: 100%;
-        height: 100%;
-        @include hover {
-            color: var(--color-base);
-        }
-    }
+
     &Text {
         font-weight: 500;
         font-size: 16px;
         line-height: 1.5;
         color: var(--color-typo-base);
         max-width: 720px;
-        margin-bottom: 32px;
     }
+
     &Inner {
         display: flex;
         align-items: center;
     }
+
     &LinkMob {
         display: none;
     }
+}
 
+.socials {
+    &Mobile {
+        display: none;
+    }
+
+    &Desktop {
+        display: none;
+    }
+
+    @include min768 {
+        &Desktop {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
+    @include max767 {
+        &Mobile {
+            display: grid;
+            gap: 8px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    &Icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        color: var(--color-typo-ghost);
+        transition: color 0.15s linear;
+
+        @include hover {
+            color: var(--color-typo-base);
+        }
+
+        &:not(:last-child) {
+            margin-right: 24px;
+        }
+    }
 }
 
 .info {
     display: flex;
-    &>*:not(:last-child) {
-        margin-right: 32px;
+    flex-wrap: wrap;
+
+    &Item {
+        &:not(:last-child) {
+            margin-right: 24px;
+        }
     }
-    
+
     &Title {
         font-weight: 500;
         font-size: 14px;
-        line-height: 1.43;
+        line-height: 1.4;
         color: var(--color-typo-ghost);
         margin-bottom: 4px;
     }
+
     &Body {
         font-weight: 700;
         font-size: 20px;
@@ -109,47 +148,44 @@
     .wrapper {
         margin-bottom: 24px;
     }
+
     .content {
+        gap: 16px;
         padding-top: 112px;
+
         &Img {
             margin-right: 16px;
         }
+
         &Link {
             display: none;
         }
+
         &LinkMob {
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         &Header {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
-        &Socials {
-            align-self: flex-start;
-            width: 100%;
-            gap: 8px;
-        }
+
         &Inner {
             margin-bottom: 16px;
         }
-        &Text {
-            margin-bottom: 16px;
-        }
     }
+
     .info {
         &Title {
             font-size: 12px;
             margin-bottom: 2px;
         }
+
         &Body {
             font-size: 18px;
-        }
-       
-        &>*:not(:last-child) {
-            margin-right: 24px;
         }
     }
 }
