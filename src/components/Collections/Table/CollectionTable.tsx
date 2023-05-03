@@ -54,7 +54,7 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
 
     useEffect(() => {
         setPageNum(1);
-    }, [filter?.sort]);
+    }, [filter?.sort, filter?.search]);
 
     const loadMore = () => {
         setPageNum((num) => num + 1);
@@ -91,7 +91,7 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
                     {footerButton}
 
                     {hasMoreButton && hasMorePages && (
-                        <Button view='secondary' block loading={isLoadingMore} onClick={loadMore}>
+                        <Button view="secondary" block loading={isLoadingMore} onClick={loadMore}>
                             Load More
                         </Button>
                     )}

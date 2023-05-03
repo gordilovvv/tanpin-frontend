@@ -8,17 +8,20 @@ import { useGameQuery } from '@/states/game/hooks/useGameQuery';
 
 import { Container } from '@/components/Layout';
 import { InputSearch } from '@/uikit';
+import { useParams } from 'react-router-dom';
 
 export function SingleGame() {
-    const { game } = useGameQuery('3');
-    const [search, setSearch] = useState<string>('');
+    const { id } = useParams();
+    const { game } = useGameQuery(id!);
 
+    const [search, setSearch] = useState<string>('');
     const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');
 
     const options: { value: `${CollectionsSort}`; label: string }[] = [
         { value: 'TRENDING', label: 'Trending' },
         { value: 'RECENTLY_ADDED', label: 'Recently Added' },
     ];
+
     return (
         <div>
             <GameHead game={game} />
