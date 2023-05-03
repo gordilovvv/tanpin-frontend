@@ -5,37 +5,32 @@ import { useDebounce } from './hooks';
 import styles from './InputSearch.module.scss';
 
 type InputProps = {
-    value: string
-    placeholder?: string
-    onChange: (value: string) => void
-}
+    value: string;
+    placeholder?: string;
+    onChange: (value: string) => void;
+};
 
-export function InputSearch({ value, onChange, placeholder }: InputProps) {
+export function InputSearch({ value, onChange, placeholder = 'Search' }: InputProps) {
     const [inputValue, setInputValue] = useState(value);
 
     const debounceTimeout = 300;
-    const debouncedValue = useDebounce(
-        inputValue,
-        debounceTimeout
-    );
+    const debouncedValue = useDebounce(inputValue, debounceTimeout);
 
     useEffect(() => {
         onChange(debouncedValue);
     }, [debouncedValue]);
 
-    return (<div
-        className={styles.wrap}
-    >
-        <Input
-            className={styles.input}
-            type='text'
-            value={inputValue}
-            onInput={(event) => setInputValue(event.currentTarget.value)}
-            placeholder={placeholder}
-        />
+    return (
+        <div className={styles.wrap}>
+            <Input
+                className={styles.input}
+                type='text'
+                value={inputValue}
+                onInput={(event) => setInputValue(event.currentTarget.value)}
+                placeholder={placeholder}
+            />
 
-        <div className={styles.icon}>
-            {<Search />}
+            <div className={styles.icon}>{<Search />}</div>
         </div>
-    </div>);
+    );
 }

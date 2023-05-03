@@ -13,6 +13,10 @@
         width: 48px;
         height: 48px;
     }
+    &.s2 {
+        width: 72px;
+        height: 72px;
+    }
 
     &.m {
         width: 80px;
@@ -44,6 +48,10 @@
         &.m {
             width: 72px;
             height: 72px;
+        }
+        &.s2 {
+            width: 48px;
+            height: 48px;
         }
     }
 }

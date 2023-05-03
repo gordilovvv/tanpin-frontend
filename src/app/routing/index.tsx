@@ -2,6 +2,7 @@ import { PageLayout } from '@/components/Layout';
 import { CollectionsView } from '@/views/Collections/CollectionsView';
 import { ErrorView } from '@/views/Error';
 import { GamesView } from '@/views/Games/GamesView';
+import { SingleGame } from '@/views/Games/SingleGame/SingleGame';
 import { MainView } from '@/views/Home/HomeView';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -12,16 +13,20 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <MainView />
+                element: <MainView />,
             },
             {
                 path: '/games',
-                element: <GamesView />
+                element: <GamesView />,
             },
             {
                 path: '/collections',
-                element: <CollectionsView />
+                element: <CollectionsView />,
             },
-        ]
+            {
+                path: '/games/test',
+                element: <SingleGame />,
+            },
+        ],
     },
 ]);

@@ -1,0 +1,139 @@
+.wrapper {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 360px;
+    margin-bottom: 32px;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top:0 ;
+        right: 0;bottom: 0;
+        background: linear-gradient(180deg, rgba(12, 12, 12, 0.5) 0%, #0C0C0C 100%);
+    }
+}
+.content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 10;
+    &Header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    &Img {
+        margin-right: 24px;
+    }
+    &Title {
+        margin-right: 48px;
+    }
+    &Socials {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 24px;
+       
+    }
+    &Link {
+        width: 32px;
+        height: 32px;
+    }
+    &LinkImg {
+        color: var(--color-typo-ghost);
+        transition: color .3s ease;
+        width: 100%;
+        height: 100%;
+        @include hover {
+            color: var(--color-base);
+        }
+    }
+    &Text {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.5;
+        color: var(--color-typo-base);
+        max-width: 720px;
+        margin-bottom: 32px;
+    }
+    &Inner {
+        display: flex;
+        align-items: center;
+    }
+    &LinkMob {
+        display: none;
+    }
+
+}
+
+.info {
+    display: flex;
+    &>*:not(:last-child) {
+        margin-right: 32px;
+    }
+    
+    &Title {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 1.43;
+        color: var(--color-typo-ghost);
+        margin-bottom: 4px;
+    }
+    &Body {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.4;
+        color: var(--color-typo-base);
+    }
+}
+
+@include max767 {
+    .wrapper {
+        margin-bottom: 24px;
+    }
+    .content {
+        &Img {
+            margin-right: 16px;
+        }
+        &Link {
+            display: none;
+        }
+        &LinkMob {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &Header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        &Socials {
+            align-self: flex-start;
+            width: 100%;
+            gap: 8px;
+        }
+        &Inner {
+            margin-bottom: 16px;
+        }
+        &Text {
+            margin-bottom: 16px;
+        }
+    }
+    .info {
+        &Title {
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+        &Body {
+            font-size: 18px;
+        }
+       
+        &>*:not(:last-child) {
+            margin-right: 24px;
+        }
+    }
+}

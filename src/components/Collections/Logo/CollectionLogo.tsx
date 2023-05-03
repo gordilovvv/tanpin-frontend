@@ -3,24 +3,24 @@ import styles from './CollectionLogo.module.scss';
 import classNames from 'classnames';
 
 type CollectionLogoProps = {
-    image: string,
+    image: string;
     // (Desktop)
     // XS - 42px
     // S - 48px
+    // S2 - 72px
     // M - 80px
-    size: 'xs' | 's' | 'm'
-}
+    size: 'xs' | 's' | 's2' | 'm';
+};
 
-export function CollectionLogo({ image, size, className, ...props }: CollectionLogoProps & HTMLAttributes<HTMLDivElement>) {
+export function CollectionLogo({
+    image,
+    size,
+    className,
+    ...props
+}: CollectionLogoProps & HTMLAttributes<HTMLDivElement>) {
     return (
-        <div
-            className={classNames(styles.logo, styles[size], className)}
-            {...props}
-        >
-            <img
-                src={image}
-                className={styles.image}
-            />
+        <div className={classNames(styles.logo, styles[size], className)} {...props}>
+            <img src={image} className={styles.image} />
         </div>
     );
 }
