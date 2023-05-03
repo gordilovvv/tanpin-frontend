@@ -16,7 +16,7 @@ const HEADER_ITEMS = ['#', 'Collections', 'Floor Price', 'Items', 'Sales (7D)', 
 
 export function CollectionTable({ filter, footerButton, hasMoreButton }: CollectionTableProps) {
     const [pageNum, setPageNum] = useState(1);
-    const { collections, page: loadedPage, countPage, isLoading: isQueryLoading } = useCollectionsQuery({
+    const { collections, page: loadedPage, pageCount, isLoading: isQueryLoading } = useCollectionsQuery({
         pageNum,
         filter
     });
@@ -25,16 +25,16 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
     const isLoadingMore = isQueryLoading && pageNum > 0 && !!collections?.length;
 
     const hasMorePages = useMemo(() => {
-        if (pageNum === 0 || !countPage) {
+        if (pageNum === 1 || !pageCount) {
             return true;
         }
 
-        if (loadedPage && countPage) {
-            return loadedPage < countPage;
+        if (loadedPage && pageCount) {
+            return loadedPage < pageCount;
         }
 
-        return pageNum + 1 <= countPage;
-    }, [pageNum, loadedPage, countPage]);
+        return pageNum + 1 <= pageCount;
+    }, [pageNum, loadedPage, pageCount]);
 
     const hasFooter = footerButton || hasMoreButton || hasMorePages;
     const collectionsLoaders = isLoading ? [...Array(PAGE_SIZE).keys()] : [];
