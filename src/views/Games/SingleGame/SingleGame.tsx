@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import styles from './SingleGame.module.scss';
+import { Select, InputSearch } from '@/uikit';
+import { Container } from '@/components/Layout';
+import { CollectionTable } from '@/components/Collections';
 import { GameHead } from './components/head/GameHead';
 import { CollectionsSort } from '@/states/collection/types';
-import { CollectionTable } from '@/components/Collections';
-import { Select } from '@/uikit';
-import { useGameQuery } from '@/states/game/hooks/useGameQuery';
-
-import { Container } from '@/components/Layout';
-import { InputSearch } from '@/uikit';
 import { useParams } from 'react-router-dom';
+import { useGameQuery } from '@/states/game/hooks/useGameQuery';
+import styles from './SingleGame.module.scss';
 
 export function SingleGame() {
     const { id } = useParams();
-    const { game } = useGameQuery(id!);
+    const { game } = useGameQuery(id as string);
 
     const [search, setSearch] = useState<string>('');
     const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');
@@ -28,7 +26,10 @@ export function SingleGame() {
 
             <Container space>
                 <div className={styles.header}>
-                    <InputSearch value={search} onChange={(val) => setSearch(val)} />
+                    <InputSearch
+                        value={search}
+                        onChange={(val) => setSearch(val)}
+                    />
 
                     <Select
                         options={options}
@@ -37,7 +38,10 @@ export function SingleGame() {
                     />
                 </div>
 
-                <CollectionTable filter={{ search, sort }} hasMoreButton={true} />
+                <CollectionTable
+                    filter={{ search, sort }}
+                    hasMoreButton
+                />
             </Container>
         </div>
     );

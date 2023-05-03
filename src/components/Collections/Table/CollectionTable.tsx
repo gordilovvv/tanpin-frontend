@@ -24,12 +24,7 @@ const HEADER_ITEMS = [
 
 export function CollectionTable({ filter, footerButton, hasMoreButton }: CollectionTableProps) {
     const [pageNum, setPageNum] = useState(1);
-    const {
-        collections,
-        page: loadedPage,
-        countPage,
-        isLoading: isQueryLoading,
-    } = useCollectionsQuery({
+    const { collections, page: loadedPage, countPage, isLoading: isQueryLoading } = useCollectionsQuery({
         pageNum,
         filter,
     });
@@ -65,7 +60,10 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
             <div className={styles.head}>
                 {HEADER_ITEMS.map((item, idx) => {
                     return (
-                        <div className={styles.headItem} key={idx}>
+                        <div
+                            className={styles.headItem}
+                            key={idx}
+                        >
                             {item}
                         </div>
                     );
@@ -75,13 +73,20 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
             {isLoading ? (
                 <div className={styles.body}>
                     {collectionsLoaders.map((index) => (
-                        <CollectionRow key={index} index={index} />
+                        <CollectionRow
+                            key={index}
+                            index={index}
+                        />
                     ))}
                 </div>
             ) : (
                 <div className={styles.body}>
                     {collections.map((item, index) => (
-                        <CollectionRow key={item.ID} index={index} collection={item} />
+                        <CollectionRow
+                            key={item.ID}
+                            index={index}
+                            collection={item}
+                        />
                     ))}
                 </div>
             )}
@@ -91,7 +96,12 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
                     {footerButton}
 
                     {hasMoreButton && hasMorePages && (
-                        <Button view="secondary" block loading={isLoadingMore} onClick={loadMore}>
+                        <Button
+                            view="secondary"
+                            block
+                            loading={isLoadingMore}
+                            onClick={loadMore}
+                        >
                             Load More
                         </Button>
                     )}
