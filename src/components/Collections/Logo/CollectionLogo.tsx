@@ -7,9 +7,9 @@ type CollectionLogoProps = {
     // (Desktop)
     // XS - 42px
     // S - 48px
-    // S2 - 72px
-    // M - 80px
-    size: 'xs' | 's' | 's2' | 'm';
+    // M - 72px
+    // L - 80px
+    size: 'xs' | 's' | 'm' | 'l';
 };
 
 export function CollectionLogo({
@@ -19,8 +19,14 @@ export function CollectionLogo({
     ...props
 }: CollectionLogoProps & HTMLAttributes<HTMLDivElement>) {
     return (
-        <div className={classNames(styles.logo, styles[size], className)} {...props}>
-            <img src={image} className={styles.image} />
+        <div
+            className={classNames(styles.logo, styles[size], className)}
+            {...props}
+        >
+            <img
+                src={image}
+                className={styles.image}
+            />
         </div>
     );
 }

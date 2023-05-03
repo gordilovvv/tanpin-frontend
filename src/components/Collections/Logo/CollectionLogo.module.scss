@@ -1,26 +1,30 @@
 .logo {
     position: relative;
-    border-radius: 8px;
     overflow: hidden;
     transform: translateZ(0);
 
     &.xs {
         width: 42px;
         height: 42px;
+        border-radius: 8px;
     }
 
     &.s {
         width: 48px;
         height: 48px;
-    }
-    &.s2 {
-        width: 72px;
-        height: 72px;
+        border-radius: 8px;
     }
 
     &.m {
+        width: 72px;
+        height: 72px;
+        border-radius: 12px;
+    }
+
+    &.l {
         width: 80px;
         height: 80px;
+        border-radius: 12px;
     }
 }
 
@@ -46,12 +50,14 @@
         }
 
         &.m {
-            width: 72px;
-            height: 72px;
-        }
-        &.s2 {
             width: 48px;
             height: 48px;
+            border-radius: 8px;
+        }
+
+        &.l {
+            width: 72px;
+            height: 72px;
         }
     }
 }
