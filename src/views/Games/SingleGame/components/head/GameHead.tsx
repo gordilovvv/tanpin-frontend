@@ -13,16 +13,24 @@ export function GameHead({ game }: GameHeadProps) {
 
     const { name, logoURL, imageURL } = game;
     return (
-        <div
-            className={styles.wrapper}
-            style={{
-                backgroundImage: `url(${imageURL})`,
-            }}
-        >
+        <div className={styles.wrapper}>
+            <div className={styles.cover}>
+                <img
+                    className={styles.coverImg}
+                    src={imageURL}
+                    alt={name}
+                />
+            </div>
+
             <Container className={styles.content}>
                 <div className={styles.contentHeader}>
                     <div className={styles.contentInner}>
-                        <CollectionLogo size="s2" image={logoURL} className={styles.contentImg} />
+                        <CollectionLogo
+                            size="s2"
+                            image={logoURL}
+                            className={styles.contentImg}
+                        />
+
                         <Title className={styles.contentTitle}>{name}</Title>
                     </div>
 
