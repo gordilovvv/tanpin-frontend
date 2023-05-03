@@ -1,4 +1,4 @@
-import { axios } from '@/app/api';
+import { api } from '@/app/api';
 import { Collection, CollectionQueryBody, CollectionResponse } from '../types';
 import { MOCK_API_CALLS } from '@/config';
 import { PAGE_SIZE } from '@/config/constants';
@@ -36,7 +36,7 @@ export async function collectionFetch(body: CollectionQueryBody): Promise<Collec
         };
     }
 
-    const { data } = await axios.post<CollectionResponse>('/collections.get.list', body);
+    const { data } = await api.post<CollectionResponse>('/collections/get.list', body);
 
     return data;
 }

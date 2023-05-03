@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, LazyMotion, domMax, motion } from 'framer-motion';
 import { Button } from '@/uikit';
 import { headerLinks } from '../../config';
@@ -41,6 +41,7 @@ type MobileDrawerProps = {
 
 export function MobileDrawer({ isOpen, close }: MobileDrawerProps) {
     const animationRef = useRef<HTMLDivElement>(null);
+    const location = useLocation();
 
     useEffect(() => {
         if (!isOpen) {
@@ -57,6 +58,12 @@ export function MobileDrawer({ isOpen, close }: MobileDrawerProps) {
 
         return () => window.removeEventListener('resize', resizeHandler);
     }, [isOpen]);
+
+    useEffect(() => {
+        if (isOpen) {
+            close();
+        }
+    }, [location]);
 
     return createPortal(
         <LazyMotion features={domMax}>
