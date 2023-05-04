@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Select, InputSearch } from '@/uikit';
 import { Container } from '@/components/Layout';
 import { CollectionTable } from '@/components/Collections';
-import { GameHead } from './components/head/GameHead';
+import { GameHead } from './components/Head/GameHead';
 import { CollectionsSort } from '@/states/collection/types';
 import { useParams } from 'react-router-dom';
 import { useGameQuery } from '@/states/game/hooks/useGameQuery';
