@@ -1,11 +1,8 @@
-import { SvgProps, UnstyleButton } from '@/uikit';
+import { PopoverButton, PopoverState, SvgProps, UnstyleButton } from '@/uikit';
 import { useAccount } from 'wagmi';
 import { ellipseAddress } from '@/utils/addressHelper';
 import styles from './WalletButton.module.scss';
-
-type WalletButtonProps = {
-    onClick: () => void
-}
+import classNames from 'classnames';
 
 const WalletIcon = (props: SvgProps) => {
     return (
@@ -35,14 +32,17 @@ const WalletIcon = (props: SvgProps) => {
     );
 };
 
-export function WalletButton({ onClick }: WalletButtonProps) {
-    const { address } = useAccount();
+type WalletButtonProps = {
+    popoverState?: PopoverState,
+    onClick?: () => void
+}
 
-    return (
-        <UnstyleButton
-            className={styles.button}
-            onClick={onClick}
-        >
+export function WalletButton({ popoverState, onClick }: WalletButtonProps) {
+    const { address } = useAccount();
+    const isPopoverOpened = popoverState?.useState('open');
+
+    const content = (
+        <>
             <div className={styles.icon}>
                 <WalletIcon />
             </div>
@@ -50,6 +50,28 @@ export function WalletButton({ onClick }: WalletButtonProps) {
             <div className={styles.address}>
                 {ellipseAddress(address!)}
             </div>
-        </UnstyleButton>
+        </>
     );
+
+    if (popoverState) {
+        return (
+            <PopoverButton
+                state={popoverState}
+                className={classNames(styles.button, {
+                    [styles.active]: isPopoverOpened
+                })}
+            >
+                {content}
+            </PopoverButton>
+        );
+    } else {
+        return (
+            <UnstyleButton
+                className={styles.button}
+                onClick={onClick}
+            >
+                {content}
+            </UnstyleButton>
+        );
+    }
 }

@@ -3,16 +3,15 @@ import { Link, NavLink } from 'react-router-dom';
 import { Logo } from './Logo';
 import { Burger } from './Burger/Burger';
 import { MobileDrawer } from './Mobile/MobileDrawer';
+import { HeaderWallet } from './Wallet/HeaderWallet';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { headerLinks } from '../config';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
-import { ConnectWalletButton } from '../ConnectWalletButton/ConnectWalletButton';
-import { useAccount } from 'wagmi';
-import { WalletButton } from '../WalletButton/WalletButton';
 
 export function Header() {
-    const { isConnected } = useAccount();
+    const { isConnected, address } = useAccount();
     const mobileDrawerState = useOpenedState();
 
     return (
@@ -41,12 +40,10 @@ export function Header() {
                     </div>
 
                     <div className={styles.stack}>
-                        <div className={styles.wallet}>
-                            {/* TODO: wallet menu */}
-                            {isConnected
-                                ? <WalletButton onClick={() => { }} />
-                                : <ConnectWalletButton />}
-                        </div>
+                        <HeaderWallet
+                            address={address}
+                            isConnected={isConnected}
+                        />
 
                         <div className={styles.mobileStack}>
                             <Burger
@@ -60,6 +57,8 @@ export function Header() {
 
                 <MobileDrawer
                     isOpen={mobileDrawerState.isOpen}
+                    address={address}
+                    isConnected={isConnected}
                     close={mobileDrawerState.close}
                 />
             </Container>

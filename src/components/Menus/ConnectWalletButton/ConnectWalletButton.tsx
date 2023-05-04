@@ -14,7 +14,7 @@ export function ConnectWalletButton() {
     const [connectError, setConnectError] = useState<string | undefined>();
 
     const wallets = useMemo(() => createWallets(), []);
-    const logged = useUserStore(state => state.accessToken);
+    const logged = useUserStore(state => !!state.accessToken);
     const connectPopupState = useOpenedState();
 
     if (connectPopupState.isOpen && logged && isConnected) {

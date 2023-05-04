@@ -10,3 +10,4 @@ export * from './Badge';
 export * from './Skeleton';
 export * from './Modal';
 export * from './Spin';
+export * from './Popover';

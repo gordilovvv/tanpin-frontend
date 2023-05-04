@@ -90,7 +90,7 @@
     color: var(--color-typo-base);
     background-color: var(--color-surface);
     border: 2px solid var(--color-stroke);
-    transition: border-color 0.15s linear, box-shadow 0.15s linear;
+    transition: border-color 0.15s linear;
 
     @include hover {
         border-color: var(--color-base);
@@ -98,6 +98,28 @@
 
     &:active {
         background-color: var(--color-essential);
+    }
+}
+
+.button.danger {
+    color: var(--color-danger);
+    background-color: var(--color-danger-10);
+    border: 2px solid var(--color-danger-10);
+    transition: border-color 0.15s linear;
+
+    @include hover {
+        border-color: var(--color-danger);
+    }
+
+    &:active {
+        background-color: var(--color-danger-20);
+    }
+
+    .buttonSpin {
+        &>div {
+            --spin-fill: var(--color-danger-20);
+            --spin-active: var(--color-danger);
+        }
     }
 }
 
