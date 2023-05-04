@@ -1,12 +1,16 @@
-import { api } from "@/app/api";
 import useSWR from 'swr'
 import { useUserStore } from '../store'
-
-const ping = () => api.get("/auth.ping");
+import { pingPong } from '../fetch/pingPong';
+import { useEffect } from 'react';
 
 export function usePingPong() {
     const resetUser = useUserStore(store => store.resetUser);
-    useSWR('ping', ping, {
-        onError: resetUser
-    });
+    const { data: pong } = useSWR('pingPong', pingPong);
+
+    useEffect(() => {
+        if (pong?.status === 401) {
+            resetUser();
+        }
+    }, [pong])
 }
+
