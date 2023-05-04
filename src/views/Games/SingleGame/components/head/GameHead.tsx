@@ -14,7 +14,7 @@ export function GameHead({ game }: GameHeadProps) {
     if (!game) return <div>loading</div>;
 
     const { name, logoURL, coverURL, stats } = game;
-    console.log(game);
+
 
     return (
         <div className={styles.wrapper}>
