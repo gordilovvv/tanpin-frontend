@@ -4,12 +4,19 @@
     gap: 16px;
     // margin-bottom: 32px;
 }
+.wrapper {
+    display: grid;
+    grid-template-columns: minmax(0,auto);
+    gap: 32px;
+}
 
 @include max767 {
     .header {
         grid-template-columns: minmax(0, auto);
         gap: 12px;
-        margin-bottom: 24px;
+    }
+    .wrapper {
+        gap: 24px;
     }
 
 }

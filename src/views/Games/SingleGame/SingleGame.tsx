@@ -21,10 +21,13 @@ export function SingleGame() {
     ];
 
     return (
-        <div>
+        <>
             <GameHead game={game} />
 
-            <Container space>
+            <Container
+                space
+                className={styles.wrapper}
+            >
                 <div className={styles.header}>
                     <InputSearch
                         value={search}
@@ -43,6 +46,6 @@ export function SingleGame() {
                     hasMoreButton
                 />
             </Container>
-        </div>
+        </>
     );
 }
