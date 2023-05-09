@@ -1,0 +1,12 @@
+.cardWrapper {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr)); 
+    gap: 20px;
+}
+
+@include max767 {
+    .cardWrapper  {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); 
+        gap: 8px;
+    }
+}

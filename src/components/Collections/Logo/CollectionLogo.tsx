@@ -5,10 +5,12 @@ import classNames from 'classnames';
 type CollectionLogoProps = {
     image: string,
     // (Desktop)
+
+    // XXS - 32px
     // XS - 42px
     // S - 48px
     // M - 80px
-    size: 'xs' | 's' | 'm'
+    size: 'xxs' | 'xs' | 's' | 'm'
 }
 
 export function CollectionLogo({ image, size, className, ...props }: CollectionLogoProps & HTMLAttributes<HTMLDivElement>) {
