@@ -21,13 +21,10 @@ export function SingleGame() {
     ];
 
     return (
-        <>
+        <div className={styles.wrapper}>
             <GameHead game={game} />
 
-            <Container
-                space
-                className={styles.wrapper}
-            >
+            <Container>
                 <div className={styles.header}>
                     <InputSearch
                         value={search}
@@ -40,12 +37,14 @@ export function SingleGame() {
                         onChange={(value) => setSort(value as CollectionsSort)}
                     />
                 </div>
+            </Container>
 
+            <Container>
                 <CollectionTable
                     filter={{ search, sort }}
                     hasMoreButton
                 />
             </Container>
-        </>
+        </div>
     );
 }

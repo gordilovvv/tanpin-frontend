@@ -1,9 +1,5 @@
 .wrapper {
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, auto);
-    gap: 200px;
-    margin-bottom: 32px;
 }
 
 .cover {
@@ -32,48 +28,32 @@
     }
 }
 
-.content {
+.container {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, auto);
     gap: 32px;
     padding-top: 168px;
-   
-    &Wrap {
-        display: grid;
-        grid-template-columns: minmax(0, auto);
-        gap: 16px;
-    }
+}
 
-    &Header {
-       display: grid;
-       grid-template-columns: auto 1fr;
-       align-items: center;
-       gap: 48px;
-    }
+.top {
+    display: flex;
+    align-items: center;
+}
 
-   
+.info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 24px;
+}
 
-   
-
-    &Text {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 1.5;
-        color: var(--color-typo-base);
-        max-width: 720px;
-    }
-
-    &Inner {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        align-items: center;
-        gap: 24px;
-    }
-
-    &LinkMob {
-        display: none;
-    }
+.description {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-typo-base);
+    max-width: 720px;
 }
 
 .socials {
@@ -89,6 +69,7 @@
         &Desktop {
             display: flex;
             flex-wrap: wrap;
+            margin-left: 48px;
         }
     }
 
@@ -119,17 +100,18 @@
     }
 }
 
-.info {
+.stats {
     display: flex;
     flex-wrap: wrap;
+    margin-left: -24px;
+    margin-top: -24px;
 
     &Item {
-        &:not(:last-child) {
-            margin-right: 24px;
-        }
+        margin-left: 24px;
+        margin-top: 24px;
     }
 
-    &Title {
+    &Label {
         font-weight: 500;
         font-size: 14px;
         line-height: 1.4;
@@ -137,7 +119,7 @@
        
     }
 
-    &Body {
+    &Value {
         font-weight: 700;
         font-size: 20px;
         line-height: 1.4;
@@ -146,44 +128,34 @@
 }
 
 @include max767 {
-    .wrapper {
-        margin-bottom: 24px;
-    }
-
-    .content {
+    .container {
         gap: 16px;
         padding-top: 112px;
-       
+    }
 
-        &Link {
-            display: none;
-        }
-
-        &LinkMob {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        &Header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
-        }
-
-        &Inner {
-            gap: 16px;
-        }
+    .top {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
     }
 
     .info {
-        &Title {
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .stats {
+        &Label {
             font-size: 12px;
             margin-bottom: 2px;
         }
 
-        &Body {
+        &Value {
             font-size: 18px;
         }
     }
