@@ -30,7 +30,10 @@ export function Table() {
             />
 
             <div className={styles.inner}>
-                <CollectionTable filter={{ sort }} hasMoreButton={true} />
+                <CollectionTable
+                    filter={{ sort }}
+                    hasMoreButton
+                />
             </div>
         </div>
     );

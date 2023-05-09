@@ -13,7 +13,7 @@ export const useCollectionsQuery = (body: CollectionQueryBody) => {
     // On filter update - reset collections
     useEffect(() => {
         setCollections({});
-    }, [body.filter]);
+    }, [body.filter?.search, body.filter?.sort]);
 
     // On get new collections contact it with previous
     useEffect(() => {

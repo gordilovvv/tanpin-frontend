@@ -6,14 +6,16 @@ import { GameHead } from './components/Head/GameHead';
 import { CollectionsSort } from '@/states/collection/types';
 import { useParams } from 'react-router-dom';
 import { useGameQuery } from '@/states/game/hooks/useGameQuery';
-import styles from './SingleGame.module.scss';
+import styles from './SingleGameView.module.scss';
 
-export function SingleGame() {
+export function SingleGameView() {
     const { id } = useParams();
     const { game } = useGameQuery(id as string);
 
     const [search, setSearch] = useState<string>('');
     const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');
+
+    const filter = { search, sort };
 
     const options: { value: `${CollectionsSort}`; label: string }[] = [
         { value: 'TRENDING', label: 'Trending' },
@@ -41,7 +43,7 @@ export function SingleGame() {
 
             <Container>
                 <CollectionTable
-                    filter={{ search, sort }}
+                    filter={filter}
                     hasMoreButton
                 />
             </Container>

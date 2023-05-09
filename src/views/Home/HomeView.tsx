@@ -4,7 +4,7 @@ import { PromoComponent } from './Components/Promo/PromoComponent';
 import { PopularCollections } from './Components/PopularCollections/PopularCollections';
 
 
-export function MainView() {
+export function HomeView() {
     return (
         <>
             <div style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>
