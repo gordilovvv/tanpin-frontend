@@ -1,0 +1,21 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 16px;
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: minmax(0,auto);
+    gap: 32px;
+}
+
+@include max767 {
+    .header {
+        grid-template-columns: minmax(0, auto);
+        gap: 12px;
+    }
+
+    .wrapper {
+        gap: 24px;
+    }
+}

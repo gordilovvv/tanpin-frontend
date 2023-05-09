@@ -1,0 +1,162 @@
+.wrapper {
+    position: relative;
+}
+
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 360px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(12, 12, 12, 0.5) 0%, #0C0C0C 100%);
+    }
+
+    &Img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+    }
+}
+
+.container {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 32px;
+    padding-top: 168px;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 24px;
+}
+
+.description {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-typo-base);
+    max-width: 720px;
+}
+
+.socials {
+    &Mobile {
+        display: none;
+    }
+
+    &Desktop {
+        display: none;
+    }
+
+    @include min768 {
+        &Desktop {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 48px;
+        }
+    }
+
+    @include max767 {
+        &Mobile {
+            display: grid;
+            gap: 8px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    &Icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        color: var(--color-typo-ghost);
+        transition: color 0.15s linear;
+
+        @include hover {
+            color: var(--color-typo-base);
+        }
+
+        &:not(:last-child) {
+            margin-right: 24px;
+        }
+    }
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -24px;
+    margin-top: -24px;
+
+    &Item {
+        margin-left: 24px;
+        margin-top: 24px;
+    }
+
+    &Label {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 1.4;
+        color: var(--color-typo-ghost);
+       
+    }
+
+    &Value {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.4;
+        color: var(--color-typo-base);
+    }
+}
+
+@include max767 {
+    .container {
+        gap: 16px;
+        padding-top: 112px;
+    }
+
+    .top {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .info {
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .stats {
+        &Label {
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        &Value {
+            font-size: 18px;
+        }
+    }
+}
