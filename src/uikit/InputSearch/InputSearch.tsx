@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Input } from '../Input/Input';
 import { Search } from '..';
-import { useDebounce } from './hooks';
+import { useDebounce } from '@/hooks/useDebounce';
 import styles from './InputSearch.module.scss';
 
 type InputProps = {
