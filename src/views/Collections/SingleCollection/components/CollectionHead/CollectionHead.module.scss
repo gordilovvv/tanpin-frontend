@@ -4,7 +4,7 @@
     grid-template-columns: minmax(0, auto);
 }
 
-.head {
+.imgWrapp {
     position: relative;
 
     &::before {
@@ -19,7 +19,7 @@
     }
 }
 
-.cover {
+.img {
     position: absolute;
     left: 0;
     top: 0;
@@ -37,11 +37,13 @@
     grid-template-columns: minmax(0, auto);
     gap: 12px;
 
-    &Gap {
-        display: grid;
-        grid-template-columns: minmax(0, auto);
-        gap: 12px;
-    }
+    
+}
+
+.innerGap {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
 }
 
 .Header {
@@ -49,32 +51,40 @@
     grid-template-columns: minmax(0, auto) minmax(0, 1fr);
     align-items: center;
     gap: 12px;
-
-    &Title {
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 1.44;
-        color: var(--color-typo-base);
-    }
-
+    
+}
+.link {
+    width: fit-content;
+    display: inline;
     text-decoration: none;
     cursor: pointer;
     color: inherit;
     -webkit-tap-highlight-color: transparent;
+   
+}
+.title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.44;
+    color: var(--color-typo-base);
+   
 }
 
-.mainInfo {
+
+.info {
     display: grid;
     align-items: center;
     grid-template-columns: auto 1fr;
     gap: 24px;
 
-    &Title {
-        font-weight: 800;
-        font-size: 48px;
-        line-height: 1.12;
-        color: var(--color-typo-base);
-    }
+  
+}
+
+.infoTitle {
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 1.12;
+    color: var(--color-typo-base);
 }
 
 .text {
@@ -100,19 +110,22 @@
     display: grid;
     gap: 4px;
 
-    &Title {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 1.43;
-        color: var(--color-typo-ghost);
-    }
+    
 
-    &Body {
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 1.44;
-        color: var(--color-typo-base);
-    }
+    
+}
+.itemTitle {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.43;
+    color: var(--color-typo-ghost);
+}
+
+.itemBody {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.44;
+    color: var(--color-typo-base);
 }
 
 @include max767 {
@@ -124,35 +137,31 @@
     .item {
         gap: 2px;
 
-        &Title {
-            font-size: 12px;
-        }
+        
 
-        &Body {
-            font-size: 18px;
-        }
+        
+    }
+    .itemTitle {
+        font-size: 12px;
+    }
+    .itemBody {
+        font-size: 18px;
     }
 
-    .Header {
-        &Title {
-            font-size: 16px;
-        }
+    .title {
+        font-size: 16px;
     }
 
-    .mainInfo {
-        &Title {
-            font-size: 24px;
-        }
+    .mainInfTitle {
+        font-size: 24px;
     }
 
     .inner {
         padding-top: 112px;
-
-        &Gap {
-            gap: 8px;
-        }
-
         gap: 16px;
+    }
+    .innerGap {
+        gap: 8px;
     }
 
     .wrapper {

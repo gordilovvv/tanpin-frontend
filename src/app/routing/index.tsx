@@ -3,7 +3,7 @@ import { CollectionsView } from '@/views/Collections/CollectionsView';
 import { ErrorView } from '@/views/Error';
 import { GamesView } from '@/views/Games/GamesView';
 import { MainView } from '@/views/Home/HomeView';
-import { SingleCollection } from '@/views/Collections/SingleCollection/SingleCollection';
+import { SingleCollectionView } from '@/views/Collections/SingleCollection/SingleCollectionView';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/collection',
-                element: <SingleCollection />
+                element: <SingleCollectionView />
             },
         ]
     },

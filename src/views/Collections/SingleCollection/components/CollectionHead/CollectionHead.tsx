@@ -7,36 +7,46 @@ import { Link } from 'react-router-dom';
 export function CollectionHead() {
     return (
         <div className={styles.wrapper}>
-            <div className={styles.head}>
+            <div className={styles.imgWrapp}>
                 <img
                     src="https://venagid.ru/wp-content/uploads/2016/12/edin-chavez.jpg"
-                    className={styles.cover}
+                    className={styles.img}
                 />
 
                 <Container className={styles.inner}>
                     <div className={styles.innerGap}>
-                        <Link
-                            to='/'
+                        <div
+
                             className={styles.header}
                         >
-                            <CollectionLogo
-                                image='https://e7.pngegg.com/pngimages/556/552/png-clipart-grand-theft-auto-v-grand-theft-auto-vice-city-computer-icons-rockstar-games-grand-theft-auto-episodes-from-liberty-city-social-icons-miscellaneous-game.png'
-                                size='xxs'
-                            />
+                            <Link
+                                to="/"
+                                className={styles.link}
+                            >
+                                <CollectionLogo
+                                    image='https://e7.pngegg.com/pngimages/556/552/png-clipart-grand-theft-auto-v-grand-theft-auto-vice-city-computer-icons-rockstar-games-grand-theft-auto-episodes-from-liberty-city-social-icons-miscellaneous-game.png'
+                                    size='xxs'
+                                />
+                            </Link>
 
-                            <div className={styles.headerTitle}>
-                                Axies Infinity
-                            </div>
-                        </Link>
+                            <Link
+                                to="/3"
+                                className={styles.link}
+                            >
+                                <div className={styles.title}>
+                                    Axies Infinity
+                                </div>
+                            </Link>
+                        </div>
 
-                        <div className={styles.mainInfo}>
+                        <div className={styles.info}>
                             <CollectionLogo
                                 image='https://e7.pngegg.com/pngimages/556/552/png-clipart-grand-theft-auto-v-grand-theft-auto-vice-city-computer-icons-rockstar-games-grand-theft-auto-episodes-from-liberty-city-social-icons-miscellaneous-game.png'
                                 size='m'
                             //TODO подправить размер после мержа, указан не тот!
                             />
 
-                            <div className={styles.mainInfoTitle}>
+                            <div className={styles.infoTitle}>
                                 Axies Drop SS23
                             </div>
                         </div>
