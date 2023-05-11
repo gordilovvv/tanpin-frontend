@@ -10,7 +10,7 @@ enum View {
     DANGER = 'danger'
 }
 
-type ButtonProps<T extends 'a' | 'button'> = {
+export type ButtonProps<T extends 'a' | 'button'> = {
     as?: T,
     to?: LinkProps['to'],
     view?: `${View}`
@@ -18,7 +18,6 @@ type ButtonProps<T extends 'a' | 'button'> = {
     loading?: boolean
     disabled?: boolean
     iconSlot?: ReactNode
-    onClick?: (event?: MouseEvent) => void
 } & JSX.IntrinsicElements[T];
 
 declare function ButtonFn<Tag extends 'a' | 'button'>(props: PropsWithChildren<ButtonProps<Tag>>): JSX.Element;
@@ -28,7 +27,7 @@ export const Button = forwardRef<HTMLElement, PropsWithChildren<any>>(
         const isLoading = !disabled && loading;
         const navigate = useNavigate();
 
-        const handleClick = () => {
+        const handleClick = (event: MouseEvent) => {
             if (isLoading || disabled) {
                 return;
             }
@@ -37,7 +36,7 @@ export const Button = forwardRef<HTMLElement, PropsWithChildren<any>>(
                 navigate(to);
             }
 
-            onClick?.();
+            onClick?.(event);
         };
 
         return (

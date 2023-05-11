@@ -51,7 +51,7 @@ export function GameCard({ game }: GameCardProps) {
                 <img
                     className={styles.backgroundImage}
                     src={game.imageURL}
-                    alt=""
+                    alt={game.name}
                 />
             </div>
 
@@ -88,6 +88,7 @@ export function GameCard({ game }: GameCardProps) {
                     </div>
 
                     <Button
+                        to={`/games/${game.ID}`}
                         className={styles.btn}
                         view="secondary"
                     >

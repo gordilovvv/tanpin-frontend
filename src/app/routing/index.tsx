@@ -21,12 +21,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/collections',
-                element: <CollectionsView />
+                element: <CollectionsView />,
             },
             {
-                path: '/collection',
+                path: '/collections/:id',
                 element: <SingleCollectionView />
-            },
+            }
         ]
     },
 ]);
