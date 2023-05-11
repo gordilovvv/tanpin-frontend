@@ -1,8 +1,9 @@
 import { ReactNode, useState } from 'react';
 import styles from './Filter.module.scss';
-import { InputPrice, InputSearch, Select, Button } from '@/uikit';
+import { InputSearch, Select, Button } from '@/uikit';
 import { Filter as FilterIcon } from '@/uikit';
 import classNames from 'classnames';
+import { PriceFilter } from '@/components/Filter/PriceFilter/PriceFilter';
 type FilterProps = {
     tableSlot: ReactNode
 }
@@ -60,11 +61,10 @@ export function Filter({ tableSlot }: FilterProps) {
                         <div className={styles.currency}>USDT</div>
                     </div>
 
-                    <InputPrice
+                    <PriceFilter
                         onMinPriceChange={(val) => console.log(val)}
                         onMaxPriceChange={(val) => console.log(val)}
                     />
-
                 </div>
 
                 <div className={styles.item}>
@@ -73,7 +73,6 @@ export function Filter({ tableSlot }: FilterProps) {
                     </div>
 
                     <div className={styles.inner}>
-
                         <InputSearch
                             value={val}
                             onChange={(val) => setVal(val)}
@@ -106,14 +105,7 @@ export function Filter({ tableSlot }: FilterProps) {
                             />
                         </div>
                     </div>
-
-
-
                 </div>
-
-
-
-
             </div>
         </div>
     );

@@ -1,0 +1,48 @@
+.wrap {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    &.error {
+        border-color: var(--color-danger);
+    }
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    background: var(--color-essential);
+    color: var(--color-typo-base);
+    border-color: var(--color-stroke);
+    border-style: solid;
+    text-align: center;
+    transition: border-color .15s linear;
+
+    &:nth-child(1) {
+        border-width: 2px 1px 2px 2px;
+        border-radius: 12px 0 0 12px;
+    }
+
+    &:nth-child(2) {
+        border-width: 2px 2px 2px 1px;
+        border-radius: 0 12px 12px 0;
+    }
+
+    @include hover {
+        border-color: var(--color-base);
+    }
+
+    &:focus {
+        border-color: var(--color-base);
+    }
+
+    &.error {
+        border-color: var(--color-danger) !important;
+    }
+}
+
+@include max767 {
+    .input {
+        height: 44px;
+    }
+}
