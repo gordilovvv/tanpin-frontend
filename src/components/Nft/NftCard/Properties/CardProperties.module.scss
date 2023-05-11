@@ -1,0 +1,59 @@
+.properties {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.property {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+
+    &Label {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--color-typo-ghost);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &Value {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 1.5;
+        color: var(--color-typo-base);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        letter-spacing: -0.01em;
+
+        span {
+            color: var(--color-typo-ghost);
+        }
+    }
+}
+
+@include max767 {
+    .properties {
+        grid-template-columns: 1fr;
+    }
+
+    .property {
+        display: none;
+
+        &:first-child {
+            display: grid;
+        }
+
+        &Label {
+            font-size: 12px;
+            line-height: 16px;
+        }
+
+        &Value {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+}

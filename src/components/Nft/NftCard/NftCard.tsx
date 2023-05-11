@@ -1,50 +1,67 @@
+import { useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { CardButton } from './Button/CardButton';
+import { CardProperties } from './Properties/CardProperties';
+import { NFT } from '@/states/types';
+import { Collection } from '@/states/collection/types';
 import styles from './NftCard.module.scss';
-import { Button } from '@/uikit';
 
+type NftCardProps = {
+    nft: NFT
+    collectionID: Collection['ID']
+    collectionName: Collection['name']
+}
 
-export function NftCard() {
+export function NftCard({ nft, collectionID, collectionName }: NftCardProps) {
+    const navigate = useNavigate();
+    const handleAction = useCallback(() => {
+        // TODO: logic
+    }, [nft.status]);
+
     return (
         <div className={styles.card}>
-            <div className={styles.cardImgWrap}>
-                <img
-                    className={styles.cardImg}
-                    src="https://s3-alpha-sig.figma.com/img/2f18/5f5e/18100085c77444b3e00e10428a0599cd?Expires=1684713600&Signature=hYwf6-BNv-lEf0wSulBi1n8F0-cQvZrzBCMu~~Q8SP3u-E8c9rgYpDFPgRg7yXCje5ndOs31Mh8FSqTuMU3DARndDpEYCTYP930qIo--wffxg95QIFJik7Q7~9cLI-~Z8rTJ9eR1GeB1PojbhoW1hzwfwGCZOCVQw2dfGqkPpoT9XA0G1QQ-6zO96vwdBDIwsBl~gA0sNr0m5fZDRUsex8NScXdpgUNjAdWYZ96OTB4DOSjXQ8LZqgoqNiJeazctS3-U5cTCIjiTI0-2aEPjGAQsaL6oysJ~rIJ9xvH7kGvYcs5rWfD34pDCKDGF0uy2TsbovJz~5AVzucGicIkMyw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                />
-            </div>
-
-            <div className={styles.info}>
-                <div className={styles.infoHeader}>
-                    <div className={styles.infoHeaderTitle}>Cars Drop 2022</div>
-                    <div className={styles.infoHeaderBody}>BMW X5M</div>
+            <Link
+                to={`/collections/${collectionID}/${nft.ID}`}
+                className={styles.cardLink}
+            >
+                <div className={styles.imageWrap}>
+                    <img
+                        className={styles.image}
+                        src={nft.imageURL}
+                        alt=''
+                    />
                 </div>
 
-                <div className={styles.infoBody}>
-                    <div className={styles.infoBodyItem}>
-                        <div className={styles.infoBodyTitle}>
-                            Highest bid
+                <div className={styles.content}>
+                    <div className={styles.head}>
+                        <div
+                            className={styles.collection}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+
+                                navigate(`/collections/${collectionID}`);
+                            }}
+                        >
+                            {collectionName}
                         </div>
 
-                        <div className={styles.infoBodyText}>
-                            10 <span className={styles.ghost}>USDT</span>
-                        </div>
+                        <div className={styles.title}>{nft.name}</div>
                     </div>
 
-                    <div className={styles.infoBodyItem}>
-                        <div className={styles.infoBodyTitle}>
-                            Highest bid
-                        </div>
+                    <CardProperties
+                        price={nft.price}
+                        auction={nft.auction}
+                        status={nft.status}
+                    />
 
-                        <div className={styles.infoBodyText}>
-                            10 <span className={styles.ghost}>USDT</span>
-                        </div>
-                    </div>
-
-                    <Button
-                        className={styles.btn}
-                        view="secondary"
-                    >Buy now</Button>
+                    <CardButton
+                        status={nft.status}
+                        className={styles.action}
+                        handleAction={handleAction}
+                    />
                 </div>
-            </div>
+            </Link>
         </div>
     );
 }
