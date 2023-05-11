@@ -31,7 +31,6 @@ module.exports = {
     'rules': {
         'quotes': ['error', 'single'],
         'semi': ['error', 'always'],
-        'prettier/prettier': 'off',
         'no-console': ['warn', { 'allow': ['info', 'warn', 'error', 'debug'] }],
         'no-debugger': 'error',
         'indent': ['error', 4],
@@ -39,8 +38,8 @@ module.exports = {
         'react-hooks/exhaustive-deps': 'off',
         'react/jsx-newline': [1, { 'prevent': true, 'allowMultilines': true }],
         'react/jsx-max-props-per-line': [1, { 'maximum': 1 }],
-        'react/jsx-first-prop-new-line':  [2, 'multiline'],
-        'react/jsx-filename-extension': ['warn', {'extensions': ['.tsx']} ],
+        'react/jsx-first-prop-new-line': [2, 'multiline'],
+        'react/jsx-filename-extension': ['warn', { 'extensions': ['.tsx'] }],
         'react/jsx-closing-bracket-location': [1, 'line-aligned'],
         'react/no-unescaped-entities': 'off',
         '@typescript-eslint/no-unused-vars': 'error',
