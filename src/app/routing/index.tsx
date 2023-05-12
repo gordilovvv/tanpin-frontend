@@ -2,7 +2,8 @@ import { PageLayout } from '@/components/Layout';
 import { CollectionsView } from '@/views/Collections/CollectionsView';
 import { ErrorView } from '@/views/Error';
 import { GamesView } from '@/views/Games/GamesView';
-import { MainView } from '@/views/Home/HomeView';
+import { HomeView } from '@/views/Home/HomeView';
+import { SingleGameView } from '@/views/Games/SingleGame/SingleGameView';
 import { SingleCollectionView } from '@/views/Collections/SingleCollection/SingleCollectionView';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -13,20 +14,25 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <MainView />
+                element: <HomeView />,
             },
             {
                 path: '/games',
-                element: <GamesView />
+                element: <GamesView />,
             },
             {
                 path: '/collections',
                 element: <CollectionsView />,
             },
             {
+
                 path: '/collections/:id',
                 element: <SingleCollectionView />
             }
-        ]
+            {
+                path: '/games/:id',
+                element: <SingleGameView />,
+            },
+        ],
     },
 ]);

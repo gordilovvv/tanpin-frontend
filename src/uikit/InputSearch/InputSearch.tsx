@@ -10,7 +10,7 @@ type InputProps = {
     onChange: (value: string) => void
 }
 
-export function InputSearch({ value, onChange, placeholder }: InputProps) {
+export function InputSearch({ value, onChange, placeholder = 'Search' }: InputProps) {
     const [inputValue, setInputValue] = useState(value);
 
     const debounceTimeout = 300;

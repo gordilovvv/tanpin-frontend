@@ -7,18 +7,26 @@ import { PAGE_SIZE } from '@/config/constants';
 import styles from './CollectionTable.module.scss';
 
 type CollectionTableProps = {
-    filter?: CollectionQueryBody['filter']
-    footerButton?: ReactNode
-    hasMoreButton?: boolean
-}
+    filter?: CollectionQueryBody['filter'];
+    footerButton?: ReactNode;
+    hasMoreButton?: boolean;
+};
 
-const HEADER_ITEMS = ['#', 'Collections', 'Floor Price', 'Items', 'Sales (7D)', 'Volume', '1D Change'];
+const HEADER_ITEMS = [
+    '#',
+    'Collections',
+    'Floor Price',
+    'Items',
+    'Sales (7D)',
+    'Volume',
+    '1D Change',
+];
 
 export function CollectionTable({ filter, footerButton, hasMoreButton }: CollectionTableProps) {
     const [pageNum, setPageNum] = useState(1);
     const { collections, page: loadedPage, pageCount, isLoading: isQueryLoading } = useCollectionsQuery({
         pageNum,
-        filter
+        filter,
     });
 
     const isLoading = isQueryLoading || !collections.length;
@@ -41,52 +49,64 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
 
     useEffect(() => {
         setPageNum(1);
-    }, [filter?.sort]);
+    }, [filter?.sort, filter?.search]);
 
     const loadMore = () => {
-        setPageNum(num => num + 1);
+        setPageNum((num) => num + 1);
     };
 
     return (
         <div className={styles.table}>
             <div className={styles.head}>
-                {
-                    HEADER_ITEMS.map((item, idx) => {
-                        return (<div
+                {HEADER_ITEMS.map((item, idx) => {
+                    return (
+                        <div
                             className={styles.headItem}
                             key={idx}
                         >
                             {item}
-                        </div>);
-                    })
-                }
+                        </div>
+                    );
+                })}
             </div>
 
-            {isLoading ? <div className={styles.body}>
-                {collectionsLoaders.map((index) => <CollectionRow
-                    key={index}
-                    index={index}
-                />)}
-            </div> : <div className={styles.body}>
-                {collections.map((item, index) => <CollectionRow
-                    key={item.ID}
-                    index={index}
-                    collection={item}
-                />)}
-            </div>}
+            {isLoading ? (
+                <div className={styles.body}>
+                    {collectionsLoaders.map((index) => (
+                        <CollectionRow
+                            key={index}
+                            index={index}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className={styles.body}>
+                    {collections.map((item, index) => (
+                        <CollectionRow
+                            key={item.ID}
+                            index={index}
+                            collection={item}
+                        />
+                    ))}
+                </div>
+            )}
 
-            {hasFooter && <div className={styles.footer}>
-                {footerButton}
+            {hasFooter && (
+                <div className={styles.footer}>
+                    {footerButton}
 
-                {hasMoreButton && hasMorePages && <Button
-                    view='secondary'
-                    block
-                    loading={isLoadingMore}
-                    onClick={loadMore}
-                >
-                    Load More
-                </Button>}
-            </div>}
+                    {hasMoreButton && hasMorePages && (
+                        <Button
+                            view="secondary"
+                            block
+                            loading={isLoadingMore}
+                            onClick={loadMore}
+                        >
+                            Load More
+                        </Button>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

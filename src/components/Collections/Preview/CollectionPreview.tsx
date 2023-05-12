@@ -23,7 +23,7 @@ export const CollectionPreview = ({ collection }: CollectionPreviewProps) => {
             className={styles.wrap}
         >
             <CollectionLogo
-                size='m'
+                size='l'
                 image={logoURL}
                 className={styles.logo}
             />

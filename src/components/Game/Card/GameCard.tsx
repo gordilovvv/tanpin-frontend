@@ -10,6 +10,7 @@ type GameCardProps = {
 }
 
 export function GameCard({ game }: GameCardProps) {
+
     if (!game) {
         return (
             <div className={classNames(styles.card, styles.skeletonWrapper)}>
@@ -91,6 +92,7 @@ export function GameCard({ game }: GameCardProps) {
                         to={`/games/${game.ID}`}
                         className={styles.btn}
                         view="secondary"
+                        to={'/games/' + game.ID}
                     >
                         Open collections
                     </Button>
