@@ -5,11 +5,12 @@ import classNames from 'classnames';
 type CollectionLogoProps = {
     image: string;
     // (Desktop)
+    // XXS - 32px
     // XS - 42px
     // S - 48px
     // M - 72px
     // L - 80px
-    size: 'xs' | 's' | 'm' | 'l';
+    size: 'xxs' | 'xs' | 's' | 'm' | 'l';
 };
 
 export function CollectionLogo({

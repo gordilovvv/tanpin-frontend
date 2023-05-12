@@ -99,7 +99,7 @@ export function CollectionRow({ collection, index }: CollectionRowProps) {
 
     return (
         <Link
-            to='/'
+            to={`/collections/${collection.ID}`}
             className={styles.row}
         >
             <div className={styles.wrap}>

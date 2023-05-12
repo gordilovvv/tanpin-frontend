@@ -1,0 +1,164 @@
+.wrapper {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.imgWrapp {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(180deg, rgba(12, 12, 12, 0.5) 0%, #0C0C0C 100%);
+        z-index: 5;
+    }
+}
+
+.img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.inner {
+    padding-top: 168px;
+    position: relative;
+    z-index: 10;
+
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+
+    
+}
+
+.innerGap {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.Header {
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    
+}
+.link {
+    width: fit-content;
+    display: inline;
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+   
+}
+.title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.44;
+    color: var(--color-typo-base);
+   
+}
+
+
+.info {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+
+  
+}
+
+.infoTitle {
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 1.12;
+    color: var(--color-typo-base);
+}
+
+.text {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-typo-base);
+    max-width: 720px;
+}
+
+.items {
+    display: grid;
+    justify-content: start;
+    gap: 32px;
+
+    @include min768 {
+        grid-template-columns: repeat(auto-fit, minmax(0, auto));
+        grid-auto-flow: column;
+    }
+}
+
+.item {
+    display: grid;
+    gap: 4px;
+
+}
+.itemTitle {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.43;
+    color: var(--color-typo-ghost);
+}
+
+.itemBody {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.44;
+    color: var(--color-typo-base);
+}
+
+@include max767 {
+    .items {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+    }
+
+    .item {
+        gap: 2px;
+
+    }
+    .itemTitle {
+        font-size: 12px;
+    }
+    .itemBody {
+        font-size: 18px;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .mainInfTitle {
+        font-size: 24px;
+    }
+
+    .inner {
+        padding-top: 112px;
+        gap: 16px;
+    }
+    .innerGap {
+        gap: 8px;
+    }
+
+    .wrapper {
+        gap: 16px;
+    }
+}
