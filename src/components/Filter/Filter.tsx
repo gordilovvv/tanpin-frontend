@@ -4,15 +4,26 @@ import { InputSearch, Select } from '@/uikit';
 import classNames from 'classnames';
 import { PriceFilter } from './components/PriceFilter/PriceFilter';
 import { AttributesDisclosure } from './AttributesDisclosure/AttributesDisclosure';
-
+import { AttributesFilter } from './AttributesFilter/AttributesFilter';
+import type { Option } from './AttributesFilter/AttributesFilter';
 
 export function Filter() {
     const [val, setVal] = useState('');
+    const [atr, setAtr] = useState<Option['value'][]>();
+
 
     const options = [{
         value: 'string',
         label: 'string',
     }];
+
+    const optionsAtr = [
+        { label: 'Option 1', value: 'option1', count: 1 },
+        { label: 'Option 2', value: 'option2', count: 25 },
+        { label: 'Option 3', value: 'option3', },
+    ];
+
+
 
     return (
         <div className={classNames(styles.filter, { [styles.hidden]: false })} >
@@ -49,11 +60,15 @@ export function Filter() {
 
                 <div className={styles.inner}>
                     <AttributesDisclosure
-                        title='Condition'
+                        // title='Condition'
+                        title={JSON.stringify(atr)}
                         attributesCount='10'
-                        selectedCount={10}
+                        selectedCount={atr?.length}
                     >
-                        options
+                        <AttributesFilter
+                            onChange={setAtr}
+                            options={optionsAtr}
+                        />
                     </AttributesDisclosure>
 
                     <InputSearch

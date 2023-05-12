@@ -1,0 +1,46 @@
+.label {
+    display: grid;
+    grid-template-columns: minmax(0,auto) minmax(0,1fr) minmax(0,auto);
+    gap: 16px;
+    align-items: center;
+    cursor: pointer;
+    &.active {
+        .mark {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    @include hover {
+        .box {
+            background: #171717;
+        }
+    }
+}
+
+.box {
+    background: var(--color-essential);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3CE361;
+    
+}
+
+.mark {
+    opacity: 0;
+    transform: scale(0);
+    transition: all .3s ease;
+}
+.title {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-typo-base);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
 
                 path: '/collections/:id',
                 element: <SingleCollectionView />
-            }
+            },
             {
                 path: '/games/:id',
                 element: <SingleGameView />,
