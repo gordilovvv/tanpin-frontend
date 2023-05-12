@@ -3,6 +3,7 @@ import styles from './Filter.module.scss';
 import { InputSearch, Select } from '@/uikit';
 import classNames from 'classnames';
 import { PriceFilter } from './components/PriceFilter/PriceFilter';
+import { AttributesDisclosure } from './AttributesDisclosure/AttributesDisclosure';
 
 
 export function Filter() {
@@ -12,6 +13,7 @@ export function Filter() {
         value: 'string',
         label: 'string',
     }];
+
     return (
         <div className={classNames(styles.filter, { [styles.hidden]: false })} >
 
@@ -46,6 +48,14 @@ export function Filter() {
                 </div>
 
                 <div className={styles.inner}>
+                    <AttributesDisclosure
+                        title='Condition'
+                        attributesCount='10'
+                        selectedCount={10}
+                    >
+                        options
+                    </AttributesDisclosure>
+
                     <InputSearch
                         value={val}
                         onChange={(val) => setVal(val)}
