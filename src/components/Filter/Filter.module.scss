@@ -45,24 +45,8 @@
 
 }
 
-.top {
-    display: grid;
-    grid-template-columns: minmax(0, auto) minmax(0,1fr) minmax(0,240px);
-    gap: 16px;
-    grid-area: top;
-}
+
 .table {
     grid-area: table;
 }
 
-.wrapper {
-    display: grid;
-    grid-template-areas:
-    "top top"
-    "filter  table";
-    grid-template-rows: minmax(0, auto) minmax(0, auto);
-    grid-template-columns: minmax(0, auto) 1fr;
-    align-items: start;
-    gap: 32px;
-   
-}
