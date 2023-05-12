@@ -3,10 +3,12 @@
     border-radius: 8px;
     overflow: hidden;
     transform: translateZ(0);
+
     &.xxs {
         height: 32px;
         width: 32px;
     }
+
     &.xs {
         width: 42px;
         height: 42px;
@@ -38,6 +40,7 @@
             height: 24px;
             width: 24px;
         }
+
         &.xs {
             width: 32px;
             height: 32px;

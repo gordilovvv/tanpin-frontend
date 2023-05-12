@@ -5,7 +5,6 @@ import classNames from 'classnames';
 type CollectionLogoProps = {
     image: string,
     // (Desktop)
-
     // XXS - 32px
     // XS - 42px
     // S - 48px
