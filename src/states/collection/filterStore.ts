@@ -22,6 +22,7 @@ type FilterActions = {
     setSort: (sort: 'RECENTLY_ADDED' | 'HIGH_PRICE_FIRST' | 'LOW_PRICE_FIRST') => void
     setStatus: (status: 'FIXED_PRICE' | 'AUCTION' | 'NOT_FOR_SALE') => void
     setCollectionID: (id: string) => void
+    clearAttributes: () => void
 }
 
 type Attribute = {
