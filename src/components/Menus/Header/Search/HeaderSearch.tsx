@@ -4,6 +4,7 @@ import { ComboboxPopover, useComboboxStore as useComboboxState } from '@ariakit/
 import { useDebounce } from '@/hooks/useDebounce';
 import { SearchInput } from '../../Search/Input/SearchInput';
 import { SearchResults } from '../../Search/Results/SearchResults';
+import { SEARCH_DEBOUNCE_TIMEOUT } from '@/config/constants';
 import styles from './HeaderSearch.module.scss';
 
 const animationMap = {
@@ -17,8 +18,6 @@ const animationVariants = {
     animate: { translateY: 0, opacity: 1 },
     exit: { translateY: 32, opacity: 0 },
 } as Variants;
-
-const SEARCH_DEBOUNCE_TIMEOUT = 300;
 
 export function HeaderSearch() {
     const inputRef = useRef<HTMLInputElement>(null);

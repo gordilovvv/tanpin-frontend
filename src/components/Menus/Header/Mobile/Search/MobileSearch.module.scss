@@ -1,0 +1,13 @@
+.wrap {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.results {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 0;
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+}
