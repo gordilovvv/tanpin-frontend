@@ -48,7 +48,10 @@ export function SearchResults({ searchQuery }: SearchResultsProps) {
         }
 
         return (
-            <NFTList />
+            <NFTList
+                searchQuery={searchQuery}
+                onError={setSearchError}
+            />
         );
     }, [searchQuery, searchError, searchTask]);
 

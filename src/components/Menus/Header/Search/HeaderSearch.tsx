@@ -19,6 +19,7 @@ const animationVariants = {
     exit: { translateY: 32, opacity: 0 },
 } as Variants;
 
+// TODO: ПОФИКСИТЬ ЕСЛИ ОТКРЫТЬ ПОИСК И ВКЛЮЧИТЬ АДАПТИВ - ПОПОВЕР ДОЛЖЕН ЗАКРЫТЬСЯ
 export function HeaderSearch() {
     const inputRef = useRef<HTMLInputElement>(null);
     const animationRef = useRef<HTMLDivElement>(null);
