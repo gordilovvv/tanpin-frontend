@@ -68,6 +68,19 @@
     }
 }
 
+@include max1000 {
+    .stack {
+        column-gap: 16px;
+    }
+
+    .menu {
+        &Link {
+            font-size: 14px;
+            padding: 0 12px;
+        }
+    }
+}
+
 @include max767 {
     .logo {
         svg {

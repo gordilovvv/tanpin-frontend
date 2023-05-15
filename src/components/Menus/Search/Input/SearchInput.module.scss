@@ -1,0 +1,36 @@
+.search {
+    position: relative;
+}
+
+.input {
+    padding-left: 46px;
+}
+
+.icon {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translate(0, -50%);
+    color: var(--color-typo-ghost);
+    transition: color 0.15s linear;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.search {
+    @include hover {
+        .icon {
+            color: var(--color-typo-base);
+        }
+    }
+}
+
+.search.focused {
+    .icon {
+        color: var(--color-typo-base);
+    }
+}

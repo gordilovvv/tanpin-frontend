@@ -4,6 +4,7 @@ import { Logo } from './Logo';
 import { Burger } from './Burger/Burger';
 import { MobileDrawer } from './Mobile/MobileDrawer';
 import { HeaderWallet } from './Wallet/HeaderWallet';
+import { HeaderSearch } from './Search/HeaderSearch';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { headerLinks } from '../config';
@@ -25,6 +26,8 @@ export function Header() {
                         >
                             <Logo />
                         </Link>
+
+                        <HeaderSearch />
 
                         <div className={styles.menu}>
                             {headerLinks.map(link => <NavLink
