@@ -1,0 +1,7 @@
+.group {
+    display: grid;
+    grid-template-columns: repeat(var(--cols-count), minmax(0, 1fr));
+    border: 1px solid var(--color-stroke);
+    background-color: var(--color-essential);
+    border-radius: 12px;
+}
