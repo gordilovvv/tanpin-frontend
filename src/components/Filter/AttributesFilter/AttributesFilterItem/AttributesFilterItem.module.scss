@@ -1,19 +1,12 @@
 .label {
     display: grid;
-    grid-template-columns: minmax(0,auto) minmax(0,1fr) minmax(0,auto);
+    grid-template-columns: auto 1fr;
     gap: 16px;
     align-items: center;
-    width: 100%;
-    cursor: pointer;
-    &.active {
-        .mark {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
+
     @include hover {
         .box {
-            background: #171717;
+            background: var(--color-surface);
         }
     }
 }
@@ -28,14 +21,21 @@
     align-items: center;
     justify-content: center;
     color: #3CE361;
-    
 }
 
 .mark {
     opacity: 0;
-    transform: scale(0);
-    transition: all .3s ease;
+    transform: scale(0.5);
+    transition: transform 0.08s ease-in-out, opacity 0.08s ease-in-out;
 }
+
+.label.active {
+    .mark {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .title {
     font-weight: 600;
     font-size: 16px;
@@ -46,9 +46,10 @@
     text-overflow: ellipsis;
     text-align: left;
 }
+
 .count {
-font-weight: 600;
-font-size: 14px;
-line-height: 1.43;
-color: var(--color-typo-ghost);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.43;
+    color: var(--color-typo-ghost);
 }

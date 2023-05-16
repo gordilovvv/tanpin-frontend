@@ -3,47 +3,47 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .item {
     display: grid;
-    grid-template-columns: minmax(0,1fr);
+    grid-template-columns: minmax(0, auto);
     gap: 12px;
 }
+
 .title {
     font-weight: 600;
     font-size: 18px;
     line-height: 1.44;
     color: var(--color-typo-base);
 }
+
 .currency {
     font-weight: 600;
     font-size: 18px;
     line-height: 1.44;
     color: var(--color-typo-ghost);
 }
+
 .filter {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
     grid-area: filter;
-    overflow: hidden  scroll;
+    overflow: hidden scroll;
     overscroll-behavior-y: none;
-  
-    
+
+
 }
+
 .inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 12px;
 }
+
 .group {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 8px;
 
 }
-
-
-.table {
-    grid-area: table;
-}
-

@@ -6,7 +6,9 @@ import { NFTSaleStatus } from '@/states/types';
 import { InputSearch, Select, Button, Filter as FilterIcon, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { Filter } from '@/components/Filter';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useOpenedState } from '@/hooks/useOpenedState';
+import { isTouchDevice } from '@/utils/isTouchDevice';
 
 
 const mock = {
@@ -31,7 +33,21 @@ const options = [{
 }];
 
 export function SingleCollectionView() {
-    const [isOpen, setIsOpen] = useState(false);
+    // const [foo, setFoo] = useState('');
+
+    const [isFilterVisible, setIsFilterVisible] = useState(!isTouchDevice);
+
+    const mobileFilterState = useOpenedState();
+
+    useEffect(() => {
+        // TODO:
+        // 1. Скрыть десктоп фильтр при resize
+        // 2. Скрыть модалку фильтра при resize
+    }, []);
+
+    const handleFilterToggle = () => {
+        setIsFilterVisible(prev => !prev);
+    };
 
     return (
         <>
@@ -40,15 +56,19 @@ export function SingleCollectionView() {
 
                 <Container space>
                     <div
-
-                        className={classNames(styles.wrapper, { [styles.hide]: isOpen })}
+                        className={classNames(styles.wrapper, {
+                            [styles.oneColumn]: !isFilterVisible,
+                            [styles.twoColumns]: isFilterVisible
+                        })}
                     >
                         <div className={styles.top}>
                             <Button
                                 iconSlot={<FilterIcon />}
                                 view="secondary"
-                                onClick={() => setIsOpen(prev => !prev)}
-                            >Filters</Button>
+                                onClick={handleFilterToggle}
+                            >
+                                Filters
+                            </Button>
 
                             <InputSearch
                                 value={'3'}
@@ -63,14 +83,14 @@ export function SingleCollectionView() {
                             />
                         </div>
 
+                        {isFilterVisible && <Filter className={styles.filter} />}
 
-                        {/* <Modal isOpen={true}> */}
-                        <Filter />
+                        <Modal isOpen={mobileFilterState.isOpen}>
+                            <Filter />
+                        </Modal>
 
-                        {/* </Modal> */}
 
-
-                        <div>
+                        <div className={styles.table}>
                             <div className={styles.cardWrapper}>
 
                                 {true && (new Array(25)).fill(1).map((el, idx) => (<NftCardSkeleton key={idx} />))}

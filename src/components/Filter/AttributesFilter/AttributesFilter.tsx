@@ -1,35 +1,25 @@
-import styles from './AttributesFilter.module.scss';
-import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
-
 import { AttributesFilterItem } from './AttributesFilterItem/AttributesFilterItem';
-
-
+import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
+import styles from './AttributesFilter.module.scss';
 
 type AttributesFilterProps = {
     values: string[]
     traitType: string
-    activeAttributes: Hashmap
-}
-
-type Hashmap = {
-    [key: string]: { [key: string]: boolean };
+    activeAttributes: {
+        [key: string]: { [key: string]: boolean };
+    }
 }
 
 export function AttributesFilter({ values = [], traitType, activeAttributes }: AttributesFilterProps) {
     const { addAttribute, removeAttribute } = useFilterStoreActons();
 
-
-
-
-    const hangleChange = (isActive: boolean, value) => {
+    const handleChange = (isActive: boolean, value) => {
         const attribute = { value, traitType };
+
         if (isActive) {
             addAttribute(attribute);
-            return;
-        }
-        if (!isActive) {
+        } else {
             removeAttribute(attribute);
-            return;
         }
     };
 
@@ -42,7 +32,7 @@ export function AttributesFilter({ values = [], traitType, activeAttributes }: A
                             key={value}
                             value={value}
                             initialActive={activeAttributes[traitType]?.[value]}
-                            onChange={hangleChange}
+                            onChange={handleChange}
                         />
                     );
                 })

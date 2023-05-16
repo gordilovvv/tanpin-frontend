@@ -12,11 +12,11 @@ type AttributesFilterItemProps = {
 
 export function AttributesFilterItem({ value, onChange, initialActive = false }: AttributesFilterItemProps) {
     const [isActive, setIsActive] = useState(initialActive);
+
     const handleClick = () => {
         onChange(!isActive, value);
         setIsActive(prev => !prev);
     };
-
 
     return (
         <UnstyleButton

@@ -5,6 +5,8 @@ import { AttributesDisclosure } from './AttributesDisclosure/AttributesDisclosur
 import { AttributesFilter } from './AttributesFilter/AttributesFilter';
 
 import { useFilterStore } from '@/states/collection/filterStore';
+import { HTMLAttributes, useCallback, useMemo } from 'react';
+import classNames from 'classnames';
 
 function convertToHashmap(array: Trait[]) {
     const hashmap = {};
@@ -28,7 +30,7 @@ type Trait = {
     values: string[];
 }
 
-type Hashmap = {
+type AttributesHashMap = {
     [key: string]: { [key: string]: boolean };
 }
 
@@ -42,16 +44,35 @@ const attributes = [
         values: ['audi', 'bmw', 'nissan'],
     },
 ];
-export function Filter() {
-    const activeAttributes: Hashmap = convertToHashmap(useFilterStore((state) => state.attributes));
+
+type FilterProps = HTMLAttributes<HTMLDivElement>;
+
+// TODO:
+// 1. Поправить порядок аттрибутов. Тут должен быть компонент ОДИН AttributesFilter
+// 2. AttributesFilterItem переименовать в AttributeFilterOption
+// 3. Сделать компонент под item (FilerItem)
+// 4. Убрать components папку у PriceFilter
+export function Filter({ className, ...props }: FilterProps) {
+    const allAttributes = useFilterStore((state) => state.attributes);
+
+    const activeAttributes = useMemo(() => {
+        return convertToHashmap(allAttributes) as AttributesHashMap;
+    }, [allAttributes]);
 
     const options = [{
         value: 'string',
         label: 'string',
     }];
 
+    const handlePriceChange = useCallback((val: string) => {
+        console.log(val);
+    }, []);
+
     return (
-        <div className={styles.filter} >
+        <div
+            className={classNames(styles.filter, className)}
+            {...props}
+        >
             <div className={styles.item}>
                 <div className={styles.header}>
                     <div className={styles.title}>Status</div>
@@ -62,7 +83,6 @@ export function Filter() {
                     onChange={() => null}
                     options={options}
                 />
-
             </div>
 
             <div className={styles.item}>
@@ -72,8 +92,8 @@ export function Filter() {
                 </div>
 
                 <PriceFilter
-                    onMinPriceChange={(val) => console.log(val)}
-                    onMaxPriceChange={(val) => console.log(val)}
+                    onMinPriceChange={handlePriceChange}
+                    onMaxPriceChange={handlePriceChange}
                 />
             </div>
 
@@ -84,56 +104,22 @@ export function Filter() {
 
                 <div className={styles.inner}>
                     <div className={styles.group}>
-                        {/* <AttributesDisclosure
-                            // title='Condition'
-                            title={JSON.stringify(atr)}
-                            attributesCount='10'
-                            selectedCount={atr?.length}
-                        >
-                            <AttributesFilter
-                                onChange={setAtr}
-                                options={optionsAtr}
-                            />
-                        </AttributesDisclosure>
-
-                        <AttributesDisclosure
-                            // title='Condition'
-                            title={JSON.stringify(atr)}
-                            attributesCount='10'
-                            selectedCount={atr?.length}
-                        >
-                            <AttributesFilter
-                                onChange={setAtr}
-                                options={optionsAtr}
-                            />
-                        </AttributesDisclosure> */}
-
-
                         {
                             attributes.map(({ traitType, values }) => {
-
                                 return (
-
-                                    < AttributesDisclosure
+                                    <AttributesDisclosure
                                         key={traitType}
-                                        // title='Condition'
                                         title={traitType}
-                                        attributesCount='10'
-                                    // selectedCount={atr?.length
-                                    // }
+                                        attributesCount={values.length}
                                     >
-
-
                                         <AttributesFilter
                                             traitType={traitType}
                                             values={values}
                                             activeAttributes={activeAttributes}
                                         />
                                     </AttributesDisclosure>
-
                                 );
                             })
-
                         }
                     </div>
                 </div>
