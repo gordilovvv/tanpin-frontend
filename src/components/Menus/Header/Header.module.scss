@@ -3,7 +3,9 @@
     top: 0;
     left: 0;
     width: 100%;
-    background-color: var(--color-essential);
+    background: linear-gradient(180deg, #0D0D0D 0%, rgba(13, 13, 13, 0.4) 100%);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     z-index: 20;
 }
 
@@ -45,7 +47,7 @@
         align-items: center;
         height: 48px;
         color: var(--color-typo-ghost);
-        background-color: var(--color-essential);
+        background-color: transparent;
         font-size: 16px;
         font-weight: 500;
         line-height: 1.5;
@@ -63,7 +65,6 @@
 
         &.active {
             color: var(--color-typo-base);
-            background-color: var(--color-surface);
         }
     }
 }

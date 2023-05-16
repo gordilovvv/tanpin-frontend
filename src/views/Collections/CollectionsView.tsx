@@ -1,11 +1,12 @@
-import { Container } from '@/components/Layout';
+import { Container, PageWrapper } from '@/components/Layout';
 import { Table } from './components/Table/Table';
-
 
 export function CollectionsView() {
     return (
-        <Container space>
-            <Table />
-        </Container>
+        <PageWrapper hasPaddingTop={false}>
+            <Container space>
+                <Table />
+            </Container>
+        </PageWrapper>
     );
 }
