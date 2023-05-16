@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import styles from './Filter.module.scss';
-import { InputSearch, Select } from '@/uikit';
-import classNames from 'classnames';
+import { Select } from '@/uikit';
 import { PriceFilter } from './components/PriceFilter/PriceFilter';
 import { AttributesDisclosure } from './AttributesDisclosure/AttributesDisclosure';
 import { AttributesFilter } from './AttributesFilter/AttributesFilter';
 import type { Option } from './AttributesFilter/AttributesFilter';
 
 export function Filter() {
-    const [val, setVal] = useState('');
     const [atr, setAtr] = useState<Option['value'][]>();
 
 
@@ -26,8 +24,7 @@ export function Filter() {
 
 
     return (
-        <div className={classNames(styles.filter, { [styles.hidden]: false })} >
-
+        <div className={styles.filter} >
             <div className={styles.item}>
                 <div className={styles.header}>
                     <div className={styles.title}>Status</div>
@@ -59,48 +56,40 @@ export function Filter() {
                 </div>
 
                 <div className={styles.inner}>
-                    <AttributesDisclosure
-                        // title='Condition'
-                        title={JSON.stringify(atr)}
-                        attributesCount='10'
-                        selectedCount={atr?.length}
-                    >
-                        <AttributesFilter
-                            onChange={setAtr}
-                            options={optionsAtr}
-                        />
-                    </AttributesDisclosure>
-
-                    <InputSearch
-                        value={val}
-                        onChange={(val) => setVal(val)}
-                        placeholder="Search"
-                    />
-
                     <div className={styles.group}>
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
+                        <AttributesDisclosure
+                            // title='Condition'
+                            title={JSON.stringify(atr)}
+                            attributesCount='10'
+                            selectedCount={atr?.length}
+                        >
+                            <AttributesFilter
+                                onChange={setAtr}
+                                options={optionsAtr}
+                            />
+                        </AttributesDisclosure><AttributesDisclosure
+                            // title='Condition'
+                            title={JSON.stringify(atr)}
+                            attributesCount='10'
+                            selectedCount={atr?.length}
+                        >
+                            <AttributesFilter
+                                onChange={setAtr}
+                                options={optionsAtr}
+                            />
+                        </AttributesDisclosure>
 
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
-
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
-
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
+                        <AttributesDisclosure
+                            // title='Condition'
+                            title={JSON.stringify(atr)}
+                            attributesCount='10'
+                            selectedCount={atr?.length}
+                        >
+                            <AttributesFilter
+                                onChange={setAtr}
+                                options={optionsAtr}
+                            />
+                        </AttributesDisclosure>
                     </div>
                 </div>
             </div>

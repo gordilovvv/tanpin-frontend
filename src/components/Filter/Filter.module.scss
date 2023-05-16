@@ -25,13 +25,10 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
     grid-area: filter;
-    transition: max-width 350ms ease 0s;
-
-    &.hidden {
-        max-width: 0px;
-        position: absolute;
-        overflow: hidden scroll;
-    }
+    overflow: hidden  scroll;
+    overscroll-behavior-y: none;
+    height: 100%;
+    
 }
 .inner {
     display: grid;

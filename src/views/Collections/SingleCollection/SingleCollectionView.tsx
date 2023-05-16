@@ -5,7 +5,8 @@ import { Container } from '@/components/Layout';
 import { NFTSaleStatus } from '@/states/types';
 import { InputSearch, Select, Button, Filter as FilterIcon } from '@/uikit';
 import { Filter } from '@/components/Filter';
-
+import classNames from 'classnames';
+import { useState } from 'react';
 
 const mock = {
     ID: '1',
@@ -29,18 +30,23 @@ const options = [{
 }];
 
 export function SingleCollectionView() {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <>
             <div className={styles.container}>
                 <CollectionHead />
 
                 <Container space>
-                    <div className={styles.wrapper}>
+                    <div
+
+                        className={classNames(styles.wrapper, { [styles.hide]: isOpen })}
+                    >
                         <div className={styles.top}>
                             <Button
                                 iconSlot={<FilterIcon />}
                                 view="secondary"
-                                onClick={() => null}
+                                onClick={() => setIsOpen(prev => !prev)}
                             >Filters</Button>
 
                             <InputSearch
@@ -56,7 +62,7 @@ export function SingleCollectionView() {
                             />
                         </div>
 
-                        <Filter />
+                        <Filter className={styles.filter} />
 
                         <div>
                             <div className={styles.cardWrapper}>
@@ -74,8 +80,8 @@ export function SingleCollectionView() {
                             </div>
                         </div>
                     </div>
-                </Container>
-            </div>
+                </Container >
+            </div >
         </>
     );
 }

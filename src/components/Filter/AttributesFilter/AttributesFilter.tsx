@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './AttributesFilter.module.scss';
-import { Mark } from '@/uikit';
-import classNames from 'classnames';
+
+import { AttributesFilterItem } from './AttributesFilterItem/AttributesFilterItem';
 
 export type Option = {
     label: string;
@@ -17,15 +17,15 @@ type AttributesFilterProps = {
 export function AttributesFilter({ options = [], onChange }: AttributesFilterProps) {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-    const handleCheckboxChange = (value: string) => {
-        setSelectedValues((prevSelectedValues) => {
-            if (prevSelectedValues.includes(value)) {
-                return prevSelectedValues.filter((v) => v !== value);
-            } else {
-                return [...prevSelectedValues, value];
-            }
-        });
-    };
+    // const handleCheckboxChange = (value: string) => {
+    //     setSelectedValues((prevSelectedValues) => {
+    //         if (prevSelectedValues.includes(value)) {
+    //             return prevSelectedValues.filter((v) => v !== value);
+    //         } else {
+    //             return [...prevSelectedValues, value];
+    //         }
+    //     });
+    // };
 
     useEffect(() => {
         onChange(selectedValues);
@@ -34,34 +34,13 @@ export function AttributesFilter({ options = [], onChange }: AttributesFilterPro
     return (
         <div className={styles.wrapper}>
             {
-                options.map(({ value, label, count }) => {
-                    return (<div key={value}>
-                        <input
-                            type="checkbox"
-                            name="a"
-                            value={value}
-                            id={value}
-                            onChange={() => handleCheckboxChange(value)}
+                options.map((info) => {
+                    return (
+                        <AttributesFilterItem
+                            key={info.label}
+                            info={info}
                         />
-
-                        <label
-                            htmlFor={value}
-
-                            className={classNames(styles.label, {
-                                [styles.active]: selectedValues.includes(value)
-                            })}
-                        >
-                            <div className={styles.box}>
-                                <Mark className={styles.mark} />
-                            </div>
-
-                            <div className={styles.title}>
-                                {label}
-                            </div>
-
-                            {count && <div className={styles.count}>{count} {+count === 1 ? 'item' : 'items'}</div>}
-                        </label>
-                    </div>);
+                    );
                 })
             }
         </div>
