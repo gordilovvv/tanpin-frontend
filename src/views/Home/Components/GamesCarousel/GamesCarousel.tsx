@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Title, Button, Arrow } from '@/uikit';
 import { GameCard } from '@/components/Game';
 import { CollectionPreview } from '@/components/Collections';
@@ -6,6 +6,8 @@ import { Carousel, CarouselState, SlideProps } from '@/components/Carousel';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 import { Game } from '@/states/game/types';
 import styles from './GamesCarousel.module.scss';
+import { times } from 'lodash';
+import { GameCardSkeleton } from '@/components/Game/Card/GameCard';
 
 const SKELETON_SlIDES = 2;
 const SKELETON_COLLECTIONS = 4;
@@ -14,10 +16,10 @@ const Slide = ({ loading, data }: { loading?: boolean } & SlideProps<Game | unde
     if (loading || !data) {
         return (
             <div className={styles.slide}>
-                <GameCard game={undefined} />
+                <GameCardSkeleton />
 
                 <div className={styles.collections}>
-                    {[...Array(SKELETON_COLLECTIONS).keys()].map(index => <CollectionPreview
+                    {times(SKELETON_COLLECTIONS).map(index => <CollectionPreview
                         key={index}
                         collection={undefined}
                     />)}
@@ -41,6 +43,8 @@ const Slide = ({ loading, data }: { loading?: boolean } & SlideProps<Game | unde
 };
 
 export function GamesCarousel() {
+    const [carouselState, setCarouselState] = useState<CarouselState | undefined>();
+
     const { games, isLoading: isLoadingQuery } = useGamesQuery({
         filter: {
             popular: true,
@@ -49,16 +53,20 @@ export function GamesCarousel() {
     });
 
     const isLoading = isLoadingQuery || !games;
+    const carouselData = isLoading ? times(SKELETON_SlIDES) : games ?? [];
 
-    const carouselData = useMemo(() => {
+    const renderCarouselSlide = (slideProps: SlideProps<Game | undefined>) => {
         if (isLoading) {
-            return [...Array(SKELETON_SlIDES).keys()];
-        } else {
-            return games ?? [];
+            return (
+                <Slide
+                    loading={true}
+                    {...slideProps}
+                />
+            );
         }
-    }, [games, isLoading]);
 
-    const [carouselState, setCarouselState] = useState<CarouselState | undefined>();
+        return (<Slide {...slideProps} />);
+    };
 
     return (
         <div>
@@ -89,15 +97,8 @@ export function GamesCarousel() {
                         '(min-width: 1000px)': { slidesToScroll: 2 }
                     }
                 }}
-                onNavigate={(state) => setCarouselState(state)}
-                renderSlide={
-                    (slideProps: SlideProps<Game | undefined>) => isLoading
-                        ? <Slide
-                            loading={true}
-                            {...slideProps}
-                        />
-                        : <Slide {...slideProps} />
-                }
+                onNavigate={setCarouselState}
+                renderSlide={renderCarouselSlide}
                 className={styles.carousel}
             />
         </div>

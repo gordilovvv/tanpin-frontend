@@ -6,46 +6,10 @@ import classNames from 'classnames';
 import styles from './GameCard.module.scss';
 
 type GameCardProps = {
-    game?: Game
+    game: Game
 }
 
 export function GameCard({ game }: GameCardProps) {
-
-    if (!game) {
-        return (
-            <div className={classNames(styles.card, styles.skeletonWrapper)}>
-                <div className={styles.skeletonInner}>
-                    <Skeleton
-                        className={styles.skeletonMain}
-                    />
-
-                    <div className={styles.skeletonRow}>
-                        <div
-                            className={styles.skeletonItem}
-                        >
-                            <Skeleton className={styles.skeletonHeader} />
-                            <Skeleton className={styles.skeletonBody} />
-                        </div>
-
-                        <div
-                            className={styles.skeletonItem}
-                        >
-                            <Skeleton className={styles.skeletonHeader} />
-                            <Skeleton className={styles.skeletonBody} />
-                        </div>
-
-                        <div
-                            className={styles.skeletonItem}
-                        >
-                            <Skeleton className={styles.skeletonHeader} />
-                            <Skeleton className={styles.skeletonBody} />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className={styles.card}>
             <div className={styles.background}>
@@ -90,12 +54,38 @@ export function GameCard({ game }: GameCardProps) {
 
                     <Button
                         to={`/games/${game.ID}`}
-                        className={styles.btn}
                         view="secondary"
-                        to={'/games/' + game.ID}
+                        className={styles.btn}
                     >
                         Open collections
                     </Button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export function GameCardSkeleton() {
+    return (
+        <div className={classNames(styles.card, styles.skeletonWrapper)}>
+            <div className={styles.skeletonInner}>
+                <Skeleton className={styles.skeletonMain} />
+
+                <div className={styles.skeletonRow}>
+                    <div className={styles.skeletonItem}>
+                        <Skeleton className={styles.skeletonHeader} />
+                        <Skeleton className={styles.skeletonBody} />
+                    </div>
+
+                    <div className={styles.skeletonItem}>
+                        <Skeleton className={styles.skeletonHeader} />
+                        <Skeleton className={styles.skeletonBody} />
+                    </div>
+
+                    <div className={styles.skeletonItem}>
+                        <Skeleton className={styles.skeletonHeader} />
+                        <Skeleton className={styles.skeletonBody} />
+                    </div>
                 </div>
             </div>
         </div>
