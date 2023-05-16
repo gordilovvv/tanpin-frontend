@@ -6,16 +6,11 @@ import { Variants } from 'framer-motion';
 import classNames from 'classnames';
 import styles from './Select.module.scss';
 
-type SelectOption = {
-    value: string
-    label: string
-}
-
-type SelectProps = {
-    options: SelectOption[]
-    selectedValue?: string
+type SelectProps<T> = {
+    options: { value: T, label: string }[]
+    selectedValue?: T
     placeholderText?: string
-    onChange: (value: string) => void
+    onChange: (value: T) => void
 }
 
 const animationMap = {
@@ -30,7 +25,7 @@ const animationVariants = {
     exit: { transform: 'translate(0, 20px)', opacity: 0 },
 } as Variants;
 
-export function Select({ options, selectedValue, placeholderText = '', onChange }: SelectProps) {
+export function Select<T extends string>({ options, selectedValue, placeholderText = '', onChange }: SelectProps<T>) {
     const state = usePopoverState({
         placement: 'bottom',
         sameWidth: true,
@@ -47,7 +42,7 @@ export function Select({ options, selectedValue, placeholderText = '', onChange 
         return options.find(option => option.value === selectedValue);
     }, [options, selectedValue]);
 
-    const handleOptionClick = (value: string) => {
+    const handleOptionClick = (value: T) => {
         onChange(value);
 
         state.setOpen(false);
