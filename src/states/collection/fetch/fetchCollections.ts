@@ -9,7 +9,7 @@ export async function collectionFetch(body: CollectionQueryBody): Promise<Collec
 
         return {
             page: body.pageNum,
-            countPage: 2,
+            pageCount: 2,
             collections: [...Array(PAGE_SIZE).keys()].map(id => {
                 return {
                     ID: `${(id + (10 * (body?.pageNum ?? 0)))}`,

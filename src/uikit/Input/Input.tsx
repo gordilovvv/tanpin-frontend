@@ -1,10 +1,15 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, forwardRef } from 'react';
 import classNames from 'classnames';
 import styles from './Input.module.scss';
 
-export function Input({ className, ...props }: InputHTMLAttributes<HTMLInputElement>) {
-    return <input
-        className={classNames(styles.input, className)}
-        {...props}
-    />;
-}
+export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
+    ({ className, ...props }, ref) => {
+        return <input
+            ref={ref}
+            className={classNames(styles.input, className)}
+            {...props}
+        />;
+    }
+);
+
+Input.displayName = 'Input';

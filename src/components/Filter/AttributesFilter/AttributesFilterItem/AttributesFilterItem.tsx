@@ -5,19 +5,19 @@ import { Mark, UnstyleButton } from '@/uikit';
 
 
 type AttributesFilterItemProps = {
-    info: {
-        value: string,
-        label: string,
-        count?: number
-    }
+    value: string
+    onChange: (isActive: boolean, value: string) => void,
+    initialActive: boolean
 }
 
-export function AttributesFilterItem({ info }: AttributesFilterItemProps) {
-    const [isActive, setIsActive] = useState(false);
-    const handleClick = () => setIsActive(prev => !prev);
+export function AttributesFilterItem({ value, onChange, initialActive = false }: AttributesFilterItemProps) {
+    const [isActive, setIsActive] = useState(initialActive);
+    const handleClick = () => {
+        onChange(!isActive, value);
+        setIsActive(prev => !prev);
+    };
 
 
-    const { value, label, count } = info;
     return (
         <UnstyleButton
             className={classNames(styles.label, {
@@ -30,10 +30,10 @@ export function AttributesFilterItem({ info }: AttributesFilterItemProps) {
             </div>
 
             <div className={styles.title}>
-                {label}
+                {value}
             </div>
 
-            {count && <div className={styles.count}>{count}3 {+count === 1 ? 'item' : 'items'}</div>}
+            {/* {count && <div className={styles.count}>{count}3 {+count === 1 ? 'item' : 'items'}</div>} */}
         </UnstyleButton>
     );
 

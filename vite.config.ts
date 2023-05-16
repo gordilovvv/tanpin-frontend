@@ -16,7 +16,7 @@ export default defineConfig({
     },
     css: {
         modules: {
-            localsConvention: 'camelCaseOnly'  
+            localsConvention: 'camelCaseOnly'
         },
         preprocessorOptions: {
             scss: {
@@ -29,6 +29,34 @@ export default defineConfig({
             // Node.js global to browser globalThis
             define: {
                 global: 'globalThis',
+            },
+        },
+    },
+    build: {
+        rollupOptions: {
+            // https://rollupjs.org/guide/en/#outputmanualchunks
+            output: {
+                // manualChunks: {
+                //     'group-user': [
+                //         './src/UserDetails',
+                //         './src/UserDashboard',
+                //         './src/UserProfileEdit',
+                //     ],
+                // },
+                // TODO: finish chunks
+                manualChunks(id) {
+                    if (id.includes('/node_modules/')) {
+                        return 'vendors';
+                    }
+
+                    if (id.includes('uikit')) {
+                        return 'uikit';
+                    }
+
+                    // if (id.includes('App.vue') || id.includes('components/Popup') || id.includes('components/Tooltip') || id.includes('src/uikit') || id.includes('src/hooks') || id.includes('components/Menus')) {
+                    //     return 'app';
+                    // }
+                }
             },
         },
     }

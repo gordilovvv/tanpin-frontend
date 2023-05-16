@@ -62,4 +62,7 @@
     .container {
         gap: 24px;
     }
+    .top {
+        grid-template-columns: 1fr;
+    }
 }

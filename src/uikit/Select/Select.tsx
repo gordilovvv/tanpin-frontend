@@ -73,7 +73,7 @@ export function Select({ options, selectedValue, placeholderText = '', onChange 
                 maxHeight={144}
                 {...animationMap}
                 variants={animationVariants}
-                transition={{ duration: 0.2, ease: [0.38, 0, 0.22, 1] }}
+                transition={{ duration: 0.15, ease: [0.38, 0, 0.22, 1] }}
             >
                 {options.map((option) => {
                     const isActive = option.value === selectedOption?.value;

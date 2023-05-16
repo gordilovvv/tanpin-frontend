@@ -3,10 +3,11 @@ import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import styles from './SingleCollectionView.module.scss';
 import { Container } from '@/components/Layout';
 import { NFTSaleStatus } from '@/states/types';
-import { InputSearch, Select, Button, Filter as FilterIcon } from '@/uikit';
+import { InputSearch, Select, Button, Filter as FilterIcon, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { Filter } from '@/components/Filter';
 import classNames from 'classnames';
 import { useState } from 'react';
+
 
 const mock = {
     ID: '1',
@@ -62,7 +63,12 @@ export function SingleCollectionView() {
                             />
                         </div>
 
-                        <Filter className={styles.filter} />
+
+                        {/* <Modal isOpen={true}> */}
+                        <Filter />
+
+                        {/* </Modal> */}
+
 
                         <div>
                             <div className={styles.cardWrapper}>

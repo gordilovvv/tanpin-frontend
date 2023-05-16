@@ -1,44 +1,48 @@
-import { useState, useEffect } from 'react';
 import styles from './AttributesFilter.module.scss';
+import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
 
 import { AttributesFilterItem } from './AttributesFilterItem/AttributesFilterItem';
 
-export type Option = {
-    label: string;
-    value: string;
-    count?: number;
-}
+
 
 type AttributesFilterProps = {
-    options: Option[];
-    onChange: (value: Option['value'][]) => void
+    values: string[]
+    traitType: string
+    activeAttributes: Hashmap
 }
 
-export function AttributesFilter({ options = [], onChange }: AttributesFilterProps) {
-    const [selectedValues, setSelectedValues] = useState<string[]>([]);
+type Hashmap = {
+    [key: string]: { [key: string]: boolean };
+}
 
-    // const handleCheckboxChange = (value: string) => {
-    //     setSelectedValues((prevSelectedValues) => {
-    //         if (prevSelectedValues.includes(value)) {
-    //             return prevSelectedValues.filter((v) => v !== value);
-    //         } else {
-    //             return [...prevSelectedValues, value];
-    //         }
-    //     });
-    // };
+export function AttributesFilter({ values = [], traitType, activeAttributes }: AttributesFilterProps) {
+    const { addAttribute, removeAttribute } = useFilterStoreActons();
 
-    useEffect(() => {
-        onChange(selectedValues);
-    }, [selectedValues]);
+
+
+
+    const hangleChange = (isActive: boolean, value) => {
+        const attribute = { value, traitType };
+        if (isActive) {
+            addAttribute(attribute);
+            return;
+        }
+        if (!isActive) {
+            removeAttribute(attribute);
+            return;
+        }
+    };
 
     return (
         <div className={styles.wrapper}>
             {
-                options.map((info) => {
+                values.map(value => {
                     return (
                         <AttributesFilterItem
-                            key={info.label}
-                            info={info}
+                            key={value}
+                            value={value}
+                            initialActive={activeAttributes[traitType]?.[value]}
+                            onChange={hangleChange}
                         />
                     );
                 })

@@ -1,27 +1,54 @@
-import { useState } from 'react';
 import styles from './Filter.module.scss';
 import { Select } from '@/uikit';
 import { PriceFilter } from './components/PriceFilter/PriceFilter';
 import { AttributesDisclosure } from './AttributesDisclosure/AttributesDisclosure';
 import { AttributesFilter } from './AttributesFilter/AttributesFilter';
-import type { Option } from './AttributesFilter/AttributesFilter';
 
+import { useFilterStore } from '@/states/collection/filterStore';
+
+function convertToHashmap(array: Trait[]) {
+    const hashmap = {};
+
+    for (const item of array) {
+        const { traitType, values } = item;
+        const valuesObject = {};
+
+        for (const value of values) {
+            valuesObject[value] = true;
+        }
+
+        hashmap[traitType] = valuesObject;
+    }
+
+    return hashmap;
+}
+
+type Trait = {
+    traitType: string;
+    values: string[];
+}
+
+type Hashmap = {
+    [key: string]: { [key: string]: boolean };
+}
+
+const attributes = [
+    {
+        traitType: 'Brand',
+        values: ['gucci', 'nike', 'adidas'],
+    },
+    {
+        traitType: 'cars',
+        values: ['audi', 'bmw', 'nissan'],
+    },
+];
 export function Filter() {
-    const [atr, setAtr] = useState<Option['value'][]>();
-
+    const activeAttributes: Hashmap = convertToHashmap(useFilterStore((state) => state.attributes));
 
     const options = [{
         value: 'string',
         label: 'string',
     }];
-
-    const optionsAtr = [
-        { label: 'Option 1', value: 'option1', count: 1 },
-        { label: 'Option 2', value: 'option2', count: 25 },
-        { label: 'Option 3', value: 'option3', },
-    ];
-
-
 
     return (
         <div className={styles.filter} >
@@ -57,17 +84,7 @@ export function Filter() {
 
                 <div className={styles.inner}>
                     <div className={styles.group}>
-                        <AttributesDisclosure
-                            // title='Condition'
-                            title={JSON.stringify(atr)}
-                            attributesCount='10'
-                            selectedCount={atr?.length}
-                        >
-                            <AttributesFilter
-                                onChange={setAtr}
-                                options={optionsAtr}
-                            />
-                        </AttributesDisclosure><AttributesDisclosure
+                        {/* <AttributesDisclosure
                             // title='Condition'
                             title={JSON.stringify(atr)}
                             attributesCount='10'
@@ -89,10 +106,38 @@ export function Filter() {
                                 onChange={setAtr}
                                 options={optionsAtr}
                             />
-                        </AttributesDisclosure>
+                        </AttributesDisclosure> */}
+
+
+                        {
+                            attributes.map(({ traitType, values }) => {
+
+                                return (
+
+                                    < AttributesDisclosure
+                                        key={traitType}
+                                        // title='Condition'
+                                        title={traitType}
+                                        attributesCount='10'
+                                    // selectedCount={atr?.length
+                                    // }
+                                    >
+
+
+                                        <AttributesFilter
+                                            traitType={traitType}
+                                            values={values}
+                                            activeAttributes={activeAttributes}
+                                        />
+                                    </AttributesDisclosure>
+
+                                );
+                            })
+
+                        }
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

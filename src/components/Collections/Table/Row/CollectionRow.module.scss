@@ -67,6 +67,16 @@ a.row {
     }
 }
 
+.row.loading .col {
+    display: flex;
+    justify-content: flex-end;
+
+    &:nth-child(1),
+    &:nth-child(2) {
+        justify-content: flex-start;
+    }
+}
+
 .secondary {
     color: var(--color-typo-ghost);
 }
@@ -125,6 +135,10 @@ a.row {
 
 @include max767 {
     .row {
+        &::before {
+            display: none;
+        }
+
         &:not(:last-child) {
             margin-bottom: 8px;
         }

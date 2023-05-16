@@ -1,0 +1,28 @@
+.wrap {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 48px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+
+    &Link {
+        color: var(--color-typo-base);
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: -0.014em;
+        text-decoration: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+}
+
+.socials {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
