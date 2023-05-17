@@ -1,4 +1,5 @@
-import { AttributesFilterItem } from './AttributesFilterItem/AttributesFilterItem';
+import { AttributesFilterOption } from './AttributesFilterOption/AttributesFilterOption';
+import { AttributesDisclosure } from '../AttributesDisclosure/AttributesDisclosure';
 import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
 import styles from './AttributesFilter.module.scss';
 
@@ -24,20 +25,28 @@ export function AttributesFilter({ values = [], traitType, activeAttributes }: A
     };
 
     return (
-        <div className={styles.wrapper}>
-            {
-                values.map(value => {
-                    return (
-                        <AttributesFilterItem
-                            key={value}
-                            value={value}
-                            initialActive={activeAttributes[traitType]?.[value]}
-                            onChange={handleChange}
-                        />
-                    );
-                })
-            }
-        </div>
+
+        <AttributesDisclosure
+            title={traitType}
+            attributesCount={values.length}
+        >
+            <div className={styles.wrapper}>
+                {
+                    values.map(value => {
+                        return (
+
+                            <AttributesFilterOption
+                                key={value}
+                                value={value}
+                                initialActive={activeAttributes[traitType]?.[value]}
+                                onChange={handleChange}
+                            />
+                        );
+                    })
+                }
+            </div>
+        </AttributesDisclosure>
+        // </div>
     );
 }
 

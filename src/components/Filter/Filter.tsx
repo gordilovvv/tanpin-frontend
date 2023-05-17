@@ -1,7 +1,7 @@
 import styles from './Filter.module.scss';
 import { Select } from '@/uikit';
-import { PriceFilter } from './components/PriceFilter/PriceFilter';
-import { AttributesDisclosure } from './AttributesDisclosure/AttributesDisclosure';
+import { PriceFilter } from './PriceFilter/PriceFilter';
+import { FilterItem } from './FilterItem/FilterItem';
 import { AttributesFilter } from './AttributesFilter/AttributesFilter';
 
 import { useFilterStore } from '@/states/collection/filterStore';
@@ -47,11 +47,11 @@ const attributes = [
 
 type FilterProps = HTMLAttributes<HTMLDivElement>;
 
-// TODO:
-// 1. Поправить порядок аттрибутов. Тут должен быть компонент ОДИН AttributesFilter
-// 2. AttributesFilterItem переименовать в AttributeFilterOption
-// 3. Сделать компонент под item (FilerItem)
-// 4. Убрать components папку у PriceFilter
+// TODO: - уже сделано
+// 1. Поправить порядок аттрибутов. Тут должен быть компонент ОДИН AttributesFilter -done
+// 2. AttributesFilterItem переименовать в AttributeFilterOption - done
+// 3. Сделать компонент под item (FilerItem) -done
+// 4. Убрать components папку у PriceFilter -done
 export function Filter({ className, ...props }: FilterProps) {
     const allAttributes = useFilterStore((state) => state.attributes);
 
@@ -73,57 +73,42 @@ export function Filter({ className, ...props }: FilterProps) {
             className={classNames(styles.filter, className)}
             {...props}
         >
-            <div className={styles.item}>
-                <div className={styles.header}>
-                    <div className={styles.title}>Status</div>
-                </div>
-
+            <FilterItem title="Status" >
                 <Select
                     placeholderText="Status"
                     onChange={() => null}
                     options={options}
                 />
-            </div>
+            </FilterItem>
 
-            <div className={styles.item}>
-                <div className={styles.header}>
-                    <div className={styles.title}>Price</div>
-                    <div className={styles.currency}>USDT</div>
-                </div>
-
+            <FilterItem
+                title="Price"
+                currency="USDT"
+            >
                 <PriceFilter
                     onMinPriceChange={handlePriceChange}
                     onMaxPriceChange={handlePriceChange}
                 />
-            </div>
+            </FilterItem>
 
-            <div className={styles.item}>
-                <div className={styles.header}>
-                    <div className={styles.title}>Properties</div>
-                </div>
-
+            <FilterItem title="Properties">
                 <div className={styles.inner}>
                     <div className={styles.group}>
                         {
                             attributes.map(({ traitType, values }) => {
                                 return (
-                                    <AttributesDisclosure
+                                    <AttributesFilter
                                         key={traitType}
-                                        title={traitType}
-                                        attributesCount={values.length}
-                                    >
-                                        <AttributesFilter
-                                            traitType={traitType}
-                                            values={values}
-                                            activeAttributes={activeAttributes}
-                                        />
-                                    </AttributesDisclosure>
+                                        traitType={traitType}
+                                        values={values}
+                                        activeAttributes={activeAttributes}
+                                    />
                                 );
                             })
                         }
                     </div>
                 </div>
-            </div>
+            </FilterItem>
         </div >
     );
 }

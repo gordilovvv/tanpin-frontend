@@ -1,16 +1,16 @@
-import styles from './AttributesFilterItem.module.scss';
+import styles from './AttributesFilterOption.module.scss';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { Mark, UnstyleButton } from '@/uikit';
 
 
-type AttributesFilterItemProps = {
+type AttributesFilterOptionProps = {
     value: string
     onChange: (isActive: boolean, value: string) => void,
     initialActive: boolean
 }
 
-export function AttributesFilterItem({ value, onChange, initialActive = false }: AttributesFilterItemProps) {
+export function AttributesFilterOption({ value, onChange, initialActive = false }: AttributesFilterOptionProps) {
     const [isActive, setIsActive] = useState(initialActive);
 
     const handleClick = () => {

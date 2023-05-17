@@ -1,28 +1,5 @@
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
-.item {
-    display: grid;
-    grid-template-columns: minmax(0, auto);
-    gap: 12px;
-}
 
-.title {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 1.44;
-    color: var(--color-typo-base);
-}
-
-.currency {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 1.44;
-    color: var(--color-typo-ghost);
-}
 
 .filter {
     display: grid;
@@ -31,7 +8,10 @@
     grid-area: filter;
     overflow: hidden scroll;
     overscroll-behavior-y: none;
-
+    
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 24px;
 
 }
 

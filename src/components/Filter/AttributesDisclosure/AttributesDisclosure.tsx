@@ -9,9 +9,10 @@ type AttributesDisclosureProps = {
     attributesCount?: string | number
     selectedCount?: string | number
     defaultOpen?: boolean
+
 }
 
-export function AttributesDisclosure({ title, attributesCount, selectedCount, defaultOpen, children }: PropsWithChildren<AttributesDisclosureProps>) {
+export function AttributesDisclosure({ title, attributesCount, selectedCount, defaultOpen, children, }: PropsWithChildren<AttributesDisclosureProps>) {
     const state = useDisclosureState({ defaultOpen });
     const isOpen = state.useState('open');
 

@@ -1,0 +1,25 @@
+.item {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.44;
+    color: var(--color-typo-base);
+}
+
+.currency {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.44;
+    color: var(--color-typo-ghost);
+}
