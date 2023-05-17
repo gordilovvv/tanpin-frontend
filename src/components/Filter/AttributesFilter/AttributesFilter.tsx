@@ -12,7 +12,7 @@ type AttributesFilterProps = {
 }
 
 export function AttributesFilter({ values = [], traitType, activeAttributes }: AttributesFilterProps) {
-    const { addAttribute, removeAttribute } = useFilterStoreActons();
+    const { addAttribute, removeAttribute, } = useFilterStoreActons();
 
     const handleChange = (isActive: boolean, value) => {
         const attribute = { value, traitType };

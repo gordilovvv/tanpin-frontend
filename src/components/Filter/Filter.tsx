@@ -3,36 +3,12 @@ import { Select } from '@/uikit';
 import { PriceFilter } from './PriceFilter/PriceFilter';
 import { FilterItem } from './FilterItem/FilterItem';
 import { AttributesFilter } from './AttributesFilter/AttributesFilter';
-
+import { convertToHashmap } from '@/utils/convertToHashmap';
+import { NFTSaleStatus } from '@/states/types';
+import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
 import { useFilterStore } from '@/states/collection/filterStore';
-import { HTMLAttributes, useCallback, useMemo } from 'react';
+import { HTMLAttributes, useMemo } from 'react';
 import classNames from 'classnames';
-
-function convertToHashmap(array: Trait[]) {
-    const hashmap = {};
-
-    for (const item of array) {
-        const { traitType, values } = item;
-        const valuesObject = {};
-
-        for (const value of values) {
-            valuesObject[value] = true;
-        }
-
-        hashmap[traitType] = valuesObject;
-    }
-
-    return hashmap;
-}
-
-type Trait = {
-    traitType: string;
-    values: string[];
-}
-
-type AttributesHashMap = {
-    [key: string]: { [key: string]: boolean };
-}
 
 const attributes = [
     {
@@ -45,28 +21,37 @@ const attributes = [
     },
 ];
 
+type AttributesHashMap = {
+    [key: string]: { [key: string]: boolean };
+}
+
 type FilterProps = HTMLAttributes<HTMLDivElement>;
 
-// TODO: - уже сделано
-// 1. Поправить порядок аттрибутов. Тут должен быть компонент ОДИН AttributesFilter -done
-// 2. AttributesFilterItem переименовать в AttributeFilterOption - done
-// 3. Сделать компонент под item (FilerItem) -done
-// 4. Убрать components папку у PriceFilter -done
+
+const saleStatusesOptions: { value: NFTSaleStatus, label: string }[] = [
+    {
+        value: NFTSaleStatus.FIXED_PRICE,
+        label: 'Fixed price'
+    },
+    {
+        value: NFTSaleStatus.AUCTION,
+        label: 'Auction'
+    },
+    {
+        value: NFTSaleStatus.NOT_FOR_SALE,
+        label: 'Not for sale'
+    },
+];
+
 export function Filter({ className, ...props }: FilterProps) {
+    const { setStatus, setMaxPrice, setMinPrice } = useFilterStoreActons();
+    const status = useFilterStore((state) => state.status);
+
     const allAttributes = useFilterStore((state) => state.attributes);
 
     const activeAttributes = useMemo(() => {
         return convertToHashmap(allAttributes) as AttributesHashMap;
     }, [allAttributes]);
-
-    const options = [{
-        value: 'string',
-        label: 'string',
-    }];
-
-    const handlePriceChange = useCallback((val: string) => {
-        console.log(val);
-    }, []);
 
     return (
         <div
@@ -76,8 +61,9 @@ export function Filter({ className, ...props }: FilterProps) {
             <FilterItem title="Status" >
                 <Select
                     placeholderText="Status"
-                    onChange={() => null}
-                    options={options}
+                    onChange={setStatus}
+                    selectedValue={status}
+                    options={saleStatusesOptions}
                 />
             </FilterItem>
 
@@ -86,8 +72,8 @@ export function Filter({ className, ...props }: FilterProps) {
                 currency="USDT"
             >
                 <PriceFilter
-                    onMinPriceChange={handlePriceChange}
-                    onMaxPriceChange={handlePriceChange}
+                    onMinPriceChange={setMinPrice}
+                    onMaxPriceChange={setMaxPrice}
                 />
             </FilterItem>
 

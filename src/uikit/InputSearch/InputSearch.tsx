@@ -6,13 +6,13 @@ import classNames from 'classnames';
 import styles from './InputSearch.module.scss';
 
 type InputProps = {
-    value: string
+    value?: string
     placeholder?: string
     onChange: (value: string) => void
 }
 
 export const InputSearch = forwardRef<HTMLInputElement, InputProps & Omit<HTMLAttributes<HTMLInputElement>, 'onChange'>>(
-    ({ value, onChange, placeholder, className, ...props }, ref) => {
+    ({ value = '', onChange, placeholder, className, ...props }, ref) => {
         const [inputValue, setInputValue] = useState(value);
 
         const debounceTimeout = 300;

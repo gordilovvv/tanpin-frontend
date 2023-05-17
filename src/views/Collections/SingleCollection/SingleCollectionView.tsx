@@ -9,8 +9,8 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { isTouchDevice } from '@/utils/isTouchDevice';
-
-
+import { useFilterStore } from '@/states/collection/filterStore';
+import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
 const mock = {
     ID: '1',
     name: 'Porsche Cayenne',
@@ -27,13 +27,18 @@ const mock = {
     status: NFTSaleStatus.FIXED_PRICE,
 };
 
-const options = [{
-    value: 'string',
-    label: 'string',
-}];
+
+
+const options: { value: string; label: string }[] = [
+    { value: 'RECENTLY_ADDED', label: 'Recently Added' },
+    { value: 'HIGH_PRICE_FIRST', label: 'High Price First' },
+    { value: 'LOW_PRICE_FIRST', label: 'Low Price First' },
+];
 
 export function SingleCollectionView() {
-    // const [foo, setFoo] = useState('');
+    const sort = useFilterStore((state) => state.sort);
+
+    const { setSearch, setSort } = useFilterStoreActons();
 
     const [isFilterVisible, setIsFilterVisible] = useState(!isTouchDevice);
 
@@ -71,14 +76,14 @@ export function SingleCollectionView() {
                             </Button>
 
                             <InputSearch
-                                value={'3'}
                                 placeholder="Search"
-                                onChange={(val) => console.log(val)}
+                                onChange={setSearch}
                             />
 
                             <Select
-                                placeholderText="Status"
-                                onChange={() => null}
+                                placeholderText="Sort"
+                                onChange={setSort}
+                                selectedValue={sort}
                                 options={options}
                             />
                         </div>

@@ -15,7 +15,7 @@ type SelectProps = {
     options: SelectOption[]
     selectedValue?: string
     placeholderText?: string
-    onChange: (value: string) => void
+    onChange: (value: SelectOption['value']) => void
 }
 
 const animationMap = {
@@ -47,6 +47,13 @@ export function Select({ options, selectedValue, placeholderText = '', onChange 
         return options.find(option => option.value === selectedValue);
     }, [options, selectedValue]);
 
+    const transformedOptions = useMemo(() => {
+        if (Array.isArray(options) && options.length > 0 && typeof options[0] === 'string') {
+            return options.map(option => ({ value: option, label: option }));
+        }
+        return options;
+    }, [options]);
+
     const handleOptionClick = (value: string) => {
         onChange(value);
 
@@ -75,7 +82,7 @@ export function Select({ options, selectedValue, placeholderText = '', onChange 
                 variants={animationVariants}
                 transition={{ duration: 0.15, ease: [0.38, 0, 0.22, 1] }}
             >
-                {options.map((option) => {
+                {transformedOptions.map((option) => {
                     const isActive = option.value === selectedOption?.value;
 
                     return <PopoverItem
