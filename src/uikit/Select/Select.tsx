@@ -70,7 +70,7 @@ export function Select<T extends string>({ options, selectedValue, placeholderTe
                 variants={animationVariants}
                 transition={{ duration: 0.15, ease: [0.38, 0, 0.22, 1] }}
             >
-                {transformedOptions.map((option) => {
+                {options.map((option) => {
                     const isActive = option.value === selectedOption?.value;
 
                     return <PopoverItem
