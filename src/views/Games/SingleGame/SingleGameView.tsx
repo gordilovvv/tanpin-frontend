@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Select, InputSearch } from '@/uikit';
-import { Container } from '@/components/Layout';
+import { Container, PageWrapper } from '@/components/Layout';
 import { CollectionTable } from '@/components/Collections';
 import { GameHead } from './components/Head/GameHead';
 import { CollectionsSort } from '@/states/collection/types';
@@ -23,30 +23,32 @@ export function SingleGameView() {
     ];
 
     return (
-        <div className={styles.wrapper}>
-            <GameHead game={game} />
+        <PageWrapper hasPaddingTop={false}>
+            <div className={styles.wrapper}>
+                <GameHead game={game} />
 
-            <Container>
-                <div className={styles.header}>
-                    <InputSearch
-                        value={search}
-                        onChange={(val) => setSearch(val)}
+                <Container>
+                    <div className={styles.header}>
+                        <InputSearch
+                            value={search}
+                            onChange={(val) => setSearch(val)}
+                        />
+
+                        <Select
+                            options={options}
+                            selectedValue={sort}
+                            onChange={(value) => setSort(value as CollectionsSort)}
+                        />
+                    </div>
+                </Container>
+
+                <Container>
+                    <CollectionTable
+                        filter={filter}
+                        hasMoreButton
                     />
-
-                    <Select
-                        options={options}
-                        selectedValue={sort}
-                        onChange={(value) => setSort(value as CollectionsSort)}
-                    />
-                </div>
-            </Container>
-
-            <Container>
-                <CollectionTable
-                    filter={filter}
-                    hasMoreButton
-                />
-            </Container>
-        </div>
+                </Container>
+            </div>
+        </PageWrapper>
     );
 }

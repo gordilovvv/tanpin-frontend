@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
+// import { basename } from 'path';
+// import { createHash } from 'crypto';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // https://vitejs.dev/config/
@@ -16,6 +18,17 @@ export default defineConfig({
     },
     css: {
         modules: {
+            // generateScopedName: '[name]__[local]___[hash:base64:5]',
+            // generateScopedName(name, filename, css) {
+            //     const component = basename(filename).replace('.module.scss', '');
+            //     const hash = createHash('md5')
+            //         .update(filename)
+            //         .digest('hex')
+            //         .slice(0, 5);
+
+            //     // we must start with an underscore, otherwise it might start with a number
+            //     return `${component}__${name}__${hash}`;
+            // },
             localsConvention: 'camelCaseOnly'
         },
         preprocessorOptions: {
