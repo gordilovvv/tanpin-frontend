@@ -3,15 +3,20 @@ import styles from './FilterItem.module.scss';
 
 type FilterItemProps = {
     title: string,
-    currency?: string
+    addon?: string
 }
 
-export function FilterItem({ children, title, currency = '' }: PropsWithChildren<FilterItemProps>) {
+export function FilterItem({ children, title, addon = '' }: PropsWithChildren<FilterItemProps>) {
     return (
         <div className={styles.item}>
-            <div className={styles.header}>
-                <div className={styles.title}> {title}</div>
-                {currency && <div className={styles.currency}> {currency}</div>}
+            <div className={styles.head}>
+                <div className={styles.title}>
+                    {title}
+                </div>
+
+                {addon && <div className={styles.addon}>
+                    {addon}
+                </div>}
             </div>
 
             {children}

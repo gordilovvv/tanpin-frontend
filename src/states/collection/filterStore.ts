@@ -1,166 +1,151 @@
-import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { create } from 'zustand';
+import { NFTAttribute, NFTSaleStatus } from '../types';
 
-type FilterStore = {
-  collectionID: string
-  search: string
-  sort: 'RECENTLY_ADDED' | 'HIGH_PRICE_FIRST' | 'LOW_PRICE_FIRST'
-  status: 'FIXED_PRICE' | 'AUCTION' | 'NOT_FOR_SALE'
-  minPrice: string
-  maxPrice: string
-  attributes: {
-    traitType: string
-    values: string[]
-  }[]
+type State = {
+    collectionID: string
+    search: string
+    sort: `${FilterSorting}`
+    status: `${NFTSaleStatus.AUCTION}` | `${NFTSaleStatus.FIXED_PRICE}`
+    minPrice: string
+    maxPrice: string
+    attributes: {
+        traitType: string
+        values: string[]
+    }[]
 }
 
-type FilterActions = {
-  addAttribute: (attribute: Attribute) => void
-  removeAttribute: (attribute: Attribute) => void
-  clearAllOfTraitType: (traitType: string) => void
-  setSearch: (search: string) => void
-  setSort: (sort: 'RECENTLY_ADDED' | 'HIGH_PRICE_FIRST' | 'LOW_PRICE_FIRST') => void
-  setStatus: (status: 'FIXED_PRICE' | 'AUCTION' | 'NOT_FOR_SALE' | string) => void
-  setCollectionID: (id: string) => void
-  clearAttributes: () => void
-  setMinPrice: (price: string) => void
-  setMaxPrice: (price: string) => void
+type Actions = {
+    setMinPrice: (minPrice: State['minPrice']) => void
+    setMaxPrice: (maxPrice: State['maxPrice']) => void
+    addAttribute: (attribute: NFTAttribute) => void
+    removeAttribute: (attribute: NFTAttribute) => void
+    clearAttributes: () => void
+    clearAllOfTraitType: (traitType: string) => void
+    setSearch: (search: State['search']) => void
+    setSort: (sort: State['sort']) => void
+    setStatus: (status: State['status']) => void
+    setCollectionID: (id: State['collectionID']) => void
 }
 
-type Attribute = {
-  traitType: string
-  value: string
+enum FilterSorting {
+    RECENTLY_ADDED = 'RECENTLY_ADDED',
+    HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
+    LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
 }
 
-export const useFilterStore = create<FilterStore & FilterActions>()(
-  devtools((set) => ({
-    collectionID: '',
-    search: '',
-    sort: 'RECENTLY_ADDED',
-    status: 'FIXED_PRICE',
-    minPrice: '',
-    maxPrice: '',
-    attributes: [],
-    addAttribute: (newAttribute) =>
-      set((store) => {
-        // Если аттрибуты пустые, просто кладём туда новый аттрибут
-        if (store.attributes.length === 0) {
-          return {
-            ...store,
-            attributes: [{ traitType: newAttribute.traitType, values: [newAttribute.value] }],
-          }
-        }
-
-        // Проверяем, есть ли в сторе аттрибут c таким-же traitType
-        const attributeFromStoreIndex = store.attributes.findIndex(
-          (storeAttribute) => storeAttribute.traitType === newAttribute.traitType,
-        )
-
-        // Если нету, просто добавляем аттрибут в массив
-        if (attributeFromStoreIndex === -1) {
-          return {
-            ...store,
-            attributes: [...store.attributes, { traitType: newAttribute.traitType, values: [newAttribute.value] }],
-          }
-        }
-
-        // Если в сторе уже есть аттрибут с таким же traitType,
-        // то мы проверяем, есть ли в его массиве values такой же value
-        // и если есть, то просто возвращаем старый стор
-        const attributeFromStore = store.attributes[attributeFromStoreIndex]
-        if (attributeFromStore.values.some((val) => val === newAttribute.value)) {
-          return store
-        }
-
-        // А если нету, то добавляем newAttribute.value в массив values
-        const newAttributes = store.attributes.map((attr) => {
-          if (attr.traitType === newAttribute.traitType) {
-            return {
-              traitType: newAttribute.traitType,
-              values: [...attr.values, newAttribute.value],
-            }
-          }
-          return attr
-        })
-        return {
-          ...store,
-          attributes: newAttributes,
-        }
-      }),
-
-    removeAttribute: (attrToRemove) =>
-      set((store) => {
-        const indexOfTraitType = store.attributes.findIndex((attr) => attr.traitType === attrToRemove.traitType)
-        if (indexOfTraitType === -1) {
-          return store
-        }
-
-        const traitTypeToModify = store.attributes[indexOfTraitType]
-        const filteredValues = traitTypeToModify.values.filter((val) => val !== attrToRemove.value)
-        if (filteredValues.length === 0) {
-          // Remove this traitType completly
-          return {
-            ...store,
-            attributes: store.attributes.filter((attr) => attr.traitType !== attrToRemove.traitType),
-          }
-        }
-
-        const modifiedTraitType = {
-          ...traitTypeToModify,
-          values: filteredValues,
-        }
-        const newAttributes = store.attributes.map((attr) => {
-          if (attr.traitType === modifiedTraitType.traitType) {
-            return modifiedTraitType
-          }
-          return attr
-        })
-        return {
-          ...store,
-          attributes: newAttributes,
-        }
-      }),
-    clearAllOfTraitType: (traitTypeToClear) =>
-      set((store) => {
-        return {
-          ...store,
-          attributes: store.attributes.filter((attr) => attr.traitType !== traitTypeToClear),
-        }
-      }),
-    clearAttributes: () =>
-      set((store) => ({
-        ...store,
+export const useFilterStore = create<State & Actions>()(
+    (set) => ({
+        collectionID: '',
+        search: '',
+        sort: 'RECENTLY_ADDED',
+        status: 'FIXED_PRICE',
+        minPrice: '',
+        maxPrice: '',
         attributes: [],
-      })),
-    setSort: (sort) =>
-      set((store) => ({
-        ...store,
-        sort,
-      })),
-    setStatus: (status) =>
-      set((store) => ({
-        ...store,
-        status,
-      })),
-    setCollectionID: (collectionID) =>
-      set((store) => ({
-        ...store,
-        collectionID,
-      })),
-    setSearch: (search) =>
-      set((store) => ({
-        ...store,
-        search,
-      })),
-    setMinPrice: (price) =>
-      set((store) => ({
-        ...store,
-        price,
-      })),
-    setMaxPrice: (price) =>
-      set((store) => ({
-        ...store,
-        price,
-      })),
-  })),
-)
+        setMinPrice: (minPrice) => {
+            set({ minPrice });
+        },
+        setMaxPrice: (maxPrice) => {
+            set({ maxPrice });
+        },
+        addAttribute: (attribute) => {
+            set((store) => {
+                // Check if attribute already have existed
+                const existedAttributeIndex = store.attributes.findIndex(({ traitType }) => traitType === attribute.traitType);
+
+                // Add attribute
+                if (existedAttributeIndex === -1) {
+                    return {
+                        attributes: [
+                            ...store.attributes,
+                            {
+                                traitType: attribute.traitType,
+                                values: [attribute.value]
+                            }
+                        ],
+                    };
+                }
+
+                // Or check if is's value
+                const existedAttribute = store.attributes[existedAttributeIndex];
+
+                // If exist - stop
+                if (existedAttribute.values.some((val) => val === attribute.value)) {
+                    return store;
+                }
+
+                // Or add new attribute value
+                const updatedAttributes = store.attributes.map((attr) => {
+                    if (attr.traitType === attribute.traitType) {
+                        return {
+                            traitType: attribute.traitType,
+                            values: [
+                                ...attr.values,
+                                attribute.value
+                            ],
+                        };
+                    }
+
+                    return attr;
+                });
+
+                return { attributes: updatedAttributes };
+            });
+        },
+        removeAttribute: (attribute) => {
+            set((store) => {
+                const existedAttribute = store.attributes.find(
+                    (attr) => attr.traitType === attribute.traitType
+                );
+
+                // If we didn't find the attribute
+                if (!existedAttribute) {
+                    return store;
+                }
+
+                const updatedAttributes: typeof store.attributes = [];
+
+                // Rebuild attributes object
+                for (const { traitType, values } of store.attributes) {
+                    if (traitType === attribute.traitType) {
+                        const filteredValues = values.filter(value => value !== attribute.value);
+
+                        if (filteredValues.length) {
+                            updatedAttributes.push({
+                                traitType,
+                                values: filteredValues
+                            });
+                        }
+                    } else {
+                        updatedAttributes.push({
+                            traitType,
+                            values
+                        });
+                    }
+                }
+
+                return { attributes: updatedAttributes };
+            });
+        },
+        clearAllOfTraitType: (traitTypeToClear) => {
+            set(store => ({
+                attributes: store.attributes.filter((attr) => attr.traitType !== traitTypeToClear)
+            }));
+        },
+        clearAttributes: () => {
+            set({ attributes: [] });
+        },
+        setSort: (sort) => {
+            set({ sort });
+        },
+        setStatus: (status) => {
+            set({ status });
+        },
+        setCollectionID: (collectionID) => {
+            set({ collectionID });
+        },
+        setSearch: (search) => {
+            set({ search });
+        }
+    })
+);

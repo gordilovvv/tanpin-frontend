@@ -1,75 +1,64 @@
-import styles from './Filter.module.scss';
-import { Select } from '@/uikit';
-import { PriceFilter } from './PriceFilter/PriceFilter';
-import { FilterItem } from './FilterItem/FilterItem';
-import { AttributesFilter } from './AttributesFilter/AttributesFilter';
-import { convertToHashmap } from '@/utils/convertToHashmap';
-import { NFTSaleStatus } from '@/states/types';
-import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
-import { useFilterStore } from '@/states/collection/filterStore';
 import { HTMLAttributes, useMemo } from 'react';
+import { Select } from '@/uikit';
+import { FilterItem } from './FilterItem/FilterItem';
+import { PriceFilter } from './PriceFilter/PriceFilter';
+import { AttributesFilter } from './AttributesFilter/AttributesFilter';
+import { useFilterStore } from '@/states/collection/filterStore';
+import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
+import { convertToHashmap } from '@/utils/convertToHashmap';
+import { ActiveAttributesHashMap } from './types';
+import { NFTSaleStatus } from '@/states/types';
+import { Collection } from '@/states/collection/types';
 import classNames from 'classnames';
+import styles from './Filter.module.scss';
 
-const attributes = [
-    {
-        traitType: 'Brand',
-        values: ['gucci', 'nike', 'adidas'],
-    },
-    {
-        traitType: 'cars',
-        values: ['audi', 'bmw', 'nissan'],
-    },
-];
+type FilterProps = {
+    collection?: Collection
+} & HTMLAttributes<HTMLDivElement>;
 
-type AttributesHashMap = {
-    [key: string]: { [key: string]: boolean };
-}
+export function Filter({ collection, className, ...props }: FilterProps) {
+    const {
+        setStatus,
+        setMaxPrice,
+        setMinPrice
+    } = useFilterStoreActions();
 
-type FilterProps = HTMLAttributes<HTMLDivElement>;
+    const [status, activeAttributes] = useFilterStore((state) => [state.status, state.attributes]);
 
+    const activeAttributesHashMap = useMemo(
+        () => convertToHashmap(activeAttributes) as ActiveAttributesHashMap,
+        [activeAttributes]
+    );
 
-const saleStatusesOptions: { value: NFTSaleStatus, label: string }[] = [
-    {
-        value: NFTSaleStatus.FIXED_PRICE,
-        label: 'Fixed price'
-    },
-    {
-        value: NFTSaleStatus.AUCTION,
-        label: 'Auction'
-    },
-    {
-        value: NFTSaleStatus.NOT_FOR_SALE,
-        label: 'Not for sale'
-    },
-];
-
-export function Filter({ className, ...props }: FilterProps) {
-    const { setStatus, setMaxPrice, setMinPrice } = useFilterStoreActons();
-    const status = useFilterStore((state) => state.status);
-
-    const allAttributes = useFilterStore((state) => state.attributes);
-
-    const activeAttributes = useMemo(() => {
-        return convertToHashmap(allAttributes) as AttributesHashMap;
-    }, [allAttributes]);
+    const statusOptions: { value: typeof status, label: string }[] = [
+        {
+            value: NFTSaleStatus.FIXED_PRICE,
+            label: 'Buy now'
+        },
+        {
+            value: NFTSaleStatus.AUCTION,
+            label: 'Auction'
+        }
+    ];
 
     return (
         <div
             className={classNames(styles.filter, className)}
             {...props}
         >
-            <FilterItem title="Status" >
+            <FilterItem title='Status'>
                 <Select
-                    placeholderText="Status"
-                    onChange={setStatus}
+                    placeholderText='Status'
                     selectedValue={status}
-                    options={saleStatusesOptions}
+                    options={statusOptions}
+                    onChange={setStatus}
                 />
             </FilterItem>
 
+            {/* TODO: Replace USDT with dynamic variable */}
             <FilterItem
-                title="Price"
-                currency="USDT"
+                title='Price'
+                addon='USDT'
             >
                 <PriceFilter
                     onMinPriceChange={setMinPrice}
@@ -77,24 +66,24 @@ export function Filter({ className, ...props }: FilterProps) {
                 />
             </FilterItem>
 
-            <FilterItem title="Properties">
+            {collection?.attributes && <FilterItem title='Properties'>
                 <div className={styles.inner}>
                     <div className={styles.group}>
                         {
-                            attributes.map(({ traitType, values }) => {
+                            collection.attributes.map(({ traitType, values }) => {
                                 return (
                                     <AttributesFilter
                                         key={traitType}
-                                        traitType={traitType}
                                         values={values}
-                                        activeAttributes={activeAttributes}
+                                        traitType={traitType}
+                                        activeAttributes={activeAttributesHashMap}
                                     />
                                 );
                             })
                         }
                     </div>
                 </div>
-            </FilterItem>
-        </div >
+            </FilterItem>}
+        </div>
     );
 }
