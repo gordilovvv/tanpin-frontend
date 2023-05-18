@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { isTouchDevice } from '@/utils/isTouchDevice';
 import { useFilterStore } from '@/states/collection/filterStore';
-import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
+import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
 const mock = {
     ID: '1',
     name: 'Porsche Cayenne',
@@ -38,7 +38,7 @@ const options: { value: string; label: string }[] = [
 export function SingleCollectionView() {
     const sort = useFilterStore((state) => state.sort);
 
-    const { setSearch, setSort } = useFilterStoreActons();
+    const { setSearch, setSort } = useFilterStoreActions();
 
     const [isFilterVisible, setIsFilterVisible] = useState(!isTouchDevice);
 
