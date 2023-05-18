@@ -3,7 +3,7 @@ import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import styles from './SingleCollectionView.module.scss';
 import { Container } from '@/components/Layout';
 import { NFTSaleStatus } from '@/states/types';
-import { InputSearch, Select, Button, Filter as FilterIcon, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
+import { InputSearch, Select, Button, Filter as FilterIcon, Modal } from '@/uikit';
 import { Filter } from '@/components/Filter';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
@@ -52,6 +52,7 @@ export function SingleCollectionView() {
 
     const handleFilterToggle = () => {
         setIsFilterVisible(prev => !prev);
+        mobileFilterState.toggle();
     };
 
     return (
@@ -90,7 +91,10 @@ export function SingleCollectionView() {
 
                         {isFilterVisible && <Filter className={styles.filter} />}
 
-                        <Modal isOpen={mobileFilterState.isOpen}>
+                        <Modal
+                            isOpen={mobileFilterState.isOpen}
+                            onClose={mobileFilterState.close}
+                        >
                             <Filter />
                         </Modal>
 

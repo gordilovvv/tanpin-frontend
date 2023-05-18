@@ -1,0 +1,10 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+.title {
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--color-typo-ghost);
+}
