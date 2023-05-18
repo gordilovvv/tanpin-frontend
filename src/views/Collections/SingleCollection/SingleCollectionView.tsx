@@ -3,10 +3,14 @@ import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import styles from './SingleCollectionView.module.scss';
 import { Container } from '@/components/Layout';
 import { NFTSaleStatus } from '@/states/types';
-import { InputSearch, Select, Button, Filter as FilterIcon } from '@/uikit';
+import { InputSearch, Select, Button, Filter as FilterIcon, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { Filter } from '@/components/Filter';
-
-
+import classNames from 'classnames';
+import { useEffect, useState } from 'react';
+import { useOpenedState } from '@/hooks/useOpenedState';
+import { isTouchDevice } from '@/utils/isTouchDevice';
+import { useFilterStore } from '@/states/collection/filterStore';
+import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
 const mock = {
     ID: '1',
     name: 'Porsche Cayenne',
@@ -23,42 +27,75 @@ const mock = {
     status: NFTSaleStatus.FIXED_PRICE,
 };
 
-const options = [{
-    value: 'string',
-    label: 'string',
-}];
+
+
+const options: { value: string; label: string }[] = [
+    { value: 'RECENTLY_ADDED', label: 'Recently Added' },
+    { value: 'HIGH_PRICE_FIRST', label: 'High Price First' },
+    { value: 'LOW_PRICE_FIRST', label: 'Low Price First' },
+];
 
 export function SingleCollectionView() {
+    const sort = useFilterStore((state) => state.sort);
+
+    const { setSearch, setSort } = useFilterStoreActons();
+
+    const [isFilterVisible, setIsFilterVisible] = useState(!isTouchDevice);
+
+    const mobileFilterState = useOpenedState();
+
+    useEffect(() => {
+        // TODO:
+        // 1. Скрыть десктоп фильтр при resize
+        // 2. Скрыть модалку фильтра при resize
+    }, []);
+
+    const handleFilterToggle = () => {
+        setIsFilterVisible(prev => !prev);
+    };
+
     return (
         <>
             <div className={styles.container}>
                 <CollectionHead />
 
                 <Container space>
-                    <div className={styles.wrapper}>
+                    <div
+                        className={classNames(styles.wrapper, {
+                            [styles.oneColumn]: !isFilterVisible,
+                            [styles.twoColumns]: isFilterVisible
+                        })}
+                    >
                         <div className={styles.top}>
                             <Button
                                 iconSlot={<FilterIcon />}
                                 view="secondary"
-                                onClick={() => null}
-                            >Filters</Button>
+                                onClick={handleFilterToggle}
+                            >
+                                Filters
+                            </Button>
 
                             <InputSearch
-                                value={'3'}
                                 placeholder="Search"
-                                onChange={(val) => console.log(val)}
+                                onChange={setSearch}
                             />
 
                             <Select
-                                placeholderText="Status"
-                                onChange={() => null}
+                                placeholderText="Sort"
+                                onChange={setSort}
+                                selectedValue={sort}
                                 options={options}
                             />
                         </div>
 
-                        <Filter />
+                        {isFilterVisible && <Filter className={styles.filter} />}
 
-                        <div>
+                        <Modal isOpen={mobileFilterState.isOpen}>
+                            <Filter />
+                        </Modal>
+
+
+                        <div className={styles.table}>
                             <div className={styles.cardWrapper}>
 
                                 {true && (new Array(25)).fill(1).map((el, idx) => (<NftCardSkeleton key={idx} />))}
@@ -74,8 +111,8 @@ export function SingleCollectionView() {
                             </div>
                         </div>
                     </div>
-                </Container>
-            </div>
+                </Container >
+            </div >
         </>
     );
 }

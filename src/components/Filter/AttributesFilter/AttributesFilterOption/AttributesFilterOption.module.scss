@@ -1,0 +1,49 @@
+.label {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: center;
+
+    @include hover {
+        .box {
+            background: var(--color-surface);
+        }
+    }
+}
+
+.box {
+    background: var(--color-essential);
+    border: 1px solid var(--color-stroke);
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-success);
+    transition: background-color 0.1s linear;
+}
+
+.mark {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: transform 0.08s ease-in-out, opacity 0.08s ease-in-out;
+}
+
+.label.active {
+    .mark {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.title {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-typo-base);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+}

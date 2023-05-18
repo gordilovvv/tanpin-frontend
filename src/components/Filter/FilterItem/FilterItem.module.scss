@@ -1,0 +1,35 @@
+.item {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--color-typo-base);
+}
+
+.addon {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--color-typo-ghost);
+}
+
+@include max767 {
+
+    .title,
+    .addon {
+        font-size: 16px;
+    }
+
+
+}

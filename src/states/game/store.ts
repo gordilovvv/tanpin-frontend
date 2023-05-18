@@ -3,12 +3,12 @@ import { GamesSort } from './types';
 
 type State = {
     typedSearchQuery: string,
-    activeSort: `${ GamesSort }`
+    activeSort: `${GamesSort}`
 }
 
 type Actions = {
     typeSearch: (value: string) => void,
-    changeSort: (sort: `${ GamesSort }`) => void
+    changeSort: (sort: `${GamesSort}`) => void
 }
 
 export const useGamesStore = create<State & Actions>()((set) => ({

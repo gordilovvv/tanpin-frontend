@@ -55,14 +55,14 @@ export function PriceFilter({
             <NumericalInput
                 onInput={(value) => setMin(value)}
                 value={min}
-                placeholder="Min"
+                placeholder='Min'
                 className={styles.input}
             />
 
             <NumericalInput
                 onInput={(value) => setMax(value)}
                 value={max}
-                placeholder="Max"
+                placeholder='Max'
                 className={classNames(styles.input, {
                     [styles.error]: !isValid
                 })}

@@ -1,94 +1,89 @@
-import { useState } from 'react';
-import styles from './Filter.module.scss';
-import { InputSearch, Select } from '@/uikit';
+import { HTMLAttributes, useMemo } from 'react';
+import { Select } from '@/uikit';
+import { FilterItem } from './FilterItem/FilterItem';
+import { PriceFilter } from './PriceFilter/PriceFilter';
+import { AttributesFilter } from './AttributesFilter/AttributesFilter';
+import { useFilterStore } from '@/states/collection/filterStore';
+import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
+import { convertToHashmap } from '@/utils/convertToHashmap';
+import { ActiveAttributesHashMap } from './types';
+import { NFTSaleStatus } from '@/states/types';
+import { Collection } from '@/states/collection/types';
 import classNames from 'classnames';
-import { PriceFilter } from './components/PriceFilter/PriceFilter';
-import { AttributesDisclosure } from './AttributesDisclosure/AttributesDisclosure';
+import styles from './Filter.module.scss';
 
+type FilterProps = {
+    collection?: Collection
+} & HTMLAttributes<HTMLDivElement>;
 
-export function Filter() {
-    const [val, setVal] = useState('');
+export function Filter({ collection, className, ...props }: FilterProps) {
+    const {
+        setStatus,
+        setMaxPrice,
+        setMinPrice
+    } = useFilterStoreActions();
 
-    const options = [{
-        value: 'string',
-        label: 'string',
-    }];
+    const [status, activeAttributes] = useFilterStore((state) => [state.status, state.attributes]);
+
+    const activeAttributesHashMap = useMemo(
+        () => convertToHashmap(activeAttributes) as ActiveAttributesHashMap,
+        [activeAttributes]
+    );
+
+    const statusOptions: { value: typeof status, label: string }[] = [
+        {
+            value: NFTSaleStatus.FIXED_PRICE,
+            label: 'Buy now'
+        },
+        {
+            value: NFTSaleStatus.AUCTION,
+            label: 'Auction'
+        }
+    ];
 
     return (
-        <div className={classNames(styles.filter, { [styles.hidden]: false })} >
-
-            <div className={styles.item}>
-                <div className={styles.header}>
-                    <div className={styles.title}>Status</div>
-                </div>
-
+        <div
+            className={classNames(styles.filter, className)}
+            {...props}
+        >
+            <FilterItem title='Status'>
                 <Select
-                    placeholderText="Status"
-                    onChange={() => null}
-                    options={options}
+                    placeholderText='Status'
+                    selectedValue={status}
+                    options={statusOptions}
+                    onChange={setStatus}
                 />
+            </FilterItem>
 
-            </div>
-
-            <div className={styles.item}>
-                <div className={styles.header}>
-                    <div className={styles.title}>Price</div>
-                    <div className={styles.currency}>USDT</div>
-                </div>
-
+            {/* TODO: Replace USDT with dynamic variable */}
+            <FilterItem
+                title='Price'
+                addon='USDT'
+            >
                 <PriceFilter
-                    onMinPriceChange={(val) => console.log(val)}
-                    onMaxPriceChange={(val) => console.log(val)}
+                    onMinPriceChange={setMinPrice}
+                    onMaxPriceChange={setMaxPrice}
                 />
-            </div>
+            </FilterItem>
 
-            <div className={styles.item}>
-                <div className={styles.header}>
-                    <div className={styles.title}>Properties</div>
-                </div>
-
+            {collection?.attributes && <FilterItem title='Properties'>
                 <div className={styles.inner}>
-                    <AttributesDisclosure
-                        title='Condition'
-                        attributesCount='10'
-                        selectedCount={10}
-                    >
-                        options
-                    </AttributesDisclosure>
-
-                    <InputSearch
-                        value={val}
-                        onChange={(val) => setVal(val)}
-                        placeholder="Search"
-                    />
-
                     <div className={styles.group}>
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
-
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
-
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
-
-                        <Select
-                            placeholderText="Status"
-                            onChange={() => null}
-                            options={options}
-                        />
+                        {
+                            collection.attributes.map(({ traitType, values }) => {
+                                return (
+                                    <AttributesFilter
+                                        key={traitType}
+                                        values={values}
+                                        traitType={traitType}
+                                        activeAttributes={activeAttributesHashMap}
+                                    />
+                                );
+                            })
+                        }
                     </div>
                 </div>
-            </div>
+            </FilterItem>}
         </div>
     );
 }

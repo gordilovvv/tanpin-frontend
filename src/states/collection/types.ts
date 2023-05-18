@@ -32,7 +32,7 @@ export type CollectionQueryBody = {
     filter?: {
         gameID?: string
         search?: string
-        sort?: `${ CollectionsSort }`
+        sort?: `${CollectionsSort}`
         popular?: boolean
     }
     pageNum: number

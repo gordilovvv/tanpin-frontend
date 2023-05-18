@@ -1,6 +1,6 @@
 .cardWrapper {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr)); 
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 20px;
 }
 
@@ -19,32 +19,64 @@
 
 .top {
     display: grid;
-    grid-template-columns: minmax(0, auto) minmax(0,1fr) minmax(0,240px);
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, 240px);
     gap: 16px;
     grid-area: top;
-}
-.table {
-    grid-area: table;
 }
 
 .wrapper {
     display: grid;
-    grid-template-areas:
-    "top top"
-    "filter  table";
-    grid-template-rows: minmax(0, auto) minmax(0, auto);
-    grid-template-columns: minmax(0, auto) 1fr;
     align-items: start;
     gap: 32px;
-   
+
+    &.oneColumn {
+        grid-template-areas:
+            "top"
+            "table";
+        grid-template-columns: minmax(0, auto);
+    }
+
+    &.twoColumns {
+        grid-template-areas:
+            "top top"
+            "filter table";
+        grid-template-columns: 320px 1fr;
+    }
+}
+
+.filter {
+    grid-area: filter;
+}
+
+.table {
+    grid-area: table;
 }
 
 @include max767 {
-    .cardWrapper  {
-        grid-template-columns: repeat(2, minmax(0, 1fr)); 
+    .cardWrapper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
     }
+
+    .wrapper {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, auto) minmax(0, auto) minmax(0, auto);
+        grid-template-areas:
+            "top "
+            "filter"
+            "table";
+
+        &.hide {
+            grid-template-rows: minmax(0, auto) 0 minmax(0, auto);
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
     .container {
         gap: 24px;
+    }
+
+    .top {
+        grid-template-columns: 1fr;
     }
 }
