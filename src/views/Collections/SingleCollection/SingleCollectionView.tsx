@@ -8,7 +8,7 @@ import { Filter } from '@/components/Filter';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import { isTouchDevice } from '@/utils/isTouchDevice';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { useFilterStore } from '@/states/collection/filterStore';
 import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
 const mock = {
@@ -40,7 +40,9 @@ export function SingleCollectionView() {
 
     const { setSearch, setSort } = useFilterStoreActons();
 
-    const [isFilterVisible, setIsFilterVisible] = useState(!isTouchDevice);
+    const isMobile = useIsMobile();
+
+    const [isFilterDesctopVisible, setisFilterDesctopVisible] = useState(false);
 
     const mobileFilterState = useOpenedState();
 
@@ -51,8 +53,12 @@ export function SingleCollectionView() {
     }, []);
 
     const handleFilterToggle = () => {
-        setIsFilterVisible(prev => !prev);
+        setisFilterDesctopVisible(prev => !prev);
         mobileFilterState.toggle();
+    };
+    const handleMobileClose = () => {
+        mobileFilterState.close();
+        setisFilterDesctopVisible(prev => !prev);
     };
 
     return (
@@ -63,8 +69,8 @@ export function SingleCollectionView() {
                 <Container space>
                     <div
                         className={classNames(styles.wrapper, {
-                            [styles.oneColumn]: !isFilterVisible,
-                            [styles.twoColumns]: isFilterVisible
+                            [styles.oneColumn]: !isFilterDesctopVisible || isMobile,
+                            [styles.twoColumns]: isFilterDesctopVisible && !isMobile
                         })}
                     >
                         <div className={styles.top}>
@@ -89,14 +95,14 @@ export function SingleCollectionView() {
                             />
                         </div>
 
-                        {isFilterVisible && <Filter className={styles.filter} />}
+                        {!isMobile && isFilterDesctopVisible && <Filter className={styles.filter} />}
 
-                        <Modal
-                            isOpen={mobileFilterState.isOpen}
-                            onClose={mobileFilterState.close}
+                        {isMobile && <Modal
+                            isOpen={isMobile && mobileFilterState.isOpen}
+                            onClose={handleMobileClose}
                         >
                             <Filter />
-                        </Modal>
+                        </Modal>}
 
 
                         <div className={styles.table}>
