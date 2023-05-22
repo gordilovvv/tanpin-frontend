@@ -27,7 +27,7 @@ type Actions = {
     setCollectionID: (id: State['collectionID']) => void
 }
 
-enum FilterSorting {
+export enum FilterSorting {
     RECENTLY_ADDED = 'RECENTLY_ADDED',
     HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
     LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
