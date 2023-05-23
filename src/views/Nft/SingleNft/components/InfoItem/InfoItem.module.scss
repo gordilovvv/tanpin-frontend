@@ -8,3 +8,8 @@
     line-height: 150%;
     color: var(--color-typo-ghost);
 }
+@include max767 {
+    .title {
+        font-size: 14px;
+    }
+}

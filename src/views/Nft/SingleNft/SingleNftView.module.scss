@@ -5,6 +5,13 @@
     align-items: flex-start;
 }
 
+@include max1000 {
+   .wrapper {
+    grid-template-columns: 1fr ;
+   }
+
+}
+
 .card {
     position: relative;
     border-radius: 12px;
@@ -239,4 +246,46 @@
     align-items: center;
     gap: 8px;
     
+}
+
+@include max767 {
+    .wrapper,.info,.bid {
+        gap: 24px;
+    }
+    
+    .subtitle {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .title {
+        font-size: 24px;
+        text-align: center;
+    }
+    .description {
+        font-size: 14px;
+    }
+
+    .currentSubtitle {
+        font-size: 14px;
+    }
+    .currentTitle {
+        font-size: 20px;
+    }
+    .currentPrice {
+        font-size: 14px;
+    }
+    .currentTime {
+        font-size: 14px;
+    }
+    .current {
+        gap: 16px;
+    }
+    .buttons {
+       gap: 8px;
+    }
+
+
 }

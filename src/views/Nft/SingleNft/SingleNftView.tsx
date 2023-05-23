@@ -1,17 +1,74 @@
-import styles from './SingleNftView.module.scss';
 import { Container } from '@/components/Layout';
 import { Button, Link as LinkIcon, Polygon, Share } from '@/uikit';
 import { Link } from 'react-router-dom';
 import { CollectionLogo } from '@/components/Collections';
 import { InfoItem } from './components/InfoItem/InfoItem';
 import { BidStatus } from './components/BidStatus/BitStatus';
+import { Attributes } from './components/Attributes/Attributes';
+import { NFTAttribute } from '@/states/types';
+import { Details } from './components/Details/Details';
+import { BidsList } from './components/BidsList/BidsList';
+import { TransactionsList } from './components/TransactionsList/TransactionsList';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import styles from './SingleNftView.module.scss';
 
-//ellipseAddress
-//
+const mockDetails = {
+    owner: 'John Doe',
+    tokenID: '123456789',
+    contractAddress: '0x123456789ABCDEF',
+    network: 'Ethereum',
+    tokenId: '987654321',
+};
+
+const mockBids = [
+    {
+        contractAddress: '0x24f73...d6f9',
+        currency: 'USDT',
+        amount: '1.83',
+        date: new Date('2022-05-01T07:20:00'),
+    },
+    {
+        contractAddress: '0x12345...6789',
+        currency: 'USDT',
+        amount: '2.50',
+        date: new Date('2022-06-15T12:30:00'),
+    },
+];
+const mockTransctions = [
+    {
+        contractAddress: '0x24f73...d6f9',
+        currency: 'USDT',
+        amount: '1.83',
+        date: new Date('2022-05-01T07:20:00'),
+    },
+    {
+        contractAddress: '0x12345...6789',
+        currency: 'USDT',
+        amount: '2.50',
+        date: new Date('2022-06-15T12:30:00'),
+    },
+];
+
+const mockAttributes = [
+    {
+        traitType: 'traitType',
+        value: 'traitType',
+    },
+    {
+        traitType: 'traitType2',
+        value: 'traitType2',
+    },
+    {
+        traitType: 'traitType3',
+        value: 'traitType3',
+    }
+] as NFTAttribute[];
 
 export function SingleNftView() {
+    const isMobile = useIsMobile(1000); //видимо надо переименовать в isBreakpoint? todo
+
     return (
-        <Container>
+        <Container space>
             <div className={styles.wrapper}>
                 <div className={styles.card}>
                     <img
@@ -56,17 +113,51 @@ export function SingleNftView() {
                         </div>
                     </div>
 
-                    <InfoItem title="Properties">
-                        <div className={styles.inner}>
-                            {(new Array(10).fill(1)).map((el, key) =>
-                                <div
-                                    className={styles.item}
-                                    key={key}
-                                >
-                                    <div className={styles.itemTitle}>Rarity</div>
-                                    <div className={styles.itemBody}>Legendary</div>
-                                </div>)}
+                    {isMobile && < div className={styles.bid}>
+                        <div className={styles.current}>
+                            <div className={styles.currentInfo}>
+                                <div className={styles.currentSubtitle}>Current bid:</div>
+                                <div className={styles.currentTitle}>56.8 MATIC</div>
+                                <div className={styles.currentPrice}>60 USDT</div>
+                            </div>
+
+                            <Button block>Place a bid</Button>
+
+                            <div className={styles.currentTime}>
+                                Sale ends in <span className={styles.white}>17d 6h 37m 7s</span>
+                            </div>
                         </div>
+
+
+                        <div className={styles.buttons}>
+                            <Button
+                                iconSlot={<Polygon />}
+                                view="secondary"
+                            >PolygonScan</Button>
+
+                            <Button
+                                iconSlot={<Share />}
+                                view="secondary"
+                            >Share</Button>
+                        </div>
+
+                        <InfoItem title="Details">
+                            <Details details={mockDetails} />
+                        </InfoItem >
+
+                        <BidStatus
+                            title="You’ve lost this auction"
+                            view="error"
+                        >
+                            <Button>Take your bid back?</Button>
+                        </BidStatus >
+
+                    </div>}
+
+                    <InfoItem title="Properties">
+                        {
+                            <Attributes attributes={mockAttributes} />
+                        }
                     </InfoItem>
 
                     <InfoItem title="Description">
@@ -75,108 +166,59 @@ export function SingleNftView() {
                         </div>
                     </InfoItem>
 
-                    <InfoItem title="History">
-                        <div
-                            className={styles.history}
-                        >
-                            <div className={styles.historyItem}>
-                                <div className={styles.historyLogo} />
+                    <InfoItem title="Bids">
+                        <BidsList bids={mockBids} />
+                    </InfoItem>
 
-
-                                <div className={styles.historyInfo}>
-                                    <div className={styles.historyTitle}>
-                                        <span className={styles.white}>0x24f73...d6f9</span> listed for <span className={styles.white}>1.83 USDT</span>
-                                    </div>
-
-                                    <div className={styles.historyMeta}>
-                                        01.05.2022, 07:20
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className={styles.historyItem}>
-                                <div className={styles.historyLogo} />
-
-
-                                <div className={styles.historyInfo}>
-                                    <div className={styles.historyTitle}>
-                                        <span className={styles.white}>0x24f73...d6f9</span> listed for <span className={styles.white}>1.83 USDT</span>
-                                    </div>
-
-                                    <div className={styles.historyMeta}>
-                                        01.05.2022, 07:20 <LinkIcon />
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                    <InfoItem title="Bids">
+                        <TransactionsList transactions={mockTransctions} />
                     </InfoItem>
 
                 </div>
 
-                <div className={styles.bid}>
-                    <div className={styles.current}>
-                        <div className={styles.currentInfo}>
-                            <div className={styles.currentSubtitle}>Current bid:</div>
-                            <div className={styles.currentTitle}>56.8 MATIC</div>
-                            <div className={styles.currentPrice}>60 USDT</div>
+                {!isMobile &&
+                    <div className={styles.bid}>
+                        <div className={styles.current}>
+                            <div className={styles.currentInfo}>
+                                <div className={styles.currentSubtitle}>Current bid:</div>
+                                <div className={styles.currentTitle}>56.8 MATIC</div>
+                                <div className={styles.currentPrice}>60 USDT</div>
+                            </div>
+
+                            <Button block>Place a bid</Button>
+
+                            <div className={styles.currentTime}>
+                                Sale ends in <span className={styles.white}>17d 6h 37m 7s</span>
+                            </div>
                         </div>
 
-                        <Button block>Place a bid</Button>
 
-                        <div className={styles.currentTime}>
-                            Sale ends in <span className={styles.white}>17d 6h 37m 7s</span>
+                        <div className={styles.buttons}>
+                            <Button
+                                iconSlot={<Polygon />}
+                                view="secondary"
+                            >PolygonScan</Button>
+
+                            <Button
+                                iconSlot={<Share />}
+                                view="secondary"
+                            >Share</Button>
                         </div>
+
+                        <InfoItem title="Details">
+                            <Details details={mockDetails} />
+                        </InfoItem >
+
+                        <BidStatus
+                            title="You’ve lost this auction"
+                            view="error"
+                        >
+                            <Button>Take your bid back?</Button>
+                        </BidStatus >
+
                     </div>
-
-
-                    <div className={styles.buttons}>
-                        <Button
-                            iconSlot={<Polygon />}
-                            view="secondary"
-                        >PolygonScan</Button>
-
-                        <Button
-                            iconSlot={<Share />}
-                            view="secondary"
-                        >Share</Button>
-                    </div>
-
-                    <InfoItem title="Details">
-                        <div className={styles.details}>
-                            <div className={styles.detailsItem}>
-                                <div className={styles.detailsLabel}>Owned by</div>
-                                <div className={styles.detailsValue}>Polygon</div>
-                            </div>
-
-                            <div className={styles.detailsItem}>
-                                <div className={styles.detailsLabel}>Owned by</div>
-                                <div className={styles.detailsValue}>Polygon</div>
-                            </div>
-
-                            <div className={styles.detailsItem}>
-                                <div className={styles.detailsLabel}>Owned by</div>
-                                <div className={styles.detailsValue}>Polygon</div>
-                            </div>
-
-                            <div className={styles.detailsItem}>
-                                <div className={styles.detailsLabel}>Owned by</div>
-                                <div className={styles.detailsValue}> <LinkIcon /> Polygon</div>
-                            </div>
-                        </div>
-                    </InfoItem >
-
-                    <BidStatus
-                        title="You’ve lost this auction"
-                        view="error"
-                    >
-                        <Button>Take your bid back?</Button>
-                    </BidStatus >
-
-                </div>
-
-
+                }
             </div>
-        </Container>
+        </Container >
     );
 }
