@@ -1,5 +1,5 @@
 import { Container } from '@/components/Layout';
-import { Button, Link as LinkIcon, Polygon, Share } from '@/uikit';
+import { Button, Polygon, Share } from '@/uikit';
 import { Link } from 'react-router-dom';
 import { CollectionLogo } from '@/components/Collections';
 import { InfoItem } from './components/InfoItem/InfoItem';
@@ -11,6 +11,7 @@ import { BidsList } from './components/BidsList/BidsList';
 import { TransactionsList } from './components/TransactionsList/TransactionsList';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import styles from './SingleNftView.module.scss';
+import { Card } from './components/Card/Card';
 
 const mockDetails = {
     owner: 'John Doe',
@@ -70,20 +71,10 @@ export function SingleNftView() {
     return (
         <Container space>
             <div className={styles.wrapper}>
-                <div className={styles.card}>
-                    <img
-                        className={styles.img}
-                        src="https://s3-alpha-sig.figma.com/img/2f18/5f5e/18100085c77444b3e00e10428a0599cd?Expires=1684713600&Signature=hYwf6-BNv-lEf0wSulBi1n8F0-cQvZrzBCMu~~Q8SP3u-E8c9rgYpDFPgRg7yXCje5ndOs31Mh8FSqTuMU3DARndDpEYCTYP930qIo--wffxg95QIFJik7Q7~9cLI-~Z8rTJ9eR1GeB1PojbhoW1hzwfwGCZOCVQw2dfGqkPpoT9XA0G1QQ-6zO96vwdBDIwsBl~gA0sNr0m5fZDRUsex8NScXdpgUNjAdWYZ96OTB4DOSjXQ8LZqgoqNiJeazctS3-U5cTCIjiTI0-2aEPjGAQsaL6oysJ~rIJ9xvH7kGvYcs5rWfD34pDCKDGF0uy2TsbovJz~5AVzucGicIkMyw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                    />
-
-                    <Button
-                        view="secondary"
-                        className={styles.btn}
-                        iconSlot={<LinkIcon />}
-                    >
-                        View original
-                    </Button>
-                </div>
+                <Card
+                    link="/"
+                    photoUrl='https://images.thevoicemag.ru/upload/img_cache/1c8/1c83f6f695855deceec54ebd48a3d40b_cropped_666x833.jpg'
+                />
 
                 <div className={styles.info}>
                     <div className={styles.header}>
