@@ -8,7 +8,7 @@ import { Filter } from '@/components/Filter';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import { useIsMobile } from '@/hooks/useIsMobile';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useFilterStore } from '@/states/collection/filterStore';
 import { useFilterStoreActons } from '@/states/collection/hooks/useFilterStoreActions';
 const mock = {
@@ -40,17 +40,11 @@ export function SingleCollectionView() {
 
     const { setSearch, setSort } = useFilterStoreActons();
 
-    const isMobile = useIsMobile();
+    const isMobile = useMediaQuery('(max-width: 767px)');
 
     const [isFilterDesctopVisible, setisFilterDesctopVisible] = useState(false);
 
     const mobileFilterState = useOpenedState();
-
-    useEffect(() => {
-        // TODO:
-        // 1. Скрыть десктоп фильтр при resize
-        // 2. Скрыть модалку фильтра при resize
-    }, []);
 
     const handleFilterToggle = () => {
         setisFilterDesctopVisible(prev => !prev);

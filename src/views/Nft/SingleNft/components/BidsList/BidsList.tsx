@@ -28,7 +28,7 @@ export function BidsList({ bids }: BidsListProps) {
                             key={idx}
                             className={styles.bidsItem}
                         >
-                            <div className={styles.bidsLogo} />
+                            <div className={styles.bidsAvatar} />
 
 
                             <div className={styles.bidsInfo}>
@@ -37,7 +37,7 @@ export function BidsList({ bids }: BidsListProps) {
                                 </div>
 
                                 <div className={styles.bidsMeta}>
-                                    {formatDate(bid.date)}<UnstyleLink className={styles.linkHover}> <Link /></UnstyleLink>
+                                    <UnstyleLink className={styles.linkHover}> {formatDate(bid.date)}  <Link /></UnstyleLink>
                                 </div>
                             </div>
                         </div>

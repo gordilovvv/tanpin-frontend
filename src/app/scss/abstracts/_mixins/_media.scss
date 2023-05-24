@@ -18,6 +18,12 @@
 }
 
 // Max Width
+@mixin max1600 {
+    @media (max-width: 1600px) {
+        @content;
+    }
+}
+
 @mixin max1400 {
     @media (max-width: 1400px) {
         @content;

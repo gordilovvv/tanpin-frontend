@@ -30,8 +30,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                             key={idx}
                             className={styles.transactionsItem}
                         >
-                            <div className={styles.transactionsLogo} />
-
+                            <div className={styles.transactionsAvatar} />
 
                             <div className={styles.transactionsInfo}>
                                 <div className={styles.transactionsTitle}>
@@ -39,7 +38,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                                 </div>
 
                                 <div className={styles.transactionsMeta}>
-                                    {formatDate(bid.date)}<UnstyleLink className={styles.linkHover}> <Link /></UnstyleLink>
+                                    <UnstyleLink className={styles.linkHover}>{formatDate(bid.date)} <Link /></UnstyleLink>
                                 </div>
                             </div>
                         </div>

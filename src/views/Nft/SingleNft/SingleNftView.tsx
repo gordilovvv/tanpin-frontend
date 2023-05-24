@@ -9,16 +9,16 @@ import { NFTAttribute } from '@/states/types';
 import { Details } from './components/Details/Details';
 import { BidsList } from './components/BidsList/BidsList';
 import { TransactionsList } from './components/TransactionsList/TransactionsList';
-import { useIsMobile } from '@/hooks/useIsMobile';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import styles from './SingleNftView.module.scss';
 import { Card } from './components/Card/Card';
+import { getTransactionExplorerURL } from "@/utils/explorer";
 
 const mockDetails = {
     owner: 'John Doe',
     tokenID: '123456789',
     contractAddress: '0x123456789ABCDEF',
     network: 'Ethereum',
-    tokenId: '987654321',
 };
 
 const mockBids = [
@@ -66,8 +66,8 @@ const mockAttributes = [
 ] as NFTAttribute[];
 
 export function SingleNftView() {
-    const isMobile = useIsMobile(1000); //видимо надо переименовать в isBreakpoint? todo
-
+    const isMobile = useMediaQuery('(max-width: 1600px)'); //видимо надо переименовать в isBreakpoint? todo
+    getTransactionExplorerURL()
     return (
         <Container space>
             <div className={styles.wrapper}>
@@ -133,7 +133,7 @@ export function SingleNftView() {
                         </div>
 
                         <InfoItem title="Details">
-                            <Details details={mockDetails} />
+                            <Details details={mockDetails} />  {/* todo как это можно решить? */}
                         </InfoItem >
 
                         <BidStatus

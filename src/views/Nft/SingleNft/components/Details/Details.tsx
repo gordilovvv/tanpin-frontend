@@ -1,36 +1,22 @@
 import { Link as LinkIcon, UnstyleLink } from '@/uikit';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { Owner } from '@/components/User';
+import { NFT } from '@/states/types';
 import styles from './Details.module.scss';
 
-type detail = {
-    owner: string
-    tokenID: string
-    contractAddress: string
-    network: string
-    tokenId: string
-}
-
 type DetailsProps = {
-    details: detail
+    details: NFT
 }
 
 export function Details({ details }: DetailsProps) {
-    const { owner, tokenID, contractAddress, network, tokenId } = details;
+    const { owner, tokenID, contractAddress, network } = details; // откуда брать нетворк?
 
     return (
         <div className={styles.details}>
             {owner && (
                 <div className={styles.detailsItem}>
                     <div className={styles.detailsLabel}>Owner</div>
-                    <Owner contractAddress={contractAddress} />
-                </div>
-            )}
-
-            {tokenID && (
-                <div className={styles.detailsItem}>
-                    <div className={styles.detailsLabel}>Token ID</div>
-                    <div className={styles.detailsValue}>{tokenID}</div>
+                    <Owner address={contractAddress} />
                 </div>
             )}
 
@@ -58,12 +44,12 @@ export function Details({ details }: DetailsProps) {
                 </div>
             )}
 
-            {tokenId && (
+            {tokenID && (
                 <div className={styles.detailsItem}>
                     <div className={styles.detailsLabel}>Token ID</div>
 
                     <div className={styles.detailsValue}>
-                        <LinkIcon /> {tokenId}
+                        <LinkIcon /> {tokenID}
                     </div>
                 </div>
             )}

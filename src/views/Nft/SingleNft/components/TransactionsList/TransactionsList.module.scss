@@ -1,7 +1,7 @@
 
 .transactions {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, auto);
     gap: 12px;
 }
 
@@ -13,7 +13,7 @@
     align-items: center;
 }
 
-.transactionsLogo {
+.transactionsAvatar {
     width: 40px;
     height: 40px;
     background: red;
@@ -52,6 +52,9 @@
 
 .linkHover {
     transition: color .1s ease;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 4px;
     @include hover {
         color: var(--color-typo-base);
     }
