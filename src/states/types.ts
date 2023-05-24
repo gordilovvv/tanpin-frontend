@@ -63,3 +63,15 @@ export type AuctionBet = {
     }
     createdAt: string
 }
+
+export type TokenHistory = {
+    type: 'mint' | 'transfer' | 'buy' | 'bid' | 'cancelBid'
+    owner: string, // Адрес кто это действие сделал
+    transferedTo?: string
+    price?: {
+        amount: string,
+        currency: 'USDT' | 'CUSTOM_TOKEN'
+    }, // Только для buy, bid
+    date: string // Базовый формат
+    transactionHash: string
+}[];
