@@ -1,0 +1,74 @@
+
+.transactions {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.transactionsItem {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-auto-flow: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.transactionsAvatar {
+    width: 40px;
+    height: 40px;
+    background: red;
+    border-radius: 50%;
+}
+.transactionsTitle {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+
+    color: var(--color-typo-ghost);
+
+    .white {
+        font-weight: 600;
+        color: var(--color-typo-base);
+    }
+}
+.transactionsInfo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+}
+
+.transactionsMeta {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 143%;
+    color: var(--color-typo-ghost);
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+}
+
+
+.linkHover {
+    transition: color .1s ease;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 4px;
+    @include hover {
+        color: var(--color-typo-base);
+    }
+}
+
+
+@include max767 {
+    .transactions {
+        gap: 8px;
+    }
+    .transactionsTitle {
+        font-size: 14px;
+    }
+    .transactionsMeta {
+        font-size: 12px;
+    }
+}
