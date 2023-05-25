@@ -49,20 +49,25 @@ export function InfinityScroller({
             {({ onRowsRendered, registerChild }) => (
                 // @ts-ignore
                 <WindowScroller>
-                    {({ height, scrollTop, scrollLeft, isScrolling, onChildScroll }) => (
-                        // @ts-ignore
-                        <AutoSizer disableHeight>
-                            {({ width }) => children({
-                                width,
-                                height,
-                                scrollLeft,
-                                scrollTop,
-                                isScrolling,
-                                registerChild,
-                                onScroll: onChildScroll,
-                                onRowsRendered
-                            })}
-                        </AutoSizer>
+                    {({ height, scrollTop, scrollLeft, isScrolling, onChildScroll, registerChild: registerWindowScrollerChild }) => (
+                        <div
+                            ref={registerWindowScrollerChild as any}
+                            style={{ flexFlow: 'column '}}
+                        >
+                            {/* @ts-ignore */}
+                            <AutoSizer disableHeight>
+                                {({ width }) => children({
+                                    width,
+                                    height,
+                                    scrollLeft,
+                                    scrollTop,
+                                    isScrolling,
+                                    registerChild,
+                                    onScroll: onChildScroll,
+                                    onRowsRendered
+                                })}
+                            </AutoSizer>
+                        </div>
                     )}
                 </WindowScroller>
             )}

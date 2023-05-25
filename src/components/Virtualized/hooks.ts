@@ -19,7 +19,7 @@ const useStore = create<State & { setState: (state: Partial<State>) => void }>((
     }
 }));
 
-export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit: number) => Promise<{ data: T[], total: number }>) {
+export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit: number) => Promise<{ items: T[], total: number }>) {
     const nonce = useRef<string | null>(null);
     const { items, index, loading, finished, setState } = useStore(state => state);
 
@@ -78,14 +78,14 @@ export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit:
 
             handleStart(params);
 
-            const { data, total } = await itemsFetcher(
+            const { items, total } = await itemsFetcher(
                 params.startIndex,
                 params.stopIndex - params.startIndex
             );
 
             handleResponse(
                 requestNonce,
-                data,
+                items,
                 total
             );
         } catch (error) {
