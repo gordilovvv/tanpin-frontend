@@ -1,0 +1,4 @@
+export enum NFTSort {
+  TRENDING = 'TRENDING',
+  RECENTLY_ADDED = 'RECENTLY_ADDED',
+}
