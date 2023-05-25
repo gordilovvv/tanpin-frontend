@@ -26,6 +26,18 @@ export type NFTAttribute = {
     value: string
 }
 
+export type  HistoryTransaction = {
+	type: 'mint' | 'transfer' | 'buy' | 'bid' | 'cancelBid'
+	owner: string, // Адрес кто это действие сделал
+	transferedTo?: string
+	price?: {
+		amount: string,
+        currency: 'USDT' | 'CUSTOM_TOKEN'
+	}, // Только для buy, bid
+	date: string // Базовый формат
+	transactionHash: string
+}
+
 export type Auction = {
     ID: string
     tokenID: string

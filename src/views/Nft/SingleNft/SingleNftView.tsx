@@ -23,32 +23,87 @@ const mockDetails = {
 
 const mockBids = [
     {
-        contractAddress: '0x24f73...d6f9',
-        currency: 'USDT',
-        amount: '1.83',
-        date: new Date('2022-05-01T07:20:00'),
+        type: 'mint',
+        owner: '0x1a3b5c7d',
+        date: '2023-05-25',
+        transactionHash: '0xabc123',
     },
     {
-        contractAddress: '0x12345...6789',
-        currency: 'USDT',
-        amount: '2.50',
-        date: new Date('2022-06-15T12:30:00'),
+        type: 'transfer',
+        owner: '0xe2f4a6b8',
+        transferedTo: '0x3d5f7h9j',
+        date: '2023-05-24',
+        transactionHash: '0xdef456',
     },
-];
+    {
+        type: 'buy',
+        owner: '0x9k8j7h6g',
+        price: {
+            amount: '10.25',
+            currency: 'USDT',
+        },
+        date: '2023-05-23',
+        transactionHash: '0xghi789',
+    },
+    {
+        type: 'bid',
+        owner: '0xc4v6b8n2',
+        price: {
+            amount: '5.75',
+            currency: 'CUSTOM_TOKEN',
+        },
+        date: '2023-05-22',
+        transactionHash: '0xjkl012',
+    },
+    {
+        type: 'cancelBid',
+        owner: '0x3h5k7j9d',
+        date: '2023-05-21',
+        transactionHash: '0xmnop34',
+    },
+]
+
 const mockTransctions = [
     {
-        contractAddress: '0x24f73...d6f9',
-        currency: 'USDT',
-        amount: '1.83',
-        date: new Date('2022-05-01T07:20:00'),
+        type: 'mint',
+        owner: '0x1a3b5c7d',
+        date: '2023-05-25',
+        transactionHash: '0xabc123',
     },
     {
-        contractAddress: '0x12345...6789',
-        currency: 'USDT',
-        amount: '2.50',
-        date: new Date('2022-06-15T12:30:00'),
+        type: 'transfer',
+        owner: '0xe2f4a6b8',
+        transferedTo: '0x3d5f7h9j',
+        date: '2023-05-24',
+        transactionHash: '0xdef456',
     },
-];
+    {
+        type: 'buy',
+        owner: '0x9k8j7h6g',
+        price: {
+            amount: '10.25',
+            currency: 'USDT',
+        },
+        date: '2023-05-23',
+        transactionHash: '0xghi789',
+    },
+    {
+        type: 'bid',
+        owner: '0xc4v6b8n2',
+        price: {
+            amount: '5.75',
+            currency: 'CUSTOM_TOKEN',
+        },
+        date: '2023-05-22',
+        transactionHash: '0xjkl012',
+    },
+    {
+        type: 'cancelBid',
+        owner: '0x3h5k7j9d',
+        date: '2023-05-21',
+        transactionHash: '0xmnop34',
+    },
+]
 
 const mockAttributes = [
     {

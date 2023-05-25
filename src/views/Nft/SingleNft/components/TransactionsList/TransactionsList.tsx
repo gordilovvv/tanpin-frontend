@@ -1,22 +1,16 @@
 import { Link, UnstyleLink } from '@/uikit';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { formatDate } from '@/utils/formatDate';
+import { UserAvatar } from '@/components/User/UserAvatar/UserAvatar';
+import { HistoryTransaction } from '@/states/types';
 import styles from './TransactionsList.module.scss';
-
-type transactionsInfo = {
-    contractAddress: string
-    currency: string
-    amount: string
-    date: Date
-}
+import classNames from 'classnames';
+import { getAddressExplorerURL } from '@/utils/explorer';
 
 
 type TransactionsListProps = {
-    transactions: transactionsInfo[]
-    // тут пропсом еще должен быть тип транзакции TODO, и отрисовка по условию типа
+    transactions: HistoryTransaction[]
 }
-
-//todo неясно куда ссылки должны вести
 
 export function TransactionsList({ transactions }: TransactionsListProps) {
     return (
@@ -24,21 +18,26 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
             className={styles.transactions}
         >
             {
-                transactions.map((bid, idx) => {
+                transactions.map((transaction, idx) => {
                     return (
                         <div
                             key={idx}
                             className={styles.transactionsItem}
                         >
-                            <div className={styles.transactionsAvatar} />
+                            <UserAvatar size="m" />
 
                             <div className={styles.transactionsInfo}>
                                 <div className={styles.transactionsTitle}>
-                                    <span className={styles.white}><UnstyleLink className={styles.link}>{ellipseAddress(bid.contractAddress)}</UnstyleLink></span> bid <span className={styles.white}>{bid.amount} {bid.currency}</span>
+                                    <UnstyleLink
+                                        rel='noreferrer noopener'
+                                        target='_blank'
+                                        href={getAddressExplorerURL(transaction.owner)}
+                                        className={classNames(styles.link, styles.white)}
+                                    >{ellipseAddress(transaction.owner)}</UnstyleLink> bid <span className={styles.white}>{transaction.price?.amount} {transaction.price?.currency}</span>
                                 </div>
 
                                 <div className={styles.transactionsMeta}>
-                                    <UnstyleLink className={styles.linkHover}>{formatDate(bid.date)} <Link /></UnstyleLink>
+                                    <UnstyleLink className={styles.linkHover}>{formatDate(transaction.date)} <Link /></UnstyleLink>
                                 </div>
                             </div>
                         </div>

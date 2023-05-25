@@ -1,0 +1,24 @@
+.avatar {
+    background: red;
+    border-radius: 50%;
+
+    &.m {
+        width: 48px;
+        height: 48px;
+    }
+
+    &.s {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@include max767 {
+    .avatar {
+        &.m {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+}

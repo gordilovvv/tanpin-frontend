@@ -8,8 +8,8 @@ const HOURS_THRESHOLD_MS = 172800000;
 export function formatElapsedTime(timeMS: number) {
     if (timeMS < HOURS_THRESHOLD_MS) {
         const hours = Math.floor(timeMS / HOUR_IN_MS);
-        const minutes = Math.floor(timeMS % HOUR_IN_MS / 60000);
-        const seconds = Math.floor(timeMS % 60000 / 1000);
+        const minutes = Math.floor((timeMS % HOUR_IN_MS) / 60000);
+        const seconds = Math.floor((timeMS % 60000) / 1000);
 
         return `${hours}:${twoNumbersFormatter(minutes)}:${twoNumbersFormatter(seconds)}`;
     }

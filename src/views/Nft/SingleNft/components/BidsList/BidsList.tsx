@@ -1,17 +1,15 @@
 import { Link, UnstyleLink } from '@/uikit';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { formatDate } from '@/utils/formatDate';
+import { UserAvatar } from '@/components/User/UserAvatar/UserAvatar';
+import { HistoryTransaction } from '@/states/types';
 import styles from './BidsList.module.scss';
+import classNames from 'classnames';
+import { getAddressExplorerURL, getTransactionExplorerURL } from '@/utils/explorer';
 
-type bidInfo = {
-    contractAddress: string
-    currency: string
-    amount: string
-    date: Date
-}
 
 type BidsListProps = {
-    bids: bidInfo[]
+    bids: HistoryTransaction[]
 }
 
 //todo неясно куда ссылки должны вести
@@ -28,16 +26,25 @@ export function BidsList({ bids }: BidsListProps) {
                             key={idx}
                             className={styles.bidsItem}
                         >
-                            <div className={styles.bidsAvatar} />
-
+                            <UserAvatar size="m" />
 
                             <div className={styles.bidsInfo}>
                                 <div className={styles.bidsTitle}>
-                                    <span className={styles.white}><UnstyleLink className={styles.link}>{ellipseAddress(bid.contractAddress)}</UnstyleLink></span> bid <span className={styles.white}>{bid.amount} {bid.currency}</span>
+                                    <UnstyleLink
+                                        rel='noreferrer noopener'
+                                        target='_blank'
+                                        href={getAddressExplorerURL(bid.owner)}
+                                        className={classNames(styles.white, styles.link)}
+                                    >{ellipseAddress(bid.owner)}</UnstyleLink> bid <span className={styles.white}>{bid.price?.amount} {bid.price?.currency}</span>
                                 </div>
 
                                 <div className={styles.bidsMeta}>
-                                    <UnstyleLink className={styles.linkHover}> {formatDate(bid.date)}  <Link /></UnstyleLink>
+                                    <UnstyleLink
+                                        rel='noreferrer noopener'
+                                        target='_blank'
+                                        href={getTransactionExplorerURL(bid.transactionHash)}
+                                        className={styles.linkHover}
+                                    > {formatDate(bid.date)} <Link /></UnstyleLink>
                                 </div>
                             </div>
                         </div>
