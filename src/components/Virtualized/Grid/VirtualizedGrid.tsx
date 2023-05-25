@@ -27,11 +27,11 @@ export function VirtualizedGrid<T>({
     const rect = useMemo(() => {
         return {
             getColumnCount: (containerWidth: number) => {
-                if (containerWidth > 760) {
-                    return Math.ceil(containerWidth / 325);
+                if (containerWidth > 700) {
+                    return Math.ceil(containerWidth / 320);
                 }
     
-                if (containerWidth > 325) {
+                if (containerWidth > 320) {
                     return 2;
                 }
     
