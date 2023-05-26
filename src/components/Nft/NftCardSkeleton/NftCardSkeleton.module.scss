@@ -1,7 +1,7 @@
 .card {
     display: grid;
     grid-template-columns: minmax(0, auto);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--color-stroke);
     border-radius: 12px;
     overflow: hidden;
     transform: translateZ(0);
@@ -12,7 +12,7 @@
     height: auto;
     overflow: hidden;
     transform: translateZ(0);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid var(--color-stroke);
 
     &::before {
         height: 0px;

@@ -8,7 +8,6 @@
     flex: 1 0 auto;
     display: flex;
     flex-flow: column;
-    padding-top: 96px + 72px;
 }
 
 .main {
@@ -16,10 +15,4 @@
     flex: 1 1 0%;
     display: flex;
     flex-flow: column;
-}
-
-@include max767 {
-    .content {
-        padding-top: 64px + 48px;
-    }
 }

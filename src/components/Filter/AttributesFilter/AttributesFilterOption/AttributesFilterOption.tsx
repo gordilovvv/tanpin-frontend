@@ -1,8 +1,7 @@
-import styles from './AttributesFilterOption.module.scss';
 import { useState } from 'react';
-import classNames from 'classnames';
 import { Mark, UnstyleButton } from '@/uikit';
-
+import classNames from 'classnames';
+import styles from './AttributesFilterOption.module.scss';
 
 type AttributesFilterOptionProps = {
     value: string
@@ -32,8 +31,6 @@ export function AttributesFilterOption({ value, onChange, initialActive = false 
             <div className={styles.title}>
                 {value}
             </div>
-
-            {/* {count && <div className={styles.count}>{count}3 {+count === 1 ? 'item' : 'items'}</div>} */}
         </UnstyleButton>
     );
 

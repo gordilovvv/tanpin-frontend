@@ -6,6 +6,9 @@ type ContainerProps = {
     space?: boolean // Bottom Padding
 }
 
+/**
+ * @param space Bottom Padding 
+ */
 export function Container({ space = false, children, className, ...props }: ContainerProps & PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
     return (
         <div
