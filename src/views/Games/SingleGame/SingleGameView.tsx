@@ -9,8 +9,11 @@ import { useGameQuery } from '@/states/game/hooks/useGameQuery';
 import styles from './SingleGameView.module.scss';
 
 export function SingleGameView() {
-    const { id } = useParams();
-    const { game } = useGameQuery(id as string);
+    const { gameID } = useParams();
+    if (typeof gameID !== 'string') {
+        throw new TypeError('typeof gameID is not a string!');
+    }
+    const { game } = useGameQuery(gameID as string);
 
     const [search, setSearch] = useState<string>('');
     const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');
@@ -46,6 +49,7 @@ export function SingleGameView() {
                     <CollectionTable
                         filter={filter}
                         hasMoreButton
+                        gameID={gameID}
                     />
                 </Container>
             </div>

@@ -1,118 +1,155 @@
-import { CollectionHead } from './components/CollectionHead/CollectionHead';
-import { NftCard, NftCardSkeleton } from '@/components/Nft';
-import styles from './SingleCollectionView.module.scss';
+import { useCallback, useState } from 'react';
+import { InputSearch, Select, Button, Filter as FilterIcon, Modal } from '@/uikit';
 import { Container } from '@/components/Layout';
-import { NFTSaleStatus } from '@/states/types';
-import { InputSearch, Select, Button, Filter as FilterIcon, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { Filter } from '@/components/Filter';
-import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { NFTGrid } from './components/NFTGrid/NFTGrid';
+import { CollectionHead } from './components/CollectionHead/CollectionHead';
+import { NFTSort } from '@/states/nft/types';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import { isTouchDevice } from '@/utils/isTouchDevice';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useFilterStore } from '@/states/collection/filterStore';
 import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
-const mock = {
-    ID: '1',
-    name: 'Porsche Cayenne',
-    description: '',
-    attributes: [],
-    imageURL: 'https://s3-alpha-sig.figma.com/img/2f18/5f5e/18100085c77444b3e00e10428a0599cd?Expires=1684713600&Signature=hYwf6-BNv-lEf0wSulBi1n8F0-cQvZrzBCMu~~Q8SP3u-E8c9rgYpDFPgRg7yXCje5ndOs31Mh8FSqTuMU3DARndDpEYCTYP930qIo--wffxg95QIFJik7Q7~9cLI-~Z8rTJ9eR1GeB1PojbhoW1hzwfwGCZOCVQw2dfGqkPpoT9XA0G1QQ-6zO96vwdBDIwsBl~gA0sNr0m5fZDRUsex8NScXdpgUNjAdWYZ96OTB4DOSjXQ8LZqgoqNiJeazctS3-U5cTCIjiTI0-2aEPjGAQsaL6oysJ~rIJ9xvH7kGvYcs5rWfD34pDCKDGF0uy2TsbovJz~5AVzucGicIkMyw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
-    contractAddress: '0x',
-    tokenID: '1',
-    owner: '0x',
-    price: {
-        amount: '100',
-        currency: 'USDT'
-    },
-    status: NFTSaleStatus.FIXED_PRICE,
-};
+import styles from './SingleCollectionView.module.scss';
+import { useParams } from 'react-router-dom';
 
-
-
-const options: { value: string; label: string }[] = [
-    { value: 'RECENTLY_ADDED', label: 'Recently Added' },
-    { value: 'HIGH_PRICE_FIRST', label: 'High Price First' },
-    { value: 'LOW_PRICE_FIRST', label: 'Low Price First' },
-];
-
+// TODO:
+// 1. add search
+// 2. add sort
+// 3. filter
+// 4. collection ID
+// 5. REAL COLLECTION HEAD
 export function SingleCollectionView() {
-    const sort = useFilterStore((state) => state.sort);
-
+    const { gameID, collectionID } = useParams();
+    if (typeof collectionID !== 'string') {
+        throw new TypeError('typeof collectionID !== string');
+    }
+    if (typeof gameID !== 'string') {
+        throw new TypeError('typeof gameID !== string');
+    }
+    const { sort, search } = useFilterStore(({ sort, search }) => ({
+        sort,
+        search
+    }));
     const { setSearch, setSort } = useFilterStoreActions();
 
-    const [isFilterVisible, setIsFilterVisible] = useState(!isTouchDevice);
+    const isPhone = useMediaQuery('(max-width: 1000px)');
+
+    const sortOptions: { value: NFTSort; label: string }[] = [
+        { value: NFTSort.RECENTLY_ADDED, label: 'Recently Added' },
+        { value: NFTSort.HIGH_PRICE_FIRST, label: 'High Price First' },
+        { value: NFTSort.LOW_PRICE_FIRST, label: 'Low Price First' },
+    ];
 
     const mobileFilterState = useOpenedState();
+    const [isFilterVisible, setIsFilterVisible] = useState(true);
 
-    useEffect(() => {
-        // TODO:
-        // 1. Скрыть десктоп фильтр при resize
-        // 2. Скрыть модалку фильтра при resize
-    }, []);
-
-    const handleFilterToggle = () => {
-        setIsFilterVisible(prev => !prev);
-    };
+    const handleFilterToggle = useCallback(() => {
+        if (isPhone) {
+            mobileFilterState.isOpen
+                ? mobileFilterState.close()
+                : mobileFilterState.open();
+        } else {
+            setIsFilterVisible(isVisible => !isVisible);
+        }
+    }, [mobileFilterState, setIsFilterVisible]);
 
     return (
-        <>
-            <div className={styles.container}>
-                <CollectionHead />
+        <div className={styles.container}>
+            <CollectionHead
+                game={{
+                    ID: '0',
+                    name: 'NFTGTA',
+                    description: 'The world\'s first blockchain-based GTA RP project. Create your own world with your favorite content creators, play and earn NFTs, exchange resources and other stuff with players and earn on selling it on Tanpin.',
+                    imageURL:
+                        'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
+                    coverURL: 'https://i.seadn.io/gcs/files/6b26248d4c1d8eb42e9f9e631636164a.jpg?w=1440&auto=format',
+                    logoURL: 'https://assets.raribleuserdata.com/prod/v1/image/t_avatar_big/aHR0cHM6Ly9pLnNlYWRuLmlvL2djcy9maWxlcy80YzY5NTc4OTBkYTgxZmMzNWY5MDYzMDUwM2YzZTQ5MC5wbmc/dz01MDAmYXV0bz1mb3JtYXQ=',
+                    stats: {
+                        volume: {
+                            currency: 'USDT',
+                            amount: '1290',
+                        },
+                        items: 256,
+                        collections: 3,
+                        floor: {
+                            amount: '34234',
+                            currency: 'USDT',
+                        },
+                    }
+                }}
+                collection={{
+                    ID: '1',
+                    name: 'YAYO NFT',
+                    description: 'YAYO NFT is a collection of 4000 YAYO Men embodying the furthest archetypes of power, speed, violence, wealth, chaos, and adventure. YAYO is a tribute to the vehicles, equipment, and aesthetics that have captured the hearts and minds of young men for generations.',
+                    logoURL: 'https://assets.raribleuserdata.com/prod/v1/image/t_avatar_big/aHR0cHM6Ly9pLnNlYWRuLmlvL2djcy9maWxlcy9lMzY5ZmE1MWJhMjhkNWRhZWNkODM3Y2IwY2JmYWJmZS5wbmc/dz01MDAmYXV0bz1mb3JtYXQ=',
+                    coverURL: 'https://i.seadn.io/gcs/files/6b26248d4c1d8eb42e9f9e631636164a.jpg?w=1440&auto=format',
+                    symbol: 'HW',
+                    stats: {
+                        items: 100,
+                        sales: 900,
+                        volume: {
+                            amount: '1000.1240214',
+                            currency: 'USDT'
+                        },
+                        floor: {
+                            amount: '10',
+                            currency: 'USDT'
+                        }
+                    },
+                    attributes: []
+                }}
+            />
 
-                <Container space>
-                    <div
-                        className={classNames(styles.wrapper, {
-                            [styles.oneColumn]: !isFilterVisible,
-                            [styles.twoColumns]: isFilterVisible
-                        })}
-                    >
-                        <div className={styles.top}>
-                            <Button
-                                iconSlot={<FilterIcon />}
-                                view="secondary"
-                                onClick={handleFilterToggle}
-                            >
-                                Filters
-                            </Button>
+            <Container space>
+                <div className={styles.wrapper}>
+                    <div className={styles.top}>
+                        <Button
+                            iconSlot={<FilterIcon />}
+                            view="secondary"
+                            onClick={handleFilterToggle}
+                        >
+                            Filters
+                        </Button>
 
-                            <InputSearch
-                                placeholder="Search"
-                                onChange={setSearch}
-                            />
+                        <InputSearch
+                            value={search}
+                            placeholder="Search"
+                            onChange={setSearch}
+                        />
 
-                            <Select
-                                placeholderText="Sort"
-                                onChange={setSort}
-                                selectedValue={sort}
-                                options={options}
-                            />
-                        </div>
+                        <Select
+                            placeholderText="Sort"
+                            onChange={setSort}
+                            selectedValue={sort}
+                            options={sortOptions}
+                        />
+                    </div>
 
-                        {isFilterVisible && <Filter className={styles.filter} />}
-
-                        <Modal isOpen={mobileFilterState.isOpen}>
-                            <Filter />
-                        </Modal>
-
-
-                        <div className={styles.table}>
-                            <div className={styles.cardWrapper}>
-
-                                {true && (new Array(25)).fill(1).map((el, idx) => (<NftCardSkeleton key={idx} />))}
-
-                                {(new Array(25)).fill(1).map((el, idx) => (
-                                    <NftCard
-                                        key={idx}
-                                        nft={mock}
-                                        collectionID={'20'}
-                                        collectionName={'Cars Drop 2022'}
-                                    />
-                                ))}
+                    <div className={styles.main}>
+                        {
+                            !isPhone
+                            && isFilterVisible
+                            && <div className={styles.filterWrap}>
+                                <Filter />
                             </div>
+                        }
+
+                        <div className={styles.listWrap}>
+                            <NFTGrid
+                                gameID={gameID}
+                                collectionID={collectionID}
+                            />
                         </div>
                     </div>
-                </Container >
-            </div >
-        </>
+
+                    {isPhone && <Modal
+                        isOpen={mobileFilterState.isOpen}
+                        onClose={mobileFilterState.close}
+                    >
+                        <Filter />
+                    </Modal>}
+                </div>
+            </Container>
+        </div>
     );
 }

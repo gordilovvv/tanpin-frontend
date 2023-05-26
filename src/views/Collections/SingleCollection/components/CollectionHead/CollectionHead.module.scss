@@ -1,13 +1,16 @@
 .wrapper {
-    display: grid;
-    gap: 32px;
-    grid-template-columns: minmax(0, auto);
+    position: relative;
+    padding-top: 168px;
 }
 
-.imgWrapp {
-    position: relative;
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    &::before {
+    &::after {
         content: '';
         position: absolute;
         top: 0;
@@ -15,7 +18,6 @@
         bottom: 0;
         left: 0;
         background: linear-gradient(180deg, rgba(12, 12, 12, 0.5) 0%, #0C0C0C 100%);
-        z-index: 5;
     }
 }
 
@@ -28,66 +30,66 @@
     object-fit: cover;
 }
 
-.inner {
-    padding-top: 168px;
+.content {
     position: relative;
-    z-index: 10;
-
     display: grid;
     grid-template-columns: minmax(0, auto);
-    gap: 12px;
-
-    
+    gap: 32px;
 }
 
-.innerGap {
+.top {
     display: grid;
     grid-template-columns: minmax(0, auto);
     gap: 12px;
 }
 
-.Header {
-    display: grid;
-    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
-    align-items: center;
-    gap: 12px;
-    
-}
-.link {
-    width: fit-content;
-    display: inline;
-    text-decoration: none;
-    cursor: pointer;
-    color: inherit;
-    -webkit-tap-highlight-color: transparent;
-   
-}
-.title {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 1.44;
-    color: var(--color-typo-base);
-   
-}
+.game {
+    display: flex;
 
+    &Link {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        color: var(--color-typo-base);
+        cursor: pointer;
+        text-decoration: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
 
-.info {
-    display: grid;
-    align-items: center;
-    grid-template-columns: auto 1fr;
-    gap: 24px;
-
-  
+    &Name {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+    }
 }
 
-.infoTitle {
-    font-weight: 800;
-    font-size: 48px;
-    line-height: 1.12;
-    color: var(--color-typo-base);
+.collection {
+    display: flex;
+
+    &Link {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        color: var(--color-typo-base);
+        cursor: pointer;
+        text-decoration: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+
+    &Name {
+        font-weight: 800;
+        font-size: 48px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+    }
 }
 
-.text {
+.description {
     font-weight: 500;
     font-size: 16px;
     line-height: 1.5;
@@ -95,70 +97,90 @@
     max-width: 720px;
 }
 
-.items {
-    display: grid;
-    justify-content: start;
-    gap: 32px;
+.bottom {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+}
 
-    @include min768 {
-        grid-template-columns: repeat(auto-fit, minmax(0, auto));
-        grid-auto-flow: column;
+.property {
+    display: grid;
+    gap: 4px;
+    grid-template-columns: minmax(0, auto);
+
+    &Label {
+        color: var(--color-typo-ghost);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    &Value {
+        color: var(--color-typo-base);
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.4;
+    }
+
+    &Label,
+    &Value {
+        white-space: nowrap;
+        letter-spacing: -0.01em;
     }
 }
 
-.item {
-    display: grid;
-    gap: 4px;
-
-}
-.itemTitle {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1.43;
-    color: var(--color-typo-ghost);
-}
-
-.itemBody {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 1.44;
-    color: var(--color-typo-base);
+@include min768 {
+    .stats {
+        display: flex;
+        flex-flow: wrap;
+        margin-top: -32px;
+        margin-left: -32px;
+    }
+    
+    .property {
+        margin-top: 32px;
+        margin-left: 32px;
+    }
 }
 
 @include max767 {
-    .items {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
+    .wrapper {
+        padding-top: 112px;
+    }
+    
+    .game {
+        &Name {
+            font-size: 16px;
+        }
     }
 
-    .item {
+    .collection {
+        &Name {
+            font-size: 24px;
+        }
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .stats {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .property {
         gap: 2px;
 
-    }
-    .itemTitle {
-        font-size: 12px;
-    }
-    .itemBody {
-        font-size: 18px;
-    }
+        &Label { 
+            font-size: 12px;
+            line-height: 1.3;
+        }
 
-    .title {
-        font-size: 16px;
-    }
-
-    .mainInfTitle {
-        font-size: 24px;
-    }
-
-    .inner {
-        padding-top: 112px;
-        gap: 16px;
-    }
-    .innerGap {
-        gap: 8px;
-    }
-
-    .wrapper {
-        gap: 16px;
+        &Value {
+            font-size: 16px;
+        }
     }
 }

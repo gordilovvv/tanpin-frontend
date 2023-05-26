@@ -10,9 +10,10 @@ type NftCardProps = {
     nft: NFT
     collectionID: Collection['ID']
     collectionName: Collection['name']
+    gameID: string
 }
 
-export function NftCard({ nft, collectionID, collectionName }: NftCardProps) {
+export function NftCard({ nft, collectionID, collectionName, gameID }: NftCardProps) {
     const navigate = useNavigate();
     const handleAction = useCallback(() => {
         // TODO: logic
@@ -21,7 +22,7 @@ export function NftCard({ nft, collectionID, collectionName }: NftCardProps) {
     return (
         <div className={styles.card}>
             <Link
-                to={`/collections/${collectionID}/${nft.ID}`}
+                to={`/${gameID}/${collectionID}/${nft.ID}`}
                 className={styles.cardLink}
             >
                 <div className={styles.imageWrap}>

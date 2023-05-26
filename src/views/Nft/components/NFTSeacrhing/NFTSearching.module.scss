@@ -1,0 +1,11 @@
+.filter {
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, 240px);
+    gap: 16px;
+}
+
+@include max767 {
+    .filter {
+        grid-template-columns: 1fr;
+    }
+}

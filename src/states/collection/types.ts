@@ -25,7 +25,11 @@ export type Collection = {
     attributes: {
         traitType: string
         values: string[]
-    }[]
+    }[],
+    game: {
+        ID: string
+        name: string
+    }
 };
 
 export type CollectionQueryBody = {

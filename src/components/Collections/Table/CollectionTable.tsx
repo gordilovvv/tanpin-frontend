@@ -10,6 +10,7 @@ type CollectionTableProps = {
     filter?: CollectionQueryBody['filter'];
     footerButton?: ReactNode;
     hasMoreButton?: boolean;
+    gameID?: string
 };
 
 const HEADER_ITEMS = [
@@ -22,7 +23,7 @@ const HEADER_ITEMS = [
     '1D Change',
 ];
 
-export function CollectionTable({ filter, footerButton, hasMoreButton }: CollectionTableProps) {
+export function CollectionTable({ filter, footerButton, hasMoreButton, gameID }: CollectionTableProps) {
     const [pageNum, setPageNum] = useState(1);
     const { collections, page: loadedPage, pageCount, isLoading: isQueryLoading } = useCollectionsQuery({
         pageNum,
@@ -86,6 +87,7 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
                             key={item.ID}
                             index={index}
                             collection={item}
+                            gameID={gameID ?? item.game.ID}
                         />
                     ))}
                 </div>

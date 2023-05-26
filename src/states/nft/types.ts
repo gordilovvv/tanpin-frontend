@@ -1,18 +1,20 @@
-export type NFTQueryBody = {
-	collectionID: string
-	limit: number
-	offset: number
+import { NFTSaleStatus } from '../types';
 
-	filter?: {
-		search?: string
-		sort?: 'RECENTLY_ADDED' | 'HIGH_PRICE_FIRST' | 'LOW_PRICE_FIRST'
-		status?: 'FIXED_PRICE' | 'AUCTION'
-		owners?: string
-		minPrice?: string
-		maxPrice?: string
-		attributes?: {
-			traitType: string
-			value: string
-		}[]
-	},
+export type NFTListFilter = {
+	search?: string
+	sort?: NFTSort
+	status?: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE,
+	owners?: string
+	minPrice?: string
+	maxPrice?: string
+	attributes?: {
+		traitType: string
+		value: string
+	}[]
+}
+
+export enum NFTSort {
+	RECENTLY_ADDED = 'RECENTLY_ADDED',
+	HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
+	LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
 }
