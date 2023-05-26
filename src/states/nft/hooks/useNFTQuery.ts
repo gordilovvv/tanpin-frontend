@@ -1,8 +1,8 @@
 import useSWRImmutable from 'swr/immutable';
-import { NFTQueryBody } from '../types';
 import { fetchNFT } from '../fetch/fetchNFT';
+import { NFTListFilter } from '../types';
 
-export function useNFTQuery(body: NFTQueryBody) {
+export function useNFTQuery(body: NFTListFilter) {
     const { data: nftList, isLoading, error } = useSWRImmutable(
         ['get.list', body],
         () => fetchNFT(body)
