@@ -9,7 +9,8 @@ import styles from './CollectionRow.module.scss';
 
 type CollectionRowProps = {
     collection?: Collection,
-    index: number
+    index: number,
+    gameID?: string,
 };
 
 const skeletonWidths = {
@@ -92,14 +93,15 @@ const Loader = ({ number }: { number: number }) => {
     );
 };
 
-export function CollectionRow({ collection, index }: CollectionRowProps) {
+export function CollectionRow({ collection, index, gameID }: CollectionRowProps) {
     if (!collection) {
         return <Loader number={index + 1} />;
     }
 
+
     return (
         <Link
-            to={`/collections/${collection.ID}`}
+            to={`/${gameID}/${collection.ID}`}
             className={styles.row}
         >
             <div className={styles.wrap}>

@@ -6,12 +6,14 @@ import { NFTListFilter } from '@/states/nft/types';
 import styles from './NFTGrid.module.scss';
 
 type NFTGridProps = {
-    collectionID?: string,
+    collectionID: string,
+    gameID: string,
     filter: NFTListFilter
 }
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
-export const NFTGrid = memo(({ collectionID, filter }: NFTGridProps) => {
+export const NFTGrid = memo(({ collectionID, filter, gameID }: NFTGridProps) => {
+
     const fetchList = useCallback(async (offset: number, limit: number) => {
         return fetchNFTList({
             collectionID,
@@ -29,7 +31,8 @@ export const NFTGrid = memo(({ collectionID, filter }: NFTGridProps) => {
         return (
             <NftCard
                 nft={data}
-                collectionID={'20'}
+                gameID={gameID}
+                collectionID={collectionID}
                 collectionName={'Cars Drop 2022'}
             />
         );

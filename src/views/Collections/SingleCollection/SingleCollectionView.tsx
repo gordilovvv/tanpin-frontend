@@ -10,6 +10,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useFilterStore } from '@/states/collection/filterStore';
 import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
 import styles from './SingleCollectionView.module.scss';
+import { useParams } from 'react-router-dom';
 
 // TODO:
 // 1. add search
@@ -18,6 +19,13 @@ import styles from './SingleCollectionView.module.scss';
 // 4. collection ID
 // 5. REAL COLLECTION HEAD
 export function SingleCollectionView() {
+    const { gameID, collectionID } = useParams();
+    if (typeof collectionID !== 'string') {
+        throw new TypeError('typeof collectionID !== string');
+    }
+    if (typeof gameID !== 'string') {
+        throw new TypeError('typeof gameID !== string');
+    }
     const { sort, search } = useFilterStore(({ sort, search }) => ({
         sort,
         search
@@ -53,7 +61,7 @@ export function SingleCollectionView() {
                     name: 'NFTGTA',
                     description: 'The world\'s first blockchain-based GTA RP project. Create your own world with your favorite content creators, play and earn NFTs, exchange resources and other stuff with players and earn on selling it on Tanpin.',
                     imageURL:
-                'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
+                        'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
                     coverURL: 'https://i.seadn.io/gcs/files/6b26248d4c1d8eb42e9f9e631636164a.jpg?w=1440&auto=format',
                     logoURL: 'https://assets.raribleuserdata.com/prod/v1/image/t_avatar_big/aHR0cHM6Ly9pLnNlYWRuLmlvL2djcy9maWxlcy80YzY5NTc4OTBkYTgxZmMzNWY5MDYzMDUwM2YzZTQ5MC5wbmc/dz01MDAmYXV0bz1mb3JtYXQ=',
                     stats: {
@@ -120,14 +128,17 @@ export function SingleCollectionView() {
                     <div className={styles.main}>
                         {
                             !isPhone
-                                    && isFilterVisible
-                                    && <div className={styles.filterWrap}>
-                                        <Filter />
-                                    </div>
+                            && isFilterVisible
+                            && <div className={styles.filterWrap}>
+                                <Filter />
+                            </div>
                         }
 
                         <div className={styles.listWrap}>
-                            <NFTGrid />
+                            <NFTGrid
+                                gameID={gameID}
+                                collectionID={collectionID}
+                            />
                         </div>
                     </div>
 
