@@ -12,7 +12,7 @@ export function useDefaultsFromURL() {
         actions.setSearch(params.get('search') ?? '');
         actions.setMinPrice(params.get('minPrice') ?? '');
         actions.setMaxPrice(params.get('maxPrice') ?? '');
-        actions.setSort(params.get('sort') as `${FilterSorting}` ?? 'RECENTLY_ADDED');
-        actions.setStatus(params.get('status') as `${NFTSaleStatus.AUCTION}` | `${NFTSaleStatus.FIXED_PRICE}` ?? 'FIXED_PRICE');
+        actions.setSort(params.get('sort') as FilterSorting ?? 'RECENTLY_ADDED');
+        actions.setStatus(params.get('status') as Exclude<NFTSaleStatus, 'NOT_FOR_SALE'> ?? 'FIXED_PRICE');
     }, []);
 }

@@ -4,8 +4,8 @@ import { NFTAttribute, NFTSaleStatus } from '../types';
 type State = {
     collectionID: string
     search: string
-    sort: `${FilterSorting}`
-    status: `${NFTSaleStatus.AUCTION}` | `${NFTSaleStatus.FIXED_PRICE}`
+    sort: FilterSorting
+    status: Exclude<NFTSaleStatus, 'NOT_FOR_SALE'>
     minPrice: string
     maxPrice: string
     attributes: {
@@ -27,11 +27,11 @@ type Actions = {
     setCollectionID: (id: State['collectionID']) => void
 }
 
-export enum FilterSorting {
-    RECENTLY_ADDED = 'RECENTLY_ADDED',
-    HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
-    LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
-}
+export type FilterSorting =
+    'RECENTLY_ADDED' |
+    'HIGH_PRICE_FIRST' |
+    'LOW_PRICE_FIRST'
+
 
 export const useFilterStore = create<State & Actions>()(
     (set) => ({
