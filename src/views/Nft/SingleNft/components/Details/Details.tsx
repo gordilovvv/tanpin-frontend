@@ -4,14 +4,14 @@ import { Owner } from '@/components/User';
 import { NFT } from '@/states/types';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import styles from './Details.module.scss';
-import classNames from 'classnames';
 
 type DetailsProps = {
-    details: NFT
+    details: NFT,
+    network: string
 }
 
-export function Details({ details }: DetailsProps) {
-    const { owner, tokenID, contractAddress, network } = details; // откуда брать нетворк?
+export function Details({ details, network }: DetailsProps) {
+    const { owner, tokenID, contractAddress } = details; // откуда брать нетворк?
 
     return (
         <div className={styles.details}>

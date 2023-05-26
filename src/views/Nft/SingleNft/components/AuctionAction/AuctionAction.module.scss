@@ -1,0 +1,54 @@
+.current {
+    padding: 24px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+}
+
+.currentInfo {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 4px;
+    text-align: center;
+}
+
+.currentSubtitle {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--color-typo-ghost);
+}
+
+.currentTitle {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 133%;
+    color: var(--color-typo-base);
+}
+
+.currentPrice {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 144%;
+    color: var(--color-typo-ghost); // заменить
+}
+
+.currentTime {
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--color-typo-ghost);
+    text-align: center;
+
+    .white {
+        font-weight: 600;
+        color: var(--color-typo-base);
+    }
+}
+
+@include max767 {
+    .current {
+        gap: 16px;
+    }
+}

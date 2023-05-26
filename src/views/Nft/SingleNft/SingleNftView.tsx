@@ -12,6 +12,8 @@ import { Card } from './components/Card/Card';
 import { useNFTQuery } from '@/states/nft/hooks/useNFTQuery';
 import { activeChain } from '@/config/chain';
 import { AuctionBorder } from './components/АuctionBorder/AuctionBorder';
+import { AuctionAction } from './components/AuctionAction/AuctionAction';
+import { InstantBuy } from './components/InstantBuy/InstantBuy';
 import styles from './SingleNftView.module.scss';
 
 const mockBids = [
@@ -102,7 +104,6 @@ const mockTransctions = [
 export function SingleNftView() {
     const isMobile = useMediaQuery('(max-width: 1600px)');
     const { isLoading, nft, error } = useNFTQuery('3');
-    console.log(nft);
 
     if (isLoading) return (
         <div className={styles.loading}><Spin size="s" /></div>
@@ -150,20 +151,7 @@ export function SingleNftView() {
                         </div>
 
                         {isMobile && < div className={styles.column}>
-                            <AuctionBorder>
-                                <div className={styles.currentInfo}>
-                                    <div className={styles.currentSubtitle}>Current bid:</div>
-                                    <div className={styles.currentTitle}>56.8 MATIC</div>
-                                    <div className={styles.currentPrice}>60 USDT</div>
-                                </div>
-
-                                <Button block>Place a bid</Button>
-
-                                <div className={styles.currentTime}>
-                                    Sale ends in <span className={styles.white}>17d 6h 37m 7s</span>
-                                </div>
-                            </AuctionBorder>
-
+                            {nft.auction && <AuctionAction auction={nft.auction} />}
 
                             <div className={styles.buttons}>
                                 <Button
@@ -178,7 +166,10 @@ export function SingleNftView() {
                             </div>
 
                             <InfoItem title="Details">
-                                <Details details={{ ...nft, network: activeChain.name }} />
+                                <Details
+                                    details={nft}
+                                    network={activeChain.name}
+                                />
                             </InfoItem >
 
 
@@ -213,20 +204,7 @@ export function SingleNftView() {
 
                     {!isMobile &&
                         <div className={styles.column}>
-                            <div className={styles.current}>
-                                <div className={styles.currentInfo}>
-                                    <div className={styles.currentSubtitle}>Current bid:</div>
-                                    <div className={styles.currentTitle}>56.8 MATIC</div>
-                                    <div className={styles.currentPrice}>60 USDT</div>
-                                </div>
-
-                                <Button block>Place a bid</Button>
-
-                                <div className={styles.currentTime}>
-                                    Sale ends in <span className={styles.white}>17d 6h 37m 7s</span>
-                                </div>
-                            </div>
-
+                            {nft.auction && <AuctionAction auction={nft.auction} />}
 
                             <div className={styles.buttons}>
                                 <Button
@@ -241,13 +219,18 @@ export function SingleNftView() {
                             </div>
 
                             <InfoItem title="Details">
-                                <Details details={{ ...nft, network: activeChain.name }} />
+                                <Details
+                                    details={nft}
+                                    network={activeChain.name}
+                                />
                             </InfoItem >
 
-                            <AuctionBorder>
+                            <AuctionBorder view="danger">
                                 <div className={styles.auctionTitle}>title</div>
                                 <Button>Take your bid back?</Button>
                             </AuctionBorder >
+
+                            {nft.price && <InstantBuy price={nft.price} />}
 
                         </div>
                     }

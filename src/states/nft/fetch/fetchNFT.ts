@@ -41,7 +41,7 @@ export async function fetchNFT(id: string): Promise<NFT> {
                     currency: 'USDT',
                 },
                 startDate: String(new Date()),
-                endDate: String(new Date()),
+                endDate: String(new Date('2023-06-01')),
                 betList: [ {
                     transactionHash: '4525256234',
                     active: true,
