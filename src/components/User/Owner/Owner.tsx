@@ -1,3 +1,4 @@
+import { UserAvatar } from '..';
 import styles from './Owner.module.scss';
 import { ellipseAddress } from '@/utils/addressHelper';
 
@@ -8,7 +9,10 @@ type OwnerProps = {
 export function Owner({ address }: OwnerProps) {
     return (
         <div className={styles.wrapper}>
-            <div className={styles.circle} />
+            <UserAvatar
+                address={address}
+                size='s'
+            />
 
             <span className={styles.text}>
                 {ellipseAddress(address)}
