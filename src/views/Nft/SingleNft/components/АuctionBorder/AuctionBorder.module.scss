@@ -4,20 +4,16 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
+
+    &.default {
+        border: 1px solid var(--color-stroke);
+    }
+
     &.primary {
         border: 1px solid var(--color-primary);
     }
-    &.error {
+
+    &.danger {
         border: 1px solid var(--color-danger);
     }
 }
-
-.title {
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 133%;
-    color: var(--color-typo-base);
-    text-align: center;
-}
-
-

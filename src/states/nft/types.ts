@@ -1,0 +1,4 @@
+export enum NFTSort {
+    HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
+    LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
+}
