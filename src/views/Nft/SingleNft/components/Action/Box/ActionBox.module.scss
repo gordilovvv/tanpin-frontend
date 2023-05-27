@@ -1,0 +1,26 @@
+.box {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+    padding: 24px;
+    border-radius: 12px;
+
+    &.default {
+        border: 1px solid var(--color-stroke);
+    }
+
+    &.primary {
+        border: 1px solid var(--color-primary);
+    }
+
+    &.danger {
+        border: 1px solid var(--color-danger);
+    }
+}
+
+@include max767 {
+    .box {
+        gap: 16px;
+        padding: 16px;
+    }
+}

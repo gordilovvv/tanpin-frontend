@@ -8,13 +8,11 @@ import { Details } from './components/Details/Details';
 import { BidsList } from './components/BidsList/BidsList';
 import { TransactionsList } from './components/TransactionsList/TransactionsList';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { Card } from './components/Card/Card';
 import { useNFTQuery } from '@/states/nft/hooks/useNFTQuery';
 import { activeChain } from '@/config/chain';
-import { AuctionBorder } from './components/АuctionBorder/AuctionBorder';
-import { AuctionAction } from './components/AuctionAction/AuctionAction';
-import { InstantBuy } from './components/InstantBuy/InstantBuy';
 import styles from './SingleNftView.module.scss';
+import { TokenImage } from './components/Image/TokenImage';
+import { TokenAction } from './components/Action/TokenAction';
 
 const mockBids = [
     {
@@ -101,26 +99,26 @@ const mockTransctions = [
 ];
 
 
+// TODO: АДАПТИРОВАТЬ ЛЕАУТ ЕШЕ РАЗ
 export function SingleNftView() {
     const isMobile = useMediaQuery('(max-width: 1600px)');
     const { isLoading, nft, error } = useNFTQuery('3');
 
-    if (isLoading) return (
-        <div className={styles.loading}><Spin size="s" /></div>
-    );
+    if (isLoading) {
+        return (
+            <div className={styles.loading}><Spin size='m' /></div>
+        );
+    }
 
-    if (!nft) return (
-        { error }
-    );
+    if (!nft) {
+        return ({ error });
+    }
 
     return (
         <PageWrapper>
             <Container space>
                 <div className={styles.wrapper}>
-                    <Card
-                        link="/"
-                        photoUrl={nft.imageURL}
-                    />
+                    <TokenImage image={nft.imageURL} />
 
                     <div className={styles.info}>
                         <div className={styles.header}>
@@ -151,7 +149,7 @@ export function SingleNftView() {
                         </div>
 
                         {isMobile && < div className={styles.column}>
-                            {nft.auction && <AuctionAction auction={nft.auction} />}
+                            <TokenAction nft={nft} />
 
                             <div className={styles.buttons}>
                                 <Button
@@ -171,19 +169,10 @@ export function SingleNftView() {
                                     network={activeChain.name}
                                 />
                             </InfoItem >
-
-
-                            <AuctionBorder>
-                                <Button>Take your bid back?</Button>
-                            </AuctionBorder>
-
-
                         </div>}
 
                         <InfoItem title="Properties">
-                            {
-                                <Attributes attributes={nft.attributes} />
-                            }
+                            <Attributes attributes={nft.attributes} />
                         </InfoItem>
 
                         <InfoItem title="Description">
@@ -204,7 +193,7 @@ export function SingleNftView() {
 
                     {!isMobile &&
                         <div className={styles.column}>
-                            {nft.auction && <AuctionAction auction={nft.auction} />}
+                            <TokenAction nft={nft} />
 
                             <div className={styles.buttons}>
                                 <Button
@@ -224,14 +213,6 @@ export function SingleNftView() {
                                     network={activeChain.name}
                                 />
                             </InfoItem >
-
-                            <AuctionBorder view="danger">
-                                <div className={styles.auctionTitle}>title</div>
-                                <Button>Take your bid back?</Button>
-                            </AuctionBorder >
-
-                            {nft.price && <InstantBuy price={nft.price} />}
-
                         </div>
                     }
                 </div>
