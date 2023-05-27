@@ -1,7 +1,7 @@
 import { api } from '@/app/api';
 import { MOCK_API_CALLS } from '@/config';
 import { NFTListFilter } from '../types';
-import { NFT } from '@/states/types';
+import { NFT, NFTSaleStatus } from '@/states/types';
 import { sample } from 'lodash';
 
 export async function fetchNFTList(params: {
@@ -30,7 +30,11 @@ export async function fetchNFTList(params: {
                     amount: '100',
                     currency: 'USDT'
                 },
-                status: 'FIXED_PRICE'
+                status: NFTSaleStatus.FIXED_PRICE,
+                collection: {
+                    ID: '1',
+                    name: 'GTA Cars'
+                }
             })),
             total: 500
         };

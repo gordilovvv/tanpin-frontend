@@ -1,3 +1,5 @@
+import { Game } from '../game/types';
+
 export enum CollectionsSort {
     TRENDING = 'TRENDING',
     RECENTLY_ADDED = 'RECENTLY_ADDED'
@@ -27,8 +29,8 @@ export type Collection = {
         values: string[]
     }[],
     game: {
-        ID: string
-        name: string
+        ID: Game['ID']
+        name: Game['name']
     }
 };
 

@@ -8,12 +8,10 @@ import styles from './NftCard.module.scss';
 
 type NftCardProps = {
     nft: NFT
-    collectionID: Collection['ID']
-    collectionName: Collection['name']
-    gameID: string
+    parentGame: Collection['game']
 }
 
-export function NftCard({ nft, collectionID, collectionName, gameID }: NftCardProps) {
+export function NftCard({ nft, parentGame }: NftCardProps) {
     const navigate = useNavigate();
     const handleAction = useCallback(() => {
         // TODO: logic
@@ -22,7 +20,7 @@ export function NftCard({ nft, collectionID, collectionName, gameID }: NftCardPr
     return (
         <div className={styles.card}>
             <Link
-                to={`/${gameID}/${collectionID}/${nft.ID}`}
+                to={`/${parentGame.ID}/${nft.collection.ID}/${nft.ID}`}
                 className={styles.cardLink}
             >
                 <div className={styles.imageWrap}>
@@ -41,10 +39,10 @@ export function NftCard({ nft, collectionID, collectionName, gameID }: NftCardPr
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                                navigate(`/collections/${collectionID}`);
+                                navigate(`/${parentGame.ID}/${nft.collection.ID}`);
                             }}
                         >
-                            {collectionName}
+                            {nft.collection.name}
                         </div>
 
                         <div className={styles.title}>{nft.name}</div>

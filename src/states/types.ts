@@ -1,3 +1,5 @@
+import { Collection } from './collection/types';
+
 export type NFT = {
     ID: string
     name: string
@@ -12,10 +14,18 @@ export type NFT = {
         amount: string
         currency: string
     },
+    collection: {
+        ID: Collection['ID'],
+        name: Collection['name']
+    }
     status: NFTSaleStatus
 }
 
-export type NFTSaleStatus = 'FIXED_PRICE' | 'AUCTION' | 'NOT_FOR_SALE'
+export enum NFTSaleStatus {
+    FIXED_PRICE = 'FIXED_PRICE',
+    AUCTION = 'AUCTION',
+    NOT_FOR_SALE = 'NOT_FOR_SALE'
+}
 
 export type NFTAttribute = {
     traitType: string
@@ -59,15 +69,3 @@ export type AuctionBet = {
     }
     createdAt: string
 }
-
-export type TokenHistory = {
-    type: 'mint' | 'transfer' | 'buy' | 'bid' | 'cancelBid'
-    owner: string, // Адрес кто это действие сделал
-    transferedTo?: string
-    price?: {
-        amount: string,
-        currency: 'USDT' | 'CUSTOM_TOKEN'
-    }, // Только для buy, bid
-    date: string // Базовый формат
-    transactionHash: string
-}[];

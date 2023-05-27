@@ -3,7 +3,7 @@ import { NFTSaleStatus } from '../types';
 export type NFTListFilter = {
 	search?: string
 	sort?: NFTSort
-	status?: Exclude<NFTSaleStatus, 'NOT_FOR_SALE'>,
+	status?: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE,
 	owners?: string
 	minPrice?: string
 	maxPrice?: string
@@ -13,4 +13,8 @@ export type NFTListFilter = {
 	}[]
 }
 
-export type NFTSort = 'RECENTLY_ADDED' | 'HIGH_PRICE_FIRST' | 'LOW_PRICE_FIRST'
+export enum NFTSort {
+	RECENTLY_ADDED = 'RECENTLY_ADDED',
+	HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
+	LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
+}

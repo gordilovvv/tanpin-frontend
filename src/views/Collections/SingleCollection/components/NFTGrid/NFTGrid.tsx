@@ -2,19 +2,17 @@ import { memo, useCallback } from 'react';
 import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import { VirtualizedGrid } from '@/components/Virtualized/Grid/VirtualizedGrid';
 import { fetchNFTList } from '@/states/nft/fetch/fetchNFTList';
+import { NFTListFilter } from '@/states/nft/types';
 import styles from './NFTGrid.module.scss';
-import { useFilterStore } from '@/states/collection/filterStore';
 
 type NFTGridProps = {
-    collectionID: string,
-    gameID: string,
+    collectionID?: string,
+    filter: NFTListFilter
 }
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
-export const NFTGrid = memo(({ collectionID, gameID }: NFTGridProps) => {
-    const filter = useFilterStore();
-
-    const fetchList = useCallback((offset: number, limit: number) => {
+export const NFTGrid = memo(({ collectionID, filter }: NFTGridProps) => {
+    const fetchList = useCallback(async (offset: number, limit: number) => {
         return fetchNFTList({
             collectionID,
             limit,
@@ -27,13 +25,14 @@ export const NFTGrid = memo(({ collectionID, gameID }: NFTGridProps) => {
         if (loading)
             return (<NftCardSkeleton />);
 
-        // TODO: collection
+        // TODO: game
         return (
             <NftCard
                 nft={data}
-                gameID={gameID}
-                collectionID={collectionID}
-                collectionName={'Cars Drop 2022'}
+                parentGame={{
+                    ID: '1',
+                    name: 'Game'
+                }}
             />
         );
     }, []);
