@@ -13,6 +13,7 @@ import { useNFTQuery } from '@/states/nft/hooks/useNFTQuery';
 import { activeChain } from '@/config/chain';
 import { AuctionBorder } from './components/АuctionBorder/AuctionBorder';
 import { AuctionAction } from './components/AuctionAction/AuctionAction';
+import { HistoryTransaction } from '@/components/Transaction/HistoryTransaction/HistoryTransaction';
 import { InstantBuy } from './components/InstantBuy/InstantBuy';
 import styles from './SingleNftView.module.scss';
 
@@ -196,8 +197,8 @@ export function SingleNftView() {
                             <BidsList bids={mockBids} />
                         </InfoItem>
 
-                        <InfoItem title="Bids">
-                            <TransactionsList transactions={mockTransctions} />
+                        <InfoItem title="transitions">
+                            <HistoryTransaction transactions={mockTransctions} />
                         </InfoItem>
 
                     </div>

@@ -1,5 +1,5 @@
 import { AuctionBorder } from '../АuctionBorder/AuctionBorder';
-import { Button, Cart } from '@/uikit';
+import { Button, Cart, Skeleton } from '@/uikit';
 import styles from './InstantBuy.module.scss';
 import { activeChainId } from '@/config/chain';
 import { CONTRACTS } from '@/config/constants/contracts';
@@ -21,7 +21,12 @@ export function InstantBuy({ price }: InstantBuyProps) {
         <AuctionBorder>
             <div className={styles.header}>
                 <div className={styles.title}>{amount} {currency}</div>
-                <div className={styles.subtitle}>{priceUSD} USD</div>
+
+                {
+                    priceUSD
+                        ? <div className={styles.subtitle}>{priceUSD} USD</div>
+                        : <Skeleton className={styles.skeleton} />
+                }
             </div>
 
             <Button iconSlot={<Cart />}>Buy now</Button>

@@ -1,6 +1,5 @@
 import { UserAvatar } from '..';
 import styles from './Owner.module.scss';
-import { UserAvatar } from '../UserAvatar/UserAvatar';
 import { ellipseAddress } from '@/utils/addressHelper';
 
 type OwnerProps = {

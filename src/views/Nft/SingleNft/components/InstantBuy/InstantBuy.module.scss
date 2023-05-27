@@ -18,7 +18,11 @@
     text-align: center;
 }
 
-
+.skeleton {
+    width: 60px;
+    height: 26px;
+    margin: 0 auto;
+}
 
 @include max767 {
     .title {

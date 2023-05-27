@@ -7,6 +7,12 @@
     gap: 24px;
 }
 
+.skeleton {
+    width: 60px;
+    height: 26px;
+    margin: 0 auto;
+}
+
 .currentInfo {
     display: grid;
     grid-template-columns: minmax(0, auto);

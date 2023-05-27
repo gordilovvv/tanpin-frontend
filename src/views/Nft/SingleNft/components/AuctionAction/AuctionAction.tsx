@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AuctionBorder } from '../АuctionBorder/AuctionBorder';
-import { Button } from '@/uikit';
+import { Button, Skeleton } from '@/uikit';
 import { Auction } from '@/states/types';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { useTokenAmountPrice } from '@/hooks/useTokenAmountPrice';
@@ -11,10 +11,10 @@ type AuctionActionProps = {
     auction: Auction
 }
 
+//TODO - изменить компонент
 
 function formattingTime(targetDate: number): string {
     const targetDateFormat = new Date(targetDate);
-
     const timeDiff = targetDateFormat.getTime();
 
     if (timeDiff <= 0) {
@@ -70,7 +70,12 @@ export function AuctionAction({ auction }: AuctionActionProps) {
             <div className={styles.currentInfo}>
                 <div className={styles.currentSubtitle}>Current bid:</div>
                 <div className={styles.currentTitle}>{highestBid.amount} {highestBid.currency}</div>
-                <div className={styles.currentPrice}>{price} USD</div>
+
+                {
+                    price
+                        ? <div className={styles.currentPrice}>{price} USD</div>
+                        : <Skeleton className={styles.skeleton} />
+                }
             </div>
 
             <Button block>Place a bid</Button>
