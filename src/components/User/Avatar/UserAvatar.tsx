@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 type UserAvatarProps = {
     address: string,
-    size: 's' | 'm'
+    size: 's' | 'm' | 'l'
 }
 
 const createGradient = (address: string) => {

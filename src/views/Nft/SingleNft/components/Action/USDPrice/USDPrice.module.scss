@@ -1,0 +1,30 @@
+.wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.loader {
+    width: 86px;
+    height: 26px;
+}
+
+.price {
+    color: var(--color-typo-base-75);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: -0.012em;
+    white-space: nowrap;
+}
+
+@include max767 {
+    .loader {
+        width: 76px;
+        height: 20px;
+    }
+
+    .price {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

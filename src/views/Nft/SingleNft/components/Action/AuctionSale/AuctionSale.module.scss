@@ -1,0 +1,22 @@
+.top {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 4px;
+}
+
+.label {
+    color: var(--color-typo-ghost);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    text-align: center;
+}
+
+@include max767 {
+    .label {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

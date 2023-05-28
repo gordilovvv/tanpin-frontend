@@ -1,14 +1,6 @@
-.auctionTitle {
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 133%;
-    color: var(--color-typo-base);
-    text-align: center;
-}
-
 .wrapper {
     display: grid;
-    grid-template-columns: minmax(0, 480px) minmax(0, 640px) minmax(0, 384px);
+    grid-template-columns: 480px 1fr 384px;
     gap: 48px;
     align-items: flex-start;
 }

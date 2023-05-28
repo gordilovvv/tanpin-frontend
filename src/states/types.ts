@@ -26,16 +26,24 @@ export type NFTAttribute = {
     value: string
 }
 
-export type  HistoryTransaction = {
-	type: 'mint' | 'transfer' | 'buy' | 'bid' | 'cancelBid'
-	owner: string, // Адрес кто это действие сделал
-	transferedTo?: string
-	price?: {
-		amount: string,
+export enum TransactionType {
+    mint = 'mint',
+    transfer = 'transfer',
+    buy = 'buy',
+    listed = 'listed',
+    unlisted = 'unlisted',
+  }
+
+export type HistoryTransaction = {
+    type: TransactionType
+    owner: string, // Адрес кто это действие сделал
+    transferedTo?: string
+    price?: {
+        amount: string,
         currency: 'USDT' | 'CUSTOM_TOKEN'
-	}, // Только для buy, bid
-	date: string // Базовый формат
-	transactionHash: string
+    }, // Только для buy, bid
+    date: string // Базовый формат
+    transactionHash: string
 }
 
 export type Auction = {
@@ -60,7 +68,8 @@ export type Auction = {
 }
 
 export enum AuctionStatus {
-    OPENED = 'OPENED',
+    NOT_STARTED = 'NOT_STARTED',
+    STARTED = 'STARTED',
     CLOSED = 'CLOSED',
     CANCELED = 'CANCELED'
 }

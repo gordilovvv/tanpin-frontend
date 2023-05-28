@@ -5,123 +5,35 @@ import { CollectionLogo } from '@/components/Collections';
 import { InfoItem } from './components/InfoItem/InfoItem';
 import { Attributes } from './components/Attributes/Attributes';
 import { Details } from './components/Details/Details';
-import { BidsList } from './components/BidsList/BidsList';
-import { TransactionsList } from './components/TransactionsList/TransactionsList';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { Card } from './components/Card/Card';
 import { useNFTQuery } from '@/states/nft/hooks/useNFTQuery';
 import { activeChain } from '@/config/chain';
-import { AuctionBorder } from './components/АuctionBorder/AuctionBorder';
-import { AuctionAction } from './components/AuctionAction/AuctionAction';
-import { HistoryTransaction } from '@/components/Transaction/HistoryTransaction/HistoryTransaction';
-import { InstantBuy } from './components/InstantBuy/InstantBuy';
 import styles from './SingleNftView.module.scss';
+import { TokenImage } from './components/Image/TokenImage';
+import { TokenAction } from './components/Action/TokenAction';
+import { TransactionsHistory } from './components/TransactionsHistory/TransactionsHistory';
+import { AuctionBetsHistory } from './components/AuctionBetsHistory/AuctionBetsHistory';
 
-const mockBids = [
-    {
-        type: 'mint',
-        owner: '0x1a3b5c7d',
-        date: '2023-05-25',
-        transactionHash: '0xabc123',
-    },
-    {
-        type: 'transfer',
-        owner: '0xe2f4a6b8',
-        transferedTo: '0x3d5f7h9j',
-        date: '2023-05-24',
-        transactionHash: '0xdef456',
-    },
-    {
-        type: 'buy',
-        owner: '0x9k8j7h6g',
-        price: {
-            amount: '10.25',
-            currency: 'USDT',
-        },
-        date: '2023-05-23',
-        transactionHash: '0xghi789',
-    },
-    {
-        type: 'bid',
-        owner: '0xc4v6b8n2',
-        price: {
-            amount: '5.75',
-            currency: 'CUSTOM_TOKEN',
-        },
-        date: '2023-05-22',
-        transactionHash: '0xjkl012',
-    },
-    {
-        type: 'cancelBid',
-        owner: '0x3h5k7j9d',
-        date: '2023-05-21',
-        transactionHash: '0xmnop34',
-    },
-];
-
-const mockTransctions = [
-    {
-        type: 'mint',
-        owner: '0x1a3b5c7d',
-        date: '2023-05-25',
-        transactionHash: '0xabc123',
-    },
-    {
-        type: 'transfer',
-        owner: '0xe2f4a6b8',
-        transferedTo: '0x3d5f7h9j',
-        date: '2023-05-24',
-        transactionHash: '0xdef456',
-    },
-    {
-        type: 'buy',
-        owner: '0x9k8j7h6g',
-        price: {
-            amount: '10.25',
-            currency: 'USDT',
-        },
-        date: '2023-05-23',
-        transactionHash: '0xghi789',
-    },
-    {
-        type: 'bid',
-        owner: '0xc4v6b8n2',
-        price: {
-            amount: '5.75',
-            currency: 'CUSTOM_TOKEN',
-        },
-        date: '2023-05-22',
-        transactionHash: '0xjkl012',
-    },
-    {
-        type: 'cancelBid',
-        owner: '0x3h5k7j9d',
-        date: '2023-05-21',
-        transactionHash: '0xmnop34',
-    },
-];
-
-
+// TODO: АДАПТИРОВАТЬ ЛЕАУТ ЕШЕ РАЗ
 export function SingleNftView() {
     const isMobile = useMediaQuery('(max-width: 1600px)');
     const { isLoading, nft, error } = useNFTQuery('3');
 
-    if (isLoading) return (
-        <div className={styles.loading}><Spin size="s" /></div>
-    );
+    if (isLoading) {
+        return (
+            <div className={styles.loading}><Spin size='m' /></div>
+        );
+    }
 
-    if (!nft) return (
-        { error }
-    );
+    if (!nft) {
+        return ({ error });
+    }
 
     return (
         <PageWrapper>
             <Container space>
                 <div className={styles.wrapper}>
-                    <Card
-                        link="/"
-                        photoUrl={nft.imageURL}
-                    />
+                    <TokenImage image={nft.imageURL} />
 
                     <div className={styles.info}>
                         <div className={styles.header}>
@@ -152,7 +64,7 @@ export function SingleNftView() {
                         </div>
 
                         {isMobile && < div className={styles.column}>
-                            {nft.auction && <AuctionAction auction={nft.auction} />}
+                            <TokenAction nft={nft} />
 
                             <div className={styles.buttons}>
                                 <Button
@@ -172,19 +84,10 @@ export function SingleNftView() {
                                     network={activeChain.name}
                                 />
                             </InfoItem >
-
-
-                            <AuctionBorder>
-                                <Button>Take your bid back?</Button>
-                            </AuctionBorder>
-
-
                         </div>}
 
                         <InfoItem title="Properties">
-                            {
-                                <Attributes attributes={nft.attributes} />
-                            }
+                            <Attributes attributes={nft.attributes} />
                         </InfoItem>
 
                         <InfoItem title="Description">
@@ -194,18 +97,18 @@ export function SingleNftView() {
                         </InfoItem>
 
                         <InfoItem title="Bids">
-                            <BidsList bids={mockBids} />
+                            <AuctionBetsHistory id={nft.ID} />
                         </InfoItem>
 
                         <InfoItem title="transitions">
-                            <HistoryTransaction transactions={mockTransctions} />
+                            <TransactionsHistory id={nft.ID} />
                         </InfoItem>
 
                     </div>
 
                     {!isMobile &&
                         <div className={styles.column}>
-                            {nft.auction && <AuctionAction auction={nft.auction} />}
+                            <TokenAction nft={nft} />
 
                             <div className={styles.buttons}>
                                 <Button
@@ -225,14 +128,6 @@ export function SingleNftView() {
                                     network={activeChain.name}
                                 />
                             </InfoItem >
-
-                            <AuctionBorder view="danger">
-                                <div className={styles.auctionTitle}>title</div>
-                                <Button>Take your bid back?</Button>
-                            </AuctionBorder >
-
-                            {nft.price && <InstantBuy price={nft.price} />}
-
                         </div>
                     }
                 </div>

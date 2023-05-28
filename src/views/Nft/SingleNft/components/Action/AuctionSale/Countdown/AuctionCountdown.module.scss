@@ -1,0 +1,31 @@
+.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    color: var(--color-typo-base-75);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 4px;
+    white-space: nowrap;
+}
+
+.ended {
+    color: var(--color-typo-base);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 4px;
+}
+
+@include max767 {
+
+    .label,
+    .ended {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}
