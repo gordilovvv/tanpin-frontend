@@ -12,10 +12,10 @@ export async function fetchGame(id: string): Promise<GameQueryResponse> {
             name: 'NFTGTA',
             description: 'The world\'s first blockchain-based GTA RP project. Create your own world with your favorite content creators, play and earn NFTs, exchange resources and other stuff with players and earn on selling it on Tanpin.',
             imageURL:
-        'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
+                'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
             coverURL: '/images/game-cover.png',
             logoURL:
-        'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1290',
+                'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1290',
             stats: {
                 volume: {
                     currency: 'USDT',
@@ -28,80 +28,6 @@ export async function fetchGame(id: string): Promise<GameQueryResponse> {
                     currency: 'USDT',
                 },
             },
-            popularCollections: [
-                {
-                    ID: '0',
-                    name: 'Hello',
-                    description: 'World',
-                    logoURL:
-            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-                    // @ts-ignore
-                    stats: {
-                        volume: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                        floor: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                    },
-                },
-                {
-                    ID: '1',
-                    name: 'Hello',
-                    description: 'World',
-                    logoURL:
-            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-                    // @ts-ignore
-                    stats: {
-                        volume: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                        floor: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                    },
-                },
-                {
-                    ID: '2',
-                    name: 'Hello',
-                    description: 'World',
-                    logoURL:
-            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-                    // @ts-ignore
-                    stats: {
-                        volume: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                        floor: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                    },
-                },
-                {
-                    ID: '3',
-                    name: 'Hello',
-                    description: 'World',
-                    logoURL:
-            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-                    // @ts-ignore
-                    stats: {
-                        volume: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                        floor: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                    },
-                },
-            ],
         };
     }
 

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { NFTAttribute, NFTSaleStatus } from '../types';
 
-type State = {
+export type FilterState = {
     collectionID: string
     search: string
     sort: `${FilterSorting}`
@@ -15,16 +15,17 @@ type State = {
 }
 
 type Actions = {
-    setMinPrice: (minPrice: State['minPrice']) => void
-    setMaxPrice: (maxPrice: State['maxPrice']) => void
+    setMinPrice: (minPrice: FilterState['minPrice']) => void
+    setMaxPrice: (maxPrice: FilterState['maxPrice']) => void
     addAttribute: (attribute: NFTAttribute) => void
     removeAttribute: (attribute: NFTAttribute) => void
     clearAttributes: () => void
     clearAllOfTraitType: (traitType: string) => void
-    setSearch: (search: State['search']) => void
-    setSort: (sort: State['sort']) => void
-    setStatus: (status: State['status']) => void
-    setCollectionID: (id: State['collectionID']) => void
+    setSearch: (search: FilterState['search']) => void
+    setSort: (sort: FilterState['sort']) => void
+    setStatus: (status: FilterState['status']) => void
+    setCollectionID: (id: FilterState['collectionID']) => void
+    replaceFilterState: (newState: Partial<FilterState>) => void
 }
 
 enum FilterSorting {
@@ -33,7 +34,7 @@ enum FilterSorting {
     LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
 }
 
-export const useFilterStore = create<State & Actions>()(
+export const useFilterStore = create<FilterState & Actions>()(
     (set) => ({
         collectionID: '',
         search: '',
@@ -146,6 +147,7 @@ export const useFilterStore = create<State & Actions>()(
         },
         setSearch: (search) => {
             set({ search });
-        }
+        },
+        replaceFilterState: set
     })
 );

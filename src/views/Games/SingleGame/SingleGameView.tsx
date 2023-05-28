@@ -9,8 +9,8 @@ import { useGameQuery } from '@/states/game/hooks/useGameQuery';
 import styles from './SingleGameView.module.scss';
 
 export function SingleGameView() {
-    const { id } = useParams();
-    const { game } = useGameQuery(id as string);
+    const { gameID } = useParams();
+    const { game } = useGameQuery(gameID as string);
 
     const [search, setSearch] = useState<string>('');
     const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');

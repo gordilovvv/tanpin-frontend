@@ -10,16 +10,15 @@ export function PopularCollections() {
             </Title>
 
             <CollectionTable
-                customButtonDown={<Button
+                filter={{ popular: true }}
+                footerButton={<Button
                     to='/collections'
                     view='secondary'
                     block
                 >
                     View collections
                 </Button>}
-
             />
         </div>
     );
-
 }

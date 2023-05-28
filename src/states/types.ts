@@ -1,3 +1,5 @@
+import { Collection } from './collection/types';
+
 export type NFT = {
     ID: string
     name: string
@@ -12,6 +14,10 @@ export type NFT = {
         amount: string
         currency: string
     },
+    collection: {
+        ID: Collection['ID'],
+        name: Collection['name']
+    }
     status: NFTSaleStatus
 }
 

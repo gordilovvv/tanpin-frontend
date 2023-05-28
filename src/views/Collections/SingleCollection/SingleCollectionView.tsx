@@ -9,31 +9,53 @@ import { useOpenedState } from '@/hooks/useOpenedState';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useFilterStore } from '@/states/collection/filterStore';
 import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
+import { useParams } from 'react-router-dom';
+import { useCollectionQuery } from '@/states/collection/hooks/useCollectionQuery';
+import { useGameQuery } from '@/states/game/hooks/useGameQuery';
+import { useDefaultsFromURL } from '@/states/collection/hooks/useDefaultsFromURL';
 import styles from './SingleCollectionView.module.scss';
 
 // TODO:
-// 1. add search
-// 2. add sort
-// 3. filter
-// 4. collection ID
-// 5. REAL COLLECTION HEAD
+// 1. Loading
+// 2. Error
+// 3. 
 export function SingleCollectionView() {
-    const { sort, search } = useFilterStore(({ sort, search }) => ({
+    const { gameID, collectionID } = useParams() as { gameID: string, collectionID: string };
+    const isPhone = useMediaQuery('(max-width: 1000px)');
+
+    const filterState = useFilterStore(({ collectionID, minPrice, maxPrice, attributes, search, sort, status }) => ({
+        collectionID,
+        minPrice,
+        maxPrice,
+        attributes,
+        search,
         sort,
-        search
+        status
     }));
     const { setSearch, setSort } = useFilterStoreActions();
 
-    const isPhone = useMediaQuery('(max-width: 1000px)');
+    useDefaultsFromURL();
 
-    const sortOptions: { value: NFTSort; label: string }[] = [
-        { value: NFTSort.RECENTLY_ADDED, label: 'Recently Added' },
-        { value: NFTSort.HIGH_PRICE_FIRST, label: 'High Price First' },
-        { value: NFTSort.LOW_PRICE_FIRST, label: 'Low Price First' },
-    ];
+    const {
+        game,
+        isLoading: isGameLoading,
+        error: gameError
+    } = useGameQuery(gameID);
+
+    const {
+        collection,
+        isLoading: isCollectionLoading,
+        error: collectionError
+    } = useCollectionQuery(collectionID);
 
     const mobileFilterState = useOpenedState();
     const [isFilterVisible, setIsFilterVisible] = useState(true);
+
+    const sortOptions: { value: `${NFTSort}`; label: string }[] = [
+        { value: 'RECENTLY_ADDED', label: 'Recently Added' },
+        { value: 'HIGH_PRICE_FIRST', label: 'High Price First' },
+        { value: 'LOW_PRICE_FIRST', label: 'Low Price First' },
+    ];
 
     const handleFilterToggle = useCallback(() => {
         if (isPhone) {
@@ -45,51 +67,19 @@ export function SingleCollectionView() {
         }
     }, [mobileFilterState, setIsFilterVisible]);
 
+    // TODO: error
+    if (gameError || collectionError)
+        return (<div>error</div>);
+
+    // TODO: loading
+    if (isGameLoading || isCollectionLoading || !game || !collection)
+        return (<div>loading</div>);
+
     return (
         <div className={styles.container}>
             <CollectionHead
-                game={{
-                    ID: '0',
-                    name: 'NFTGTA',
-                    description: 'The world\'s first blockchain-based GTA RP project. Create your own world with your favorite content creators, play and earn NFTs, exchange resources and other stuff with players and earn on selling it on Tanpin.',
-                    imageURL:
-                'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
-                    coverURL: 'https://i.seadn.io/gcs/files/6b26248d4c1d8eb42e9f9e631636164a.jpg?w=1440&auto=format',
-                    logoURL: 'https://assets.raribleuserdata.com/prod/v1/image/t_avatar_big/aHR0cHM6Ly9pLnNlYWRuLmlvL2djcy9maWxlcy80YzY5NTc4OTBkYTgxZmMzNWY5MDYzMDUwM2YzZTQ5MC5wbmc/dz01MDAmYXV0bz1mb3JtYXQ=',
-                    stats: {
-                        volume: {
-                            currency: 'USDT',
-                            amount: '1290',
-                        },
-                        items: 256,
-                        collections: 3,
-                        floor: {
-                            amount: '34234',
-                            currency: 'USDT',
-                        },
-                    }
-                }}
-                collection={{
-                    ID: '1',
-                    name: 'YAYO NFT',
-                    description: 'YAYO NFT is a collection of 4000 YAYO Men embodying the furthest archetypes of power, speed, violence, wealth, chaos, and adventure. YAYO is a tribute to the vehicles, equipment, and aesthetics that have captured the hearts and minds of young men for generations.',
-                    logoURL: 'https://assets.raribleuserdata.com/prod/v1/image/t_avatar_big/aHR0cHM6Ly9pLnNlYWRuLmlvL2djcy9maWxlcy9lMzY5ZmE1MWJhMjhkNWRhZWNkODM3Y2IwY2JmYWJmZS5wbmc/dz01MDAmYXV0bz1mb3JtYXQ=',
-                    coverURL: 'https://i.seadn.io/gcs/files/6b26248d4c1d8eb42e9f9e631636164a.jpg?w=1440&auto=format',
-                    symbol: 'HW',
-                    stats: {
-                        items: 100,
-                        sales: 900,
-                        volume: {
-                            amount: '1000.1240214',
-                            currency: 'USDT'
-                        },
-                        floor: {
-                            amount: '10',
-                            currency: 'USDT'
-                        }
-                    },
-                    attributes: []
-                }}
+                game={game}
+                collection={collection}
             />
 
             <Container space>
@@ -104,7 +94,7 @@ export function SingleCollectionView() {
                         </Button>
 
                         <InputSearch
-                            value={search}
+                            value={filterState.search}
                             placeholder="Search"
                             onChange={setSearch}
                         />
@@ -112,7 +102,7 @@ export function SingleCollectionView() {
                         <Select
                             placeholderText="Sort"
                             onChange={setSort}
-                            selectedValue={sort}
+                            selectedValue={filterState.sort}
                             options={sortOptions}
                         />
                     </div>
@@ -120,14 +110,17 @@ export function SingleCollectionView() {
                     <div className={styles.main}>
                         {
                             !isPhone
-                                    && isFilterVisible
-                                    && <div className={styles.filterWrap}>
-                                        <Filter />
-                                    </div>
+                            && isFilterVisible
+                            && <div className={styles.filterWrap}>
+                                <Filter />
+                            </div>
                         }
 
                         <div className={styles.listWrap}>
-                            <NFTGrid />
+                            <NFTGrid
+                                filter={filterState}
+                                collectionID={collectionID}
+                            />
                         </div>
                     </div>
 

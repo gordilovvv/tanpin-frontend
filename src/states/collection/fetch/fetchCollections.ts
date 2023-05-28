@@ -13,7 +13,7 @@ export async function collectionFetch(body: CollectionQueryBody): Promise<Collec
             collections: [...Array(PAGE_SIZE).keys()].map(id => {
                 return {
                     ID: `${(id + (10 * (body?.pageNum ?? 0)))}`,
-                    name: `Hello ${ body.pageNum } ${ body.filter?.sort }`,
+                    name: `Hello ${body.pageNum} ${body.filter?.sort}`,
                     description: 'World',
                     logoURL: 'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                     coverURL: '',
@@ -30,7 +30,11 @@ export async function collectionFetch(body: CollectionQueryBody): Promise<Collec
                             currency: 'USDT'
                         }
                     },
-                    attributes: []
+                    attributes: [],
+                    game: {
+                        ID: '0',
+                        name: 'GTA'
+                    }
                 } as Collection;
             })
         };

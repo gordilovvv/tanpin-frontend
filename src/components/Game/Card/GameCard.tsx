@@ -53,7 +53,7 @@ export function GameCard({ game }: GameCardProps) {
                     </div>
 
                     <Button
-                        to={`/games/${game.ID}`}
+                        to={`/${game.ID}`}
                         view="secondary"
                         className={styles.btn}
                     >

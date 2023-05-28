@@ -17,7 +17,7 @@ export const useCollectionsQuery = (body: CollectionQueryBody) => {
 
     // On get new collections contact it with previous
     useEffect(() => {
-        if (data?.collections && data.page) {    
+        if (data?.collections && data.page) {
             setCollections(hashMap => ({
                 ...hashMap,
                 [data.page]: data.collections
