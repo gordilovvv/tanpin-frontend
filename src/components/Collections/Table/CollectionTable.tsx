@@ -7,10 +7,9 @@ import { PAGE_SIZE } from '@/config/constants';
 import styles from './CollectionTable.module.scss';
 
 type CollectionTableProps = {
-    filter?: CollectionQueryBody['filter'];
-    footerButton?: ReactNode;
-    hasMoreButton?: boolean;
-    gameID?: string
+    filter?: CollectionQueryBody['filter']
+    footerButton?: ReactNode
+    hasMoreButton?: boolean
 };
 
 const HEADER_ITEMS = [
@@ -23,7 +22,7 @@ const HEADER_ITEMS = [
     '1D Change',
 ];
 
-export function CollectionTable({ filter, footerButton, hasMoreButton, gameID }: CollectionTableProps) {
+export function CollectionTable({ filter, footerButton, hasMoreButton }: CollectionTableProps) {
     const [pageNum, setPageNum] = useState(1);
     const { collections, page: loadedPage, pageCount, isLoading: isQueryLoading } = useCollectionsQuery({
         pageNum,
@@ -87,7 +86,6 @@ export function CollectionTable({ filter, footerButton, hasMoreButton, gameID }:
                             key={item.ID}
                             index={index}
                             collection={item}
-                            gameID={gameID ?? item.game.ID}
                         />
                     ))}
                 </div>

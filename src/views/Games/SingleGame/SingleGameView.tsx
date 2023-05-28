@@ -10,9 +10,6 @@ import styles from './SingleGameView.module.scss';
 
 export function SingleGameView() {
     const { gameID } = useParams();
-    if (typeof gameID !== 'string') {
-        throw new TypeError('typeof gameID is not a string!');
-    }
     const { game } = useGameQuery(gameID as string);
 
     const [search, setSearch] = useState<string>('');
@@ -49,7 +46,6 @@ export function SingleGameView() {
                     <CollectionTable
                         filter={filter}
                         hasMoreButton
-                        gameID={gameID}
                     />
                 </Container>
             </div>

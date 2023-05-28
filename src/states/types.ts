@@ -21,13 +21,11 @@ export type NFT = {
     status: NFTSaleStatus
 }
 
-export const enum NFTSaleStatus {
+export enum NFTSaleStatus {
     FIXED_PRICE = 'FIXED_PRICE',
     AUCTION = 'AUCTION',
     NOT_FOR_SALE = 'NOT_FOR_SALE'
 }
-
-export type NFTSaleStatusString = keyof typeof NFTSaleStatus;
 
 export type NFTAttribute = {
     traitType: string
@@ -55,7 +53,7 @@ export type Auction = {
     status: AuctionStatus
 }
 
-export const enum AuctionStatus {
+export enum AuctionStatus {
     OPENED = 'OPENED',
     CLOSED = 'CLOSED',
     CANCELED = 'CANCELED'

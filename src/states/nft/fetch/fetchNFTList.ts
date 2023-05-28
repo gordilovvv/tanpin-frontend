@@ -1,14 +1,14 @@
 import { api } from '@/app/api';
 import { MOCK_API_CALLS } from '@/config';
-import { NFTListFilter } from '../types';
 import { NFT, NFTSaleStatus } from '@/states/types';
 import { sample } from 'lodash';
+import { FilterState } from '@/states/collection/filterStore';
 
 export async function fetchNFTList(params: {
     collectionID?: string,
     offset: number,
     limit: number,
-    filter?: NFTListFilter
+    filter?: FilterState
 }): Promise<{
     items: NFT[],
     total: number

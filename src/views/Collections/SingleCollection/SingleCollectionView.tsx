@@ -9,35 +9,53 @@ import { useOpenedState } from '@/hooks/useOpenedState';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useFilterStore } from '@/states/collection/filterStore';
 import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
-import styles from './SingleCollectionView.module.scss';
 import { useParams } from 'react-router-dom';
 import { useCollectionQuery } from '@/states/collection/hooks/useCollectionQuery';
 import { useGameQuery } from '@/states/game/hooks/useGameQuery';
+import { useDefaultsFromURL } from '@/states/collection/hooks/useDefaultsFromURL';
+import styles from './SingleCollectionView.module.scss';
 
 // TODO:
-// 1. Собрать объект фильтра и отдать его компоненту NFTGrid
-// 2. При изменения фильтра записывать данные в url
-// 3. { gameID, collectionID } = useParams(); сделать отдельный хук useURLStringParams чтобы убрать из компонента не нужную валидацию
+// 1. Loading
+// 2. Error
+// 3. 
 export function SingleCollectionView() {
-    const { gameID, collectionID } = useParams();
+    const { gameID, collectionID } = useParams() as { gameID: string, collectionID: string };
+    const isPhone = useMediaQuery('(max-width: 1000px)');
 
-    // TODO: собрать фильтр ТУТ для передачи NFTGrid.tsx
-    const { sort, search } = useFilterStore(({ sort, search }) => ({
+    const filterState = useFilterStore(({ collectionID, minPrice, maxPrice, attributes, search, sort, status }) => ({
+        collectionID,
+        minPrice,
+        maxPrice,
+        attributes,
+        search,
         sort,
-        search
+        status
     }));
     const { setSearch, setSort } = useFilterStoreActions();
 
-    const isPhone = useMediaQuery('(max-width: 1000px)');
+    useDefaultsFromURL();
+
+    const {
+        game,
+        isLoading: isGameLoading,
+        error: gameError
+    } = useGameQuery(gameID);
+
+    const {
+        collection,
+        isLoading: isCollectionLoading,
+        error: collectionError
+    } = useCollectionQuery(collectionID);
+
+    const mobileFilterState = useOpenedState();
+    const [isFilterVisible, setIsFilterVisible] = useState(true);
 
     const sortOptions: { value: `${NFTSort}`; label: string }[] = [
         { value: 'RECENTLY_ADDED', label: 'Recently Added' },
         { value: 'HIGH_PRICE_FIRST', label: 'High Price First' },
         { value: 'LOW_PRICE_FIRST', label: 'Low Price First' },
     ];
-
-    const mobileFilterState = useOpenedState();
-    const [isFilterVisible, setIsFilterVisible] = useState(true);
 
     const handleFilterToggle = useCallback(() => {
         if (isPhone) {
@@ -48,9 +66,6 @@ export function SingleCollectionView() {
             setIsFilterVisible(isVisible => !isVisible);
         }
     }, [mobileFilterState, setIsFilterVisible]);
-
-    const { collection, isLoading: isCollectionLoading, error: collectionError } = useCollectionQuery(collectionID);
-    const { game, isLoading: isGameLoading, error: gameError } = useGameQuery(gameID);
 
     // TODO: error
     if (gameError || collectionError)
@@ -79,7 +94,7 @@ export function SingleCollectionView() {
                         </Button>
 
                         <InputSearch
-                            value={search}
+                            value={filterState.search}
                             placeholder="Search"
                             onChange={setSearch}
                         />
@@ -87,7 +102,7 @@ export function SingleCollectionView() {
                         <Select
                             placeholderText="Sort"
                             onChange={setSort}
-                            selectedValue={sort}
+                            selectedValue={filterState.sort}
                             options={sortOptions}
                         />
                     </div>
@@ -103,6 +118,7 @@ export function SingleCollectionView() {
 
                         <div className={styles.listWrap}>
                             <NFTGrid
+                                filter={filterState}
                                 collectionID={collectionID}
                             />
                         </div>

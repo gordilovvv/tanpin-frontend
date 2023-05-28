@@ -23,6 +23,7 @@ export function Filter({ collection, className, ...props }: FilterProps) {
         setMinPrice
     } = useFilterStoreActions();
 
+    const [minPrice, maxPrice] = useFilterStore((state) => [state.minPrice, state.maxPrice]);
     const [status, activeAttributes] = useFilterStore((state) => [state.status, state.attributes]);
 
     const activeAttributesHashMap = useMemo(
@@ -61,6 +62,8 @@ export function Filter({ collection, className, ...props }: FilterProps) {
                 addon='USDT'
             >
                 <PriceFilter
+                    initialMin={minPrice}
+                    initialMax={maxPrice}
                     onMinPriceChange={setMinPrice}
                     onMaxPriceChange={setMaxPrice}
                 />

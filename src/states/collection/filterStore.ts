@@ -1,12 +1,11 @@
 import { create } from 'zustand';
-import { NFTAttribute, NFTSaleStatusString } from '../types';
-import { NFTSortString } from '../nft/types';
+import { NFTAttribute, NFTSaleStatus } from '../types';
 
 export type FilterState = {
     collectionID: string
     search: string
-    sort: NFTSortString
-    status: Exclude<NFTSaleStatusString, 'NOT_FOR_SALE'>
+    sort: `${FilterSorting}`
+    status: `${NFTSaleStatus.AUCTION}` | `${NFTSaleStatus.FIXED_PRICE}`
     minPrice: string
     maxPrice: string
     attributes: {
@@ -27,6 +26,12 @@ type Actions = {
     setStatus: (status: FilterState['status']) => void
     setCollectionID: (id: FilterState['collectionID']) => void
     replaceFilterState: (newState: Partial<FilterState>) => void
+}
+
+enum FilterSorting {
+    RECENTLY_ADDED = 'RECENTLY_ADDED',
+    HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
+    LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
 }
 
 export const useFilterStore = create<FilterState & Actions>()(
