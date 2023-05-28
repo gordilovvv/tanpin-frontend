@@ -32,17 +32,17 @@ export enum TransactionType {
     buy = 'buy',
     listed = 'listed',
     unlisted = 'unlisted',
-  }
+}
 
 export type HistoryTransaction = {
     type: TransactionType
-    owner: string, // Адрес кто это действие сделал
+    owner: string,
     transferedTo?: string
     price?: {
-        amount: string,
-        currency: 'USDT' | 'CUSTOM_TOKEN'
-    }, // Только для buy, bid
-    date: string // Базовый формат
+        amount: string
+        currency: string
+    }
+    date: string
     transactionHash: string
 }
 
