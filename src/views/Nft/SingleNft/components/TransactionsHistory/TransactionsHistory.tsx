@@ -1,6 +1,6 @@
 import { useHistoryQuery } from '@/states/nft/hooks/useHistoryQuery';
-import { HistoryTransaction } from '@/components/Transaction/HistoryTransaction/HistoryTransaction';
-import { TransitionRowSkeleton } from '@/components/Transaction/TransitionRowSkeleton/TransitionRowSkeleton';
+import { HistoryTransaction } from '@/components/Transaction';
+import { TransitionRowSkeleton } from '@/components/Transaction';
 import times from 'lodash/times';
 import styles from './TransactionsHistory.module.scss';
 

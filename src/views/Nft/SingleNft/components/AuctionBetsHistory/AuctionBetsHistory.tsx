@@ -1,8 +1,8 @@
 import { useBetsQuery } from '@/states/nft/hooks/useBetsQuery';
-import { AuctionBet } from '@/components/Transaction/AuctionBet/AuctionBet';
-import styles from './AuctionBetsHistory.module.scss';
-import { TransitionRowSkeleton } from '@/components/Transaction/TransitionRowSkeleton/TransitionRowSkeleton';
+import { AuctionBet } from '@/components/Transaction';
+import { TransitionRowSkeleton } from '@/components/Transaction';
 import times from 'lodash/times';
+import styles from './AuctionBetsHistory.module.scss';
 
 type AuctionBetsHistoryProps = {
     id: string
