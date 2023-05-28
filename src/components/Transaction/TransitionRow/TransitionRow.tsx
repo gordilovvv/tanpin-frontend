@@ -1,9 +1,9 @@
-import styles from './TransitionRow.module.scss';
-import { getTransactionExplorerURL } from '@/utils/explorer';
-import { Link, UnstyleLink } from '@/uikit';
-import { formatDate } from '@/utils/formatDate';
-import { UserAvatar } from '@/components/User';
 import { PropsWithChildren } from 'react';
+import { Link, UnstyleLink } from '@/uikit';
+import { UserAvatar } from '@/components/User';
+import { formatDate } from '@/utils/date';
+import { getTransactionExplorerURL } from '@/utils/explorer';
+import styles from './TransitionRow.module.scss';
 
 type TransitionRowProps = {
     date: string
@@ -13,9 +13,7 @@ type TransitionRowProps = {
 
 export function TransitionRow({ children, date, transactionHash, userAddress }: PropsWithChildren<TransitionRowProps>) {
     return (
-        <div
-            className={styles.item}
-        >
+        <div className={styles.row}>
             <UserAvatar
                 address={userAddress}
                 size="l"
@@ -31,8 +29,10 @@ export function TransitionRow({ children, date, transactionHash, userAddress }: 
                         rel='noreferrer noopener'
                         target='_blank'
                         href={getTransactionExplorerURL(transactionHash)}
-                        className={styles.linkHover}
-                    > {formatDate(new Date(date))} <Link /></UnstyleLink>
+                        className={styles.date}
+                    >
+                        {formatDate(date)} <Link />
+                    </UnstyleLink>
                 </div>
             </div>
         </div>

@@ -1,4 +1,3 @@
-import stringToColor from 'string-to-color';
 import styles from './UserAvatar.module.scss';
 import classNames from 'classnames';
 
@@ -8,12 +7,28 @@ type UserAvatarProps = {
 }
 
 const createGradient = (address: string) => {
-    const degree = Math.min(parseInt(address.replace(/(^.+\D)(\d+)(\D.+$)/i, '$2').slice(0, 1)) * 10, 360);
+    const seedArr = address.match(/.{1,7}/g)?.splice(0, 5);
+    const colors: string[] = [];
 
-    const firstColor = stringToColor(address.slice(2, 20));
-    const secondColor = stringToColor(address.slice(-20));
+    seedArr?.forEach((seed) => {
+        let hash = 0;
 
-    return `linear-gradient(${degree}deg, ${firstColor}, ${secondColor})`;
+        for (let i = 0; i < seed.length; i += 1) {
+            hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+            hash = hash & hash;
+        }
+
+        const rgb = [0, 0, 0];
+
+        for (let i = 0; i < 3; i += 1) {
+            const value = (hash >> (i * 8)) & 255;
+            rgb[i] = value;
+        }
+
+        colors.push(`rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
+    });
+
+    return `linear-gradient(120deg, ${colors[0]}, ${colors[1]})`;
 };
 
 export function UserAvatar({ address, size }: UserAvatarProps) {
