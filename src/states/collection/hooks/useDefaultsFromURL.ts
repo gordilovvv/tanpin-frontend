@@ -1,8 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
-import { NFTSaleStatus } from '@/states/types';
+import { NFTSaleStatus, NFTSaleStatusString } from '@/states/types';
 import { useEffect } from 'react';
 import { FilterState, useFilterStore } from '../filterStore';
-import { NFTSort } from '@/states/nft/types';
+import { NFTSortString } from '@/states/nft/types';
 
 export function useDefaultsFromURL() {
     const [params] = useSearchParams();
@@ -13,7 +13,6 @@ export function useDefaultsFromURL() {
         replaceFilterState(newFilterState);
     }, [params, replaceFilterState]);
 }
-
 
 type ParamsObject = {
     collectionID: string
@@ -36,7 +35,7 @@ function paramsToObject(params: URLSearchParams): ParamsObject {
 
 }
 
-function queryParamsToFilterState(params: ParamsObject, defaultSort: `${NFTSort}`, defaultStatus: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE,): Omit<FilterState, 'attributes'> {
+function queryParamsToFilterState(params: ParamsObject, defaultSort: NFTSortString, defaultStatus: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE): Omit<FilterState, 'attributes'> {
     const sort = validateSort(params.sort, defaultSort);
     const status = validateStatus(params.status, defaultStatus);
     const minPrice = validatePrice(params.minPrice);
@@ -76,15 +75,18 @@ function isNumeric(string: string): boolean {
         !isNaN(parseFloat(string)); // ...and ensure strings of whitespace fail
 }
 
-function validateSort(sort: string, defaultSort: `${NFTSort}`): `${NFTSort}` {
+function validateSort(sort: string, defaultSort: NFTSortString): NFTSortString {
     if (sort !== 'RECENTLY_ADDED' && sort !== 'HIGH_PRICE_FIRST' && sort !== 'LOW_PRICE_FIRST') {
         return defaultSort;
     }
     return sort;
 }
 
-function validateStatus(status: string, defaultStatus: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE): NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE {
-    if (status !== NFTSaleStatus.AUCTION && status !== NFTSaleStatus.FIXED_PRICE) {
+function validateStatus(
+    status: string,
+    defaultStatus: Exclude<NFTSaleStatusString, 'NOT_FOR_SALE'>
+): Exclude<NFTSaleStatusString, 'NOT_FOR_SALE'> {
+    if (status !== 'AUCTION' && status !== 'FIXED_PRICE') {
         return defaultStatus;
     }
     return status;

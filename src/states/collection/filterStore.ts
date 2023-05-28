@@ -1,12 +1,12 @@
 import { create } from 'zustand';
-import { NFTAttribute, NFTSaleStatus } from '../types';
-import { NFTSort } from '../nft/types';
+import { NFTAttribute, NFTSaleStatusString } from '../types';
+import { NFTSortString } from '../nft/types';
 
 export type FilterState = {
     collectionID: string
     search: string
-    sort: `${NFTSort}`
-    status: `${NFTSaleStatus.FIXED_PRICE}` | `${NFTSaleStatus.AUCTION}`
+    sort: NFTSortString
+    status: Exclude<NFTSaleStatusString, 'NOT_FOR_SALE'>
     minPrice: string
     maxPrice: string
     attributes: {
