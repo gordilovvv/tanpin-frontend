@@ -27,7 +27,7 @@ export function TransactionsHistory({ id }: TransactionsHistoryProps) {
     return (
         <div className={styles.wrapper}>
             {
-                history!.map((transaction, idx) => {
+                history.map((transaction, idx) => {
                     return (
                         <HistoryTransaction
                             key={idx}
