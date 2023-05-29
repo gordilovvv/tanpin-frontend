@@ -14,10 +14,9 @@ export function AuctionBetsHistory({ id }: AuctionBetsHistoryProps) {
     return (
         <>
             {
-                isLoading
+                isLoading || !bets
                     ? <div
-                        className={styles.wrapper
-                        }
+                        className={styles.wrapper}
                     >
                         {
                             times(4).map((idx) => <TransitionRowSkeleton
@@ -30,11 +29,11 @@ export function AuctionBetsHistory({ id }: AuctionBetsHistoryProps) {
                         className={styles.wrapper}
                     >
                         {
-                            bets!.map((bet, idx) => {
+                            bets.map((bet) => {
                                 return (
                                     <AuctionBet
                                         bet={bet}
-                                        key={idx}
+                                        key={bet.transactionHash}
                                     />
                                 );
                             })

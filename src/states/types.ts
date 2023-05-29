@@ -34,7 +34,7 @@ export enum TransactionType {
     unlisted = 'unlisted',
   }
 
-export type HistoryTransaction = {
+export type HistoryTransactionType = {
     type: TransactionType
     owner: string, // Адрес кто это действие сделал
     transferedTo?: string

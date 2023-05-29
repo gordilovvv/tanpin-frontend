@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { MOCK_API_CALLS } from '@/config';
-import type { HistoryTransaction } from '@/states/types';
+import type { HistoryTransactionType } from '@/states/types';
 import { TransactionType } from '@/states/types';
 
-export async function fetchHistory(id: string): Promise<HistoryTransaction[]> {
+export async function fetchHistory(id: string): Promise<HistoryTransactionType[]> {
     if (MOCK_API_CALLS) {
         await new Promise((res) => setTimeout(res, 3000));
       
@@ -62,11 +62,11 @@ export async function fetchHistory(id: string): Promise<HistoryTransaction[]> {
                 },
                 date: '2023-05-29',
                 transactionHash: '0x0987654321fedcba',
-            },    
+            }, 
         ];
     }
 
-    const { data } = await axios.get<Promise<HistoryTransaction[]>>('token/get.history/' + id);
+    const { data } = await axios.get<Promise<HistoryTransactionType[]>>('token/get.history/' + id);
 
     return data;
 }

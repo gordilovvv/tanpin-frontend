@@ -12,7 +12,7 @@ export function TransactionsHistory({ id }: TransactionsHistoryProps) {
     const { history, isLoading } = useHistoryQuery(id);
 
     return (<>
-        {isLoading
+        {isLoading || !history
             ? <div
                 className={styles.wrapper}
             >
@@ -27,17 +27,16 @@ export function TransactionsHistory({ id }: TransactionsHistoryProps) {
                 className={styles.wrapper}
             >
                 {
-                    history!.map((transaction, idx) => {
+                    history.map((transaction) => {
                         return (
                             <HistoryTransaction
                                 transaction={transaction}
-                                key={idx}
+                                key={transaction.transactionHash}
                             />
                         );
                     })
                 }
             </div>}
-
 
     </>
     );

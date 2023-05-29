@@ -1,10 +1,10 @@
-import type { HistoryTransaction as HistoryTransactionType } from '@/states/types';
+import type { HistoryTransactionType } from '@/states/types';
 import { TransitionRow } from '../TransitionRow/TransitionRow';
 import { UnstyleLink } from '@/uikit';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import { TransactionType } from '@/states/types';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import classNames from 'classnames';
 import styles from './HistoryTransaction.module.scss';
 
@@ -12,24 +12,14 @@ type HistoryTransactionProps = {
     transaction: HistoryTransactionType
 }
 
-function createTransactionComponent(transaction: HistoryTransactionType, additionalContent: JSX.Element) {
-    const { date, owner, transactionHash } = transaction;
-    return (
-        <TransitionRow
-            date={date}
-            userAddress={owner}
-            transactionHash={transactionHash}
-        >
-            {additionalContent}
-        </TransitionRow>
-    );
-}
+
 
 export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps) => {
-    if (transaction.type === TransactionType.mint) {
-        return (
-            createTransactionComponent(transaction,
+    const renderContent = useCallback(() => {
+        if (transaction.type === TransactionType.mint) {
+            return (
                 <>
+
                     <UnstyleLink
                         rel='noreferrer noopener'
                         target='_blank'
@@ -37,24 +27,17 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
                         className={classNames(styles.link, styles.white)}
                     >{ellipseAddress(transaction.owner)}</UnstyleLink> minted
                 </>
-            )
-
-        );
-    }
-
-    if (transaction.type === TransactionType.buy) {
-        return (
-            createTransactionComponent(transaction,
+            );
+        }
+        if (transaction.type === TransactionType.buy) {
+            return (
                 <>
                     address bought for  < span className={styles.white} > {transaction!.price!.amount} {transaction!.price!.currency}</span >
                 </>
-            )
-        );
-    }
-
-    if (transaction.type === TransactionType.listed) {
-        return (
-            createTransactionComponent(transaction,
+            );
+        }
+        if (transaction.type === TransactionType.listed) {
+            return (
                 <>
                     <UnstyleLink
                         rel='noreferrer noopener'
@@ -63,13 +46,10 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
                         className={classNames(styles.link, styles.white)}
                     >{ellipseAddress(transaction.owner)}</UnstyleLink> listed < span className={styles.white} > {transaction.price?.amount} {transaction.price?.currency}</span >
                 </>
-            )
-        );
-    }
-
-    if (transaction.type === TransactionType.unlisted) {
-        return (
-            createTransactionComponent(transaction,
+            );
+        }
+        if (transaction.type === TransactionType.unlisted) {
+            return (
                 <>
                     <UnstyleLink
                         rel='noreferrer noopener'
@@ -77,14 +57,11 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
                         href={getAddressExplorerURL(transaction.owner)}
                         className={classNames(styles.link, styles.white)}
                     >{ellipseAddress(transaction.owner)}</UnstyleLink> unlisted < span className={styles.white} > {transaction.price?.amount} {transaction.price?.currency}</span >
-                </ >
-            )
-        );
-    }
-
-    if (transaction.type === TransactionType.transfer) {
-        return (
-            createTransactionComponent(transaction,
+                </>
+            );
+        }
+        if (transaction.type === TransactionType.transfer) {
+            return (
                 <>
                     <UnstyleLink
                         rel='noreferrer noopener'
@@ -98,9 +75,28 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
                         className={classNames(styles.link, styles.white)}
                     >{ellipseAddress(transaction.transferedTo)}</UnstyleLink>
                 </ >
-            )
+            );
+        }
+
+        return (
+            <>
+                Unknow transaction
+            </>
         );
-    }
+
+
+    }, [transaction]);
+
+
+    return (
+        <TransitionRow
+            date={transaction.date}
+            userAddress={transaction.owner}
+            transactionHash={transaction.transactionHash}
+        >
+            {renderContent()}
+        </TransitionRow>);
+
 });
 
 HistoryTransaction.displayName = 'HistoryTransaction';
