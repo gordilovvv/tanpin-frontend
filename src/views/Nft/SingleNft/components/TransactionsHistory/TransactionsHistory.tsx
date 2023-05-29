@@ -11,11 +11,9 @@ type TransactionsHistoryProps = {
 export function TransactionsHistory({ id }: TransactionsHistoryProps) {
     const { history, isLoading } = useHistoryQuery(id);
 
-    return (<>
-        {isLoading
-            ? <div
-                className={styles.wrapper}
-            >
+    if (isLoading || !history) {
+        return (
+            <div className={styles.wrapper}>
                 {
                     times(4).map((idx) => <TransitionRowSkeleton
                         key={idx}
@@ -23,22 +21,21 @@ export function TransactionsHistory({ id }: TransactionsHistoryProps) {
                     />)
                 }
             </div>
-            : <div
-                className={styles.wrapper}
-            >
-                {
-                    history!.map((transaction, idx) => {
-                        return (
-                            <HistoryTransaction
-                                transaction={transaction}
-                                key={idx}
-                            />
-                        );
-                    })
-                }
-            </div>}
+        );
+    }
 
-
-    </>
+    return (
+        <div className={styles.wrapper}>
+            {
+                history!.map((transaction, idx) => {
+                    return (
+                        <HistoryTransaction
+                            key={idx}
+                            transaction={transaction}
+                        />
+                    );
+                })
+            }
+        </div>
     );
 }
