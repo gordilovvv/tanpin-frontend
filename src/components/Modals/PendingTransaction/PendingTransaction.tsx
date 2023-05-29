@@ -29,7 +29,7 @@ type PendingTransactionProps = {
     status: STATUSES
 }
 
-export function PendingTransaction({ isOpen = true, onClose, transactionHash = '3242352352332', status = STATUSES.success }: PendingTransactionProps) {
+export function PendingTransaction({ isOpen, onClose, transactionHash, status }: PendingTransactionProps) {
     return (
         <Modal
             isOpen={isOpen}
