@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { InputSearch, Select, Button, Filter as FilterIcon, Modal } from '@/uikit';
 import { Container } from '@/components/Layout';
 import { Filter } from '@/components/Filter';
-import { NFTGrid } from './components/NFTGrid/NFTGrid';
+import { NFTGrid } from '../../../components/Nft/NFTGrid/NFTGrid';
 import { CollectionHead } from './components/CollectionHead/CollectionHead';
 import { NFTSort } from '@/states/nft/types';
 import { useOpenedState } from '@/hooks/useOpenedState';

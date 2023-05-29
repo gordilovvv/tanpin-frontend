@@ -1,0 +1,38 @@
+.filter {
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, 240px);
+    gap: 16px;
+}
+
+.wrapper {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.main {
+    display: flex;
+    flex-flow: nowrap;
+}
+
+.filterWrap {
+    position: sticky;
+    top: 104px;
+    height: calc(100vh - 144px);
+    margin-top: 8px;
+    margin-right: 32px;
+}
+
+.listWrap {
+    flex-grow: 1;
+}
+
+@include max767 {
+    .wrapper {
+        gap: 24px;
+    }
+
+    .filter {
+        grid-template-columns: 1fr;
+    }
+}
