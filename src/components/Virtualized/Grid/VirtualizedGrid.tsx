@@ -7,12 +7,15 @@ import { useVirtualizedGridState } from '../hooks';
 
 type VirtualizedGridProps<T> = {
    renderItem: (props: { data: T, loading: boolean, index: number, measure: () => void }) => JSX.Element
+   renderEmpty: () => JSX.Element,
    loadItems: (offset: number, limit: number) => Promise<any>
    minimumBatchSize: number
 }
 
+// TODO: add error state
 export function VirtualizedGrid<T>({
     loadItems,
+    renderEmpty,
     renderItem,
     minimumBatchSize
 }: VirtualizedGridProps<T>) {
@@ -70,6 +73,10 @@ export function VirtualizedGrid<T>({
     const registerLoaderRef = useCallback((loader: InfiniteLoader) => {
         loaderRef.current = loader;
     }, [loaderRef]);
+
+    if (state.finished && !state.items.length) {
+        return renderEmpty();
+    }
 
     return (
         <InfinityScroller
