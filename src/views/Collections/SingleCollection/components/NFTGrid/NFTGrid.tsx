@@ -5,9 +5,11 @@ import { fetchNFTList } from '@/states/nft/fetch/fetchNFTList';
 import { NFTListFilter } from '@/states/nft/types';
 import styles from './NFTGrid.module.scss';
 
+
 type NFTGridProps = {
     collectionID?: string,
-    filter: NFTListFilter
+    filter: NFTListFilter,
+    empty: () => JSX.Element
 }
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект

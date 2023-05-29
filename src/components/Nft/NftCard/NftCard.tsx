@@ -10,6 +10,7 @@ type NftCardProps = {
     nft: NFT
     collectionID: Collection['ID']
     collectionName: Collection['name']
+
 }
 
 export function NftCard({ nft, collectionID, collectionName }: NftCardProps) {
