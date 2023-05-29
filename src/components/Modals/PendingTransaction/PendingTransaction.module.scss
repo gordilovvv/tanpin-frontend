@@ -79,9 +79,6 @@
     }
 }
 
-.upperCase {
-    text-transform: capitalize;
-}
 
 @include max767 {
     .text {
