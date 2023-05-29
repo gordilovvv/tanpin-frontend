@@ -1,4 +1,4 @@
-
+import styles from './NFTSaleModal.module.scss';
 import { Button, Modal, ModalBody, ModalHead, Input } from '@/uikit';
 
 
@@ -17,7 +17,7 @@ export function NFTSaleModal({ isOpen, onClose, }: NFTSaleModalProps) {
             <ModalHead title='List for Sale' />
 
             <ModalBody>
-                <div>
+                <div className={styles.wrapper}>
                     <div >Set a price for listing your NFT</div>
                     <Input placeholder="Enter price" />
                     <div>Commission Tanpin: x usdt</div>

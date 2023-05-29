@@ -7,8 +7,6 @@ import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 import { GamesSort } from '@/states/game/types';
 import times from 'lodash/times';
 import styles from './GamesView.module.scss';
-import { AuctionBidModal } from '@/components/Modals/AuctionBidModal/AuctionBidModal';
-import { NFTSaleModal } from '@/components/Modals';
 
 const SKELETON_GAMES = 4;
 
@@ -59,7 +57,6 @@ export function GamesView() {
 
     return (
         <PageWrapper>
-            <NFTSaleModal isOpen={true} />
 
             <Container space>
                 <div className={styles.wrap}>
