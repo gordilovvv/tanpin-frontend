@@ -7,6 +7,7 @@ type TransitionRowSkeletonProps = {
 
 const WIDTHS = [55, 60, 65];
 
+// TODO: detailed skeleton
 export function TransitionRowSkeleton({ widthType }: TransitionRowSkeletonProps) {
     const currentWidth = widthType % WIDTHS.length;
     return (
