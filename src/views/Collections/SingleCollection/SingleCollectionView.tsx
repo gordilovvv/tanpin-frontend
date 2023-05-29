@@ -14,6 +14,7 @@ import { useCollectionQuery } from '@/states/collection/hooks/useCollectionQuery
 import { useGameQuery } from '@/states/game/hooks/useGameQuery';
 import { useDefaultsFromURL } from '@/states/collection/hooks/useDefaultsFromURL';
 import styles from './SingleCollectionView.module.scss';
+import { useFilterUrlQuery } from '@/states/collection/hooks/useFilterUrlQuery';
 
 // TODO:
 // 1. Loading
@@ -35,6 +36,7 @@ export function SingleCollectionView() {
     const { setSearch, setSort } = useFilterStoreActions();
 
     useDefaultsFromURL();
+    useFilterUrlQuery();
 
     const {
         game,
