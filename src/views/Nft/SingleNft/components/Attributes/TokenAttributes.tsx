@@ -1,11 +1,11 @@
-import styles from './Attributes.module.scss';
 import { NFTAttribute } from '@/states/types';
+import styles from './TokenAttributes.module.scss';
 
-type AttributesProps = {
+type TokenAttributesProps = {
     attributes: NFTAttribute[]
 }
 
-export function Attributes({ attributes }: AttributesProps) {
+export function TokenAttributes({ attributes }: TokenAttributesProps) {
     return (
         <div className={styles.attributes}>
             {(attributes).map((attribute) =>

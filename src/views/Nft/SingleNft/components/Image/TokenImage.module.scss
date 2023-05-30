@@ -2,6 +2,15 @@
     position: relative;
     display: flex;
     flex-flow: column;
+    min-height: 100px;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
 .image {

@@ -1,19 +1,21 @@
-import { NFT } from '@/states/types';
-import styles from './AuctionSale.module.scss';
+import { Button } from '@/uikit';
 import { ActionBox } from '../Box/ActionBox';
 import { ActionTitle } from '../Title/ActionTitle';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import { USDPrice } from '../USDPrice/USDPrice';
-import { Button } from '@/uikit';
 import { AuctionCountdown } from './Countdown/AuctionCountdown';
+import { NFTInStore } from '@/states/nft/types';
+import { Auction } from '@/states/types';
+import styles from './AuctionSale.module.scss';
 
 type AuctionSaleProps = {
-    nft: NFT
+    nft: NFTInStore,
+    auction: Auction
 }
 
-export function AuctionSale({ nft }: AuctionSaleProps) {
+export function AuctionSale({ nft, auction }: AuctionSaleProps) {
     const handleBidPlace = () => {
-        console.log('place bid');
+        console.log('place bid', nft.ID);
     };
 
     return (
@@ -24,12 +26,12 @@ export function AuctionSale({ nft }: AuctionSaleProps) {
                 </div>
 
                 <ActionTitle>
-                    {formatTokenAmount(nft.auction!.highestBid.amount)} {nft.auction!.highestBid.currency}
+                    {formatTokenAmount(auction.highestBid.amount)} {auction.highestBid.currency}
                 </ActionTitle>
 
                 <USDPrice
-                    tokenAmount={nft.auction!.highestBid.amount}
-                    tokenSymbol={nft.auction!.highestBid.currency}
+                    tokenAmount={auction.highestBid.amount}
+                    tokenSymbol={auction.highestBid.currency}
                 />
             </div>
 
@@ -37,7 +39,7 @@ export function AuctionSale({ nft }: AuctionSaleProps) {
                 Place a bid
             </Button>
 
-            <AuctionCountdown auction={nft.auction!} />
+            <AuctionCountdown auction={auction} />
         </ActionBox>
     );
 }

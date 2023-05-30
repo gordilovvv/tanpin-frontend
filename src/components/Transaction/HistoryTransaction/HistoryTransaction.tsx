@@ -1,101 +1,58 @@
-import type { HistoryTransactionType } from '@/states/types';
-import { TransitionRow } from '../TransitionRow/TransitionRow';
-import { UnstyleLink } from '@/uikit';
-import { ellipseAddress } from '@/utils/addressHelper';
-import { getAddressExplorerURL } from '@/utils/explorer';
-import { TransactionType } from '@/states/types';
-import { memo, useCallback } from 'react';
-import classNames from 'classnames';
+
+import { memo } from 'react';
+import { TransactionRow } from '../TransactionRow/TransactionRow';
+import { Account } from '../Common/Account';
+import { Amount } from '../Common/Amount';
+import { HistoryTransaction as HistoryTransactionData, TransactionType } from '@/states/types';
 import styles from './HistoryTransaction.module.scss';
 
 type HistoryTransactionProps = {
-    transaction: HistoryTransactionType
+    transaction: HistoryTransactionData
 }
 
-
-
 export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps) => {
-    const renderContent = useCallback(() => {
-        if (transaction.type === TransactionType.mint) {
-            return (
-                <>
+    const renderContent = () => {
+        /* eslint-disable indent */
+        switch (transaction.type) {
 
-                    <UnstyleLink
-                        rel='noreferrer noopener'
-                        target='_blank'
-                        href={getAddressExplorerURL(transaction.owner)}
-                        className={classNames(styles.link, styles.white)}
-                    >{ellipseAddress(transaction.owner)}</UnstyleLink> minted
-                </>
-            );
-        }
-        if (transaction.type === TransactionType.buy) {
-            return (
-                <>
-                    address bought for  < span className={styles.white} > {transaction!.price!.amount} {transaction!.price!.currency}</span >
-                </>
-            );
-        }
-        if (transaction.type === TransactionType.listed) {
-            return (
-                <>
-                    <UnstyleLink
-                        rel='noreferrer noopener'
-                        target='_blank'
-                        href={getAddressExplorerURL(transaction.owner)}
-                        className={classNames(styles.link, styles.white)}
-                    >{ellipseAddress(transaction.owner)}</UnstyleLink> listed < span className={styles.white} > {transaction.price?.amount} {transaction.price?.currency}</span >
-                </>
-            );
-        }
-        if (transaction.type === TransactionType.unlisted) {
-            return (
-                <>
-                    <UnstyleLink
-                        rel='noreferrer noopener'
-                        target='_blank'
-                        href={getAddressExplorerURL(transaction.owner)}
-                        className={classNames(styles.link, styles.white)}
-                    >{ellipseAddress(transaction.owner)}</UnstyleLink> unlisted < span className={styles.white} > {transaction.price?.amount} {transaction.price?.currency}</span >
-                </>
-            );
-        }
-        if (transaction.type === TransactionType.transfer) {
-            return (
-                <>
-                    <UnstyleLink
-                        rel='noreferrer noopener'
-                        target='_blank'
-                        href={getAddressExplorerURL(transaction.owner)}
-                        className={classNames(styles.link, styles.white)}
-                    >{ellipseAddress(transaction.owner)}</UnstyleLink> transfered to <UnstyleLink
-                        rel='noreferrer noopener'
-                        target='_blank'
-                        href={getAddressExplorerURL(transaction.transferedTo)}
-                        className={classNames(styles.link, styles.white)}
-                    >{ellipseAddress(transaction.transferedTo)}</UnstyleLink>
-                </ >
-            );
-        }
+            case TransactionType.MINT:
+                return (<div><Account address={transaction.owner} /> minted</div>);
 
-        return (
-            <>
-                Unknow transaction
-            </>
-        );
+            case TransactionType.BUY:
+                return (
+                    // eslint-disable-next-line react/jsx-newline
+                    <div><Account address={transaction.owner} /> bought for <Amount
+                        amount={transaction.price!.amount}
+                        currency={transaction.price!.currency}
+                    /></div>
+                );
 
+            case TransactionType.LISTED:
+                return (<div><Account address={transaction.owner} /> listed</div>);
 
-    }, [transaction]);
+            case TransactionType.UNLISTED:
+                return (<div><Account address={transaction.owner} /> unlisted</div>);
+
+            case TransactionType.TRANSFER:
+                return (<div><Account address={transaction.owner} /> transfered to <Account address={transaction.transferedTo!} /></div>);
+
+            default:
+                return (<div className={styles.white}>Unknown transaction</div>);
+
+        }
+        /* eslint-enable indent */
+    };
 
 
     return (
-        <TransitionRow
+        <TransactionRow
             date={transaction.date}
             userAddress={transaction.owner}
             transactionHash={transaction.transactionHash}
         >
             {renderContent()}
-        </TransitionRow>);
+        </TransactionRow>
+    );
 
 });
 

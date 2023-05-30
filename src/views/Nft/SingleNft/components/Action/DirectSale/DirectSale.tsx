@@ -3,11 +3,11 @@ import { ActionBox } from '../Box/ActionBox';
 import { USDPrice } from '../USDPrice/USDPrice';
 import { ActionTitle } from '../Title/ActionTitle';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
-import { NFT } from '@/states/types';
+import { NFTInStore } from '@/states/nft/types';
 import styles from './DirectSale.module.scss';
 
 type DirectSaleProps = {
-    nft: NFT
+    nft: NFTInStore
 }
 
 export function DirectSale({ nft }: DirectSaleProps) {

@@ -12,6 +12,16 @@ export type NFT = {
         amount: string
         currency: string
     },
+    collection: {
+        ID: string
+        name: string
+        logoURL: string
+        game: {
+            ID: string,
+            name: string,
+            logoURL: string
+        }
+    }
     status: NFTSaleStatus
 }
 
@@ -27,14 +37,14 @@ export type NFTAttribute = {
 }
 
 export enum TransactionType {
-    mint = 'mint',
-    transfer = 'transfer',
-    buy = 'buy',
-    listed = 'listed',
-    unlisted = 'unlisted',
+    MINT = 'mint',
+    TRANSFER = 'transfer',
+    BUY = 'buy',
+    LISTED = 'listed',
+    UNLISTED = 'unlisted',
 }
 
-export type HistoryTransactionType = {
+export type HistoryTransaction = {
     type: TransactionType
     owner: string,
     transferedTo?: string

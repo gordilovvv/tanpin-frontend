@@ -1,17 +1,17 @@
 import { PropsWithChildren } from 'react';
-import { Link, UnstyleLink } from '@/uikit';
+import { Link, Skeleton, UnstyleLink } from '@/uikit';
 import { UserAvatar } from '@/components/User';
 import { formatDate } from '@/utils/date';
 import { getTransactionExplorerURL } from '@/utils/explorer';
-import styles from './TransitionRow.module.scss';
+import styles from './TransactionRow.module.scss';
 
-type TransitionRowProps = {
+type TransactionRowProps = {
     date: string
     transactionHash: string
     userAddress: string
 }
 
-export function TransitionRow({ children, date, transactionHash, userAddress }: PropsWithChildren<TransitionRowProps>) {
+export function TransactionRow({ children, date, transactionHash, userAddress }: PropsWithChildren<TransactionRowProps>) {
     return (
         <div className={styles.row}>
             <UserAvatar
@@ -34,6 +34,19 @@ export function TransitionRow({ children, date, transactionHash, userAddress }: 
                         {formatDate(date)} <Link />
                     </UnstyleLink>
                 </div>
+            </div>
+        </div>
+    );
+}
+
+export function TransactionRowSkeleton() {
+    return (
+        <div className={styles.row}>
+            <Skeleton className={styles.avatarLoader} />
+
+            <div className={styles.info}>
+                <Skeleton className={styles.titleLoader} />
+                <Skeleton className={styles.metaLoader} />
             </div>
         </div>
     );
