@@ -1,0 +1,24 @@
+.countdown {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.letter {
+    color: var(--color-typo-base);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+
+    &+.letter {
+        margin-left: 4px;
+    }
+}
+
+@include max767 {
+    .letter {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

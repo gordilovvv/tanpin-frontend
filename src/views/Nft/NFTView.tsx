@@ -1,13 +1,12 @@
 import { NFTSearching } from './components/NFTSeacrhing/NFTSearching';
-import { Container } from '@/components/Layout';
-import styles from './NFTView.module.scss';
+import { Container, PageWrapper } from '@/components/Layout';
 
 export function NFTView() {
     return (
-        <div>
+        <PageWrapper>
             <Container space>
                 <NFTSearching />
             </Container>
-        </div>
+        </PageWrapper>
     );
 }

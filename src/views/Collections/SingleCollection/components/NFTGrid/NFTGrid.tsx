@@ -7,13 +7,12 @@ import styles from './NFTGrid.module.scss';
 
 type NFTGridProps = {
     collectionID?: string,
-    filter: FilterState
+    filter: FilterState,
+    empty: () => JSX.Element
 }
 
-// TODO:
-// 1. грид выкидывает только id, а по нему уже получаем из хеш мапа объект
-// 2. ПРИ ИЗМЕНЕНИИ ФИЛЬТРА ОБНОВИТЬ СПИСОК
-export const NFTGrid = memo(({ collectionID, filter }: NFTGridProps) => {
+// TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
+export const NFTGrid = memo(({ collectionID, filter, empty }: NFTGridProps) => {
     const fetchList = useCallback(async (offset: number, limit: number) => {
         return fetchNFTList({
             collectionID,
@@ -43,6 +42,7 @@ export const NFTGrid = memo(({ collectionID, filter }: NFTGridProps) => {
         <div className={styles.list}>
             <VirtualizedGrid
                 renderItem={renderGridItem}
+                renderEmpty={empty}
                 loadItems={fetchList}
                 minimumBatchSize={30}
             />

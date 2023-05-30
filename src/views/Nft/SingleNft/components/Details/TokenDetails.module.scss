@@ -1,0 +1,16 @@
+.details {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.link {
+    display: flex;
+    align-items: center;
+
+    svg {
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+    }
+}

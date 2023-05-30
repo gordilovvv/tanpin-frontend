@@ -1,0 +1,16 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.white {
+    font-weight: 600;
+    color: var(--color-typo-base);
+}
+
+@include max767 {
+    .wrapper {
+        gap: 8px;
+    }
+}

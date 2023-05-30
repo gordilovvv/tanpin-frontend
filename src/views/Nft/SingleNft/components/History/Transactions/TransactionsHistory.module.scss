@@ -1,0 +1,11 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+@include max767 {
+    .wrapper {
+        gap: 8px;
+    }
+}

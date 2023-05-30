@@ -4,21 +4,21 @@ import { Container } from '@/components/Layout';
 import { Filter } from '@/components/Filter';
 import { NFTGrid } from './components/NFTGrid/NFTGrid';
 import { CollectionHead } from './components/CollectionHead/CollectionHead';
-import { NFTSort } from '@/states/nft/types';
+import { EmptyResult } from '@/components/Nft/EmptyResult/EmptyResult';
+import { useParams } from 'react-router-dom';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useFilterStore } from '@/states/collection/filterStore';
 import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
-import { useParams } from 'react-router-dom';
-import { useCollectionQuery } from '@/states/collection/hooks/useCollectionQuery';
 import { useGameQuery } from '@/states/game/hooks/useGameQuery';
+import { useCollectionQuery } from '@/states/collection/hooks/useCollectionQuery';
 import { useDefaultsFromURL } from '@/states/collection/hooks/useDefaultsFromURL';
+import { NFTSort } from '@/states/nft/types';
 import styles from './SingleCollectionView.module.scss';
 
 // TODO:
 // 1. Loading
 // 2. Error
-// 3. 
 export function SingleCollectionView() {
     const { gameID, collectionID } = useParams() as { gameID: string, collectionID: string };
     const isPhone = useMediaQuery('(max-width: 1000px)');
@@ -50,6 +50,13 @@ export function SingleCollectionView() {
 
     const mobileFilterState = useOpenedState();
     const [isFilterVisible, setIsFilterVisible] = useState(true);
+
+    const renderEmpty = useCallback(() => {
+        return <EmptyResult
+            title="Nothing found"
+            text="We couldn't find anything with this criteria"
+        />;
+    }, []);
 
     const sortOptions: { value: `${NFTSort}`; label: string }[] = [
         { value: 'RECENTLY_ADDED', label: 'Recently Added' },
@@ -119,6 +126,7 @@ export function SingleCollectionView() {
                         <div className={styles.listWrap}>
                             <NFTGrid
                                 filter={filterState}
+                                empty={renderEmpty}
                                 collectionID={collectionID}
                             />
                         </div>

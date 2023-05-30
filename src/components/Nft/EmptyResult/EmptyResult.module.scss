@@ -1,0 +1,32 @@
+.wrapper {
+    padding: 119px 24px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.33;
+    color: var(--color-typo-base);
+    text-align: center;
+}
+
+.text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--color-typo-ghost);
+}
+
+@include max767 {
+    .title {
+        font-size: 20px;
+    }
+
+    .text {
+        font-size: 14px;
+    }
+}

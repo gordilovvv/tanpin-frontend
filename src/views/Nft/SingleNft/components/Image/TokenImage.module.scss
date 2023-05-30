@@ -1,0 +1,28 @@
+.wrap {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    min-height: 100px;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.button {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    transform: translate(-50%, 0);
+}
