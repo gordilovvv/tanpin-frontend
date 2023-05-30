@@ -2,13 +2,12 @@ import { memo, useCallback } from 'react';
 import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import { VirtualizedGrid } from '@/components/Virtualized/Grid/VirtualizedGrid';
 import { fetchNFTList } from '@/states/nft/fetch/fetchNFTList';
-import { NFTListFilter } from '@/states/nft/types';
+import { FilterState } from '@/states/collection/filterStore';
 import styles from './NFTGrid.module.scss';
-
 
 type NFTGridProps = {
     collectionID?: string,
-    filter: NFTListFilter,
+    filter: FilterState,
     empty: () => JSX.Element
 }
 
@@ -21,18 +20,20 @@ export const NFTGrid = memo(({ collectionID, filter, empty }: NFTGridProps) => {
             offset,
             filter
         });
-    }, []);
+    }, [collectionID, filter]);
 
     const renderGridItem = useCallback(({ data, loading }) => {
         if (loading)
             return (<NftCardSkeleton />);
 
-        // TODO: collection
+        // TODO: game
         return (
             <NftCard
                 nft={data}
-                collectionID={'20'}
-                collectionName={'Cars Drop 2022'}
+                parentGame={{
+                    ID: '1',
+                    name: 'Game'
+                }}
             />
         );
     }, []);

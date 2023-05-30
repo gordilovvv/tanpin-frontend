@@ -1,3 +1,5 @@
+import { Collection } from './collection/types';
+
 export type NFT = {
     ID: string
     name: string

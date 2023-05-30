@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import styles from './CollectionRow.module.scss';
 
 type CollectionRowProps = {
-    collection?: Collection,
+    collection?: Collection
     index: number
 };
 
@@ -97,9 +97,10 @@ export function CollectionRow({ collection, index }: CollectionRowProps) {
         return <Loader number={index + 1} />;
     }
 
+
     return (
         <Link
-            to={`/collections/${collection.ID}`}
+            to={`/${collection.game.ID}/${collection.ID}`}
             className={styles.row}
         >
             <div className={styles.wrap}>

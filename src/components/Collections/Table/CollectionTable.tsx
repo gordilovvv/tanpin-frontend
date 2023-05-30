@@ -7,9 +7,9 @@ import { PAGE_SIZE } from '@/config/constants';
 import styles from './CollectionTable.module.scss';
 
 type CollectionTableProps = {
-    filter?: CollectionQueryBody['filter'];
-    footerButton?: ReactNode;
-    hasMoreButton?: boolean;
+    filter?: CollectionQueryBody['filter']
+    footerButton?: ReactNode
+    hasMoreButton?: boolean
 };
 
 const HEADER_ITEMS = [

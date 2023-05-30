@@ -27,23 +27,20 @@ export const router = createBrowserRouter([
                 element: <CollectionsView />,
             },
             {
-
-                path: '/collections/:id',
-                element: <SingleCollectionView />
-            },
-            {
-
                 path: '/nft',
-                element: <NFTView />
+                element: <NFTView />,
             },
             {
-
-                path: '/:gameID/:collectionID/:tokenID',
-                element: <SingleNftView />
-            },
-            {
-                path: '/games/:id',
+                path: '/:gameID',
                 element: <SingleGameView />,
+            },
+            {
+                path: '/:gameID/:collectionID',
+                element: <SingleCollectionView />,
+            },
+            {
+                path: '/:gameID/:collectionID/:tokenID',
+                element: <SingleNftView />,
             },
         ],
     },
