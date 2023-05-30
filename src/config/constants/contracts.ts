@@ -7,8 +7,16 @@ export const CONTRACTS = {
             decimals: 6
         },
         [polygonMumbai.id]: {
-            address: '0x5E4f0639795a01f30f609612599dc81889630135',
-            decimals: 18
+            address: '0x415A507edBabA701589c713152c3d232BbfE81a9',
+            decimals: 6
         }
+    },
+    market: {
+        [polygon.id]: '',
+        [polygonMumbai.id]: '0x5e687642685E3c221364C570e6c4a84A66907ECe'
+    },
+    ERC1155: {
+        [polygon.id]: '',
+        [polygonMumbai.id]: '0x4690b3f9013770e283fed8b765a625adc4372a03'
     }
 };

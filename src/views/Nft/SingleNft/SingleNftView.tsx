@@ -60,7 +60,7 @@ export function SingleNftView() {
 
                         {isMobile && <>
                             <TokenAction nft={nft} />
-                            <TokenShareLinks />
+                            <TokenShareLinks nft={nft} />
                         </>}
 
                         <BlockWrap title="Properties">
@@ -88,7 +88,7 @@ export function SingleNftView() {
                             />
 
                             <TokenAction nft={nft} />
-                            <TokenShareLinks />
+                            <TokenShareLinks nft={nft} />
 
                             <BlockWrap title="Details">
                                 <TokenDetails nft={nft} />
