@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
             },
             {
 
-                path: '/nft/:id',
+                path: '/:gameID/:collectionID/:tokenID',
                 element: <SingleNftView />
             },
             {
