@@ -16,6 +16,7 @@
     "bignumber.js": "^9.1.1",
     "body-scroll-lock": "^3.1.5",
     "classnames": "^2.3.2",
+    "copy-to-clipboard": "^3.3.3",
     "embla-carousel": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "ethers": "^5.7.2",
