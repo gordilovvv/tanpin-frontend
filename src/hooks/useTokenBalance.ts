@@ -1,48 +1,36 @@
 import useSWRImmutable from 'swr/immutable';
-import { useMemo } from 'react';
-import { BigNumber } from 'ethers';
+import { Address } from 'viem';
 import { useERC20 } from './useContract';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { formatValueFromRaw } from '@/utils/formatRawAmount';
 import { FAST_INTERVAL } from '@/config/constants';
 
-export function useTokenBalance(tokenAddress: string, decimals: number) {
+// TODO: useContractRead
+export function useTokenBalance(tokenAddress: Address, decimals: number) {  
     const { address: account } = useAccount();
-    const contract = useERC20(tokenAddress, false);
+    const contract = useERC20(tokenAddress);
 
-    const fetchKey = useMemo(
-        () => account
-            ? {
-                tokenAddress,
-                methodName: 'balanceOf',
-                params: [account]
+    const { data, isLoading } = useSWRImmutable(
+        ['fetchTokenBalance', tokenAddress, account],
+        async () => {
+            if (!contract || !account) {
+                return null;
             }
-            : null,
-        [tokenAddress, account, contract]
+
+            const balance = await contract.read.balanceOf([account]);
+
+            if (typeof balance === 'bigint') {
+                const amount = formatValueFromRaw(balance.toString(), decimals);
+                const rawAmount = balance.toString();
+
+                return {
+                    amount,
+                    rawAmount
+                };
+            }
+        },
+        { refreshInterval: FAST_INTERVAL }
     );
-
-    const { data, isLoading } = useSWRImmutable(fetchKey, async (request) => {
-        if (!request) {
-            return null;
-        }
-        
-        const {
-            methodName,
-            params
-        } = request;
-
-        const balance = await contract[methodName](...params) as BigNumber | undefined;
-
-        if (balance) {
-            const amount = formatValueFromRaw(balance.toString(), decimals);
-            const rawAmount = balance.toString();
-
-            return {
-                amount,
-                rawAmount
-            };
-        }
-    }, { refreshInterval: FAST_INTERVAL });
 
     return {
         amount: data?.amount,

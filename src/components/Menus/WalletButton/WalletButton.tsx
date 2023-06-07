@@ -1,8 +1,8 @@
 import { PopoverButton, PopoverState, SvgProps, UnstyleButton } from '@/uikit';
-import { useAccount } from 'wagmi';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { ellipseAddress } from '@/utils/addressHelper';
-import styles from './WalletButton.module.scss';
 import classNames from 'classnames';
+import styles from './WalletButton.module.scss';
 
 const WalletIcon = (props: SvgProps) => {
     return (

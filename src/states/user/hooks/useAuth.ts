@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { ConnectorNotFoundError, SwitchChainError, SwitchChainNotSupportedError, UserRejectedRequestError, useAccount, useConnect, useDisconnect } from 'wagmi';
+import { ConnectorNotFoundError, SwitchChainNotSupportedError, useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useUserStore } from '../store';
 import { ConnectorNames } from '@/config/wallet';
 import { activeChainId } from '@/config/chain';
@@ -21,15 +21,11 @@ export function useAuth() {
 
                 return connected;
             } catch (error) {
-                if (error instanceof UserRejectedRequestError) {
-                    throw new Error('You\'ve canceled the wallet connection.');
-                }
-
                 if (error instanceof ConnectorNotFoundError) {
                     throw new Error('Connector not found.');
                 }
 
-                if (error instanceof SwitchChainNotSupportedError || error instanceof SwitchChainError) {
+                if (error instanceof SwitchChainNotSupportedError) {
                     throw new Error('Unable to switch network. Please try it on your wallet');
                 }
             }

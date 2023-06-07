@@ -1,20 +1,23 @@
-import { Chain, ConnectorNotFoundError, ResourceUnavailableError, RpcError, UserRejectedRequestError } from 'wagmi';
+import { Chain, ConnectorNotFoundError, WindowProvider } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import { Address, Ethereum, getClient } from '@wagmi/core';
-import { getAddress } from '@ethersproject/address';
+import { Address, getConfig } from '@wagmi/core';
+import '@wagmi/core/window';
+import { getAddress, ResourceUnavailableRpcError, ProviderRpcError, UserRejectedRequestError } from 'viem';
 
 declare global {
-  interface Window {
-    trustwallet?: Ethereum
-  }
+    interface Window {
+        trustwallet?: WindowProvider
+    }
 }
 
 const mappingNetwork: Record<number, string> = {
-    137: 'polygon-mainnet',
-    80001: 'polygon-mumbai',
+    1: 'eth-mainnet',
+    5: 'eth-goerli',
+    56: 'bsc-mainnet',
+    97: 'bsc-testnet',
 };
 
-export function getTrustWalletProvider() {
+export function getTrustWalletProvider(): WindowProvider | undefined {
     const isTrustWallet = (ethereum: NonNullable<Window['ethereum']>) => {
     // Identify if Trust Wallet injected provider is present.
         const trustWallet = !!ethereum.isTrust;
@@ -54,12 +57,12 @@ export class TrustWalletConnector extends InjectedConnector {
         chains: _chains,
         options: _options,
     }: {
-    chains?: Chain[]
-    options?: {
-      shimDisconnect?: boolean
-      shimChainChangedDisconnect?: boolean
-    }
-  } = {}) {
+        chains?: Chain[]
+        options?: {
+            shimDisconnect?: boolean
+            shimChainChangedDisconnect?: boolean
+        }
+    } = {}) {
         const options = {
             name: 'Trust Wallet',
             shimDisconnect: _options?.shimDisconnect ?? false,
@@ -77,8 +80,8 @@ export class TrustWalletConnector extends InjectedConnector {
             throw new UserRejectedRequestError(error);
         }
 
-        if ((error as RpcError).code === -32002) {
-            throw new ResourceUnavailableError(error);
+        if ((error as ProviderRpcError).code === -32002) {
+            throw new ResourceUnavailableRpcError(error);
         }
 
         throw error;
@@ -102,7 +105,7 @@ export class TrustWalletConnector extends InjectedConnector {
             // Attempt to show wallet select prompt with `wallet_requestPermissions` when
             // `shimDisconnect` is active and account is in disconnected state (flag in storage)
             let account: Address | null = null;
-            if (this.options?.shimDisconnect && !getClient().storage?.getItem(this.shimDisconnectKey)) {
+            if (this.options?.shimDisconnect && !getConfig().storage?.getItem(this.shimDisconnectKey)) {
                 account = await this.getAccount().catch(() => null);
                 const isConnected = !!account;
                 if (isConnected) {
@@ -117,7 +120,7 @@ export class TrustWalletConnector extends InjectedConnector {
                     } catch (error) {
                         // Only bubble up error if user rejects request
                         if (this.isUserRejectedRequestError(error)) {
-                            throw new UserRejectedRequestError(error);
+                            throw new UserRejectedRequestError(error as Error);
                         }
                     }
                 }
@@ -127,7 +130,7 @@ export class TrustWalletConnector extends InjectedConnector {
                 const accounts = await provider.request({
                     method: 'eth_requestAccounts',
                 });
-                account = getAddress(accounts[0] as string);
+                account = getAddress(accounts[0] as Address);
             }
 
             // Switch to chain if provided
@@ -140,7 +143,7 @@ export class TrustWalletConnector extends InjectedConnector {
             }
 
             if (this.options?.shimDisconnect) {
-                getClient().storage?.setItem(this.shimDisconnectKey, true);
+                getConfig().storage?.setItem(this.shimDisconnectKey, true);
             }
 
             return { account, chain: { id, unsupported }, provider };

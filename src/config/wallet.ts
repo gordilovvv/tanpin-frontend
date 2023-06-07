@@ -1,5 +1,5 @@
+import { APP_URL } from './index';
 import { Coinbase, InjectedWallet, Metamask, SafePal, TrustWallet, WalletConnect } from '@/uikit';
-import { APP_URL } from '..';
 import { getTrustWalletProvider } from '@/utils/trustWalletConnector';
 import type { ExtendEthereum } from 'global';
 
@@ -38,7 +38,7 @@ export type WalletConfig = {
     downloadLink?: string
     mobileOnly?: boolean
     qrCode?: () => Promise<string>
-  }
+}
 
 const walletsConfig = (): WalletConfig[] => {
     return [
@@ -81,7 +81,7 @@ const walletsConfig = (): WalletConfig[] => {
             connectorId: ConnectorNames.Injected,
             get installed() {
                 return typeof window !== 'undefined' && Boolean((window.ethereum as ExtendEthereum)?.isSafePal);
-            }
+            },
         }
     ];
 };
@@ -100,7 +100,7 @@ export const createWallets = () => {
                 title: 'Injected',
                 icon: InjectedWallet,
                 connectorId: ConnectorNames.Injected,
-                installed: typeof window !== 'undefined' && Boolean(window.ethereum)
-            } as WalletConfig
+                installed: typeof window !== 'undefined' && Boolean(window.ethereum),
+            }
         ];
 };

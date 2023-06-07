@@ -1,7 +1,6 @@
-import { useAccount as useAccountWagmi } from 'wagmi';
+import { PublicClient, useAccount as useAccountWagmi } from 'wagmi';
 import { useUserStore } from '../store';
 import { GetAccountResult } from 'wagmi/actions';
-import { Provider } from '@wagmi/core';
 
 /**
  * useAccount - wagmi's modified version. We want to check accessToken for isConnected
@@ -13,5 +12,5 @@ export function useAccount() {
     return {
         ...rest,
         isConnected: hasAccessToken && isConnected
-    } as GetAccountResult<Provider>;
+    } as GetAccountResult<PublicClient>;
 }

@@ -1,29 +1,34 @@
-import { configureChains, createClient } from 'wagmi';
+import { configureChains, createConfig } from 'wagmi';
+import { infuraProvider } from 'wagmi/providers/infura';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
-import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc';
-import { PUBLIC_NODES, activeChain } from '../chain';
 import { TrustWalletConnector } from '@/utils/trustWalletConnector';
-import { infuraProvider } from 'wagmi/providers/infura';
+import { PUBLIC_NODES, activeChain } from './chain';
 
-export const { provider, chains } = configureChains(
+export const { publicClient, chains } = configureChains(
     [activeChain],
     [
         infuraProvider({
-            apiKey: import.meta.env.VITE_INFURA_API_KEY,
-            priority: 0
+            apiKey: import.meta.env.VITE_INFURA_API_KEY
         }),
-        jsonRpcProvider({
-            rpc: (chain) => {
-                const http = PUBLIC_NODES[chain.id] ?? chain.rpcUrls.default.http[0];
-                
-                return { http };
-            },
-            priority: 1
-        })
-    ]
+        // Public nodes
+        ...PUBLIC_NODES[activeChain.id]
+            .map(nodeUrl => jsonRpcProvider<typeof activeChain>({
+                rpc: () => {
+                    return { http: nodeUrl };
+                }
+            }))
+    ],
+    {
+        batch: {
+            multicall: {
+                batchSize: 1024 * 200
+            }
+        }
+    }
 );
 
 export const injectedConnector = new InjectedConnector({
@@ -67,9 +72,9 @@ export const trustWalletConnector = new TrustWalletConnector({
     },
 });
 
-export const client = createClient({
+export const wagmiConfig = createConfig({
     autoConnect: true,
-    provider,
+    publicClient,
     connectors: [
         metaMaskConnector,
         injectedConnector,

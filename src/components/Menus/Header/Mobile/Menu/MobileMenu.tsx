@@ -1,4 +1,4 @@
-import { Address } from 'wagmi';
+import { Address } from 'viem';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import styles from './MobileMenu.module.scss';
 import { WalletMenu } from '@/components/Menus/WalletMenu/WalletMenu';
