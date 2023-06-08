@@ -10,7 +10,10 @@ type ShareModalProps = {
 export function ShareModal({ isOpen, onClose }: ShareModalProps & ModalProps) {
 
     return (
-        <Modal isOpen={isOpen}>
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+        >
             <ModalHead title='Share' />
 
             <ModalBody className={styles.wrap}>
