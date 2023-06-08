@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Button } from '@/uikit';
-import { CollectionRow } from './Row/CollectionRow';
+import { CollectionRow, CollectionRowSkeleton } from './Row/CollectionRow';
 import { CollectionQueryBody } from '@/states/collection/types';
 import { useCollectionsQuery } from '@/states/collection/hooks/useCollectionsQuery';
 import { PAGE_SIZE } from '@/config/constants';
@@ -73,7 +73,7 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
             {isLoading ? (
                 <div className={styles.body}>
                     {collectionsLoaders.map((index) => (
-                        <CollectionRow
+                        <CollectionRowSkeleton
                             key={index}
                             index={index}
                         />

@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import styles from './CollectionRow.module.scss';
 
 type CollectionRowProps = {
-    collection?: Collection
+    collection: Collection
     index: number
 };
 
@@ -35,15 +35,15 @@ const skeletonWidths = {
     ]
 }
 
-const Loader = ({ number }: { number: number }) => {
-    const widthIndex = number % 3;
+export function CollectionRowSkeleton({ index }: { index: number }) {
+    const widthIndex = index % 3;
     const widthsData = isTouchDevice ? skeletonWidths.mobile : skeletonWidths.desktop;
 
     return (
         <div className={classNames(styles.row, styles.loading)}>
             <div className={styles.wrap}>
                 <div className={classNames(styles.col, styles.secondary)}>
-                    {number}
+                    {index}
                 </div>
 
                 <div className={styles.col}>
@@ -90,13 +90,9 @@ const Loader = ({ number }: { number: number }) => {
             </div>
         </div>
     );
-};
+}
 
 export function CollectionRow({ collection, index }: CollectionRowProps) {
-    if (!collection) {
-        return <Loader number={index + 1} />;
-    }
-
 
     return (
         <Link
