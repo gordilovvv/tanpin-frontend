@@ -3,11 +3,11 @@ import { memo } from 'react';
 import { TransactionRow } from '../TransactionRow/TransactionRow';
 import { Account } from '../Common/Account';
 import { Amount } from '../Common/Amount';
-import { HistoryTransaction as HistoryTransactionData, TransactionType } from '@/states/types';
+import { ActivityTransaction, TransactionType } from '@/states/types';
 import styles from './HistoryTransaction.module.scss';
 
 type HistoryTransactionProps = {
-    transaction: HistoryTransactionData
+    transaction: ActivityTransaction
 }
 
 export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps) => {
