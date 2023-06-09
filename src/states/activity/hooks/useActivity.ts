@@ -6,15 +6,15 @@ import { ActivityFilter } from '../types';
 import { ActivityType, useActivityStore } from '../store';
 
 
-export function useActivity(filter: ActivityFilter) {
+export function useActivity({filter}: ActivityFilter) {
     const setActivityList = useActivityStore(state=>state.setActivityList);
 
     const type = typeof filter.tokenID === 'undefined' ? ActivityType.USER: ActivityType.TOKEN;
 
     const {  isLoading } = useSWR<ActivityTransaction[] | undefined>(
-        ['post.activity', filter],
+        ['activity', filter],
         async () => {
-            const activity = await fetchActivity(filter);
+            const activity = await fetchActivity({filter});
 
             setActivityList(type, activity);
 

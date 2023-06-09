@@ -14,12 +14,12 @@ type TransactionsHistoryProps = {
 }
 
 export function TransactionsHistory({ tokenID }: TransactionsHistoryProps) {
-    const { isLoading } = useActivity(
-        {
+    const { isLoading } = useActivity({
+        filter: {
             tokenID,
             types: [TransactionType.BUY, TransactionType.LISTED, TransactionType.MINT, TransactionType.TRANSFER, TransactionType.UNLISTED]
         }
-    );
+    });
 
     const tokenActivity = useActivityStore(state => state.tokenActivity);
 
