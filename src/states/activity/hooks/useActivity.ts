@@ -6,7 +6,7 @@ import { ActivityFilter } from '../types';
 import { ActivityType, useActivityStore } from '../store';
 
 
-export function useActivity({filter}: ActivityFilter) {
+export function useActivity(filter: ActivityFilter) {
     const setActivityList = useActivityStore(state=>state.setActivityList);
 
     const type = typeof filter.tokenID === 'undefined' ? ActivityType.USER: ActivityType.TOKEN;

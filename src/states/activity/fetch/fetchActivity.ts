@@ -3,7 +3,7 @@ import { MOCK_API_CALLS } from '@/config';
 import { ActivityFilter } from '../types';
 import { ActivityTransaction, TransactionType } from '@/states/types';
 
-export async function fetchActivity({filter}: ActivityFilter): Promise<ActivityTransaction[]> {
+export async function fetchActivity({filter}: {filter:ActivityFilter}): Promise<ActivityTransaction[]> {
     if (MOCK_API_CALLS) {
         await new Promise((res) => setTimeout(res, 200));
 
