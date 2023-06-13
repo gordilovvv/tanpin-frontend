@@ -11,7 +11,7 @@ export function useActivity(filter: ActivityFilter) {
 
     const type = typeof filter.tokenID === 'undefined' ? ActivityType.USER: ActivityType.TOKEN;
 
-    const {  isLoading } = useSWR<ActivityTransaction[] | undefined>(
+    const {  isLoading, error } = useSWR<ActivityTransaction[] | undefined>(
         ['activity', filter],
         async () => {
             const activity = await fetchActivity({filter});
@@ -27,6 +27,7 @@ export function useActivity(filter: ActivityFilter) {
     );
 
     return {
-        isLoading
+        isLoading,
+        error
     };
 }
