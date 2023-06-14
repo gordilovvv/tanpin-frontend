@@ -1,0 +1,75 @@
+.wrap {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.box {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: minmax(0, auto);
+    padding: 16px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+}
+
+.status {
+    display: grid;
+    align-items: center;
+    gap: 12px;
+    grid-template-columns: auto 1fr;
+
+    &Circle {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    &.fail &Circle {
+        background-color: var(--color-danger);
+    }
+
+    &.success &Circle {
+        background-color: var(--color-success);
+    }
+
+    &.pending &Circle {
+        background-color: var(--color-warning);
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-fill-mode: backwards;
+        animation-duration: 1.6s;
+        animation-name: flash;
+    }
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@include max767 {
+    .wrap {
+        gap: 24px
+    }
+
+    .box {
+        gap: 12px;
+        padding: 12px;
+    }
+}

@@ -1,0 +1,25 @@
+.body {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.text {
+    color: var(--color-typo-base-75);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+
+@include max767 {
+    .body {
+        gap: 16px;
+    }
+
+    .text {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

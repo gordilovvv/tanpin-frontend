@@ -10,6 +10,13 @@
     transform: translateZ(0px);
     user-select: none;
 
+    &.xs {
+        width: 16px;
+        height: 16px;
+        border-radius: 20px;
+        border-width: 2px;
+    }
+
     &.s {
         width: 24px;
         height: 24px;

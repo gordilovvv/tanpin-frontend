@@ -1,0 +1,43 @@
+.body {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.text {
+    color: var(--color-typo-base-75);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.01em;
+    text-align: center;
+
+    span {
+        color: var(--color-typo-base);
+        font-weight: 600;
+    }
+}
+
+@include min768 {
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        & > button + button {
+            margin-left: 16px;
+        }
+    }
+}
+
+@include max767 {
+    .text {
+        text-align: left;
+    }
+
+    .buttons {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: minmax(0, auto);
+    }
+}

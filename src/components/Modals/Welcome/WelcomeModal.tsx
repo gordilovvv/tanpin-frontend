@@ -3,6 +3,7 @@ import { Button, Cat, Modal, ModalBody, ModalProps, UnstyleLink } from '@/uikit'
 import { ErrorMessageModal } from '..';
 import { useRulesAccept } from '@/states/user/hooks/useRulesAccept';
 import { POLICY_URL, TERMS_URL } from '@/config';
+import { logError } from '@/utils/sentry';
 import backgroundImage from '@/app/assets/images/background.png';
 import styles from './WelcomeModal.module.scss';
 
@@ -14,7 +15,7 @@ export function WelcomeModal({ isOpen }: ModalProps) {
         try {
             await acceptRules();
         } catch (error) {
-            console.error(error);
+            logError(error);
             setAcceptError((error as Error).message);
         }
     };
