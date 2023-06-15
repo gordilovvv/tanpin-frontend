@@ -16,3 +16,17 @@ export function usePendingTransactionModal() {
         close: resetPendingTransaction
     };
 }
+
+export function useWrongNetworkModal() {
+    const [isOpen, open, close] = useGlobalStore(state => [
+        state.wrongNetworkModalOpened,
+        state.openWrongNetworkModal,
+        state.closeWrongNetworkModal
+    ]);
+
+    return {
+        isOpen,
+        open,
+        close
+    };
+}

@@ -1,35 +1,19 @@
-import { Button, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
-import styles from './WrongNetworkModal.module.scss';
-import { useSwitchNetwork } from '@/hooks/useSwitchNetwork';
-import { activeChainId } from '@/config/chain';
+import { useCallback, useState } from 'react';
+import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { ErrorMessageModal } from '..';
+import { NetworkSwitch } from './Switch/NetworkSwitch';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import { useEffect } from 'react';
 
-type WrongNetworkModalProps = {
-    currentChain: string
-    supportedChain: string
-}
-
-export function WrongNetworkModal({ isOpen, currentChain, supportedChain, onClose }: ModalProps & WrongNetworkModalProps) {
+export function WrongNetworkModal({ isOpen, onClose }: ModalProps) {
     const errorMessage = useOpenedState();
-    const { switchNetworkAsync, canSwitch, error, isLoading } = useSwitchNetwork();
+    const [error, setError] = useState<string | undefined>();
 
-    useEffect(() => {
-        if (error) {
-            onClose?.();
-            errorMessage.open();
-        }
-    }, [error]);
+    const handleError = useCallback((error: string | undefined) => {
+        onClose?.();
+        setError(error);
+        errorMessage.open();
+    }, [onClose, setError, errorMessage.open]);
 
-    const handleSwitchNetwork = async () => {
-        const chain = await switchNetworkAsync(activeChainId);
-
-        if (chain) {
-            onClose?.();
-        }
-    };
-    
     return (
         <>
             <Modal
@@ -39,28 +23,10 @@ export function WrongNetworkModal({ isOpen, currentChain, supportedChain, onClos
                 <ModalHead title='Wrong network' />
 
                 <ModalBody>
-                    <div className={styles.body}>
-                        <div className={styles.text}>
-                            You are connected to <span>{currentChain} Network</span>. To prevent possible errors, connect to <span>{supportedChain} Network</span>
-                        </div>
-
-                        <div className={styles.buttons}>
-                            {canSwitch && <Button
-                                view='primary'
-                                loading={isLoading}
-                                onClick={handleSwitchNetwork}
-                            >
-                                Switch network
-                            </Button>}
-
-                            <Button
-                                view='secondary'
-                                onClick={onClose}
-                            >
-                                Cancel
-                            </Button>
-                        </div>
-                    </div>
+                    <NetworkSwitch
+                        onError={handleError}
+                        onClose={onClose}
+                    />
                 </ModalBody>
             </Modal>
 
