@@ -1,0 +1,88 @@
+.step {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: auto 1fr;
+}
+
+.indicator {
+    display: flex;
+    flex-flow: column;
+}
+
+.idleCircle {
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-stroke);
+    border-radius: 50%;
+}
+
+.successCircle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--color-typo-inverse);
+    background-color: var(--color-success);
+    border-radius: 50%;
+}
+
+.loadingCircle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--color-surface);
+    border-radius: 50%;
+}
+
+.content {
+    display: grid;
+    gap: 6px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.label {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.4;
+    letter-spacing: -0.012em;
+}
+
+.description {
+    color: var(--color-typo-base-75);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+@include max767 {
+    .step {
+        gap: 16px;
+    }
+
+    .idleCircle,
+    .loadingCircle,
+    .successCircle {
+        width: 24px;
+        height: 24px;
+    }
+
+    .successCircle {
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .label {
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

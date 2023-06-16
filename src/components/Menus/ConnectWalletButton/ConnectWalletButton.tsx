@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@/uikit';
 import { ErrorMessageModal } from '@/components/Modals';
 import { ConnectWalletModal } from '../ConnectWalletModal/ConnectWalletModal';
@@ -17,9 +17,11 @@ export function ConnectWalletButton() {
     const logged = useUserStore(state => !!state.accessToken);
     const connectPopupState = useOpenedState();
 
-    if (connectPopupState.isOpen && logged && isConnected) {
-        connectPopupState.close();
-    }
+    useEffect(() => {
+        if (connectPopupState.isOpen && logged && isConnected) {
+            connectPopupState.close();
+        }
+    }, [connectPopupState.isOpen, logged, isConnected]);
 
     const handleLogin = useCallback(async (id: ConnectorNames) => {
         try {

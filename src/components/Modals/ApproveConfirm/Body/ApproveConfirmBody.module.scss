@@ -1,0 +1,52 @@
+.body {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.steps {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.bottom {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & button+button {
+        margin-left: 16px;
+    }
+}
+
+.error {
+    color: var(--color-danger);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+@include max767 {
+    .body {
+        gap: 24px;
+    }
+
+    .steps {
+        gap: 16px;
+    }
+
+    .buttons {
+        & button+button {
+            margin-left: 12px;
+        }
+    }
+}

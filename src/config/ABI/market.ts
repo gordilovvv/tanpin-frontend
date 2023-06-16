@@ -1,0 +1,676 @@
+export const marketABI = [{
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': '_step',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'payable',
+    'type': 'constructor'
+}, {
+    'inputs': [],
+    'name': 'AuctionClosed',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'AuctionNotClosed',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'BidTooLow',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'InvalidNft',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'InvalidToken',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'LotOwnerCannotBuyHimself',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'NotLotOwner',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'NotOwner',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'NotParticipate',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'SafeTransferFailed',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'SafeTransferFromFailed',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'TimestampMistake',
+    'type': 'error'
+}, {
+    'inputs': [],
+    'name': 'ZeroAmount',
+    'type': 'error'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'user',
+        'type': 'address'
+    }, {
+        'indexed': false,
+        'internalType': 'uint256',
+        'name': 'amount',
+        'type': 'uint256'
+    }],
+    'name': 'BidAuctionSale',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'buyer',
+        'type': 'address'
+    }, {
+        'indexed': false,
+        'internalType': 'uint256',
+        'name': 'amount',
+        'type': 'uint256'
+    }, {
+        'indexed': false,
+        'internalType': 'uint256',
+        'name': 'price',
+        'type': 'uint256'
+    }],
+    'name': 'BuyDirectSale',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }],
+    'name': 'CloseAuctionSale',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'user',
+        'type': 'address'
+    }],
+    'name': 'CloseDirectSale',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'user',
+        'type': 'address'
+    }],
+    'name': 'CreateAuctionSale',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'user',
+        'type': 'address'
+    }],
+    'name': 'CreateDirectSale',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'previousOwner',
+        'type': 'address'
+    }, {
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'newOwner',
+        'type': 'address'
+    }],
+    'name': 'OwnershipTransferred',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'indexed': true,
+        'internalType': 'address',
+        'name': 'user',
+        'type': 'address'
+    }],
+    'name': 'RefundBid',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'indexed': false,
+        'internalType': 'uint256',
+        'name': 'newTimestamp',
+        'type': 'uint256'
+    }],
+    'name': 'UpdateCloseTimestamp',
+    'type': 'event'
+}, {
+    'anonymous': false,
+    'inputs': [{
+        'indexed': true,
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }],
+    'name': 'UpdateDirectSale',
+    'type': 'event'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'newAmount',
+        'type': 'uint256'
+    }],
+    'name': 'bidAuctionSale',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'amount',
+        'type': 'uint256'
+    }],
+    'name': 'buyDirectSale',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }],
+    'name': 'closeAuctionSale',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }],
+    'name': 'closeDirectSale',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'address',
+        'name': 'nft',
+        'type': 'address'
+    }, {
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'amount',
+        'type': 'uint256'
+    }, {
+        'internalType': 'contract IERC20',
+        'name': 'token',
+        'type': 'address'
+    }, {
+        'internalType': 'uint256',
+        'name': 'price',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'openTimestamp',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'closeTimestamp',
+        'type': 'uint256'
+    }],
+    'name': 'createAuctionSale',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'address',
+        'name': 'nft',
+        'type': 'address'
+    }, {
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'amount',
+        'type': 'uint256'
+    }, {
+        'internalType': 'contract IERC20',
+        'name': 'token',
+        'type': 'address'
+    }, {
+        'internalType': 'uint256',
+        'name': 'price',
+        'type': 'uint256'
+    }],
+    'name': 'createDirectSale',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }],
+    'name': 'getAuction',
+    'outputs': [{
+        'components': [{
+            'internalType': 'address',
+            'name': 'nft',
+            'type': 'address'
+        }, {
+            'internalType': 'uint256',
+            'name': 'id',
+            'type': 'uint256'
+        }, {
+            'internalType': 'uint256',
+            'name': 'amount',
+            'type': 'uint256'
+        }, {
+            'internalType': 'contract IERC20',
+            'name': 'token',
+            'type': 'address'
+        }, {
+            'internalType': 'uint256',
+            'name': 'price',
+            'type': 'uint256'
+        }, {
+            'internalType': 'uint256',
+            'name': 'currentPrice',
+            'type': 'uint256'
+        }, {
+            'internalType': 'uint256',
+            'name': 'openTimestamp',
+            'type': 'uint256'
+        }, {
+            'internalType': 'uint256',
+            'name': 'closeTimestamp',
+            'type': 'uint256'
+        }, {
+            'internalType': 'address',
+            'name': 'seller',
+            'type': 'address'
+        }, {
+            'internalType': 'address',
+            'name': 'currentBuyer',
+            'type': 'address'
+        }, {
+            'internalType': 'bool',
+            'name': 'closed',
+            'type': 'bool'
+        }],
+        'internalType': 'struct Marketplace.AuctionSale',
+        'name': '',
+        'type': 'tuple'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [],
+    'name': 'getAuctionStep',
+    'outputs': [{
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'address',
+        'name': 'user',
+        'type': 'address'
+    }, {
+        'internalType': 'uint256',
+        'name': 'auctionId',
+        'type': 'uint256'
+    }],
+    'name': 'getBuyerInfo',
+    'outputs': [{
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }],
+    'name': 'getDirect',
+    'outputs': [{
+        'components': [{
+            'internalType': 'address',
+            'name': 'nft',
+            'type': 'address'
+        }, {
+            'internalType': 'uint256',
+            'name': 'id',
+            'type': 'uint256'
+        }, {
+            'internalType': 'uint256',
+            'name': 'validAmount',
+            'type': 'uint256'
+        }, {
+            'internalType': 'uint256',
+            'name': 'soldAmount',
+            'type': 'uint256'
+        }, {
+            'internalType': 'contract IERC20',
+            'name': 'token',
+            'type': 'address'
+        }, {
+            'internalType': 'uint256',
+            'name': 'price',
+            'type': 'uint256'
+        }, {
+            'internalType': 'address',
+            'name': 'seller',
+            'type': 'address'
+        }],
+        'internalType': 'struct Marketplace.DirectSale',
+        'name': '',
+        'type': 'tuple'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [],
+    'name': 'getExtraTime',
+    'outputs': [{
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [],
+    'name': 'getFee',
+    'outputs': [{
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [],
+    'name': 'getMinAndMaxTimestamp',
+    'outputs': [{
+        'internalType': 'uint256',
+        'name': 'min',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'max',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'address',
+        'name': '_nft',
+        'type': 'address'
+    }],
+    'name': 'getNft',
+    'outputs': [{
+        'internalType': 'bool',
+        'name': '',
+        'type': 'bool'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [],
+    'name': 'getTimestamp',
+    'outputs': [{
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'contract IERC20',
+        'name': '_token',
+        'type': 'address'
+    }],
+    'name': 'getToken',
+    'outputs': [{
+        'internalType': 'bool',
+        'name': '',
+        'type': 'bool'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [],
+    'name': 'lengths',
+    'outputs': [{
+        'internalType': 'uint256',
+        'name': 'directs',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'auctions',
+        'type': 'uint256'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'address',
+        'name': '',
+        'type': 'address'
+    }, {
+        'internalType': 'address',
+        'name': '',
+        'type': 'address'
+    }, {
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': '',
+        'type': 'uint256'
+    }, {
+        'internalType': 'bytes',
+        'name': '',
+        'type': 'bytes'
+    }],
+    'name': 'onERC1155Received',
+    'outputs': [{
+        'internalType': 'bytes4',
+        'name': '',
+        'type': 'bytes4'
+    }],
+    'stateMutability': 'pure',
+    'type': 'function'
+}, {
+    'inputs': [],
+    'name': 'owner',
+    'outputs': [{
+        'internalType': 'address',
+        'name': '',
+        'type': 'address'
+    }],
+    'stateMutability': 'view',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'newAuctionStep',
+        'type': 'uint256'
+    }],
+    'name': 'setAuctionStep',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'newExtraTime',
+        'type': 'uint256'
+    }],
+    'name': 'setExtraTime',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'newFee',
+        'type': 'uint256'
+    }],
+    'name': 'setFee',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'address',
+        'name': '_nft',
+        'type': 'address'
+    }, {
+        'internalType': 'bool',
+        'name': '_valid',
+        'type': 'bool'
+    }],
+    'name': 'setNft',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'min',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'max',
+        'type': 'uint256'
+    }],
+    'name': 'setTimestamp',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'contract IERC20',
+        'name': '_token',
+        'type': 'address'
+    }, {
+        'internalType': 'bool',
+        'name': '_valid',
+        'type': 'bool'
+    }],
+    'name': 'setToken',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'address',
+        'name': 'newOwner',
+        'type': 'address'
+    }],
+    'name': 'transferOwnership',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}, {
+    'inputs': [{
+        'internalType': 'uint256',
+        'name': 'id',
+        'type': 'uint256'
+    }, {
+        'internalType': 'uint256',
+        'name': 'newPrice',
+        'type': 'uint256'
+    }],
+    'name': 'updateDirectSale',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function'
+}] as const;

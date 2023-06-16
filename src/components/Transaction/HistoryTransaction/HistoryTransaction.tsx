@@ -12,7 +12,6 @@ type HistoryTransactionProps = {
 
 export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps) => {
     const renderContent = () => {
-        /* eslint-disable indent */
         switch (transaction.type) {
 
             case TransactionType.MINT:
@@ -37,10 +36,9 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
                 return (<div><Account address={transaction.owner} /> transfered to <Account address={transaction.transferedTo!} /></div>);
 
             default:
-                return (<div className={styles.white}>Unknown transaction</div>);
+                return (<div className={styles.white}>Unknown transaction: {transaction.type}</div>);
 
         }
-        /* eslint-enable indent */
     };
 
 
