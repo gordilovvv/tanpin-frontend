@@ -15,14 +15,14 @@ enum Step {
 }
 
 type ApproveConfirmBodyProps = {
-    tokenID: string
+    saleID: string
     tokenPrice: string
     tokenAmount: number
     onClose?: () => void
     onSuccess?: (confirmHash: Hash) => void
 }
 
-export function ApproveConfirmBody({ tokenID, tokenPrice, tokenAmount, onClose, onSuccess }: ApproveConfirmBodyProps) {
+export function ApproveConfirmBody({ saleID, tokenPrice, tokenAmount, onClose, onSuccess }: ApproveConfirmBodyProps) {
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
 
@@ -40,7 +40,7 @@ export function ApproveConfirmBody({ tokenID, tokenPrice, tokenAmount, onClose, 
                 contract: marketContract,
                 method: 'buyDirectSale',
                 args: [
-                    BigInt(tokenID),
+                    BigInt(saleID),
                     BigInt(tokenAmount)
                 ]
             });
