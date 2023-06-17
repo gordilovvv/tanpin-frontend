@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { ModalContext } from '../Context';
 import { Close, UnstyleButton } from '@/uikit';
 import styles from './ModalHead.module.scss';
 import classNames from 'classnames';
 
 type ModalHeadProps = {
-    title: string
+    title: string | ReactNode
 }
 
 export function ModalHead({ title }: ModalHeadProps) {
