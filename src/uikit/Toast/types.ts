@@ -1,6 +1,5 @@
-export enum Variant {
-    COMMON = 'common',
+export enum ToastVariant {
     LOADING = 'loading',
-    ALERT = 'alert',
     DANGER = 'danger',
+    WARNING = 'warning'
 }

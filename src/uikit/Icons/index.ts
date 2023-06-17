@@ -25,5 +25,4 @@ export { Filter } from './components/Filter';
 export { Link } from './components/Link';
 export { Polygon } from './components/Polygon';
 export { Share } from './components/Share';
-export {Cart} from './components/Cart';
-export {Info} from './components/Info';
+export { Cart } from './components/Cart';
