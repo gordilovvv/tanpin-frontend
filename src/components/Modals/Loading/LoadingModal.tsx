@@ -3,10 +3,11 @@ import { LoadingContent } from './LoadingContent';
 import styles from './LoadingModal.module.scss';
 
 type LoadingModalProps = {
+    text?: string
     onCancel?: () => void
 }
 
-export function LoadingModal({ isOpen, onCancel }: LoadingModalProps & ModalProps) {
+export function LoadingModal({ isOpen, text, onCancel }: LoadingModalProps & ModalProps) {
     const title = <span className={styles.title}>Loading</span>;
 
     return (
@@ -14,7 +15,7 @@ export function LoadingModal({ isOpen, onCancel }: LoadingModalProps & ModalProp
             <ModalHead title={title} />
 
             <ModalBody className={styles.body}>
-                <LoadingContent />
+                <LoadingContent text={text} />
 
                 {onCancel && <div className={styles.bottom}>
                     <Button

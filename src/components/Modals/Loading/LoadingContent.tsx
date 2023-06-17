@@ -3,9 +3,13 @@ import { Spin } from '@/uikit';
 import { sample } from 'lodash';
 import styles from './LoadingContent.module.scss';
 
-export function LoadingContent() {
+type LoadingContentProps = {
+    text?: string
+}
+
+export function LoadingContent({ text }: LoadingContentProps) {
     const interval = useRef<NodeJS.Timer | null>(null);
-    const [phrase, setPhrase] = useState<string | undefined>();
+    const [phrase, setPhrase] = useState<string | undefined>(text);
     const phrases = [
         'Sending Crypto Waves',
         'Building the Blockchain Bridge',
@@ -19,20 +23,25 @@ export function LoadingContent() {
         'Minting Memories with NFT'
     ];
 
+    // Randomize phrases
     useEffect(() => {
-        setPhrase(sample(phrases));
-
-        interval.current = setInterval(() => {
+        if (!text) {
             setPhrase(sample(phrases));
-        }, 1_500);
 
-        return () => {
-            if (interval.current) {
-                clearInterval(interval.current);
-                interval.current = null;
-            }
-        };
-    }, []);
+            interval.current = setInterval(() => {
+                setPhrase(sample(phrases));
+            }, 1_500);
+
+            return () => {
+                if (interval.current) {
+                    clearInterval(interval.current);
+                    interval.current = null;
+                }
+            };
+        } else {
+            setPhrase(text);
+        }
+    }, [text]);
 
     return (
         <div className={styles.loader}>
