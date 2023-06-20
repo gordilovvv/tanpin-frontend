@@ -3,6 +3,11 @@
     grid-template-columns: auto auto;
     align-items: center;
     gap: 8px;
+
+    &.xl {
+        gap: 24px;
+        //T0D0 mobile font size
+    }
 }
 
 .text {
@@ -10,6 +15,11 @@
     font-size: 16px;
     line-height: 150%;
     color: var(--color-typo-base);
+
+    &.xl {
+        font-size: 30px;
+        //T0D0 mobile font size
+    }
 }
 
 @include max767 {
