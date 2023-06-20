@@ -9,6 +9,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { SingleNftView } from '@/views/Nft/SingleNft/SingleNftView';
 import { NFTView } from '@/views/Nft/NFTView';
 import { AssetsView } from '@/views/Assets/AssetsView';
+import { OwnedView } from '@/views/Assets/Owned/OwnedView';
+import { SaleView } from '@/views/Assets/Sale/SaleView';
 
 export const router = createBrowserRouter([
     {
@@ -34,6 +36,20 @@ export const router = createBrowserRouter([
             {
                 path: '/assets',
                 element: <AssetsView />,
+                children: [
+                    {
+                        path: '/collections',
+                        element: <CollectionsView />
+                    },
+                    {
+                        path: '/sale',
+                        element: <SaleView />
+                    },
+                    {
+                        path: '/owned',
+                        element: <OwnedView />
+                    },
+                ]
             },
             {
                 path: '/:gameID',

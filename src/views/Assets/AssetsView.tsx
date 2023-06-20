@@ -2,6 +2,7 @@ import { Container, PageWrapper } from '@/components/Layout';
 import styles from './AssetsView.module.scss';
 import { UserHead } from './components/UserHead/UserHead';
 import { ToggleButton, ToggleGroup } from '@/uikit';
+import { Outlet } from 'react-router-dom';
 
 
 
@@ -27,6 +28,8 @@ export function AssetsView() {
                     </ToggleGroup>
                 </div>
             </Container>
+
+            <Outlet />
         </PageWrapper>
     );
 }
