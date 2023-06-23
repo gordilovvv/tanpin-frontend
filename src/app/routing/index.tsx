@@ -1,5 +1,4 @@
 import { PageLayout } from '@/components/Layout';
-import { CollectionsView } from '@/views/Collections/CollectionsView';
 import { ErrorView } from '@/views/Error';
 import { GamesView } from '@/views/Games/GamesView';
 import { HomeView } from '@/views/Home/HomeView';
@@ -9,6 +8,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { SingleNftView } from '@/views/Nft/SingleNft/SingleNftView';
 import { NFTView } from '@/views/Nft/NFTView';
 import { AssetsView } from '@/views/Assets/AssetsView';
+import { CollectionsView } from '@/views/Assets/Collections/CollectionsView';
 import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
 
