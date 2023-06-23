@@ -34,19 +34,18 @@ export const router = createBrowserRouter([
                 element: <NFTView />,
             },
             {
-                path: '/assets',
                 element: <AssetsView />,
                 children: [
                     {
-                        path: '/collections',
+                        path: '/assets/collections',
                         element: <CollectionsView />
                     },
                     {
-                        path: '/sale',
+                        path: '/assets/sale',
                         element: <SaleView />
                     },
                     {
-                        path: '/owned',
+                        path: '/assets/owned',
                         element: <OwnedView />
                     },
                 ]
