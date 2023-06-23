@@ -3,14 +3,17 @@ import { router } from './app/routing';
 import { WagmiConfig } from 'wagmi';
 import { wagmiConfig } from './config/wagmi';
 import { useAccountEventListener } from './hooks/useAccountEventListener';
+import { ToastProvider } from './uikit';
 
 function App() {
     useAccountEventListener();
 
     return (
-        <WagmiConfig config={wagmiConfig}>
-            <RouterProvider router={router} />
-        </WagmiConfig>
+        <ToastProvider>
+            <WagmiConfig config={wagmiConfig}>
+                <RouterProvider router={router} />
+            </WagmiConfig>
+        </ToastProvider>
     );
 }
 

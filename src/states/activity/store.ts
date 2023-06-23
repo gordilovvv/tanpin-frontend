@@ -1,15 +1,21 @@
 import { create } from 'zustand';
 import {  ActivityTransaction } from '../types';
 
+type filterActivity = {value:string,label:string}
+
 type State = {
 	notificationsCount: number,
 	userActivity: ActivityTransaction[] | undefined
     tokenActivity: ActivityTransaction[] | undefined
+    filterActivity: filterActivity[]| []
 }
 
 type Actions = {
 	setActivityList: (type: ActivityType, list: ActivityTransaction[] | undefined) => void
 	appendToActivityList: (type: ActivityType, transaction: ActivityTransaction) => void
+    
+	appendToFilterActivity: ( filter: filterActivity) => void
+	removeFromFilterActivity: ( filter: filterActivity) => void
 }
 
 export enum ActivityType {
@@ -22,6 +28,7 @@ export const useActivityStore = create<State & Actions>()(
         notificationsCount: 0,
         userActivity: undefined,
         tokenActivity: undefined,
+        filterActivity: [],
         
         setActivityList: (type, list) => {
             switch (type) {
@@ -69,7 +76,24 @@ export const useActivityStore = create<State & Actions>()(
                 return;
                
             }
-        }
+        },
+
+       
+        removeFromFilterActivity: (activity)=>{
+            set(state => {
+                return {
+                    filterActivity: (state.filterActivity.filter(el=>el.value !== activity.value))
+                };
+            });
+        },
+        appendToFilterActivity: (activity)=>{
+            set(state => {
+                if (state.filterActivity.find(el=>el.value === activity.value)) return {filterActivity:state.filterActivity};
+                return {
+                    filterActivity: [...state.filterActivity, activity]
+                };
+            });
+        },
     })      
 );
    

@@ -1,50 +1,23 @@
 import { Container, PageWrapper } from '@/components/Layout';
-import { useActivity } from '@/states/activity/hooks/useActivity';
-import { useActivityStore } from '@/states/activity/store';
 import styles from './ActivityView.module.scss';
-import { TransactionType } from '@/states/types';
-import { ActivityRow } from './components/ActivityRow/ActivityRow';
-import { Spin } from '@/uikit';
+import { Select, Title } from '@/uikit';
+import { ActivityFilter } from '@/components/Filter';
+import { ActivityList } from './components/ActivityList/ActivityList';
+import { useActivityStore } from '@/states/activity/store';
+
+const options = [{ value: 'someValue', label: 'someLabel' },];
 
 export function ActivityView() {
-    const { isLoading, error } = useActivity({
-        tokenID: '3',
-        types: [TransactionType.BUY, TransactionType.LISTED, TransactionType.MINT, TransactionType.TRANSFER, TransactionType.UNLISTED]
-    });
-
-    const tokenActivity = useActivityStore(state => state.tokenActivity);
-
-    if (isLoading) {
-        return (
-            <div className={styles.wrapper}>
-                <Spin size='m' />
-            </div>
-        );
-    }
-    if (error) {
-        return (
-            <div className={styles.wrapper}>
-                error
-            </div>
-        );
-    }
-
+    const filterActivity = useActivityStore(state => state.filterActivity);
     return (
         <PageWrapper>
-            <Container>
-                <div>
-                    Activity
-                </div>
+            <Container className={styles.container}>
+                <Title className={styles.title}>Notifications</Title>
 
-                <div className={styles.inner}>
-                    {
-                        tokenActivity!.map((tx) => <ActivityRow
-                            tx={tx}
-                            key={tx.transactionHash}
-                        />)
-                    }
+                <div className={styles.wrapper}>
+                    <ActivityList filter={filterActivity} />
+                    <ActivityFilter options={options} />
                 </div>
-
             </Container>
         </PageWrapper>
     );
