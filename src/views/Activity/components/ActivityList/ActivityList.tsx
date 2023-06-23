@@ -11,10 +11,13 @@ type ActivityListProps = {
 
 export function ActivityList({ filter }: ActivityListProps) {
 
+    //T0D0 добавить сортировку на фронте
+
     const { isLoading } = useActivity({
         userAddress: '333',
         types: [TransactionType.BUY, TransactionType.LISTED, TransactionType.MINT, TransactionType.TRANSFER, TransactionType.UNLISTED]
     });
+
 
     const userActivity = useActivityStore(state => state.userActivity);
 
