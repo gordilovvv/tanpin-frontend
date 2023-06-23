@@ -5,7 +5,14 @@ import { ActivityFilter } from '@/components/Filter';
 import { ActivityList } from './components/ActivityList/ActivityList';
 import { useActivityStore } from '@/states/activity/store';
 
-const options = [{ value: 'someValue', label: 'someLabel' },];
+const options = [
+    { value: 'sales', label: 'Sales' },
+    { value: 'listings', label: 'Listings' },
+    { value: 'bids', label: 'Bids' },
+    { value: 'transfers', label: 'Transfers' },
+    { value: 'purchases', label: 'Purchases' },
+    { value: 'mints', label: 'Mints' },
+];
 
 export function ActivityView() {
     const filterActivity = useActivityStore(state => state.filterActivity);

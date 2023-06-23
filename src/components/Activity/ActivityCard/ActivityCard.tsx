@@ -39,7 +39,7 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
                 <div className={styles.imageWrap}>
                     <img
                         className={styles.image}
-                        src={'https://croppola.com/croppola/example-bird2/image.jpg?algorithm=croppola&aspectRatio=1&width=500&thumbnailMaximumWidth=150'}
+                        src={'https://lh3.googleusercontent.com/C0lBMN4E8RslF_NeLLSLnfPyMG9FOmvEiwZdu4DgpQ0nqnN2ZFIr9AKlSpafxkbr4e5Ar23jzEDTWaXW2zievUIv-UwvYwWtV7U-=s1000'}
                     />
                 </div>
 
