@@ -38,26 +38,6 @@ export type NFTAttribute = {
     value: string
 }
 
-export enum TransactionType {
-    MINT = 'mint',
-    TRANSFER = 'transfer',
-    BUY = 'buy',
-    LISTED = 'listed',
-    UNLISTED = 'unlisted',
-}
-
-export type ActivityTransaction = {
-    type: TransactionType
-    owner: string,
-    transferedTo?: string
-    price?: {
-        amount: string
-        currency: string
-    }
-    date: string
-    transactionHash: string
-}
-
 export type Auction = {
     ID: string
     tokenID: string

@@ -3,8 +3,8 @@ import { memo } from 'react';
 import { TransactionRow } from '../TransactionRow/TransactionRow';
 import { Account } from '../Common/Account';
 import { Amount } from '../Common/Amount';
-import { ActivityTransaction, TransactionType } from '@/states/types';
 import styles from './HistoryTransaction.module.scss';
+import { ActivityTransaction, ActivityType } from '@/states/activity/types';
 
 type HistoryTransactionProps = {
     transaction: ActivityTransaction
@@ -15,10 +15,10 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
         /* eslint-disable indent */
         switch (transaction.type) {
 
-            case TransactionType.MINT:
+            case ActivityType.MINT:
                 return (<div><Account address={transaction.owner} /> minted</div>);
 
-            case TransactionType.BUY:
+            case ActivityType.BUY:
                 return (
                     // eslint-disable-next-line react/jsx-newline
                     <div><Account address={transaction.owner} /> bought for <Amount
@@ -27,13 +27,13 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
                     /></div>
                 );
 
-            case TransactionType.LISTED:
+            case ActivityType.LISTED:
                 return (<div><Account address={transaction.owner} /> listed</div>);
 
-            case TransactionType.UNLISTED:
+            case ActivityType.UNLISTED:
                 return (<div><Account address={transaction.owner} /> unlisted</div>);
 
-            case TransactionType.TRANSFER:
+            case ActivityType.TRANSFER:
                 return (<div><Account address={transaction.owner} /> transfered to <Account address={transaction.transferedTo!} /></div>);
 
             default:

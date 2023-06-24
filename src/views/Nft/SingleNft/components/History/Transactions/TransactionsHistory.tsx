@@ -3,8 +3,8 @@ import { HistoryTransaction, TransactionRowSkeleton } from '@/components/Transac
 import times from 'lodash/times';
 import styles from './TransactionsHistory.module.scss';
 import { useActivity } from '@/states/activity/hooks/useActivity';
-import { TransactionType } from '@/states/types';
 import { useActivityStore } from '@/states/activity/store';
+import { ActivityType } from '@/states/activity/types';
 
 const SKELETONS_COUNT = 5;
 
@@ -16,7 +16,7 @@ type TransactionsHistoryProps = {
 export function TransactionsHistory({ tokenID }: TransactionsHistoryProps) {
     const { isLoading } = useActivity({
         tokenID,
-        types: [TransactionType.BUY, TransactionType.LISTED, TransactionType.MINT, TransactionType.TRANSFER, TransactionType.UNLISTED]
+        types: [ActivityType.BUY, ActivityType.LISTED, ActivityType.MINT, ActivityType.TRANSFER, ActivityType.UNLISTED]
     });
 
     const tokenActivity = useActivityStore(state => state.tokenActivity);
