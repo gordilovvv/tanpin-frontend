@@ -1,0 +1,8 @@
+.wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 5px;
+    align-items: center;
+    justify-content: initial;
+}
