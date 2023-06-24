@@ -25,7 +25,7 @@ export enum ActivityType {
 
 export const useActivityStore = create<State & Actions>()(
     (set) => ({
-        notificationsCount: 0,
+        notificationsCount: 1,
         userActivity: undefined,
         tokenActivity: undefined,
         filterActivity: [],
