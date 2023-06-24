@@ -20,6 +20,6 @@ export const footerLinks: NavLink[] = [
 ];
 
 export const walletMenuLinks: (NavLink & { icon: (...args: any) => JSX.Element })[] = [
-    { to: '/owned/assets', text: 'My Assets', icon: Assets },
-    { to: '/owned/activity', text: 'Activity', icon: Activity }
+    { to: '/assets/owned', text: 'My Assets', icon: Assets },
+    { to: '/activity', text: 'Activity', icon: Activity }
 ];

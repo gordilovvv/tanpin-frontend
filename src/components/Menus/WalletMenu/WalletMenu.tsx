@@ -1,4 +1,4 @@
-import { Button, Buy, Close, InjectedWallet, Logout, Swap, UnstyleButton } from '@/uikit';
+import { Button, Close, InjectedWallet, Logout, UnstyleButton } from '@/uikit';
 import { MenuLink } from './Link/MenuLink';
 import { TokenInfo } from './Token/TokenInfo';
 import { useAuth } from '@/states/user/hooks/useAuth';
@@ -80,7 +80,8 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                     />
                 )}
 
-                <MenuLink
+                {/* TODO: real links */}
+                {/* <MenuLink
                     text='Swap TANP'
                     iconSlot={<Swap />}
                 />
@@ -88,7 +89,7 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                 <MenuLink
                     text='Buy USDT'
                     iconSlot={<Buy />}
-                />
+                /> */}
             </div>
 
             <div className={styles.footer}>
