@@ -23,8 +23,8 @@
 
 .circle {
     border-radius: 8px;
-    background: #3CE361;
-    box-shadow: 0px 0px 8px 0px #3CE361;
+    background: var(--color-primary);
+    box-shadow: 0px 0px 8px 0px var(--color-primary);
     width: 8px;
     height: 8px;
     position: absolute;

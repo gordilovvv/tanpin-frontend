@@ -7,6 +7,7 @@ import styles from './NotificationsButton.module.scss';
 
 export function NotificationsButton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     const notificationsCount = useActivityStore(state => state.notificationsCount);
+    
     return (
         <div
             className={className}
@@ -15,7 +16,6 @@ export function NotificationsButton({ className, ...props }: HTMLAttributes<HTML
             <Link
                 to={'./activity'}
                 className={styles.wrapper}
-
             >
                 <div className={styles.inner}>
                     <Bell className={styles.icon} />
