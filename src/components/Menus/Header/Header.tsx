@@ -50,7 +50,7 @@ export function Header() {
                     </div>
 
                     <div className={styles.stack}>
-                        <NotificationsButton />
+                        <NotificationsButton className={styles.desktopNotification} />
 
                         <HeaderWallet
                             address={address}
@@ -58,6 +58,7 @@ export function Header() {
                         />
 
                         <div className={styles.mobileStack}>
+
                             <MobileButton
                                 active={mobileSearchState.isOpen}
                                 defaultIcon={<Search />}
@@ -65,6 +66,8 @@ export function Header() {
                                 className={styles.mobileButton}
                                 onClick={mobileSearchState.toggle}
                             />
+
+                            <NotificationsButton className={styles.mobileNotification} />
 
                             <MobileButton
                                 active={mobileMenuState.isOpen}
