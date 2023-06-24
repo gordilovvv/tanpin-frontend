@@ -61,3 +61,18 @@
         text-overflow: ellipsis;
     }
 }
+
+
+@include max767 {
+    .wrap {
+        grid-template-columns: 1fr;
+        grid-auto-flow: row;
+        gap: 16px;
+        //TODO: прием с отрицательным margin перекрывает hover у Owner
+    }
+
+    .ownerIcon {
+        width: 24px;
+        height: 24px;
+    }
+}
