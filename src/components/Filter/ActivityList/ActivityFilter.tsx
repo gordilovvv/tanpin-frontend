@@ -2,26 +2,28 @@
 import { useActivityStore } from '@/states/activity/store';
 import styles from './ActivityFilter.module.scss';
 import { ActivityFilterOption } from './ActivityFilterOption/ActivityFilterOption';
-import { option } from './type';
 
 type ActivityFilterProps = {
-    options: option[],
+    options: { value: string, label: string }[],
 }
 
 export function ActivityFilter({ options }: ActivityFilterProps) {
-    const appendToFilterActivity = useActivityStore(state => state.appendToFilterActivity);
-    const removeFromFilterActivity = useActivityStore(state => state.removeFromFilterActivity);
+    const selectUserActivityOption = useActivityStore(state => state.selectUserActivityOption);
+    const removeUserActivityOption = useActivityStore(state => state.removeUserActivityOption);
+    const filterActivity = useActivityStore(state => state.filterActivity);
 
-    const handleChange = (option: option, isActive: boolean) => {
+
+    const handleChange = ({ value }: { value: string, label: string }, isActive: boolean) => {
         if (isActive) {
-            appendToFilterActivity(option);
+            selectUserActivityOption(value);
         } else {
-            removeFromFilterActivity(option);
+            removeUserActivityOption(value);
         }
     };
     return (
         <div className={styles.wrapper}>
             <div className={styles.title}>Filters</div>
+            {JSON.stringify(filterActivity)}
 
             <div className={styles.inner}>
                 {options.map((option) => <ActivityFilterOption
