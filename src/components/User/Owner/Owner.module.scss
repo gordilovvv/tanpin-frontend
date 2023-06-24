@@ -1,29 +1,52 @@
 .wrapper {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 48px;
     align-items: center;
-    gap: 8px;
+    justify-content: initial;
+    
+    &.s {
+        gap: 8px;
+    }
 
     &.xl {
         gap: 24px;
-        //T0D0 mobile font size
     }
 }
 
 .text {
     font-weight: 600;
     font-size: 16px;
-    line-height: 150%;
     color: var(--color-typo-base);
+
+    &.s {
+        font-size: 16px;
+        line-height: 1.5;
+    }
 
     &.xl {
         font-size: 30px;
-        //T0D0 mobile font size
+        line-height: 1.2;
     }
 }
 
 @include max767 {
+    .wrapper {
+        &.xl {
+            gap: 14px;
+        }
+    }
+    
     .text {
-        font-size: 14px;
+        &.s {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        &.xl {
+            font-size: 20px;
+            line-height: 1.4;
+        }
     }
 }

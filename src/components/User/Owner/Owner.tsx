@@ -1,12 +1,11 @@
 import { UserAvatar } from '..';
-import styles from './Owner.module.scss';
 import { ellipseAddress } from '@/utils/addressHelper';
-import { UserSizes } from '../Avatar/UserAvatar';
 import classNames from 'classnames';
+import styles from './Owner.module.scss';
 
 type OwnerProps = {
-    address: string,
-    size?: UserSizes
+    address: string
+    size?: 's' | 'xl'
 }
 
 export function Owner({ address, size = 's' }: OwnerProps) {

@@ -11,14 +11,14 @@
     border-radius: 50%;
     transform: translateZ(0);
 
-    &.m {
-        width: 32px;
-        height: 32px;
-    }
-
     &.s {
         width: 20px;
         height: 20px;
+    }
+
+    &.m {
+        width: 32px;
+        height: 32px;
     }
 
     &.l {
@@ -29,15 +29,13 @@
     &.xl {
         width: 72px;
         height: 72px;
-        //T0D0 mobile sizes
-
     }
 }
 
 
 @include max767 {
     .avatar {
-        &.l {
+        &.l, &.xl {
             width: 32px;
             height: 32px;
         }

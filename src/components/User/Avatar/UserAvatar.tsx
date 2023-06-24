@@ -1,11 +1,13 @@
 import styles from './UserAvatar.module.scss';
 import classNames from 'classnames';
 
-export type UserSizes = 's' | 'm' | 'l' | 'xl'
-
 type UserAvatarProps = {
     address: string,
-    size: UserSizes
+    // s - 20px
+    // m - 32px
+    // l - 48px
+    // xl - 72px
+    size: 's' | 'm' | 'l' | 'xl'
 }
 
 const createGradient = (address: string) => {
