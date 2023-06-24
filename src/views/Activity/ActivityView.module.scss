@@ -1,9 +1,13 @@
+//TODO: mobile adaptive
+
 .title {
     text-align: center;
 }
 
 .container {
     max-width: calc(1296px + 30px * 2);
+    display: grid;
+    gap: 64px;
 }
 
 .wrapper {

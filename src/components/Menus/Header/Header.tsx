@@ -15,6 +15,7 @@ import { useOpenedState } from '@/hooks/useOpenedState';
 import { headerLinks } from '../config';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
+import { NotificationsButton } from './NotificationsButton/NotificationsButton';
 
 export function Header() {
     const { isConnected, address } = useAccount();
@@ -49,6 +50,8 @@ export function Header() {
                     </div>
 
                     <div className={styles.stack}>
+                        <NotificationsButton />
+
                         <HeaderWallet
                             address={address}
                             isConnected={isConnected}
@@ -80,6 +83,7 @@ export function Header() {
                 >
                     <MobileSearch />
                 </MobileDrawer>
+
 
                 <MobileDrawer
                     isOpen={mobileMenuState.isOpen}
