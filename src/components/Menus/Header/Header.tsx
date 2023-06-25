@@ -10,6 +10,7 @@ import { MobileSearch } from './Mobile/Search/MobileSearch';
 import { MobileDrawer } from './Mobile/MobileDrawer';
 import { HeaderWallet } from './Wallet/HeaderWallet';
 import { HeaderSearch } from './Search/HeaderSearch';
+import { NotificationsButton } from './NotificationsButton/NotificationsButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { headerLinks } from '../config';
@@ -49,6 +50,8 @@ export function Header() {
                     </div>
 
                     <div className={styles.stack}>
+                        <NotificationsButton className={styles.desktopNotification} />
+
                         <HeaderWallet
                             address={address}
                             isConnected={isConnected}
@@ -62,6 +65,8 @@ export function Header() {
                                 className={styles.mobileButton}
                                 onClick={mobileSearchState.toggle}
                             />
+
+                            <NotificationsButton className={styles.mobileNotification} />
 
                             <MobileButton
                                 active={mobileMenuState.isOpen}
@@ -80,6 +85,7 @@ export function Header() {
                 >
                     <MobileSearch />
                 </MobileDrawer>
+
 
                 <MobileDrawer
                     isOpen={mobileMenuState.isOpen}

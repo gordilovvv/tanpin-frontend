@@ -69,6 +69,12 @@
     }
 }
 
+
+
+.mobileNotification {
+    display: none;
+}
+
 @include max1000 {
     .stack {
         column-gap: 16px;
@@ -82,7 +88,17 @@
     }
 }
 
+
+
 @include max767 {
+    .desktopNotification {
+        display: none;
+    }
+
+    .mobileNotification {
+        display: block;
+    }
+
     .logo {
         svg {
             width: 34px;

@@ -1,19 +1,60 @@
 .wrapper {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
     align-items: center;
-    gap: 8px;
+    justify-content: initial;
+
+    &.xs {
+        gap: 4px;
+    }
+
+    &.s {
+        gap: 8px;
+    }
+
+    &.xl {
+        gap: 24px;
+    }
 }
 
 .text {
     font-weight: 600;
     font-size: 16px;
-    line-height: 150%;
     color: var(--color-typo-base);
+
+    &.xs {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    &.s {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    &.xl {
+        font-size: 30px;
+        line-height: 1.2;
+    }
 }
 
 @include max767 {
+    .wrapper {
+        &.xl {
+            gap: 14px;
+        }
+    }
+    
     .text {
-        font-size: 14px;
+        &.xs, &.s {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        &.xl {
+            font-size: 20px;
+            line-height: 1.4;
+        }
     }
 }

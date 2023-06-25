@@ -5,11 +5,16 @@ import { TransactionsHistory } from './Transactions/TransactionsHistory';
 import { useNFTStore } from '@/states/nft/store';
 import { NFTSaleStatus } from '@/states/types';
 
+import { useActivity } from '@/states/activity/hooks/useActivity';
+
 export const TokenHistory = memo(() => {
     const [tokenID, status] = useNFTStore(state => [
         state.nft!.ID,
         state.nft!.status
     ]);
+
+    const { activity } = useActivity({ userAddress: '3', tokenID: '3', types: [] });
+    console.log(activity);
 
     return (
         <>

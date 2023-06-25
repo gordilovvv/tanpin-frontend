@@ -1,0 +1,19 @@
+//TODO: mobile adaptive
+
+.title {
+    text-align: center;
+}
+
+.container {
+    max-width: calc(1296px + 30px * 2);
+    display: grid;
+    gap: 64px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 272px);
+    grid-template-rows: 1fr;
+    gap: 48px;
+    align-items: start
+}

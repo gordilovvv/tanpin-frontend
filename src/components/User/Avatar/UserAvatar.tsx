@@ -3,7 +3,11 @@ import classNames from 'classnames';
 
 type UserAvatarProps = {
     address: string,
-    size: 's' | 'm' | 'l'
+    // s - 20px
+    // m - 32px
+    // l - 48px
+    // xl - 72px
+    size: 'xs' | 's' | 'm' | 'l' | 'xl'
 }
 
 const createGradient = (address: string) => {
