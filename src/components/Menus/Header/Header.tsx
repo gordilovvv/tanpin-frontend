@@ -10,12 +10,12 @@ import { MobileSearch } from './Mobile/Search/MobileSearch';
 import { MobileDrawer } from './Mobile/MobileDrawer';
 import { HeaderWallet } from './Wallet/HeaderWallet';
 import { HeaderSearch } from './Search/HeaderSearch';
+import { NotificationsButton } from './NotificationsButton/NotificationsButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { headerLinks } from '../config';
 import classNames from 'classnames';
 import styles from './Header.module.scss';
-import { NotificationsButton } from './NotificationsButton/NotificationsButton';
 
 export function Header() {
     const { isConnected, address } = useAccount();
@@ -58,7 +58,6 @@ export function Header() {
                         />
 
                         <div className={styles.mobileStack}>
-
                             <MobileButton
                                 active={mobileSearchState.isOpen}
                                 defaultIcon={<Search />}

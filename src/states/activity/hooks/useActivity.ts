@@ -1,8 +1,7 @@
 import useSWR from 'swr';
 import { ACTIVITY_REFRESH_INTERVAL } from '@/config/constants/nft';
-import { ActivityTransaction } from '@/states/types';
 import { fetchActivity } from '../fetch/fetchActivity';
-import { ActivityFilter } from '../types';
+import { ActivityFilter, ActivityTransaction } from '../types';
 import { ActivityType, useActivityStore } from '../store';
 
 

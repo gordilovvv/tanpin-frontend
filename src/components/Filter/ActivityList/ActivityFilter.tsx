@@ -23,7 +23,6 @@ export function ActivityFilter({ options }: ActivityFilterProps) {
     return (
         <div className={styles.wrapper}>
             <div className={styles.title}>Filters</div>
-            {JSON.stringify(filterActivity)}
 
             <div className={styles.inner}>
                 {options.map((option) => <ActivityFilterOption

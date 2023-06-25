@@ -1,8 +1,8 @@
 import { ActivityCard } from '@/components/Activity';
 import { useActivity } from '@/states/activity/hooks/useActivity';
 import { useActivityStore } from '@/states/activity/store';
-import { TransactionType } from '@/states/types';
 import styles from './ActivityList.module.scss';
+import { ActivityType } from '@/states/activity/types';
 
 type ActivityListProps = {
     filter: string[]
@@ -14,7 +14,7 @@ export function ActivityList({ filter }: ActivityListProps) {
 
     const { isLoading } = useActivity({
         userAddress: '333',
-        types: [TransactionType.BUY, TransactionType.LISTED, TransactionType.MINT, TransactionType.TRANSFER, TransactionType.UNLISTED]
+        types: [ActivityType.BUY, ActivityType.LISTED, ActivityType.MINT, ActivityType.TRANSFER, ActivityType.UNLISTED]
     });
 
 
@@ -32,10 +32,16 @@ export function ActivityList({ filter }: ActivityListProps) {
     }
 
     return (
-        <div>
+        <div
+            style={{
+                display: 'grid',
+                gap: '12px',
+                gridTemplateColumns: '1fr'
+            }}
+        >
             {userActivity.map((activity) => <ActivityCard
                 activity={activity}
-                key={activity.transactionHash}
+                key={activity.id}
             />)}
         </div>
     );

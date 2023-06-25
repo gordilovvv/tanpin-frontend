@@ -18,7 +18,11 @@ export function ActivityView() {
     const filterActivity = useActivityStore(state => state.filterActivity);
     return (
         <PageWrapper>
-            <Container maxWidth={963}>
+            <Container
+                maxWidth={963}
+                className={styles.container}
+                space
+            >
                 <Title className={styles.title}>Notifications</Title>
 
                 <div className={styles.wrapper}>
