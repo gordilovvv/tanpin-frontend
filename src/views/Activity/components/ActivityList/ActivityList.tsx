@@ -5,9 +5,8 @@ import { TransactionType } from '@/states/types';
 import styles from './ActivityList.module.scss';
 
 type ActivityListProps = {
-    filter: { value: string, label: string }[] | []
+    filter: string[]
 }
-
 
 export function ActivityList({ filter }: ActivityListProps) {
 
