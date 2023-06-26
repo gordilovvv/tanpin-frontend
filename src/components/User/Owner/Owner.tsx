@@ -14,7 +14,7 @@ type OwnerProps = {
 
 export function Owner({ address, size, isUser }: OwnerProps) {
     return (
-        <UnstyleLink 
+        <UnstyleLink
             href={getAddressExplorerURL(address)}
             rel='noreferrer noopener'
             target='_blank'
