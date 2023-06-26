@@ -1,9 +1,3 @@
-.properties {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
 .property {
     display: grid;
     grid-template-columns: minmax(0, auto);
@@ -35,10 +29,6 @@
 }
 
 @include max767 {
-    .properties {
-        grid-template-columns: 1fr;
-    }
-
     .property {
         display: none;
 

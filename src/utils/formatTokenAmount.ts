@@ -26,6 +26,14 @@ export function formatTokenAmount(value: string | number) {
     const multipliedBy = tokenValue.isLessThan(ZERO)
         ? NEGATIVE_ONE
         : ONE;
-    
+
     return integer.plus(diff.precision(2, roundDown)).times(multipliedBy).toFixed();
+}
+
+const shortFormatter = Intl.NumberFormat('en', {
+    notation: 'compact'
+});
+
+export function formatTokenAmountShort(value: string | number) {
+    return shortFormatter.format(typeof value === 'string' ? parseFloat(value) : value);
 }

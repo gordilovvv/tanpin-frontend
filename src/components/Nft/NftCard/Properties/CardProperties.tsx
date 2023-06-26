@@ -1,78 +1,51 @@
-import { ReactNode, memo } from 'react';
-import styles from './CardProperties.module.scss';
-import { Auction, NFTSaleStatus } from '@/states/types';
+import { NFTSaleStatus } from '@/states/types';
 import { AuctionTime } from '../AuctionTime/AuctionTime';
+import { Property } from './Property/Property';
+import { PropertiesList } from './List/PropertiesList';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 
-type PropertyProps = {
-    label: string,
-    value: string | ReactNode
-}
-
-const Property = ({ label, value }: PropertyProps) => {
-    return (
-        <div className={styles.property}>
-            <div className={styles.propertyLabel}>
-                {label}
-            </div>
-
-            <div className={styles.propertyValue}>
-                {value}
-            </div>
-        </div>
-    );
-};
-
 type CardPropertiesProps = {
-    price?: {
-        amount: string,
-        currency: string
-    }
-    auction?: Auction
+    type: 'singleNFT' | 'multipleNFT'
+    price?: string
+    currency?: string
+    auctionEndDate?: string
     status: NFTSaleStatus
 }
 
-export const CardProperties = memo(({ price, auction, status }: CardPropertiesProps) => {
-    const renderProperties = () => {
-        if (status === NFTSaleStatus.FIXED_PRICE && price) {
-            return (
-                <>
-                    <Property
-                        label='Price'
-                        value={<>{formatTokenAmount(price.amount)} <span>{price.currency}</span></>}
-                    />
-                </>
-            );
-        }
-
-        if (status === NFTSaleStatus.AUCTION && auction) {
-            return (
-                <>
-                    <Property
-                        label='Highest bid'
-                        value={<>{formatTokenAmount(auction.highestBid.amount)} <span>{auction.highestBid.currency}</span></>}
-                    />
-
-                    <Property
-                        label='Time left'
-                        value={<AuctionTime endDate={auction.endDate} />}
-                    />
-                </>
-            );
-        }
-
+export function CardProperties({ type, price, currency, auctionEndDate, status }: CardPropertiesProps) {
+    if (price && currency && status === NFTSaleStatus.FIXED_PRICE) {
         return (
+            <PropertiesList>
+                <Property
+                    label={type === 'singleNFT' ? 'Price' : 'Price from'}
+                    value={<>{formatTokenAmount(price)} <span>{currency}</span></>}
+                />
+            </PropertiesList>
+        );
+    }
+
+    if (price && currency && auctionEndDate && status === NFTSaleStatus.AUCTION) {
+        return (
+            <PropertiesList>
+                <Property
+                    label='Highest bid'
+                    value={<>{formatTokenAmount(price)} <span>{currency}</span></>}
+                />
+
+                <Property
+                    label='Time left'
+                    value={<AuctionTime endDate={auctionEndDate} />}
+                />
+            </PropertiesList>
+        );
+    }
+
+    return (
+        <PropertiesList>
             <Property
                 label='Price'
                 value='Not for sale'
             />
-        );
-    };
-    return (
-        <div className={styles.properties}>
-            {renderProperties()}
-        </div>
+        </PropertiesList>
     );
-});
-
-CardProperties.displayName = 'CardProperties';
+}

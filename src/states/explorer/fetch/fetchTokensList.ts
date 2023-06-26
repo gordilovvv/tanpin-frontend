@@ -20,7 +20,7 @@ export async function fetchTokensList(params: {
 
         await new Promise<void>(r => setTimeout(r, 300));
 
-        const total = 500;
+        const total = 100;
         const finalTotal = params.offset + params.limit;
         const itemsCount = finalTotal <= total ? params.limit : params.limit - (finalTotal - total);
 
@@ -33,15 +33,53 @@ export async function fetchTokensList(params: {
                 attributes: [],
                 contractAddress: '0x',
                 tokenID: '1',
-                owner: '0x',
-                sale: {
-                    saleID: '1',
-                    price: {
-                        amount: '100',
-                        currency: 'USDT'
-                    }
-                },
-                status: NFTSaleStatus.FIXED_PRICE,
+
+                // owner: '0x',
+                // sale: {
+                //     saleID: '1',
+                //     price: {
+                //         amount: '100',
+                //         currency: 'USDT'
+                //     }
+                // },
+                // // auction: {
+                // //     highestBid: {
+                // //         amount: '100',
+                // //         currency: 'USDT'
+                // //     },
+                // //     endDate: '2023-06-26T03:50:26.615+00:00'
+                // // },
+                // status: NFTSaleStatus.FIXED_PRICE,
+
+                sold: 4,
+                stock: 1200,
+                supply: 100,
+                owners: [{
+                    id: '3',
+                    owner: '0x241124m124m',
+                    value: 4,
+                    sales: [{
+                        saleID: '1',
+                        sold: 0,
+                        stock: 2,
+                        price: {
+                            amount: '100',
+                            currency: 'USDT'
+                        }
+                    }, {
+                        saleID: '2',
+                        sold: 0,
+                        stock: 2,
+                        price: {
+                            amount: '80',
+                            currency: 'USDT'
+                        }
+                    }],
+                    auctions: [],
+                    date: '01-06-2023',
+                    status: NFTSaleStatus.AUCTION
+                }],
+
                 collection: {
                     ID: '1',
                     name: 'GTA Cars',

@@ -1,53 +1,38 @@
-import { memo } from 'react';
 import { Button } from '@/uikit';
+import { useNavigate } from 'react-router-dom';
 import { NFTSaleStatus } from '@/states/types';
 import classNames from 'classnames';
 import styles from './CardButton.module.scss';
 
 type CardButtonProps = {
-    status: NFTSaleStatus
-    className?: string,
-    handleAction: () => void
+    nftID: string
+    gameID: string
+    collectionID: string
+    status: NFTSaleStatus.FIXED_PRICE | NFTSaleStatus.AUCTION
+    className?: string
 }
 
-export const CardButton = memo(({ status, className, handleAction }: CardButtonProps) => {
-    if (status === NFTSaleStatus.AUCTION) {
-        return (
-            <div className={classNames(styles.wrap, className)}>
-                <Button
-                    view='secondary'
-                    onClick={(event: any) => {
-                        event.preventDefault();
-                        event.stopPropagation();
+// TODO: КОГДА ПОЙДЕТ ЛОГИКА ПОКУПКИ ИЛИ СТАВКИ РАЗДЕЛИТЬ НА 2 КОМПОНЕНТА
+export const CardButton = ({ nftID, gameID, collectionID, status, className }: CardButtonProps) => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        // TODO: logic
+        navigate(`/${gameID}/${collectionID}/${nftID}`);
+    };
 
-                        handleAction();
-                    }}
-                >
-                    Bid
-                </Button>
-            </div>
-        );
-    }
+    return (
+        <div className={classNames(styles.wrap, className)}>
+            <Button
+                view='secondary'
+                onClick={(event: any) => {
+                    event.preventDefault();
+                    event.stopPropagation();
 
-    if (status === NFTSaleStatus.FIXED_PRICE) {
-        return (
-            <div className={classNames(styles.wrap, className)}>
-                <Button
-                    view='secondary'
-                    onClick={(event: any) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-
-                        handleAction();
-                    }}
-                >
-                    Bid
-                </Button>
-            </div>
-        );
-    }
-
-    return null;
-});
-
-CardButton.displayName = 'CardButton';
+                    handleClick();
+                }}
+            >
+                {status === NFTSaleStatus.FIXED_PRICE ? 'Purchase' : 'Bid'}
+            </Button>
+        </div>
+    );
+};

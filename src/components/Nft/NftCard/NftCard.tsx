@@ -1,7 +1,9 @@
-import { useCallback } from 'react';
+import { Stock } from '@/uikit';
+import { NftSingle } from './NftSingle';
+import { NftMultiple } from './NftMultiple';
 import { Link, useNavigate } from 'react-router-dom';
-import { CardButton } from './Button/CardButton';
-import { CardProperties } from './Properties/CardProperties';
+import { isSingleNFT } from '@/utils/nft';
+import { formatTokenAmountShort } from '@/utils/formatTokenAmount';
 import { NFT } from '@/states/types';
 import styles from './NftCard.module.scss';
 
@@ -10,10 +12,8 @@ type NftCardProps = {
 }
 
 export function NftCard({ nft }: NftCardProps) {
+    const isSingle = isSingleNFT(nft);
     const navigate = useNavigate();
-    const handleAction = useCallback(() => {
-        // TODO: logic
-    }, [nft.status]);
 
     return (
         <div className={styles.card}>
@@ -27,6 +27,16 @@ export function NftCard({ nft }: NftCardProps) {
                         src={nft.imageURL}
                         alt=''
                     />
+
+                    {!isSingle && <div className={styles.stock}>
+                        <div className={styles.stockIcon}>
+                            <Stock />
+                        </div>
+
+                        <div className={styles.stockCount}>
+                            {formatTokenAmountShort(nft.stock)}
+                        </div>
+                    </div>}
                 </div>
 
                 <div className={styles.content}>
@@ -37,7 +47,7 @@ export function NftCard({ nft }: NftCardProps) {
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                                navigate(`/${parentGame.ID}/${nft.collection.ID}`);
+                                navigate(`/${nft.collection.game.ID}/${nft.collection.ID}`);
                             }}
                         >
                             {nft.collection.name}
@@ -46,17 +56,15 @@ export function NftCard({ nft }: NftCardProps) {
                         <div className={styles.title}>{nft.name}</div>
                     </div>
 
-                    <CardProperties
-                        price={nft.price}
-                        auction={nft.auction}
-                        status={nft.status}
-                    />
-
-                    <CardButton
-                        status={nft.status}
-                        className={styles.action}
-                        handleAction={handleAction}
-                    />
+                    {isSingle
+                        ? <NftSingle
+                            nft={nft}
+                            buttonClass={styles.action}
+                        />
+                        : <NftMultiple
+                            nft={nft}
+                            buttonClass={styles.action}
+                        />}
                 </div>
             </Link>
         </div>
