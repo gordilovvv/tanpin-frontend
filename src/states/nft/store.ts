@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import { NFTInStore } from './types';
-import { Auction, AuctionBet, HistoryTransaction } from '../types';
+import { Auction, AuctionBet } from '../types';
+import { ActivityTransaction } from '../activity/types';
 
 type State = {
     nft: NFTInStore | undefined
     auction: Auction | undefined
-    historyTxs: HistoryTransaction[] | undefined
+    historyTxs: ActivityTransaction[] | undefined
     actionTransaction?: {
         hash: string,
         status: 'PENDING' | 'CONFIRMED' | 'REJECTED' // TODO: transaction error
@@ -17,7 +18,7 @@ type Actions = {
     setNFT: (nft: State['nft']) => void
     setAuction: (auction: State['auction']) => void
     setAuctionBets: (bets: AuctionBet[]) => void
-    setHistoryTxs: (txs: HistoryTransaction[]) => void
+    setHistoryTxs: (txs: ActivityTransaction[]) => void
 }
 
 export const useNFTStore = create<State & Actions>()(
