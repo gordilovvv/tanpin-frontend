@@ -5,7 +5,7 @@ import styles from './ToggleButton.module.scss';
 
 type ToggleButtonProps = {
     active?: boolean,
-    onClick: () => void
+    onClick?: () => void
 }
 
 export const ToggleButton = forwardRef<HTMLButtonElement, PropsWithChildren<ToggleButtonProps>>(
