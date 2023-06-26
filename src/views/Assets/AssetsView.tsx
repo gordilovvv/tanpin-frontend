@@ -1,6 +1,6 @@
 import { Container, PageWrapper } from '@/components/Layout';
 import styles from './AssetsView.module.scss';
-import { UserHead } from './components/UserHead/UserHead';
+import { UserAbout } from './components/UserAbout/UserAbout';
 import { ToggleButton, ToggleGroup } from '@/uikit';
 import { NavLink, Outlet } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ export function AssetsView() {
         <PageWrapper>
             <Container>
                 <div className={styles.header}>
-                    <UserHead
+                    <UserAbout
                         address='0x331F298e2Dfb55777f8692959cE0a5379Fe0C81F'
                         nftCount={3}
                         collectionsCount={2}
