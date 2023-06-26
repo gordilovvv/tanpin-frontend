@@ -1,6 +1,8 @@
 import { Address } from 'viem';
 
-export type NFT = {
+export type NFT = SingleNFT | MultipleNFT;
+
+export type SingleNFT = {
     ID: string
     name: string
     description: string
@@ -11,9 +13,7 @@ export type NFT = {
     imageURL: string
     contractAddress: Address
     tokenID: string
-
-    // Unique Token
-    owner?: Address
+    owner: Address
     sale?: {
         saleID: string
         price: {
@@ -21,15 +21,8 @@ export type NFT = {
             currency: string
         }
     }
-    auctions?: Auction[]
-    status?: NFTSaleStatus
-
-    // ERC1155 Tokens
-    sold?: number
-    stock?: number
-    supply?: number
-    owners?: Owner[]
-
+    auction?: Auction,
+    status: NFTSaleStatus
     collection: {
         ID: string
         name: string
@@ -42,7 +35,34 @@ export type NFT = {
     }
 }
 
-type Owner = {
+export type MultipleNFT = {
+    ID: string
+    name: string
+    description: string
+    attributes: {
+        traitType: string
+        value: string
+    }[]
+    imageURL: string
+    contractAddress: Address
+    tokenID: string
+    sold: number
+    stock: number
+    supply: number
+    owners: NFTOwner[]
+    collection: {
+        ID: string
+        name: string
+        logoURL: string
+        game: {
+            ID: string
+            name: string
+            logoURL: string
+        }
+    }
+}
+
+export type NFTOwner = {
     id: string
     owner: Address
     value: number
@@ -74,6 +94,7 @@ export type NFTAttribute = {
 export type Auction = {
     ID: string
     tokenID: string
+    amount: number
     highestBid: {
         amount: string,
         currency: string
