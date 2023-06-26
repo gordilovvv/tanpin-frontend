@@ -23,7 +23,10 @@ export async function fetchCollection(collectionID: string): Promise<Collection>
                     currency: 'USDT'
                 }
             },
-            attributes: [],
+            attributes: [
+                { traitType: 'Hat', values: ['Red', 'Blue', 'Orange'] },
+                { traitType: 'Jacket', values: ['Small', 'Medium', 'Large'] }
+            ],
             game: {
                 ID: '1',
                 name: 'NFTGTA',

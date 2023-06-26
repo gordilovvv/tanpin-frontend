@@ -1,29 +1,62 @@
-import { Collection } from './collection/types';
+import { Address } from 'viem';
 
 export type NFT = {
     ID: string
     name: string
     description: string
-    attributes: NFTAttribute[]
+    attributes: {
+        traitType: string
+        value: string
+    }[]
     imageURL: string
-    contractAddress: string
+    contractAddress: Address
     tokenID: string
-    owner: string
-    auction?: Auction
-    price?: {
-        amount: string
-        currency: string
-    },
+
+    // Unique Token
+    owner?: Address
+    sale?: {
+        saleID: string
+        price: {
+            amount: string
+            currency: string
+        }
+    }
+    auctions?: Auction[]
+    status?: NFTSaleStatus
+
+    // ERC1155 Tokens
+    sold?: number
+    stock?: number
+    supply?: number
+    owners?: Owner[]
+
     collection: {
         ID: string
         name: string
         logoURL: string
         game: {
-            ID: string,
-            name: string,
+            ID: string
+            name: string
             logoURL: string
         }
     }
+}
+
+type Owner = {
+    id: string
+    owner: Address
+    value: number
+    sales: {
+        saleID: string
+        sold: number
+        stock: number
+        price: {
+            amount: string
+            currency: string
+        }
+    }[]
+    auctions: Auction[]
+    date: string
     status: NFTSaleStatus
 }
 

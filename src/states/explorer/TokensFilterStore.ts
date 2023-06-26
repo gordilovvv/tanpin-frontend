@@ -1,11 +1,16 @@
 import { create } from 'zustand';
 import { NFTAttribute, NFTSaleStatus } from '../types';
 
-export type FilterState = {
-    collectionID: string
+export enum NFTSort {
+    RECENTLY_ADDED = 'RECENTLY_ADDED',
+    HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
+    LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
+}
+
+export type TokensFilterState = {
     search: string
-    sort: `${FilterSorting}`
-    status: `${NFTSaleStatus.AUCTION}` | `${NFTSaleStatus.FIXED_PRICE}`
+    sort: NFTSort
+    status: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE
     minPrice: string
     maxPrice: string
     attributes: {
@@ -15,31 +20,23 @@ export type FilterState = {
 }
 
 type Actions = {
-    setMinPrice: (minPrice: FilterState['minPrice']) => void
-    setMaxPrice: (maxPrice: FilterState['maxPrice']) => void
+    setMinPrice: (minPrice: TokensFilterState['minPrice']) => void
+    setMaxPrice: (maxPrice: TokensFilterState['maxPrice']) => void
     addAttribute: (attribute: NFTAttribute) => void
     removeAttribute: (attribute: NFTAttribute) => void
     clearAttributes: () => void
     clearAllOfTraitType: (traitType: string) => void
-    setSearch: (search: FilterState['search']) => void
-    setSort: (sort: FilterState['sort']) => void
-    setStatus: (status: FilterState['status']) => void
-    setCollectionID: (id: FilterState['collectionID']) => void
-    replaceFilterState: (newState: Partial<FilterState>) => void
+    setSearch: (search: TokensFilterState['search']) => void
+    setSort: (sort: TokensFilterState['sort']) => void
+    setStatus: (status: TokensFilterState['status']) => void
+    replaceFilterState: (newState: Partial<TokensFilterState>) => void
 }
 
-enum FilterSorting {
-    RECENTLY_ADDED = 'RECENTLY_ADDED',
-    HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
-    LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
-}
-
-export const useFilterStore = create<FilterState & Actions>()(
+export const useTokensFilterStore = create<TokensFilterState & Actions>()(
     (set) => ({
-        collectionID: '',
         search: '',
-        sort: 'RECENTLY_ADDED',
-        status: 'FIXED_PRICE',
+        sort: NFTSort.RECENTLY_ADDED,
+        status: NFTSaleStatus.FIXED_PRICE,
         minPrice: '',
         maxPrice: '',
         attributes: [],
@@ -141,9 +138,6 @@ export const useFilterStore = create<FilterState & Actions>()(
         },
         setStatus: (status) => {
             set({ status });
-        },
-        setCollectionID: (collectionID) => {
-            set({ collectionID });
         },
         setSearch: (search) => {
             set({ search });

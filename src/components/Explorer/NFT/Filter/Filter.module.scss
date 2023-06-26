@@ -1,0 +1,51 @@
+.filter {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    border: 1px solid var(--color-stroke);
+    padding: 0 6px;
+    border-radius: 12px;
+
+    &.sticky {
+        position: sticky;
+        top: 104px;
+        max-height: calc(100vh - 116px);
+        margin-top: 8px;
+        margin-right: 32px;
+
+        .content {
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                width: 2px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: var(--color-scrollbar);
+                border-radius: 2px;
+            }
+        }
+    }
+}
+
+.content {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+    padding: 24px 16px;
+}
+
+.inner {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.group {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 8px;
+}

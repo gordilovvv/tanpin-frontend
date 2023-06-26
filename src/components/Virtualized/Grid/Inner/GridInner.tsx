@@ -86,8 +86,8 @@ export function GridInner({
         cellCache.current = cellCacheMemo;
     }, [cellCache, cellCacheMemo]);
 
-    const cellRerender = useCallback(({ key: cellKey, rowIndex, columnIndex, ...props}: GridCellProps) => {
-        const key = `${ cellKey }-${ columnCount }`;
+    const cellRerender = useCallback(({ key: cellKey, rowIndex, columnIndex, ...props }: GridCellProps) => {
+        const key = `${cellKey}-${columnCount}`;
         const index = rowIndex * columnCount + columnIndex;
         const item = items[index];
 

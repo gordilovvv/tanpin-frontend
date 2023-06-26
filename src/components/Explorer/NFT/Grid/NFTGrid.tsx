@@ -1,41 +1,34 @@
 import { memo, useCallback } from 'react';
 import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import { VirtualizedGrid } from '@/components/Virtualized/Grid/VirtualizedGrid';
-import { fetchNFTList } from '@/states/nft/fetch/fetchNFTList';
-import { FilterState } from '@/states/collection/filterStore';
+import { TokensFilterState } from '@/states/explorer/TokensFilterStore';
+import { fetchTokensList } from '@/states/explorer/fetch/fetchTokensList';
 import styles from './NFTGrid.module.scss';
 
 type NFTGridProps = {
-    collectionID?: string,
-    filter: FilterState,
+    collectionID?: string
+    ownerAddress?: string,
+    filter: TokensFilterState
     empty: () => JSX.Element
 }
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
-export const NFTGrid = memo(({ collectionID, filter, empty }: NFTGridProps) => {
-    const fetchList = useCallback(async (offset: number, limit: number) => {
-        return fetchNFTList({
+export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty }: NFTGridProps) => {
+    const fetchList = useCallback(async (startIndex: number, stopIndex: number) => {
+        return fetchTokensList({
             collectionID,
-            limit,
-            offset,
+            ownerAddress,
+            limit: stopIndex - startIndex + 1,
+            offset: startIndex - 1,
             filter
         });
-    }, [collectionID, filter]);
+    }, [collectionID, ownerAddress, filter]);
 
     const renderGridItem = useCallback(({ data, loading }) => {
         if (loading)
             return (<NftCardSkeleton />);
 
-        // TODO: game
-        return (
-            <NftCard
-                nft={data}
-                parentGame={{
-                    ID: '1',
-                    name: 'Game'
-                }}
-            />
-        );
+        return (<NftCard nft={data} />);
     }, []);
 
     return (

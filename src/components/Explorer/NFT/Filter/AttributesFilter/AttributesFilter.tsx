@@ -1,6 +1,7 @@
+import { useCallback } from 'react';
 import { AttributesFilterOption } from './AttributesFilterOption/AttributesFilterOption';
 import { AttributesDisclosure } from '../AttributesDisclosure/AttributesDisclosure';
-import { useFilterStoreActions } from '@/states/collection/hooks/useFilterStoreActions';
+import { useTokensFilterActions } from '@/states/explorer/hooks/useTokensFilterActions';
 import { ActiveAttributesHashMap } from '../types';
 import styles from './AttributesFilter.module.scss';
 
@@ -11,9 +12,9 @@ type AttributesFilterProps = {
 }
 
 export function AttributesFilter({ values = [], traitType, activeAttributes }: AttributesFilterProps) {
-    const { addAttribute, removeAttribute } = useFilterStoreActions();
+    const { addAttribute, removeAttribute } = useTokensFilterActions();
 
-    const handleChange = (isActive: boolean, value: string) => {
+    const handleChange = useCallback((isActive: boolean, value: string) => {
         const attribute = { value, traitType };
 
         if (isActive) {
@@ -21,7 +22,7 @@ export function AttributesFilter({ values = [], traitType, activeAttributes }: A
         } else {
             removeAttribute(attribute);
         }
-    };
+    }, [addAttribute, removeAttribute]);
 
     return (
         <AttributesDisclosure

@@ -1,0 +1,42 @@
+.currency {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.44;
+    color: var(--color-typo-ghost);
+}
+
+.top {
+    display: grid;
+    grid-template-columns: auto 1fr 240px;
+    gap: 16px;
+}
+
+.wrapper {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.main {
+    display: flex;
+    flex-flow: nowrap;
+}
+
+.filterWrap {
+    display: flex;
+    flex-flow: column;
+}
+
+.listWrap {
+    flex-grow: 1;
+}
+
+@include max767 {
+    .wrapper {
+        gap: 24px;
+    }
+
+    .top {
+        grid-template-columns: minmax(0, auto);
+    }
+}

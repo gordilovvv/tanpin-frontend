@@ -6,13 +6,15 @@ import { RerenderCellHandler } from '../types';
 import { useVirtualizedGridState } from '../hooks';
 
 type VirtualizedGridProps<T> = {
-   renderItem: (props: { data: T, loading: boolean, index: number, measure: () => void }) => JSX.Element
-   renderEmpty: () => JSX.Element,
-   loadItems: (offset: number, limit: number) => Promise<any>
-   minimumBatchSize: number
+    renderItem: (props: { data: T, loading: boolean, index: number, measure: () => void }) => JSX.Element
+    renderEmpty: () => JSX.Element,
+    loadItems: (offset: number, limit: number) => Promise<any>
+    minimumBatchSize: number
 }
 
-// TODO: add error state
+// TODO:
+// 1. При первом изменении фильтра не обновляется грид
+// 2. При подгрузке может остаться скелетон
 export function VirtualizedGrid<T>({
     loadItems,
     renderEmpty,
@@ -33,11 +35,11 @@ export function VirtualizedGrid<T>({
                 if (containerWidth > 700) {
                     return Math.ceil(containerWidth / 320);
                 }
-    
+
                 if (containerWidth > 320) {
                     return 2;
                 }
-    
+
                 return 1;
             },
             horizontalGap: 16,
@@ -56,7 +58,7 @@ export function VirtualizedGrid<T>({
             cellCache.current?.clearAll();
             loaderRef.current?.resetLoadMoreRowsCache(true);
         }
-    }, [columnCount]);
+    }, [columnCount, cellCache, loaderRef]);
 
     const rerenderItem: RerenderCellHandler<T> = useCallback(({ item, index, measure }) => {
         const empty = state.items.length === 0;
@@ -68,7 +70,7 @@ export function VirtualizedGrid<T>({
             index,
             measure
         });
-    }, [state.items, state.loading]);
+    }, [state.items, state.loading, renderItem]);
 
     const registerLoaderRef = useCallback((loader: InfiniteLoader) => {
         loaderRef.current = loader;

@@ -7,6 +7,7 @@ type ActivityFilterProps = {
     options: { value: string, label: string }[],
 }
 
+// TODO: ПЕРЕНЕСТИ В ЛОКАЛЬНЫЕ КОМПОНЕНТЫ К ВИДУ
 export function ActivityFilter({ options }: ActivityFilterProps) {
     const selectUserActivityOption = useActivityStore(state => state.selectUserActivityOption);
     const removeUserActivityOption = useActivityStore(state => state.removeUserActivityOption);

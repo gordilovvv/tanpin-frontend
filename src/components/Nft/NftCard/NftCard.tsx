@@ -3,15 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CardButton } from './Button/CardButton';
 import { CardProperties } from './Properties/CardProperties';
 import { NFT } from '@/states/types';
-import { Collection } from '@/states/collection/types';
 import styles from './NftCard.module.scss';
 
 type NftCardProps = {
     nft: NFT
-    parentGame: Collection['game']
 }
 
-export function NftCard({ nft, parentGame }: NftCardProps) {
+export function NftCard({ nft }: NftCardProps) {
     const navigate = useNavigate();
     const handleAction = useCallback(() => {
         // TODO: logic
@@ -20,7 +18,7 @@ export function NftCard({ nft, parentGame }: NftCardProps) {
     return (
         <div className={styles.card}>
             <Link
-                to={`/${parentGame.ID}/${nft.collection.ID}/${nft.ID}`}
+                to={`/${nft.collection.game.ID}/${nft.collection.ID}/${nft.ID}`}
                 className={styles.cardLink}
             >
                 <div className={styles.imageWrap}>

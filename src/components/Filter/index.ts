@@ -1,2 +1,2 @@
-export { Filter } from './Filter';
-export {ActivityFilter} from './ActivityList/ActivityFilter';
+// export { Filter } from './Filter';
+export { ActivityFilter } from './ActivityList/ActivityFilter';

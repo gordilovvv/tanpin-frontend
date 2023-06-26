@@ -1,5 +1,4 @@
-import { Container, PageWrapper } from '@/components/Layout';
-import { Spin } from '@/uikit';
+import { Container, PageLoader, PageWrapper } from '@/components/Layout';
 import { BlockWrap } from './components/BlockWrap/BlockWrap';
 import { TokenAttributes } from './components/Attributes/TokenAttributes';
 import { TokenDetails } from './components/Details/TokenDetails';
@@ -27,11 +26,7 @@ export function SingleNftView() {
     const isMobile = useMediaQuery('(max-width: 1000px)');
 
     if (isLoading || error || !nft) {
-        return (
-            <div className={styles.loading}>
-                <Spin size='m' />
-            </div>
-        );
+        return (<PageLoader />);
     }
 
     // TODO: Error
