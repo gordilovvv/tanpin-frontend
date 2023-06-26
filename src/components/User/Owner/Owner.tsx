@@ -1,5 +1,5 @@
 import { UserAvatar } from '..';
-import { UnstyleLink } from '@/uikit';
+import { Link, UnstyleLink } from '@/uikit';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import styles from './Owner.module.scss';
@@ -9,10 +9,10 @@ type OwnerProps = {
     address: string
     size: 'xs' | 's' | 'xl',
     isUser?: boolean
-    // showLink?: boolean
+    showLink?: boolean
 }
 
-export function Owner({ address, size, isUser }: OwnerProps) {
+export function Owner({ address, size, isUser, showLink }: OwnerProps) {
     return (
         <UnstyleLink
             href={getAddressExplorerURL(address)}
@@ -28,10 +28,11 @@ export function Owner({ address, size, isUser }: OwnerProps) {
                 <span className={styles.text}>
                     {isUser ? 'You' : ellipseAddress(address)}
                 </span>
-            </div>
 
-            {/* TODO: add link */}
-            {/* {showLink && <Link className={styles.icon} />} */}
+                {showLink && <div className={styles.icon}>
+                    <Link className={styles.icon} />
+                </div>}
+            </div>
         </UnstyleLink>
     );
 }

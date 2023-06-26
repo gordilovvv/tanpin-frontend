@@ -13,19 +13,11 @@ type UserAboutProps = {
 export function UserAbout({ address, nftCount, collectionsCount }: UserAboutProps) {
     return (
         <div className={styles.wrap}>
-            <UnstyleLink
-                href={getAddressExplorerURL(address)}
-                rel='noreferrer noopener'
-                target='_blank'
-                className={styles.owner}
-            >
-                <Owner
-                    size='xl'
-                    address={address}
-                />
-
-                <Link className={styles.ownerIcon} />
-            </UnstyleLink>
+            <Owner
+                size='xl'
+                address={address}
+                showLink
+            />
 
             {/* <div className={styles.counts}>
                 <div className={styles.item}>

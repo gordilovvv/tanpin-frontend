@@ -22,18 +22,43 @@
     font-weight: 600;
     font-size: 16px;
     color: var(--color-typo-base);
+}
 
-    &.xs {
+.icon {
+    display: flex;
+    color: var(--color-typo-base-75);
+    transition: color 0.1s linear;
+}
+
+.wrapper {
+    @include hover {
+        .icon {
+            color: var(--color-typo-base);
+        }
+    }
+}
+
+.wrapper.xs {
+    .text {
         font-size: 16px;
         line-height: 1.4;
     }
+}
 
-    &.s {
+.wrapper.s {
+    .text {
         font-size: 16px;
         line-height: 1.5;
     }
+}
 
-    &.xl {
+.wrapper.xl {
+    .icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .text {
         font-size: 30px;
         line-height: 1.2;
     }
@@ -57,6 +82,32 @@
         &.xl {
             font-size: 20px;
             line-height: 1.4;
+        }
+    }
+
+    .wrapper.xs {
+        .text {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    }
+
+    .wrapper.s {
+        .text {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    }
+
+    .wrapper.xl {
+        .text {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
         }
     }
 }
