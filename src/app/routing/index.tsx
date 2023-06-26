@@ -1,5 +1,4 @@
 import { PageLayout } from '@/components/Layout';
-import { CollectionsView } from '@/views/Collections/CollectionsView';
 import { ErrorView } from '@/views/Error';
 import { GamesView } from '@/views/Games/GamesView';
 import { HomeView } from '@/views/Home/HomeView';
@@ -9,6 +8,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import { SingleNftView } from '@/views/Nft/SingleNft/SingleNftView';
 import { NFTView } from '@/views/Nft/NFTView';
 import { ActivityView } from '@/views/Activity/ActivityView';
+import { AssetsView } from '@/views/Assets/AssetsView';
+import { CollectionsView } from '@/views/Assets/Collections/CollectionsView';
+import { OwnedView } from '@/views/Assets/Owned/OwnedView';
+import { SaleView } from '@/views/Assets/Sale/SaleView';
+import { ProtectedRoute } from './ProtectedRoute';
 
 export const router = createBrowserRouter([
     {
@@ -34,6 +38,26 @@ export const router = createBrowserRouter([
             {
                 path: '/activity',
                 element: <ActivityView />,
+            },
+            {
+                element: <ProtectedRoute />,
+                children: [{
+                    element: <AssetsView />,
+                    children: [
+                        {
+                            path: '/assets/collections',
+                            element: <CollectionsView />
+                        },
+                        {
+                            path: '/assets/sale',
+                            element: <SaleView />
+                        },
+                        {
+                            path: '/assets/owned',
+                            element: <OwnedView />
+                        },
+                    ]
+                }],
             },
             {
                 path: '/:gameID',

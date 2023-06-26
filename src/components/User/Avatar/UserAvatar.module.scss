@@ -31,15 +31,27 @@
         height: 20px;
     }
 
+    &.m {
+        width: 32px;
+        height: 32px;
+    }
+
     &.l {
         width: 48px;
         height: 48px;
+    }
+
+    &.xl {
+        width: 72px;
+        height: 72px;
     }
 }
 
 @include max767 {
     .avatar {
-        &.l {
+
+        &.l,
+        &.xl {
             width: 32px;
             height: 32px;
         }

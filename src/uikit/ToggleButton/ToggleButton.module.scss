@@ -8,6 +8,12 @@
     padding: 0 12px;
 }
 
+a.button {
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
 .text {
     position: relative;
     color: var(--color-typo-base);
