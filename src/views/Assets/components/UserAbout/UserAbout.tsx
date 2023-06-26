@@ -1,10 +1,11 @@
 import { Link, UnstyleLink } from '@/uikit';
 import { Owner } from '@/components/User';
+import { Address } from 'viem';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import styles from './UserAbout.module.scss';
 
 type UserAboutProps = {
-    address: string
+    address: Address
     nftCount: number
     collectionsCount: number
 }
@@ -26,7 +27,7 @@ export function UserAbout({ address, nftCount, collectionsCount }: UserAboutProp
                 <Link className={styles.ownerIcon} />
             </UnstyleLink>
 
-            <div className={styles.counts}>
+            {/* <div className={styles.counts}>
                 <div className={styles.item}>
                     <div className={styles.itemLabel}>NFTs</div>
                     <div className={styles.itemValue}>{nftCount}</div>
@@ -36,7 +37,7 @@ export function UserAbout({ address, nftCount, collectionsCount }: UserAboutProp
                     <div className={styles.itemLabel}>Collections</div>
                     <div className={styles.itemValue}>{collectionsCount}</div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -1,31 +1,59 @@
-import { PropsWithChildren, forwardRef } from 'react';
+import { ForwardedRef, PropsWithChildren, forwardRef } from 'react';
+import { LinkProps, NavLink } from 'react-router-dom';
 import { UnstyleButton } from '..';
 import classNames from 'classnames';
 import styles from './ToggleButton.module.scss';
 
-type ToggleButtonProps = {
+type ToggleButtonProps<T extends 'Button' | 'NavLink'> = {
+    as: T,
+    to?: LinkProps['to'],
     active?: boolean,
     onClick?: () => void
 }
 
-export const ToggleButton = forwardRef<HTMLButtonElement, PropsWithChildren<ToggleButtonProps>>(
-    ({ active, onClick, children }, ref) => {
-        return (
-            <UnstyleButton
-                ref={ref}
-                className={classNames(styles.button, {
-                    [styles.active]: active
-                })}
-                onClick={onClick}
-            >
+declare function ToggleButtonFn<Tag extends 'Button' | 'NavLink'>(props: PropsWithChildren<ToggleButtonProps<Tag>>): JSX.Element;
+
+// TODO: ПРОВЕРИТЬ AS
+export const ToggleButton = forwardRef<any, PropsWithChildren<any>>(
+    ({ as: tag, to, active, onClick, children }, ref) => {
+        const renderContent = () => {
+            return (<>
                 <div className={styles.activeDecorator} />
 
                 <div className={styles.text}>
                     {children}
                 </div>
-            </UnstyleButton>
+            </>);
+        };
+
+        if (tag === 'button') {
+            return (
+                <UnstyleButton
+                    ref={ref as ForwardedRef<HTMLButtonElement>}
+                    className={classNames(styles.button, {
+                        [styles.active]: active
+                    })}
+                    onClick={onClick}
+                >
+                    {renderContent()}
+                </UnstyleButton>
+            );
+        }
+
+        return (
+            <NavLink
+                ref={ref as ForwardedRef<HTMLAnchorElement>}
+                to={to}
+                className={({ isActive }) => classNames(styles.button, {
+                    [styles.active]: isActive
+                })}
+                onClick={onClick}
+            >
+                {renderContent()}
+            </NavLink>
         );
     }
-);
+) as typeof ToggleButtonFn;
 
+// @ts-ignore
 ToggleButton.displayName = 'ToggleName';
