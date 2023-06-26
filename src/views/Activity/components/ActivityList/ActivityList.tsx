@@ -1,32 +1,28 @@
-import { ActivityCard } from '@/components/Activity';
+import { ActivityCard, ActivityCardSkeleton } from '@/components/Activity';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { useActivity } from '@/states/activity/hooks/useActivity';
 import { useActivityStore } from '@/states/activity/store';
-import styles from './ActivityList.module.scss';
 import { ActivityType } from '@/states/activity/types';
+import { times } from 'lodash';
+import styles from './ActivityList.module.scss';
 
 type ActivityListProps = {
-    filter: string[]
+    filter: ActivityType[]
 }
 
 export function ActivityList({ filter }: ActivityListProps) {
-
-    //T0D0 добавить сортировку на фронте
-
+    const userActivity = useActivityStore(state => state.userActivity);
+    const { address } = useAccount();
     const { isLoading } = useActivity({
-        userAddress: '333',
-        types: [ActivityType.BUY, ActivityType.LISTED, ActivityType.MINT, ActivityType.TRANSFER, ActivityType.UNLISTED]
+        userAddress: address,
+        types: filter
     });
 
-
-    const userActivity = useActivityStore(state => state.userActivity);
-
+    // TODO: Error
     if (isLoading || !userActivity) {
         return (
             <div className={styles.wrapper}>
-                {/* {times(SKELETONS_COUNT).map(
-                    (idx) => <TransactionRowSkeleton key={idx} />)
-                } */}
-                loading
+                {times(6).map(index => <ActivityCardSkeleton key={index} />)}
             </div>
         );
     }

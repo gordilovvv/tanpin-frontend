@@ -1,24 +1,23 @@
 import { useState } from 'react';
 import { Mark, UnstyleButton } from '@/uikit';
+import { ActivityType } from '@/states/activity/types';
 import classNames from 'classnames';
-import { option } from '../type';
 import styles from './ActivityFilterOption.module.scss';
 
 type ActivityFilterOptionProps = {
-    option: option
-    onChange: (option: option, isActive: boolean) => void,
+    title: string
+    value: ActivityType | ActivityType[]
+    onChange: (value: ActivityType | ActivityType[], isActive: boolean) => void
     initialActive: boolean
 }
 
-export function ActivityFilterOption({ option, onChange, initialActive = false }: ActivityFilterOptionProps) {
+export function ActivityFilterOption({ title, value, onChange, initialActive = false }: ActivityFilterOptionProps) {
     const [isActive, setIsActive] = useState(initialActive);
-    const { label } = option;
 
     const handleClick = () => {
-        onChange(option, !isActive);
+        onChange(value, !isActive);
         setIsActive(prev => !prev);
     };
-
 
     return (
         <UnstyleButton
@@ -32,7 +31,7 @@ export function ActivityFilterOption({ option, onChange, initialActive = false }
             </div>
 
             <div className={styles.title}>
-                {label}
+                {title}
             </div>
         </UnstyleButton>
     );

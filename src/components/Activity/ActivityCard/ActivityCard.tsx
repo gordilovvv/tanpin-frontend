@@ -1,10 +1,11 @@
 import { memo } from 'react';
-import { Link, UnstyleLink } from '@/uikit';
+import { Link, Skeleton, UnstyleLink } from '@/uikit';
 import { ActivityDescription } from './Description/ActivityDescription';
 import { ActivityTransaction } from '@/states/activity/types';
 import { formatDate } from '@/utils/date';
 import { getTransactionExplorerURL } from '@/utils/explorer';
 import styles from './ActivityCard.module.scss';
+import classNames from 'classnames';
 
 // function ArrowIcon(props: SvgProps) {
 //     return (
@@ -53,7 +54,7 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
 
                         <div className={styles.dateWrap}>
                             <UnstyleLink
-                                href={ getTransactionExplorerURL(activity.transactionHash)}
+                                href={getTransactionExplorerURL(activity.transactionHash)}
                                 rel='noreferrer noopener'
                                 target='_blank'
                                 className={styles.date}
@@ -69,5 +70,23 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
     );
 });
 
-
 ActivityCard.displayName = 'ActivityCard';
+
+export function ActivityCardSkeleton() {
+    return (
+        <div className={classNames(styles.card, styles.skeleton)}>
+            <div className={styles.content}>
+                <Skeleton className={styles.imageSkeleton} />
+
+                <div className={styles.info}>
+                    <Skeleton className={styles.titleSkeleton} />
+
+                    <div className={styles.details}>
+                        <Skeleton className={styles.descriptionSkeleton} />
+                        <Skeleton className={styles.dateSkeleton} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

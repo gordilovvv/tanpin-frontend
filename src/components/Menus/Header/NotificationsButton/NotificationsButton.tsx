@@ -4,10 +4,9 @@ import { useActivityStore } from '@/states/activity/store';
 import { HTMLAttributes } from 'react';
 import styles from './NotificationsButton.module.scss';
 
-
 export function NotificationsButton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     const notificationsCount = useActivityStore(state => state.notificationsCount);
-    
+
     return (
         <div
             className={className}

@@ -15,7 +15,8 @@ const options = [
 ];
 
 export function ActivityView() {
-    const filterActivity = useActivityStore(state => state.filterActivity);
+    const filterActivity = useActivityStore(state => state.userActivityFilter);
+
     return (
         <PageWrapper>
             <Container

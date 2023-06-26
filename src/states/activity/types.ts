@@ -27,7 +27,7 @@ export type ActivityTransaction = {
     transactionHash: Hash
 }
 
-export type ActivityFilter =  {
+export type ActivityFilter = {
     userAddress?: Address
     tokenID?: string
     types: ActivityType[]
