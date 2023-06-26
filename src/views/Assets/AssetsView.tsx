@@ -2,9 +2,7 @@ import { Container, PageWrapper } from '@/components/Layout';
 import styles from './AssetsView.module.scss';
 import { UserHead } from './components/UserHead/UserHead';
 import { ToggleButton, ToggleGroup } from '@/uikit';
-import { Outlet } from 'react-router-dom';
-
-
+import { NavLink, Outlet } from 'react-router-dom';
 
 export function AssetsView() {
     return (
@@ -18,13 +16,29 @@ export function AssetsView() {
                     />
 
                     <ToggleGroup>
-                        <ToggleButton
-                            active
-                            onClick={() => null}
-                        >Owned</ToggleButton>
+                        <NavLink to="/assets/owned">
+                            {({ isActive }) =>
+                                <ToggleButton active={isActive}>
+                                    Owned
+                                </ToggleButton>
+                            }
+                        </NavLink>
 
-                        <ToggleButton onClick={() => null}>On sale</ToggleButton>
-                        <ToggleButton onClick={() => null}>Collections</ToggleButton>
+                        <NavLink to="/assets/sale">
+                            {({ isActive }) =>
+                                <ToggleButton active={isActive}>
+                                    On sale
+                                </ToggleButton>
+                            }
+                        </NavLink>
+
+                        <NavLink to="/assets/collections">
+                            {({ isActive }) =>
+                                <ToggleButton active={isActive}>
+                                    Collections
+                                </ToggleButton>
+                            }
+                        </NavLink>
                     </ToggleGroup>
                 </div>
             </Container>
