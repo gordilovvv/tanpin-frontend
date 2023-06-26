@@ -11,6 +11,7 @@ import { AssetsView } from '@/views/Assets/AssetsView';
 import { CollectionsView } from '@/views/Assets/Collections/CollectionsView';
 import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
+import { ProtectedRoute } from '@/components/Layout/ProtectedRoute/ProtectedRoute';
 
 export const router = createBrowserRouter([
     {
@@ -34,21 +35,24 @@ export const router = createBrowserRouter([
                 element: <NFTView />,
             },
             {
-                element: <AssetsView />,
-                children: [
-                    {
-                        path: '/assets/collections',
-                        element: <CollectionsView />
-                    },
-                    {
-                        path: '/assets/sale',
-                        element: <SaleView />
-                    },
-                    {
-                        path: '/assets/owned',
-                        element: <OwnedView />
-                    },
-                ]
+                element: <ProtectedRoute />,
+                children: [{
+                    element: <AssetsView />,
+                    children: [
+                        {
+                            path: '/assets/collections',
+                            element: <CollectionsView />
+                        },
+                        {
+                            path: '/assets/sale',
+                            element: <SaleView />
+                        },
+                        {
+                            path: '/assets/owned',
+                            element: <OwnedView />
+                        },
+                    ]
+                }],
             },
             {
                 path: '/:gameID',
