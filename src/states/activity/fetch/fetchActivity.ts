@@ -65,7 +65,7 @@ export async function fetchActivity({ filter }: { filter: ActivityFilter }): Pro
         ];
     }
 
-    const { data } = await api.post<ActivityTransaction[]>('/activity/', filter);
+    const { data } = await api.post<ActivityTransaction[]>('/activity/', { filter });
 
     return data;
 }

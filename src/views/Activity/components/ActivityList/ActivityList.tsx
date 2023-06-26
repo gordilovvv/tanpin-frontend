@@ -19,7 +19,7 @@ export function ActivityList({ filter }: ActivityListProps) {
     });
 
     // TODO: Error
-    if (isLoading || !userActivity) {
+    if (isLoading || typeof userActivity === 'undefined') {
         return (
             <div className={styles.wrapper}>
                 {times(6).map(index => <ActivityCardSkeleton key={index} />)}
@@ -27,14 +27,13 @@ export function ActivityList({ filter }: ActivityListProps) {
         );
     }
 
+    // TODO: empty
+    if (!userActivity.length) {
+        return (<div>Empty</div>);
+    }
+
     return (
-        <div
-            style={{
-                display: 'grid',
-                gap: '12px',
-                gridTemplateColumns: '1fr'
-            }}
-        >
+        <div className={styles.wrapper}>
             {userActivity.map((activity) => <ActivityCard
                 activity={activity}
                 key={activity.id}
