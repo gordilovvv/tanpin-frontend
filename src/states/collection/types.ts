@@ -42,12 +42,12 @@ export type CollectionQueryBody = {
         sort?: `${CollectionsSort}`
         popular?: boolean
     }
-    pageNum: number
+    offset?: number,
+    limit?: number,
 }
 
 export type CollectionResponse = {
-    page: number
-    pageCount: number
+    counts: number
     collections: Collection[]
 }
 

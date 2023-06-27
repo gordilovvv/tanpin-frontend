@@ -6,10 +6,10 @@ import { PAGE_SIZE } from '@/config/constants';
 export async function collectionFetch(body: CollectionQueryBody): Promise<CollectionResponse> {
     if (MOCK_API_CALLS) {
         await new Promise((res) => setTimeout(res, 300));
+        
 
         return {
-            page: body.pageNum,
-            pageCount: 2,
+            counts: 17,
             collections: [...Array(PAGE_SIZE).keys()].map(id => {
                 return {
                     ID: `${(id + (10 * (body?.pageNum ?? 0)))}`,

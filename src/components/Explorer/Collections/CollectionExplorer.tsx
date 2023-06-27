@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Select, InputSearch } from '@/uikit';
 import { CollectionTable } from '@/components/Collections';
 import { CollectionsSort } from '@/states/collection/types';
@@ -14,6 +14,8 @@ type CollectionExplorerProps = {
 export function CollectionExplorer({ gameID, userAddress }: CollectionExplorerProps) {
     const [search, setSearch] = useState<string>('');
     const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');
+
+    const filter = useMemo(() => ({ search, sort, gameID, userAddress }), [search, sort, gameID, userAddress]);
 
     const options: { value: `${CollectionsSort}`; label: string }[] = [
         { value: 'TRENDING', label: 'Trending' },
@@ -36,7 +38,7 @@ export function CollectionExplorer({ gameID, userAddress }: CollectionExplorerPr
             </div>
 
             <CollectionTable
-                filter={{ search, sort, gameID, userAddress }}
+                filter={filter}
                 hasMoreButton
             />
 

@@ -1,41 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect,  useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { collectionFetch } from '../fetch/fetchCollections';
 import { Collection, CollectionQueryBody } from '../types';
+import { PAGE_SIZE } from '@/config/constants';
 
 export const useCollectionsQuery = (body: CollectionQueryBody) => {
-    const [collections, setCollections] = useState<{ [page: number]: Collection[] }>([]);
+    //rename useCollections
+    const [offset, setOffset] = useState(0);
+    const [collections, setCollections] = useState<Collection[]>([]);
+    const [limit, setLimit] = useState(1);
+
+    useEffect(() => {
+        setOffset(0);
+        setCollections([]);
+    }, [body.filter, body.filter]);
+
     const { data, isLoading } = useSWRImmutable(
-        ['collectionsList', body],
-        () => collectionFetch(body)
+        ['collectionsList', {filter: body.filter,offset}],
+        () => collectionFetch({filter: body.filter, offset, limit: PAGE_SIZE})
     );
-
-    // On filter update - reset collections
-    useEffect(() => {
-        setCollections({});
-    }, [body.filter?.search, body.filter?.sort]);
-
-    // On get new collections contact it with previous
-    useEffect(() => {
-        if (data?.collections && data.page) {
-            setCollections(hashMap => ({
-                ...hashMap,
-                [data.page]: data.collections
-            }));
+   
+    useEffect(()=>{
+        if (data) {
+            const {collections : fetchedCollections, counts} = data;
+            setCollections((prev)=>([...prev,...fetchedCollections]));
+            setLimit(counts);
         }
-    }, [data?.collections, data?.page]);
+    },[data]);
 
-    // Create list
-    const collectionsList: Collection[] = [];
+   
+    const loadMore = useCallback(()=>{
+        setOffset(prev=>prev+PAGE_SIZE);
+    }, []);
 
-    for (const list of Object.values(collections)) {
-        collectionsList.push(...list);
-    }
-
+    const hasLoadMore =  (offset + PAGE_SIZE + 1 ) <= limit;
+    const isFirstLoading = collections.length === 0;
     return {
-        collections: collectionsList,
-        page: data?.page,
-        pageCount: data?.pageCount,
-        isLoading
+        collections,
+        isFirstLoading,
+        isLoading,
+        loadMore,
+        hasLoadMore,
     };
 };
