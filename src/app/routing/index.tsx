@@ -9,7 +9,8 @@ import { SingleNftView } from '@/views/Nft/SingleNft/SingleNftView';
 import { NFTView } from '@/views/Nft/NFTView';
 import { ActivityView } from '@/views/Activity/ActivityView';
 import { AssetsView } from '@/views/Assets/AssetsView';
-import { CollectionsView } from '@/views/Assets/Collections/CollectionsView';
+import { CollectionsView } from '@/views/Collections/CollectionsView';
+import { CollectionsView as CollectionsAssetsView } from '@/views/Assets/Collections/CollectionsView';
 import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
                     children: [
                         {
                             path: '/assets/collections',
-                            element: <CollectionsView />
+                            element: <CollectionsAssetsView />
                         },
                         {
                             path: '/assets/sale',

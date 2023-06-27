@@ -10,7 +10,7 @@ export function AssetsView() {
 
     return (
         <PageWrapper>
-            <Container>
+            <Container space>
                 <div className={styles.header}>
                     <UserAbout
                         address={address!}

@@ -37,6 +37,7 @@ export type Collection = {
 export type CollectionQueryBody = {
     filter?: {
         gameID?: string
+        userAddress?: string
         search?: string
         sort?: `${CollectionsSort}`
         popular?: boolean

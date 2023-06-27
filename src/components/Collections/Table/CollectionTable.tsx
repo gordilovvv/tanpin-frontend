@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Button } from '@/uikit';
-import { CollectionRow } from './Row/CollectionRow';
+import { CollectionRow, CollectionRowSkeleton } from './Row/CollectionRow';
 import { CollectionQueryBody } from '@/states/collection/types';
 import { useCollectionsQuery } from '@/states/collection/hooks/useCollectionsQuery';
 import { PAGE_SIZE } from '@/config/constants';
@@ -23,11 +23,13 @@ const HEADER_ITEMS = [
 ];
 
 export function CollectionTable({ filter, footerButton, hasMoreButton }: CollectionTableProps) {
+    //TODO: limit, offset
     const [pageNum, setPageNum] = useState(1);
     const { collections, page: loadedPage, pageCount, isLoading: isQueryLoading } = useCollectionsQuery({
         pageNum,
         filter,
     });
+
 
     const isLoading = isQueryLoading || !collections.length;
     const isLoadingMore = isQueryLoading && pageNum > 0 && !!collections?.length;
@@ -45,7 +47,8 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
     }, [pageNum, loadedPage, pageCount]);
 
     const hasFooter = footerButton || hasMoreButton || hasMorePages;
-    const collectionsLoaders = isLoading ? [...Array(PAGE_SIZE).keys()] : [];
+    // const collectionsLoaders = isLoading ? [...Array(PAGE_SIZE).keys()] : []; - поменял это на строку ниже 
+    const collectionsLoaders = [...Array(PAGE_SIZE).keys()];
 
     useEffect(() => {
         setPageNum(1);
@@ -73,7 +76,7 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
             {isLoading ? (
                 <div className={styles.body}>
                     {collectionsLoaders.map((index) => (
-                        <CollectionRow
+                        <CollectionRowSkeleton
                             key={index}
                             index={index}
                         />
