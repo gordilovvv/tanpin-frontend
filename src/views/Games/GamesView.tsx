@@ -51,7 +51,7 @@ export function GamesView() {
         }
 
         return <div className={styles.empty}>
-            Collections not found
+            Games not found
         </div>;
     }, [games, isLoading]);
 
