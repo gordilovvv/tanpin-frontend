@@ -11,19 +11,12 @@ type ContainerProps = {
  * @param space Bottom Padding 
  */
 export function Container({ space = false, children, maxWidth = 1630, className, ...props }: ContainerProps & PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
-    const containerPadding = 15;
-    const width = maxWidth + containerPadding * 2;
-
     return (
         <div
             className={classNames(styles.container, className, {
                 [styles.space]: space
             })}
-            style={{
-                ['--page-padding' as string]: `${containerPadding}px`,
-                maxWidth: `${width}px`
-            }}
-
+            style={{ maxWidth: `${maxWidth}px` }}
             {...props}
         >
             {children}

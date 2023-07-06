@@ -1,11 +1,9 @@
-
+import { useCallback, useMemo } from 'react';
 import { useActivityStore } from '@/states/activity/store';
 import { ActivityFilterOption } from './ActivityFilterOption/ActivityFilterOption';
 import { ActivityType } from '@/states/activity/types';
 import styles from './ActivityFilter.module.scss';
-import { useMemo } from 'react';
 
-// TODO: Перенести в локальные компоненты к виду
 export function ActivityFilter() {
     const [selectUserActivityOption, removeUserActivityOption] = useActivityStore(state => [
         state.selectUserActivityOption,
@@ -23,13 +21,14 @@ export function ActivityFilter() {
         ];
     }, []);
 
-    const handleChange = (value: ActivityType | ActivityType[], isActive: boolean) => {
+    const handleChange = useCallback((value: ActivityType | ActivityType[], isActive: boolean) => {
         if (isActive) {
             selectUserActivityOption(value);
         } else {
             removeUserActivityOption(value);
         }
-    };
+    }, [selectUserActivityOption, removeUserActivityOption]);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.title}>Filters</div>

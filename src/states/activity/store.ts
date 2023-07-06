@@ -35,9 +35,10 @@ const allUserActivityFilters = [
 export const useActivityStore = create<State & Actions>()(
     (set, get) => ({
         notificationsCount: 0,
+        tokenActivity: undefined,
+
         userActivity: undefined,
         userActivityFilter: allUserActivityFilters,
-        tokenActivity: undefined,
 
         setActivityList: (type, list) => {
             if (type === ActivitySection.USER) {

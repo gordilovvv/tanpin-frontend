@@ -4,8 +4,8 @@ import { ActivityDescription } from './Description/ActivityDescription';
 import { ActivityTransaction } from '@/states/activity/types';
 import { formatDate } from '@/utils/date';
 import { getTransactionExplorerURL } from '@/utils/explorer';
-import styles from './ActivityCard.module.scss';
 import classNames from 'classnames';
+import styles from './ActivityCard.module.scss';
 
 // function ArrowIcon(props: SvgProps) {
 //     return (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Mark, UnstyleButton } from '@/uikit';
 import { ActivityType } from '@/states/activity/types';
 import classNames from 'classnames';
@@ -8,10 +8,10 @@ type ActivityFilterOptionProps = {
     title: string
     value: ActivityType | ActivityType[]
     onChange: (value: ActivityType | ActivityType[], isActive: boolean) => void
-    initialActive: boolean
+    initialActive?: boolean
 }
 
-export function ActivityFilterOption({ title, value, onChange, initialActive = false }: ActivityFilterOptionProps) {
+export const ActivityFilterOption = memo(({ title, value, onChange, initialActive = false }: ActivityFilterOptionProps) => {
     const [isActive, setIsActive] = useState(initialActive);
 
     const handleClick = () => {
@@ -35,5 +35,6 @@ export function ActivityFilterOption({ title, value, onChange, initialActive = f
             </div>
         </UnstyleButton>
     );
+});
 
-}
+ActivityFilterOption.displayName = 'ActivityFilterOption';

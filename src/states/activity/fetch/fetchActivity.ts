@@ -8,14 +8,14 @@ export async function fetchActivity({ filter }: { filter: ActivityFilter }): Pro
 
         return [
             {
-                id: '1',
+                ID: '1',
                 type: ActivityType.MINT,
                 owner: '0xE45133bD72217782d834C43Eb54adA97dE1B7a93',
                 date: '2023-05-29',
                 transactionHash: '0x3987654321fedcba4',
             },
             {
-                id: '3',
+                ID: '3',
                 type: ActivityType.TRANSFER,
                 owner: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
                 transferedTo: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
@@ -23,7 +23,7 @@ export async function fetchActivity({ filter }: { filter: ActivityFilter }): Pro
                 transactionHash: '0x0587654321fedcba4',
             },
             {
-                id: '2',
+                ID: '2',
                 type: ActivityType.LISTED,
                 owner: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
                 price: {
@@ -34,14 +34,14 @@ export async function fetchActivity({ filter }: { filter: ActivityFilter }): Pro
                 transactionHash: '0x0987654321fedcba4',
             },
             {
-                id: '4',
+                ID: '4',
                 type: ActivityType.UNLISTED,
                 owner: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
                 date: '2023-05-29',
                 transactionHash: '0x0987654321fedcba4',
             },
             {
-                id: '5',
+                ID: '5',
                 type: ActivityType.BUY,
                 price: {
                     amount: '100',
@@ -52,7 +52,7 @@ export async function fetchActivity({ filter }: { filter: ActivityFilter }): Pro
                 transactionHash: '0x0987654321fedcba4',
             },
             {
-                id: '6',
+                ID: '6',
                 type: ActivityType.SALE,
                 price: {
                     amount: '100',
