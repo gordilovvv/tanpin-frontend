@@ -29,6 +29,10 @@
     padding: 0 9px;
 }
 
+.empty {
+    padding: 24px 0;
+}
+
 @include max767 {
     .head {
         display: none;
@@ -36,5 +40,9 @@
 
     .body {
         margin-bottom: 24px;
+    }
+
+    .empty {
+        padding: 0 9px;
     }
 }

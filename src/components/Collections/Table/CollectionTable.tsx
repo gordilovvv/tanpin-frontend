@@ -1,38 +1,72 @@
 import { memo } from 'react';
 import { Button } from '@/uikit';
 import { CollectionRow, CollectionRowSkeleton } from './Row/CollectionRow';
-import { CollectionQueryBody } from '@/states/collection/types';
-import { useCollectionsQuery } from '@/states/collection/hooks/useCollectionsQuery';
-import { PAGE_SIZE } from '@/config/constants';
+import { EmptyResult } from '@/components/Explorer/EmptyResult/EmptyResult';
+import { CollectionsFilter } from '@/states/collection/types';
+import { useCollections } from '@/states/collection/hooks/useCollections';
+import { times } from 'lodash';
 import styles from './CollectionTable.module.scss';
 
-
 type CollectionTableProps = {
-    filter?: CollectionQueryBody['filter']
-    hasMoreButton?: boolean
+    filter: CollectionsFilter
 };
 
-const HEADER_ITEMS = [
-    '#',
-    'Collections',
-    'Floor Price',
-    'Items',
-    'Sales (7D)',
-    'Volume',
-    '1D Change',
-];
+export const CollectionTable = memo(({ filter }: CollectionTableProps) => {
+    const { collections, isLoading, isFinished, loadMore } = useCollections(filter);
 
-export const CollectionTable = memo(({ filter, hasMoreButton }: CollectionTableProps) => {
-    const { collections, isLoading, loadMore, isFirstLoading, hasLoadMore } = useCollectionsQuery({
-        filter,
-    });
+    const isFirstLoading = collections.length === 0 && isLoading;
+    const showMoreButton = !isFinished && !isFirstLoading;
 
-    const collectionsLoaders = [...Array(PAGE_SIZE).keys()];
+    const headColumns = [
+        '#',
+        'Collections',
+        'Floor Price',
+        'Items',
+        'Sales (7D)',
+        'Volume',
+        '1D Change',
+    ];
+
+    const renderBody = () => {
+        if (isFirstLoading) {
+            return (
+                <div className={styles.body}>
+                    {times(12).map((index) => (
+                        <CollectionRowSkeleton
+                            key={index}
+                            index={index}
+                        />
+                    ))}
+                </div>
+            );
+        }
+
+        if (!collections.length) {
+            return (<div className={styles.empty}>
+                <EmptyResult
+                    title='Nothing found'
+                    text="We couldn't find any collections"
+                />
+            </div>);
+        }
+
+        return (
+            <div className={styles.body}>
+                {collections.map((item, index) => (
+                    <CollectionRow
+                        key={item.ID}
+                        index={index}
+                        collection={item}
+                    />
+                ))}
+            </div>
+        );
+    };
 
     return (
         <div className={styles.table}>
             <div className={styles.head}>
-                {HEADER_ITEMS.map((item, idx) => {
+                {headColumns.map((item, idx) => {
                     return (
                         <div
                             className={styles.headItem}
@@ -44,33 +78,12 @@ export const CollectionTable = memo(({ filter, hasMoreButton }: CollectionTableP
                 })}
             </div>
 
-            {isFirstLoading && collections ? (
-                <div className={styles.body}>
-                    {collectionsLoaders.map((index) => (
-                        <CollectionRowSkeleton
-                            key={index}
-                            index={index}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className={styles.body}>
-                    {collections.map((item, index) => (
-                        <CollectionRow
-                            key={item.ID}
-                            index={index}
-                            collection={item}
-                        />
-                    ))}
-                </div>
-            )}
-
+            {renderBody()}
 
             <div className={styles.footer}>
-
-                {hasLoadMore && !isFirstLoading && hasMoreButton && (
+                {showMoreButton && (
                     <Button
-                        view="secondary"
+                        view='secondary'
                         block
                         loading={isLoading}
                         onClick={loadMore}
@@ -79,7 +92,6 @@ export const CollectionTable = memo(({ filter, hasMoreButton }: CollectionTableP
                     </Button>
                 )}
             </div>
-
         </div>
     );
 });

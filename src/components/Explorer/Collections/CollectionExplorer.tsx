@@ -10,16 +10,20 @@ type CollectionExplorerProps = {
     userAddress?: string
 }
 
-
 export function CollectionExplorer({ gameID, userAddress }: CollectionExplorerProps) {
     const [search, setSearch] = useState<string>('');
-    const [sort, setSort] = useState<`${CollectionsSort}`>('TRENDING');
+    const [sort, setSort] = useState<CollectionsSort>(CollectionsSort.TRENDING);
 
-    const filter = useMemo(() => ({ search, sort, gameID, userAddress }), [search, sort, gameID, userAddress]);
+    const filter = useMemo(() => ({
+        search,
+        sort,
+        gameID,
+        userAddress
+    }), [search, sort, gameID, userAddress]);
 
-    const options: { value: `${CollectionsSort}`; label: string }[] = [
-        { value: 'TRENDING', label: 'Trending' },
-        { value: 'RECENTLY_ADDED', label: 'Recently Added' },
+    const options: { value: CollectionsSort; label: string }[] = [
+        { value: CollectionsSort.TRENDING, label: 'Trending' },
+        { value: CollectionsSort.RECENTLY_ADDED, label: 'Recently Added' },
     ];
 
     return (
@@ -37,11 +41,7 @@ export function CollectionExplorer({ gameID, userAddress }: CollectionExplorerPr
                 />
             </div>
 
-            <CollectionTable
-                filter={filter}
-                hasMoreButton
-            />
-
+            <CollectionTable filter={filter} />
         </div>
     );
 }
