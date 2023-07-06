@@ -1,16 +1,12 @@
-import { Link, UnstyleLink } from '@/uikit';
 import { Owner } from '@/components/User';
 import { Address } from 'viem';
-import { getAddressExplorerURL } from '@/utils/explorer';
 import styles from './UserAbout.module.scss';
 
 type UserAboutProps = {
     address: Address
-    nftCount: number
-    collectionsCount: number
 }
 
-export function UserAbout({ address, nftCount, collectionsCount }: UserAboutProps) {
+export function UserAbout({ address }: UserAboutProps) {
     return (
         <div className={styles.wrap}>
             <Owner

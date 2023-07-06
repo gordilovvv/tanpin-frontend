@@ -34,20 +34,11 @@ export type Collection = {
     }
 };
 
-export type CollectionQueryBody = {
-    filter?: {
-        gameID?: string
-        search?: string
-        sort?: `${CollectionsSort}`
-        popular?: boolean
-    }
-    pageNum: number
+export type CollectionsFilter = {
+    gameID?: string,
+    userAddress?: string,
+    search?: string,
+    sort?: CollectionsSort,
+    popular?: boolean
 }
-
-export type CollectionResponse = {
-    page: number
-    pageCount: number
-    collections: Collection[]
-}
-
 

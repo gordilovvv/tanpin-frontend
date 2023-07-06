@@ -1,3 +1,10 @@
+import { NFTExplorer } from '@/components/Explorer';
+import { Container } from '@/components/Layout';
+
 export function SaleView() {
-    return <div>SaleView</div>;
+    return (
+        <Container space>
+            <NFTExplorer />
+        </Container >
+    );
 }

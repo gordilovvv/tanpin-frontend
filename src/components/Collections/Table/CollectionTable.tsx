@@ -1,64 +1,72 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { memo } from 'react';
 import { Button } from '@/uikit';
-import { CollectionRow } from './Row/CollectionRow';
-import { CollectionQueryBody } from '@/states/collection/types';
-import { useCollectionsQuery } from '@/states/collection/hooks/useCollectionsQuery';
-import { PAGE_SIZE } from '@/config/constants';
+import { CollectionRow, CollectionRowSkeleton } from './Row/CollectionRow';
+import { EmptyResult } from '@/components/Explorer/EmptyResult/EmptyResult';
+import { CollectionsFilter } from '@/states/collection/types';
+import { useCollections } from '@/states/collection/hooks/useCollections';
+import { times } from 'lodash';
 import styles from './CollectionTable.module.scss';
 
 type CollectionTableProps = {
-    filter?: CollectionQueryBody['filter']
-    footerButton?: ReactNode
-    hasMoreButton?: boolean
+    filter: CollectionsFilter
 };
 
-const HEADER_ITEMS = [
-    '#',
-    'Collections',
-    'Floor Price',
-    'Items',
-    'Sales (7D)',
-    'Volume',
-    '1D Change',
-];
+export const CollectionTable = memo(({ filter }: CollectionTableProps) => {
+    const { collections, isLoading, isFinished, loadMore } = useCollections(filter);
 
-export function CollectionTable({ filter, footerButton, hasMoreButton }: CollectionTableProps) {
-    const [pageNum, setPageNum] = useState(1);
-    const { collections, page: loadedPage, pageCount, isLoading: isQueryLoading } = useCollectionsQuery({
-        pageNum,
-        filter,
-    });
+    const isFirstLoading = collections.length === 0 && isLoading;
+    const showMoreButton = !isFinished && !isFirstLoading;
 
-    const isLoading = isQueryLoading || !collections.length;
-    const isLoadingMore = isQueryLoading && pageNum > 0 && !!collections?.length;
+    const headColumns = [
+        '#',
+        'Collections',
+        'Floor Price',
+        'Items',
+        'Sales (7D)',
+        'Volume',
+        '1D Change',
+    ];
 
-    const hasMorePages = useMemo(() => {
-        if (pageNum === 1 || !pageCount) {
-            return true;
+    const renderBody = () => {
+        if (isFirstLoading) {
+            return (
+                <div className={styles.body}>
+                    {times(12).map((index) => (
+                        <CollectionRowSkeleton
+                            key={index}
+                            index={index}
+                        />
+                    ))}
+                </div>
+            );
         }
 
-        if (loadedPage && pageCount) {
-            return loadedPage < pageCount;
+        if (!collections.length) {
+            return (<div className={styles.empty}>
+                <EmptyResult
+                    title='Nothing found'
+                    text="We couldn't find any collections"
+                />
+            </div>);
         }
 
-        return pageNum + 1 <= pageCount;
-    }, [pageNum, loadedPage, pageCount]);
-
-    const hasFooter = footerButton || hasMoreButton || hasMorePages;
-    const collectionsLoaders = isLoading ? [...Array(PAGE_SIZE).keys()] : [];
-
-    useEffect(() => {
-        setPageNum(1);
-    }, [filter?.sort, filter?.search]);
-
-    const loadMore = () => {
-        setPageNum((num) => num + 1);
+        return (
+            <div className={styles.body}>
+                {collections.map((item, index) => (
+                    <CollectionRow
+                        key={item.ID}
+                        index={index}
+                        collection={item}
+                    />
+                ))}
+            </div>
+        );
     };
 
     return (
         <div className={styles.table}>
             <div className={styles.head}>
-                {HEADER_ITEMS.map((item, idx) => {
+                {headColumns.map((item, idx) => {
                     return (
                         <div
                             className={styles.headItem}
@@ -70,43 +78,22 @@ export function CollectionTable({ filter, footerButton, hasMoreButton }: Collect
                 })}
             </div>
 
-            {isLoading ? (
-                <div className={styles.body}>
-                    {collectionsLoaders.map((index) => (
-                        <CollectionRow
-                            key={index}
-                            index={index}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className={styles.body}>
-                    {collections.map((item, index) => (
-                        <CollectionRow
-                            key={item.ID}
-                            index={index}
-                            collection={item}
-                        />
-                    ))}
-                </div>
-            )}
+            {renderBody()}
 
-            {hasFooter && (
-                <div className={styles.footer}>
-                    {footerButton}
-
-                    {hasMoreButton && hasMorePages && (
-                        <Button
-                            view="secondary"
-                            block
-                            loading={isLoadingMore}
-                            onClick={loadMore}
-                        >
-                            Load More
-                        </Button>
-                    )}
-                </div>
-            )}
+            <div className={styles.footer}>
+                {showMoreButton && (
+                    <Button
+                        view='secondary'
+                        block
+                        loading={isLoading}
+                        onClick={loadMore}
+                    >
+                        Load More
+                    </Button>
+                )}
+            </div>
         </div>
     );
-}
+});
+
+CollectionTable.displayName = 'CollectionTable';

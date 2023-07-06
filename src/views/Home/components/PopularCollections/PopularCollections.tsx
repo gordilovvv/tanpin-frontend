@@ -9,16 +9,19 @@ export function PopularCollections() {
                 Trending Collections
             </Title>
 
-            <CollectionTable
-                filter={{ popular: true }}
-                footerButton={<Button
+            <div>
+                <CollectionTable
+                    filter={{ popular: true }}
+                />
+
+                <Button
                     to='/collections'
                     view='secondary'
                     block
                 >
                     View collections
-                </Button>}
-            />
+                </Button>
+            </div>
         </div>
     );
 }

@@ -43,7 +43,7 @@ module.exports = {
         'react/no-unescaped-entities': 'off',
         'indent': 'off',
         '@typescript-eslint/indent': ['error', 4],
-        '@typescript-eslint/no-unused-vars': 'error',
+        '@typescript-eslint/no-unused-vars': ['error', { 'destructuredArrayIgnorePattern': '^_' }],
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off'

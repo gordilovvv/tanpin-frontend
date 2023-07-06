@@ -1,3 +1,12 @@
+import { NFTExplorer } from '@/components/Explorer';
+import { Container } from '@/components/Layout';
+import { useAccount } from '@/states/user/hooks/useAccount';
+
 export function OwnedView() {
-    return <div>OwnedView</div>;
+    const { address } = useAccount();
+    return (
+        <Container space>
+            <NFTExplorer ownerAddress={address} />
+        </Container>
+    );
 }
