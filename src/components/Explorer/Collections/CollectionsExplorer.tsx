@@ -1,16 +1,16 @@
 import { useState, useMemo } from 'react';
-import { Select, InputSearch } from '@/uikit';
+import { Select } from '@/uikit';
+import { SearchInput } from '@/components/SearchInput';
 import { CollectionTable } from '@/components/Collections';
 import { CollectionsSort } from '@/states/collection/types';
-import styles from './CollectionExplorer.module.scss';
+import styles from './CollectionsExplorer.module.scss';
 
-// из-за того, что у нас этот компонент эксплорер в дургом месте, у нас стремные импорты из другого модуля (@/components/Collections) я бы поэтому подумал над расположением эксплореров прям там же (@/components/Collections)
-type CollectionExplorerProps = {
+type CollectionsExplorerProps = {
     gameID?: string
     userAddress?: string
 }
 
-export function CollectionExplorer({ gameID, userAddress }: CollectionExplorerProps) {
+export function CollectionsExplorer({ gameID, userAddress }: CollectionsExplorerProps) {
     const [search, setSearch] = useState<string>('');
     const [sort, setSort] = useState<CollectionsSort>(CollectionsSort.TRENDING);
 
@@ -29,7 +29,7 @@ export function CollectionExplorer({ gameID, userAddress }: CollectionExplorerPr
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <InputSearch
+                <SearchInput
                     value={search}
                     onChange={(val) => setSearch(val)}
                 />

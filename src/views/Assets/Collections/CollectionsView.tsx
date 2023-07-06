@@ -1,5 +1,5 @@
 import { Container } from '@/components/Layout';
-import { CollectionExplorer } from '@/components/Explorer';
+import { CollectionsExplorer } from '@/components/Explorer';
 import { useAccount } from '@/states/user/hooks/useAccount';
 
 export function CollectionsView() {
@@ -7,7 +7,7 @@ export function CollectionsView() {
 
     return (
         <Container space>
-            <CollectionExplorer userAddress={address} />
+            <CollectionsExplorer userAddress={address} />
         </Container>
     );
 }
