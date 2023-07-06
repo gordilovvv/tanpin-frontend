@@ -11,14 +11,23 @@ export function useTokensFilterState() {
         state.status
     ]);
 
-    return useMemo(() => {
-        return {
-            minPrice,
-            maxPrice,
-            attributes,
-            search,
-            sort,
-            status
-        };
-    }, [minPrice, maxPrice, attributes, search, sort, status]);
+    // return useMemo(() => {
+    //     return {
+    //         minPrice,
+    //         maxPrice,
+    //         attributes,
+    //         search,
+    //         sort,
+    //         status
+    //     };
+    // }, [minPrice, maxPrice, attributes, search, sort, status]);
+
+    return {
+        minPrice,
+        maxPrice,
+        attributes,
+        search,
+        sort,
+        status
+    };
 }
