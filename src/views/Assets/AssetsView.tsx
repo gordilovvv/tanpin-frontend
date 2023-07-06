@@ -10,13 +10,9 @@ export function AssetsView() {
 
     return (
         <PageWrapper>
-            <Container space>
+            <Container>
                 <div className={styles.header}>
-                    <UserAbout
-                        address={address!}
-                        nftCount={3}
-                        collectionsCount={2}
-                    />
+                    <UserAbout address={address!} />
 
                     <ToggleGroup>
                         <ToggleButton
