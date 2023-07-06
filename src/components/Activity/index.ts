@@ -1,1 +1,1 @@
-export { ActivityCard } from './ActivityCard/ActivityCard';
+export { ActivityCard, ActivityCardSkeleton } from './ActivityCard/ActivityCard';

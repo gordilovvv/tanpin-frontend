@@ -5,6 +5,8 @@ import { AnimatePresence, LazyMotion, domMax, motion } from 'framer-motion';
 import { MEDIA_SIZES } from '@/config/constants';
 import styles from './MobileDrawer.module.scss';
 
+//TODO: Отключить скролл у body при открытии мобильного бургера
+
 const animationHandler = (element: HTMLElement | null) => {
     if (!element) {
         return;

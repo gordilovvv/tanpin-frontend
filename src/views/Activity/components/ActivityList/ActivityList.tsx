@@ -1,45 +1,39 @@
-import { ActivityCard } from '@/components/Activity';
+import { ActivityCard, ActivityCardSkeleton } from '@/components/Activity';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { useActivity } from '@/states/activity/hooks/useActivity';
 import { useActivityStore } from '@/states/activity/store';
-import styles from './ActivityList.module.scss';
 import { ActivityType } from '@/states/activity/types';
+import { times } from 'lodash';
+import styles from './ActivityList.module.scss';
 
 type ActivityListProps = {
-    filter: { value: string, label: string }[] | []
+    filter: ActivityType[]
 }
 
-
 export function ActivityList({ filter }: ActivityListProps) {
-
-    //T0D0 добавить сортировку на фронте
-
+    const userActivity = useActivityStore(state => state.userActivity);
+    const { address } = useAccount();
     const { isLoading } = useActivity({
-        userAddress: '333',
-        types: [ActivityType.BUY, ActivityType.LISTED, ActivityType.MINT, ActivityType.TRANSFER, ActivityType.UNLISTED]
+        userAddress: address,
+        types: filter
     });
 
-
-    const userActivity = useActivityStore(state => state.userActivity);
-
-    if (isLoading || !userActivity) {
+    // TODO: Error
+    if (isLoading || typeof userActivity === 'undefined') {
         return (
             <div className={styles.wrapper}>
-                {/* {times(SKELETONS_COUNT).map(
-                    (idx) => <TransactionRowSkeleton key={idx} />)
-                } */}
-                loading
+                {times(6).map(index => <ActivityCardSkeleton key={index} />)}
             </div>
         );
     }
 
+    // TODO: empty
+    if (!userActivity.length) {
+        return (<div>Empty</div>);
+    }
+
     return (
-        <div
-            style={{
-                display: 'grid',
-                gap: '12px',
-                gridTemplateColumns: '1fr'
-            }}
-        >
+        <div className={styles.wrapper}>
             {userActivity.map((activity) => <ActivityCard
                 activity={activity}
                 key={activity.id}

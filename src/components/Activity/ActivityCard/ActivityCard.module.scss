@@ -30,7 +30,7 @@
 
 .content {
     display: grid;
-    grid-template-columns: 96px 1fr;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: 24px;
 }
@@ -72,7 +72,7 @@
     line-height: 24px;
     letter-spacing: -0.01em;
 
-    & > span {
+    &>span {
         font-weight: 600;
         color: var(--color-typo-base);
     }
@@ -99,5 +99,85 @@
 
     @include hover {
         color: var(--color-typo-base);
+    }
+}
+
+.imageSkeleton {
+    width: 96px;
+    height: 96px;
+}
+
+.titleSkeleton {
+    width: 220px;
+    height: 22px;
+}
+
+.descriptionSkeleton {
+    width: 68px;
+    height: 20px;
+}
+
+.dateSkeleton {
+    width: 120px;
+    height: 18px;
+}
+
+.card.skeleton {
+    .info {
+        gap: 16px;
+    }
+
+    .details {
+        gap: 6px;
+    }
+}
+
+@include max767 {
+    .imageWrap {
+        width: 72px;
+    }
+
+    .info {
+        gap: 4px;
+    }
+
+    .title {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.16px;
+    }
+
+    .details {
+        gap: 2px;
+    }
+
+    .imageSkeleton {
+        width: 72px;
+        height: 72px;
+    }
+
+    .titleSkeleton {
+        width: 190px;
+        height: 20px;
+    }
+
+    .descriptionSkeleton {
+        height: 18px;
+    }
+
+    .dateSkeleton {
+        height: 16px;
+    }
+
+    .card.skeleton {
+        min-height: 87px;
+
+        .info {
+            gap: 12px;
+        }
+
+        .details {
+            gap: 4px;
+        }
     }
 }
