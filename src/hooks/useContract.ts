@@ -4,6 +4,7 @@ import { Abi, Account, Address, CallParameters, Chain, GetContractReturnType, Ge
 import { viemClient } from '@/config/viem';
 import { activeChainId } from '@/config/chain';
 import { marketABI } from '@/config/ABI/market';
+import { erc1155ABI } from '@/config/ABI/erc1155';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { GetWalletClientResult, SendTransactionResult } from 'wagmi/actions';
 
@@ -43,6 +44,10 @@ export function useContract<TAbi extends Abi>(address: Address, abi: TAbi): Cont
 
 export function useERC20(address: Address) {
     return useContract(address, erc20ABI);
+}
+
+export function useERC1155(address: Address) {
+    return useContract(address, erc1155ABI);
 }
 
 export function useMarketContract() {

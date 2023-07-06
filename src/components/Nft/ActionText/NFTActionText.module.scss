@@ -1,0 +1,25 @@
+.text {
+    color: var(--color-typo-base-75);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+
+    a,
+    span {
+        color: var(--color-typo-base);
+        font-weight: 600;
+    }
+
+    a {
+        cursor: pointer;
+        text-decoration: none;
+    }
+}
+
+@include max767 {
+    .text {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/uikit';
 import { TransactionStep } from '../Step/TransactionStep';
 import { LoadingContent } from '../../Loading/LoadingContent';
-import { useContractCall, useMarketContract } from '@/hooks/useContract';
-import { LoadingStatus, useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
-import { Hash } from 'viem';
-import { activeChainId } from '@/config/chain';
-import { CONTRACTS } from '@/config/constants/contracts';
+import { ApproveConfirmState, LoadingStatus } from '@/hooks/useApproveConfirmCallbacks';
 import styles from './ApproveConfirmBody.module.scss';
 
 enum Step {
@@ -15,61 +11,35 @@ enum Step {
 }
 
 type ApproveConfirmBodyProps = {
-    saleID: string
-    tokenPrice: string
-    tokenAmount: number
+    state: ApproveConfirmState,
+    texts: {
+        approve: { title: string, description: string },
+        confirm: { title: string, description: string }
+    },
+    isLoading?: boolean,
+    onApprove: () => Promise<void>,
+    onConfirm: () => Promise<void>,
     onClose?: () => void
-    onSuccess?: (confirmHash: Hash) => void
 }
 
-export function ApproveConfirmBody({ saleID, tokenPrice, tokenAmount, onClose, onSuccess }: ApproveConfirmBodyProps) {
-    const { callContract } = useContractCall();
-    const marketContract = useMarketContract();
-
-    const { state, isPreparing, handleApprove, handleConfirm } = useApproveConfirmCallbacks({
-        spender: CONTRACTS.market[activeChainId],
-        amount: tokenPrice,
-        tokenAddress: CONTRACTS.usdt[activeChainId].address,
-        tokenDecimals: CONTRACTS.usdt[activeChainId].decimals,
-        onConfirm: async () => {
-            if (!marketContract) {
-                throw new Error('Market contract have not loaded!');
-            }
-
-            const sendRes = await callContract({
-                contract: marketContract,
-                method: 'buyDirectSale',
-                args: [
-                    BigInt(saleID),
-                    BigInt(tokenAmount)
-                ]
-            });
-
-            return sendRes;
-        },
-        onConfirmSent: (hash) => {
-            onClose?.();
-            onSuccess?.(hash);
-        }
-    });
-
+export function ApproveConfirmBody({ state, isLoading, texts, onApprove, onConfirm, onClose }: ApproveConfirmBodyProps) {
     const steps = {
-        [Step.APPROVE]: handleApprove,
-        [Step.CONFIRM]: handleConfirm
+        [Step.APPROVE]: onApprove,
+        [Step.CONFIRM]: onConfirm
     };
     const [activeStep, setActiveStep] = useState(Step.APPROVE);
 
     const transactionError = state.approveState.error ?? state.confirmState.error;
     const retryTransaction = state.approveState.error
-        ? handleApprove
-        : handleConfirm;
+        ? onApprove
+        : onConfirm;
 
     // Run active step on open
     useEffect(() => {
-        if (!isPreparing && !transactionError) {
+        if (!isLoading && !transactionError) {
             steps[activeStep]();
         }
-    }, [isPreparing, activeStep]);
+    }, [isLoading, activeStep]);
 
     // After successful approve start confirm
     useEffect(() => {
@@ -78,7 +48,7 @@ export function ApproveConfirmBody({ saleID, tokenPrice, tokenAmount, onClose, o
         }
     }, [state.approveState]);
 
-    if (isPreparing) {
+    if (isLoading) {
         return (<LoadingContent />);
     }
 
@@ -86,14 +56,14 @@ export function ApproveConfirmBody({ saleID, tokenPrice, tokenAmount, onClose, o
         <div className={styles.body}>
             <div className={styles.steps}>
                 <TransactionStep
-                    label='Approve tokens'
-                    description='This transaction is conducted only once per asset type'
+                    label={texts.approve.title}
+                    description={texts.approve.description}
                     state={state.approveState}
                 />
 
                 <TransactionStep
-                    label='Purchase asset'
-                    description='Send transaction to purchase asset'
+                    label={texts.confirm.title}
+                    description={texts.confirm.description}
                     state={state.confirmState}
                 />
             </div>

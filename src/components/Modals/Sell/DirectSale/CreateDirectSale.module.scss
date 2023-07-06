@@ -1,0 +1,11 @@
+.wrap {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.inputs {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+}

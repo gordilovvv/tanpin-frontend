@@ -1,0 +1,26 @@
+.body {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.text {
+    color: var(--color-typo-base-75);
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+
+    span {
+        color: var(--color-typo-base);
+        font-weight: 600;
+    }
+
+    a {
+        font-weight: 600;
+        color: var(--color-typo-base);
+        cursor: pointer;
+        text-decoration: none;
+    }
+}

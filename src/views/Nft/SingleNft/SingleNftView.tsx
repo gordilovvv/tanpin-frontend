@@ -1,38 +1,109 @@
-import { Container, PageLoader, PageWrapper } from '@/components/Layout';
+import { useMemo } from 'react';
+import { Container, PageError, PageLoader, PageWrapper } from '@/components/Layout';
 import { BlockWrap } from './components/BlockWrap/BlockWrap';
 import { TokenAttributes } from './components/Attributes/TokenAttributes';
 import { TokenDetails } from './components/Details/TokenDetails';
 import { TokenImage } from './components/Image/TokenImage';
-import { TokenAction } from './components/Action/TokenAction';
 import { TokenHead } from './components/Head/TokenHead';
-import { TokenShareLinks } from './components/ShareLinks/TokenShareLinks';
-import { TokenHistory } from './components/History/TokenHistory';
+import { TokenTabs } from './components/Tabs/TokenTabs';
+import { OwnerAction } from './components/Action/Owner/OwnerAction';
+import { SaleAction } from './components/Action/SaleAction';
+import { BestOfferAction } from './components/Action/BestOfferAction';
 import { useParams } from 'react-router-dom';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { useNFTStore } from '@/states/nft/store';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { useNFTAndAuctionQuery } from '@/states/nft/hooks/useNFTAndAuctionQuery';
+import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
+import { useTransactionsHistory } from '@/states/nft/hooks/useTransactionsHistory';
+import { isAddressOwner } from '@/utils/addressHelper';
+import { isMultipleNFT, isOwnerOfMultipleNFT, isSingleNFT } from '@/utils/nft';
 import styles from './SingleNftView.module.scss';
 
+// TODO: Доделать кнопку share
 export function SingleNftView() {
+    const { address } = useAccount();
     const { tokenID } = useParams() as {
         gameID: string,
         collectionID: string,
         tokenID: string
     };
 
+    useTransactionsHistory(tokenID);
+
     const nft = useNFTStore(state => state.nft);
-    const { isLoading, error } = useNFTAndAuctionQuery(tokenID);
-
     const isMobile = useMediaQuery('(max-width: 1000px)');
+    const isSingle = nft && isSingleNFT(nft);
+    const isMultiple = nft && isMultipleNFT(nft);
+    const { isLoading, error } = useNFTFetch(tokenID);
 
-    if (isLoading || error || !nft) {
+    const tokenAction = useMemo(() => {
+        if (!nft) {
+            return null;
+        }
+
+        // Unique token
+        if (isSingle) {
+            const isUserOwner = isAddressOwner(address, nft.owner);
+
+            if (isUserOwner) {
+                return (<OwnerAction
+                    nftID={nft.ID}
+                    tokenID={nft.tokenID}
+                    sale={nft.sale}
+                    auction={nft.auction}
+                    status={nft.status}
+                />);
+            } else {
+                return (<SaleAction
+                    nftID={nft.ID}
+                    sale={nft.sale}
+                    auction={nft.auction}
+                    status={nft.status}
+                />)
+            }
+        }
+
+        // Multiple token (Copies)
+        if (isMultiple) {
+            const ownerOfCopy = isOwnerOfMultipleNFT(
+                address,
+                nft.owners
+            );
+
+            if (ownerOfCopy) {
+                let availableEditions = ownerOfCopy.value;
+
+                for (const sale of ownerOfCopy.sales) {
+                    availableEditions -= sale.stock;
+                }
+
+                for (const auction of ownerOfCopy.auctions) {
+                    availableEditions -= auction.amount;
+                }
+
+                return (<OwnerAction
+                    nftID={nft.ID}
+                    tokenID={nft.tokenID}
+                    availableEditions={availableEditions}
+                    sale={ownerOfCopy.sales[0]}
+                    auction={ownerOfCopy.auctions[0]}
+                    status={ownerOfCopy.status}
+                />);
+            } else {
+                return (<BestOfferAction nft={nft} />)
+            }
+        }
+
+        return null;
+    }, [nft, address, isSingle, isMultiple]);
+
+    if (isLoading) {
         return (<PageLoader />);
     }
 
-    // TODO: Error
-    // if (!nft) {
-    //     return ({ error });
-    // }
+    if (error || !nft) {
+        return (<PageError error={error} />);
+    }
 
     return (
         <PageWrapper>
@@ -54,8 +125,8 @@ export function SingleNftView() {
                         />
 
                         {isMobile && <>
-                            <TokenAction nft={nft} />
-                            <TokenShareLinks nft={nft} />
+                            {tokenAction}
+                            {/* <TokenShareLinks nft={nft} /> */}
                         </>}
 
                         <BlockWrap title="Properties">
@@ -72,7 +143,7 @@ export function SingleNftView() {
                             <TokenDetails nft={nft} />
                         </BlockWrap >}
 
-                        <TokenHistory />
+                        <TokenTabs nft={nft} />
                     </div>
 
                     {!isMobile &&
@@ -82,8 +153,8 @@ export function SingleNftView() {
                                 className={styles.head}
                             />
 
-                            <TokenAction nft={nft} />
-                            <TokenShareLinks nft={nft} />
+                            {tokenAction}
+                            {/* <TokenShareLinks nft={nft} /> */}
 
                             <BlockWrap title="Details">
                                 <TokenDetails nft={nft} />

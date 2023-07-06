@@ -3,11 +3,12 @@ import { ellipseAddress } from '@/utils/addressHelper';
 import { Owner } from '@/components/User';
 import { getAddressExplorerURL, getTransactionExplorerURL } from '@/utils/explorer';
 import { DetailRow } from './Row/DetailRow';
-import { useNFTStore } from '@/states/nft/store';
 import { useMemo } from 'react';
 import { activeChain } from '@/config/chain';
 import { NFT } from '@/states/types';
 import { ActivityType } from '@/states/activity/types';
+import { isSingleNFT } from '@/utils/nft';
+import { useActivityStore } from '@/states/activity/store';
 import styles from './TokenDetails.module.scss';
 
 type TokenDetailsProps = {
@@ -15,7 +16,8 @@ type TokenDetailsProps = {
 }
 
 export function TokenDetails({ nft }: TokenDetailsProps) {
-    const historyTransactions = useNFTStore(state => state.historyTxs);
+    const isSingle = isSingleNFT(nft);
+    const historyTransactions = useActivityStore(state => state.tokenActivity);
 
     const mintTransaction = useMemo(() => {
         return historyTransactions?.find(tx => tx.type === ActivityType.MINT);
@@ -23,12 +25,12 @@ export function TokenDetails({ nft }: TokenDetailsProps) {
 
     return (
         <div className={styles.details}>
-            <DetailRow title='Owned by'>
+            {isSingle && <DetailRow title='Owned by'>
                 <Owner
                     address={nft.owner}
                     size='s'
                 />
-            </DetailRow>
+            </DetailRow>}
 
             {mintTransaction && <DetailRow title='Token ID'>
                 <UnstyleLink

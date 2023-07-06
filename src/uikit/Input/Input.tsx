@@ -13,3 +13,20 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
 );
 
 Input.displayName = 'Input';
+
+type InputWithAddon = {
+    addonText: string
+} & InputHTMLAttributes<HTMLInputElement>;
+
+export function InputWithAddon({ addonText, ...props }: InputWithAddon) {
+    return (<div className={styles.wrap}>
+        <Input
+            {...props}
+            className={styles.input}
+        />
+
+        <div className={styles.label}>
+            {addonText}
+        </div>
+    </div>);
+}

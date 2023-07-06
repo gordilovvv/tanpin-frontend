@@ -1,25 +1,15 @@
 
 import { HistoryTransaction, TransactionRowSkeleton } from '@/components/Transaction';
+import { useNFTStore } from '@/states/nft/store';
+import { useActivityStore } from '@/states/activity/store';
 import times from 'lodash/times';
 import styles from './TransactionsHistory.module.scss';
-import { useActivity } from '@/states/activity/hooks/useActivity';
-import { useActivityStore } from '@/states/activity/store';
-import { ActivityType } from '@/states/activity/types';
 
 const SKELETONS_COUNT = 5;
 
-type TransactionsHistoryProps = {
-    tokenID?: string
-
-}
-
-export function TransactionsHistory({ tokenID }: TransactionsHistoryProps) {
-    const { isLoading } = useActivity({
-        tokenID,
-        types: [ActivityType.BUY, ActivityType.LISTED, ActivityType.MINT, ActivityType.TRANSFER, ActivityType.UNLISTED]
-    });
-
+export function TransactionsHistory() {
     const tokenActivity = useActivityStore(state => state.tokenActivity);
+    const isLoading = useNFTStore(state => state.isLoadingActivity);
 
     if (isLoading || !tokenActivity) {
         return (
@@ -34,10 +24,9 @@ export function TransactionsHistory({ tokenID }: TransactionsHistoryProps) {
     return (
         <div className={styles.wrapper}>
             {tokenActivity.map(tx => <HistoryTransaction
-                key={tx.transactionHash}
+                key={tx.ID}
                 transaction={tx}
             />)}
         </div>
     );
-
 }

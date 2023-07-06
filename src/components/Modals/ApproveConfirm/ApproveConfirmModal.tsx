@@ -1,21 +1,19 @@
-import { useCallback } from 'react';
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { ApproveConfirmBody } from './Body/ApproveConfirmBody';
-import { Hash } from 'viem';
+import { ApproveConfirmState } from '@/hooks/useApproveConfirmCallbacks';
 
 type ApproveConfirmModal = {
-    saleID: string
-    tokenPrice: string
-    tokenAmount: number
-    onSuccess?: (hash: Hash) => void
-}
+    state: ApproveConfirmState,
+    texts: {
+        approve: { title: string, description: string },
+        confirm: { title: string, description: string }
+    },
+    isLoading?: boolean,
+    onApprove: () => Promise<void>,
+    onConfirm: () => Promise<void>
+} & ModalProps;
 
-export function ApproveConfirmModal({ isOpen, saleID, tokenPrice, tokenAmount, onSuccess, onClose }: ModalProps & ApproveConfirmModal) {
-    const handleApproveConfirmSuccess = useCallback((hash: Hash) => {
-        onClose?.();
-        onSuccess?.(hash);
-    }, [onSuccess, onClose]);
-
+export function ApproveConfirmModal({ isOpen, state, isLoading, texts, onApprove, onConfirm, onClose }: ApproveConfirmModal) {
     return (
         <Modal
             isOpen={isOpen}
@@ -25,11 +23,12 @@ export function ApproveConfirmModal({ isOpen, saleID, tokenPrice, tokenAmount, o
 
             <ModalBody>
                 <ApproveConfirmBody
-                    saleID={saleID}
-                    tokenPrice={tokenPrice}
-                    tokenAmount={tokenAmount}
+                    state={state}
+                    texts={texts}
+                    isLoading={isLoading}
+                    onApprove={onApprove}
+                    onConfirm={onConfirm}
                     onClose={onClose}
-                    onSuccess={handleApproveConfirmSuccess}
                 />
             </ModalBody>
         </Modal>

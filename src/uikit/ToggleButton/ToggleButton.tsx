@@ -5,8 +5,9 @@ import classNames from 'classnames';
 import styles from './ToggleButton.module.scss';
 
 type ToggleButtonProps<T extends 'Button' | 'NavLink'> = {
-    as: T,
+    as?: T,
     to?: LinkProps['to'],
+    view?: 'filled' | 'outline',
     active?: boolean,
     onClick?: () => void
 }
@@ -15,7 +16,7 @@ declare function ToggleButtonFn<Tag extends 'Button' | 'NavLink'>(props: PropsWi
 
 // TODO: ПРОВЕРИТЬ AS
 export const ToggleButton = forwardRef<any, PropsWithChildren<any>>(
-    ({ as: tag, to, active, onClick, children }, ref) => {
+    ({ as: tag = 'Button', to, view = 'filled', active, onClick, children }, ref) => {
         const renderContent = () => {
             return (<>
                 <div className={styles.activeDecorator} />
@@ -26,11 +27,11 @@ export const ToggleButton = forwardRef<any, PropsWithChildren<any>>(
             </>);
         };
 
-        if (tag === 'button') {
+        if (tag === 'Button') {
             return (
                 <UnstyleButton
                     ref={ref as ForwardedRef<HTMLButtonElement>}
-                    className={classNames(styles.button, {
+                    className={classNames(styles.button, styles[view], {
                         [styles.active]: active
                     })}
                     onClick={onClick}
@@ -44,7 +45,7 @@ export const ToggleButton = forwardRef<any, PropsWithChildren<any>>(
             <NavLink
                 ref={ref as ForwardedRef<HTMLAnchorElement>}
                 to={to}
-                className={({ isActive }) => classNames(styles.button, {
+                className={({ isActive }) => classNames(styles.button, styles[view], {
                     [styles.active]: isActive
                 })}
                 onClick={onClick}

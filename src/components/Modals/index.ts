@@ -3,4 +3,7 @@ export { WelcomeModal } from './Welcome/WelcomeModal';
 export { ErrorMessageModal } from './ErrorMessage/ErrorMessageModal';
 export { WrongNetworkModal } from './WrongNetwork/WrongNetworkModal';
 export { ApproveConfirmModal } from './ApproveConfirm/ApproveConfirmModal';
+export { BuyModal } from './Buy/BuyModal';
+export { SellModal } from './Sell/SellModal';
+export { UpdateSaleModal } from './UpdateSale/UpdateSaleModal';
 export { PendingTransactionModal } from './PendingTransaction/PendingTransactionModal';

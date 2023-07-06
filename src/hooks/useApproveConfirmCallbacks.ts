@@ -1,8 +1,7 @@
 import { useCallback, useReducer } from 'react';
-import { Address, Hash } from 'viem';
+import { Hash } from 'viem';
 import { SendTransactionResult } from 'wagmi/actions';
 import { viemClient } from '@/config/viem';
-import { useTokenApprove } from './useTokenApprove';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
@@ -13,7 +12,7 @@ export enum LoadingStatus {
     FAIL = 'fail'
 }
 
-type State = {
+export type ApproveConfirmState = {
     approveState: {
         error?: string
         status: LoadingStatus
@@ -31,7 +30,7 @@ type Action = {
     errorMessage: string
 }
 
-const initialState: State = {
+const initialState: ApproveConfirmState = {
     approveState: {
         error: undefined,
         status: LoadingStatus.IDLE
@@ -42,7 +41,7 @@ const initialState: State = {
     }
 };
 
-function reducer(state: State, actions: Action): State {
+function reducer(state: ApproveConfirmState, actions: Action): ApproveConfirmState {
     switch (actions.type) {
         case 'approveSending':
             return {
@@ -98,27 +97,19 @@ function reducer(state: State, actions: Action): State {
 }
 
 export function useApproveConfirmCallbacks({
-    tokenAddress,
-    tokenDecimals,
-    spender,
-    amount,
+    isApproved,
+    onCheckApproved,
+    onApprove,
     onConfirm,
-    onConfirmSent,
+    onConfirmSent
 }: {
-    spender?: Address
-    amount: string
-    tokenAddress: Address
-    tokenDecimals: number
+    isApproved?: boolean,
+    onCheckApproved?: () => Promise<boolean>,
+    onApprove: () => Promise<SendTransactionResult>,
     onConfirm: () => Promise<SendTransactionResult>
     onConfirmSent: (hash: Hash) => void
 }) {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const { approve, isPreparing, isApproved } = useTokenApprove(
-        tokenAddress,
-        tokenDecimals,
-        spender,
-        amount
-    );
 
     // Approve transaction
     const handleApprove = useCallback(async () => {
@@ -131,9 +122,17 @@ export function useApproveConfirmCallbacks({
                 return dispatch({ type: 'approveReceipt' });
             }
 
+            if (onCheckApproved) {
+                const isApprovedTokens = await onCheckApproved();
+
+                if (isApprovedTokens) {
+                    return dispatch({ type: 'approveReceipt' });
+                }
+            }
+
             dispatch({ type: 'approveSending' });
 
-            const hash = await approve();
+            const { hash } = await onApprove();
 
             await viemClient.waitForTransactionReceipt({ hash });
 
@@ -145,7 +144,7 @@ export function useApproveConfirmCallbacks({
             });
             logError(error);
         }
-    }, [state.approveState.status, isApproved, dispatch, approve]);
+    }, [state.approveState.status, isApproved, onApprove, dispatch]);
 
     // Confirm transaction
     const handleConfirm = useCallback(async () => {
@@ -171,7 +170,6 @@ export function useApproveConfirmCallbacks({
 
     return {
         state,
-        isPreparing,
         handleApprove,
         handleConfirm
     };

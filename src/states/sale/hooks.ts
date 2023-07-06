@@ -1,0 +1,84 @@
+import { useEffect, useMemo } from 'react';
+import { useSaleStore } from './store';
+import BigNumber from 'bignumber.js';
+
+export function useSaleState() {
+    const [amount, price, currency] = useSaleStore(state => [
+        state.amount,
+        state.price,
+        state.currency
+    ]);
+
+    return {
+        amount,
+        price,
+        currency
+    };
+}
+
+export function useSaleActions() {
+    const [setPrice, setAmount] = useSaleStore(state => [
+        state.setPrice,
+        state.setAmount
+    ]);
+
+    return {
+        onPriceChange: setPrice,
+        onAmountChange: setAmount
+    };
+}
+
+export function useCreateDirectSaleInfo(editionsAvailable?: number) {
+    const { amount, price, currency } = useSaleState();
+    const replaceSaleState = useSaleStore(state => state.replaceSaleState);
+
+    const parsedValues = useMemo(() => {
+        return {
+            amount: amount ? new BigNumber(amount) : undefined,
+            price: price ? new BigNumber(price) : undefined
+        };
+    }, [amount, price]);
+
+    let priceError: string | undefined;
+    let amountError: string | undefined;
+
+    if (editionsAvailable) {
+        if (!parsedValues.amount) {
+            amountError = 'Enter amount';
+        }
+
+        if (parsedValues.amount && parsedValues.amount.isLessThanOrEqualTo(0)) {
+            amountError = 'Enter amount';
+        }
+
+        if (parsedValues.amount && parsedValues.amount.isGreaterThan(editionsAvailable)) {
+            amountError = `Available for sale are ${editionsAvailable} copies`;
+        }
+    }
+
+    if (!parsedValues.price) {
+        priceError = 'Enter price';
+    }
+
+    if (parsedValues.price && parsedValues.price.isLessThan(0.1)) {
+        priceError = 'Price is less than 0.1 USDT';
+    }
+
+    useEffect(() => {
+        return () => {
+            replaceSaleState({
+                amount: '',
+                price: ''
+            });
+        };
+    }, []);
+
+    return {
+        amount,
+        price,
+        currency,
+        priceError,
+        amountError,
+        parsedValues
+    };
+}

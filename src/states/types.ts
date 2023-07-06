@@ -14,14 +14,8 @@ export type SingleNFT = {
     contractAddress: Address
     tokenID: string
     owner: Address
-    sale?: {
-        saleID: string
-        price: {
-            amount: string
-            currency: string
-        }
-    }
-    auction?: Auction,
+    sale?: Sale
+    auction?: Auction
     status: NFTSaleStatus
     collection: {
         ID: string
@@ -66,15 +60,7 @@ export type NFTOwner = {
     id: string
     owner: Address
     value: number
-    sales: {
-        saleID: string
-        sold: number
-        stock: number
-        price: {
-            amount: string
-            currency: string
-        }
-    }[]
+    sales: Sale[]
     auctions: Auction[]
     date: string
     status: NFTSaleStatus
@@ -89,6 +75,16 @@ export enum NFTSaleStatus {
 export type NFTAttribute = {
     traitType: string
     value: string
+}
+
+export type Sale = {
+    saleID: string
+    sold: number
+    stock: number
+    price: {
+        amount: string
+        currency: string
+    }
 }
 
 export type Auction = {

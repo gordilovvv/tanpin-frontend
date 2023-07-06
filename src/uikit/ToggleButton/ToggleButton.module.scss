@@ -34,17 +34,35 @@ a.button {
     bottom: -1px;
     background-color: transparent;
     border-radius: 12px;
-    transform: scale(0.96);
-    transition: transform 0.15s ease-in-out, background-color 0.12s linear;
 }
 
-.button.active {
-    .text {
-        color: var(--color-typo-inverse);
+.button.filled {
+    .activeDecorator {
+        transform: scale(0.96);
+        transition: transform 0.15s ease-in-out, background-color 0.12s linear;
     }
 
+    &.active {
+        .text {
+            color: var(--color-typo-inverse);
+        }
+
+        .activeDecorator {
+            background-color: var(--color-base);
+            transform: scale(1);
+        }
+    }
+}
+
+.button.outline {
     .activeDecorator {
-        background-color: var(--color-base);
-        transform: scale(1);
+        border: 2px solid transparent;
+        transition: border-color 0.12s linear;
+    }
+
+    &.active {
+        .activeDecorator {
+            border-color: var(--color-base);
+        }
     }
 }

@@ -7,12 +7,12 @@ import { useContractCall, useERC20 } from './useContract';
 import { useTokenAllowance } from './useTokenAllowance';
 import { formatValueToRaw } from '@/utils/formatRawAmount';
 
-export function useTokenApprove(
+export function useTokenApprove({ tokenAddress, tokenDecimals, spender, amountToApprove }: {
     tokenAddress: Address,
     tokenDecimals: number,
     spender?: Address,
     amountToApprove?: string
-) {
+}) {
     const { address } = useAccount();
     const { callContract } = useContractCall();
     const { data: walletClient } = useWalletClient();
@@ -56,22 +56,28 @@ export function useTokenApprove(
             args: [spender, BigInt(rawAmountToApprove)]
         });
 
-        return hash;
+        return { hash };
     }, [amountToApprove, tokenAllowance, spender, tokenDecimals, walletClient, tokenContract, isApproved, isPreparing, callContract]);
 
-    // const requiresToApprove = async () => {
+    // const isTokensApproved = async () => {
     //     try {
     //         if (!address || !spender || !tokenContract || !amountToApprove) {
     //             throw new Error('Allowance call failed!');
     //         }
 
-    //         const rawAllowance = await tokenContract.read.allowance([address, spender]);
-    //         const allowance = formatValueFromRaw(rawAllowance, tokenDecimals);
+    //         const allowance = await tokenContract.read.allowance([
+    //             address,
+    //             spender
+    //         ]);
 
-    //         const shouldApproveAmount = new BigNumber(amountToApprove).minus(allowance);
-    //         const isApproved = shouldApproveAmount.isLessThanOrEqualTo(0);
+    //         const amountToApproveRaw = formatValueToRaw(
+    //             amountToApprove,
+    //             tokenDecimals
+    //         );
 
-    //         return isApproved ? 0 : shouldApproveAmount.toString();
+    //         const amountForApprove = amountToApproveRaw - allowance;
+
+    //         return amountForApprove;
     //     } catch (error) {
     //         return amountToApprove;
     //     }
@@ -83,3 +89,66 @@ export function useTokenApprove(
         isPreparing
     };
 }
+
+// export function useTokenApprove({ tokenAddress, tokenDecimals, spender }: {
+//     tokenAddress: Address,
+//     tokenDecimals: number,
+//     spender?: Address
+// }) {
+//     const { address } = useAccount();
+//     const { callContract } = useContractCall();
+//     const tokenContract = useERC20(tokenAddress);
+
+//     /**
+//      * Approve ERC20 Tokens
+//      */
+//     const approve = useCallback(async (amount: string) => {
+//         if (!tokenContract || !spender) {
+//             throw new Error('Approving is not ready!');
+//         }
+
+//         const rawAmount = formatValueToRaw(amount, tokenDecimals);
+
+//         const { hash } = await callContract({
+//             contract: tokenContract,
+//             method: 'approve',
+//             args: [spender, BigInt(rawAmount)]
+//         });
+
+//         return { hash };
+//     }, [spender, tokenDecimals, tokenContract, callContract]);
+
+//     /**
+//      * Returns amount required for approval. 
+//      *  `If you need 40 approved tokens and you already have approved 10 tokens,
+//      * the function will return 30 tokens.`
+//      */
+//     const requiredApproveAmount = useCallback(async (amountToApprove: string) => {
+//         try {
+//             if (!address || !spender || !tokenContract) {
+//                 throw new Error('Allowance call failed!');
+//             }
+
+//             const allowance = await tokenContract.read.allowance([
+//                 address,
+//                 spender
+//             ]);
+
+//             const amountToApproveRaw = formatValueToRaw(amountToApprove, tokenDecimals);
+//             const requiredAmount = amountToApproveRaw - allowance;
+
+//             if (requiredAmount <= 0) {
+//                 return '0';
+//             }
+
+//             return formatValueFromRaw(requiredAmount, tokenDecimals);
+//         } catch (error) {
+//             return amountToApprove;
+//         }
+//     }, [address, spender, tokenContract, tokenDecimals]);
+
+//     return {
+//         approve,
+//         requiredApproveAmount
+//     };
+// }

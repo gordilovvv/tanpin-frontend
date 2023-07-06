@@ -24,10 +24,33 @@
     }
 }
 
+.wrap {
+    position: relative;
+    display: grid;
+    gap: 0px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.label {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translate(0, -50%);
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.16px;
+}
+
 @include max767 {
     .input {
         font-size: 14px;
         line-height: 1.4;
         line-height: 16px;
+    }
+
+    .label {
+        font-size: 14px;
     }
 }

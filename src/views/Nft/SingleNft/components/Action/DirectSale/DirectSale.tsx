@@ -1,63 +1,55 @@
-import { useCallback } from 'react';
 import { Cart } from '@/uikit';
-import { ApproveConfirmModal } from '@/components/Modals';
 import { ActionBox } from '../Box/ActionBox';
 import { ActionTitle } from '../Title/ActionTitle';
-import { ActionButton } from '../Button/ActionButton';
 import { USDPrice } from '../USDPrice/USDPrice';
+import { BuyButton } from '../Buttons/BuyButton';
+import { DelistButton } from '../Buttons/DelistButton';
+import { UpdateSaleButton } from '../Buttons/UpdateSaleButton';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
-import { useOpenedState } from '@/hooks/useOpenedState';
-import { usePendingTransactionModal } from '@/states/global/hooks';
-import { Hash } from 'viem';
-import { NFTInStore } from '@/states/nft/types';
+import { Sale } from '@/states/types';
 import styles from './DirectSale.module.scss';
 
 type DirectSaleProps = {
-    nft: NFTInStore
+    nftID: string,
+    sale: Sale,
+    isOwner?: boolean
 }
 
-export function DirectSale({ nft }: DirectSaleProps) {
-    const approveConfirmModal = useOpenedState();
-    const pendingTransactionModal = usePendingTransactionModal();
-
-    const handlePurchase = () => {
-        approveConfirmModal.open();
-    };
-
-    const handleSuccess = useCallback((hash: Hash) => {
-        pendingTransactionModal.open(hash, 'Purchase is successfully initiated. Updates will appear as soon as the transaction is confirmed.');
-    }, [pendingTransactionModal.open]);
-
+export function DirectSale({ nftID, sale, isOwner }: DirectSaleProps) {
     return (
         <>
             <ActionBox>
                 <div className={styles.top}>
                     <ActionTitle>
-                        {formatTokenAmount(nft.price!.amount)} {nft.price!.currency}
+                        {formatTokenAmount(sale.price.amount)} {sale.price.currency}
                     </ActionTitle>
 
                     <USDPrice
-                        tokenAmount={nft.price!.amount}
-                        tokenSymbol={nft.price!.currency}
+                        tokenAmount={sale.price.amount}
+                        tokenSymbol={sale.price.currency}
                     />
                 </div>
 
-                <ActionButton
-                    iconSlot={<Cart />}
-                    onClick={handlePurchase}
-                >
-                    Buy now
-                </ActionButton>
+                {isOwner
+                    ? <UpdateSaleButton
+                        nftID={nftID}
+                        saleID={sale.saleID}
+                    />
+                    : <BuyButton
+                        nftID={nftID}
+                        saleID={sale.saleID}
+                        price={sale.price.amount}
+                        stock={sale.stock}
+                        buttonIcon={<Cart />}
+                        buttonView='primary'
+                    />}
             </ActionBox>
 
-            <ApproveConfirmModal
-                isOpen={approveConfirmModal.isOpen}
-                tokenID={nft.tokenID}
-                tokenPrice={nft.price!.amount}
-                tokenAmount={1} // TODO: модалка ввода количества ERC-1155
-                onSuccess={handleSuccess}
-                onClose={approveConfirmModal.close}
-            />
+            {isOwner && <DelistButton
+                nftID={nftID}
+                saleID={sale.saleID}
+                text='Delist from Sale'
+            />}
         </>
     );
 }

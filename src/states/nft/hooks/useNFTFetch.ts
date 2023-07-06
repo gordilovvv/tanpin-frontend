@@ -1,29 +1,31 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useToast } from '@/uikit';
 import { useNFTStore } from '../store';
 import { fetchNFT as fetchNFTRequest } from '../fetch/fetchNFT';
+import { logError } from '@/utils/sentry';
 
+// TODO: ДОБАВИТЬ АУКЦИОН
 /**
  * Hook for NFT Fetch and Refetch.
  * You can refetch nft after Auction End for example.
  */
-export function useNFTAndAuctionQuery(tokenID: string) {
+export function useNFTFetch(nftID: string) {
+    const { toastDanger } = useToast();
     const [error, setError] = useState<string | undefined>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const [
-        setNFT,
-        setAuction,
-    ] = useNFTStore(state => [state.setNFT, state.setAuction]);
+    const setNFT = useNFTStore(state => state.setNFT);
 
     const fetchNFT = async () => {
         try {
             setIsLoading(true);
 
-            const { nft, auction } = await fetchNFTRequest(tokenID);
+            const nft = await fetchNFTRequest(nftID);
 
             setNFT(nft);
-            setAuction(auction);
             setIsLoading(false);
+
+            // setAuction(auction);
         } catch (error) {
             setError((error as Error).message);
         }
@@ -35,15 +37,15 @@ export function useNFTAndAuctionQuery(tokenID: string) {
                 return;
             }
 
-            const { nft, auction } = await fetchNFTRequest(tokenID);
+            const nft = await fetchNFTRequest(nftID);
 
             setNFT(nft);
-            setAuction(auction);
+            // setAuction(auction);
         } catch (error) {
-            // TODO: error toast
-            console.error(error);
+            logError(error);
+            toastDanger('NFT update was failed!');
         }
-    }, [isLoading, setNFT, setAuction]);
+    }, [isLoading, setNFT, toastDanger]);
 
     useEffect(() => {
         fetchNFT();

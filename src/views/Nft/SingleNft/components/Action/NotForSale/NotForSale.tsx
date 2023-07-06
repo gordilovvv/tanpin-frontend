@@ -7,7 +7,7 @@ export function NotForSale() {
         <ActionBox>
             <div className={styles.top}>
                 <div className={styles.label}>
-                    Price:
+                    Price
                 </div>
 
                 <ActionTitle>

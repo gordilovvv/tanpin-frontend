@@ -1,0 +1,64 @@
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 12px;
+    align-items: center;
+    justify-content: initial;
+}
+
+.info {
+    display: grid;
+    gap: 2px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.title {
+    color: var(--color-typo-base);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+.description {
+    color: var(--color-typo-ghost);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    span {
+        color: var(--color-typo-base);
+    }
+}
+
+.action {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 12px;
+    align-items: center;
+    justify-content: initial;
+}
+
+@include max767 {
+    .title {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .description {
+        font-size: 12px;
+        line-height: 16px;
+    }
+}

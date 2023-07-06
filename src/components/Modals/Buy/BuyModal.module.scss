@@ -1,0 +1,5 @@
+.body {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
