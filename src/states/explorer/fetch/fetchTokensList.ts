@@ -12,11 +12,11 @@ export async function fetchTokensList(params: {
     filter?: TokensFilterState
 }): Promise<{ items: NFT[], total: number }> {
     if (MOCK_API_CALLS) {
-        console.log({
-            price: [params.filter?.minPrice, params.filter?.maxPrice],
-            sort: params.filter?.sort,
-            status: params.filter?.status
-        }, params.offset, params.limit);
+        // console.log({
+        //     price: [params.filter?.minPrice, params.filter?.maxPrice],
+        //     sort: params.filter?.sort,
+        //     status: params.filter?.status
+        // }, params.offset, params.limit);
 
         await new Promise<void>(r => setTimeout(r, 300));
 
@@ -97,11 +97,11 @@ export async function fetchTokensList(params: {
 
     const { data } = await api.post<{
         counts: number
-        items: NFT[]
+        tokens: NFT[]
     }>('/token/get.list', params);
 
     return {
-        items: data.items,
+        items: data.tokens,
         total: data.counts
     };
 }
