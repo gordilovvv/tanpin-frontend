@@ -14,12 +14,12 @@ type NFTGridProps = {
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
 export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty }: NFTGridProps) => {
-    const fetchList = useCallback(async (startIndex: number, stopIndex: number) => {
+    const fetchList = useCallback(async (offset: number, limit: number) => {
         return fetchTokensList({
             collectionID,
             ownerAddress,
-            limit: stopIndex - startIndex + 1,
-            offset: startIndex - 1,
+            limit,
+            offset,
             filter
         });
     }, [collectionID, ownerAddress, filter]);

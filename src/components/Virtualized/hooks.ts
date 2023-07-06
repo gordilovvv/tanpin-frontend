@@ -74,11 +74,11 @@ function createNonce() {
 //     };
 // }
 
-enum GridEvent {
-    IDLE = 'idle',
-    START_LOAD = 'startLoad',
-    LOADED = 'loaded'
-}
+// enum GridEvent {
+//     IDLE = 'idle',
+//     START_LOAD = 'startLoad',
+//     LOADED = 'loaded'
+// }
 
 type State = {
     items: any[],
@@ -115,15 +115,26 @@ export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit:
 
     const handleResponse = (requestNonce: string, resItems: T[], total: number) => {
         if (requestNonce === nonce.current) {
-            setState(state => ({
-                items: [
-                    ...state.items,
-                    ...resItems
-                ],
-                index: state.index - (state.loading - resItems.length),
-                loading: 0,
-                finished: state.index - (state.loading - resItems.length) >= total
-            }));
+            setState(state => {
+                console.log({
+                    items: [
+                        ...state.items,
+                        ...resItems
+                    ],
+                    index: state.index - (state.loading - resItems.length),
+                    loading: 0,
+                    finished: state.index - (state.loading - resItems.length) >= total
+                });
+                return {
+                    items: [
+                        ...state.items,
+                        ...resItems
+                    ],
+                    index: state.index - (state.loading - resItems.length),
+                    loading: 0,
+                    finished: state.index - (state.loading - resItems.length) >= total
+                };
+            });
         } else {
             setState(state => ({
                 index: state.index - state.loading,
@@ -142,7 +153,7 @@ export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit:
     const loadItems = useCallback(async (params: { startIndex: number, stopIndex: number }) => {
         queue.add(async () => {
             try {
-                console.log(params);
+                // console.log(params);
                 if (finished || params.startIndex < useStore.getState().index) {
                     return;
                 }
@@ -195,11 +206,37 @@ export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit:
     };
 }
 
+// type State = {
+//     items: any[],
+//     index: number,
+//     loading: number,
+//     finished: boolean
+// }
+
+// type Actions = {
+//     setState: (state: Partial<State>) => void
+// }
+
+// const useStore = create<State & Actions>(
+//     set => ({
+//         items: [],
+//         index: 0,
+//         loading: 0,
+//         finished: false,
+//         setState: (state) => {
+//             set(prevState => ({
+//                 ...prevState,
+//                 state
+//             }));
+//         }
+//     })
+// );
+
 // export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit: number) => Promise<{ items: T[], total: number }>) {
 //     const nonce = useRef<string | null>(null);
 //     const { items, finished, index, loading, setState } = useStore(state => state);
 
-//     console.log(useStore.getState())
+//     // console.log(useStore.getState());
 
 //     const handleStart = (params: { startIndex: number, stopIndex: number }) => {
 //         const newLoading = params.stopIndex - params.startIndex + 1;
@@ -211,8 +248,16 @@ export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit:
 //     };
 
 //     const handleResponse = (requestNonce: string, resItems: T[], total: number) => {
+//         console.log({
+//             requestNonce,
+//             currentNonce: nonce.current,
+//             condition: requestNonce === nonce.current
+//         });
+
 //         if (requestNonce === nonce.current) {
 //             const finalIndex = index - (loading - resItems.length);
+
+//             console.log(finalIndex, total, finalIndex >= total);
 
 //             setState({
 //                 items: [
@@ -257,8 +302,8 @@ export function useVirtualizedGridState<T>(itemsFetcher: (offset: number, limit:
 //             handleStart(params);
 
 //             const { items, total } = await itemsFetcher(
-//                 params.startIndex,
-//                 params.stopIndex - params.startIndex
+//                 params.startIndex - 1,
+//                 params.stopIndex - params.startIndex + 1
 //             );
 
 //             handleResponse(
