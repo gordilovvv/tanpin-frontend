@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Select, InputSearch } from '@/uikit';
+import { Select } from '@/uikit';
 import { Container, PageWrapper } from '@/components/Layout';
 import { CollectionTable } from '@/components/Collections';
 import { GameHead } from './components/Head/GameHead';
+import { SearchInput } from '@/components/SearchInput';
 import { CollectionsSort } from '@/states/collection/types';
 import { useParams } from 'react-router-dom';
 import { useGameQuery } from '@/states/game/hooks/useGameQuery';
@@ -29,7 +30,7 @@ export function SingleGameView() {
 
                 <Container>
                     <div className={styles.header}>
-                        <InputSearch
+                        <SearchInput
                             value={search}
                             onChange={(val) => setSearch(val)}
                         />

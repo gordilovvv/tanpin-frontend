@@ -1,4 +1,4 @@
-import { Button, InputWithAddon, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
+import { Button, Input, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
 import { NFTActionText } from '@/components/Nft';
 import { useMemo } from 'react';
@@ -53,13 +53,13 @@ export function BuyModal({ isOpen, amount, availableAmount, onAmountChange, onPu
                         gameID={metadata.collection.game.ID}
                     />}
 
-                    {canInputAmount && <InputWithAddon
+                    {canInputAmount && <Input
                         numerical
                         value={amount}
                         onInput={onAmountChange}
                         style={{ paddingRight: '120px' }}
-                        error={parsedAmount && !!amountError}
-                        addonText={`/ ${availableAmount}`}
+                        danger={parsedAmount && !!amountError}
+                        rightAddon={`/ ${availableAmount}`}
                     />}
 
                     <Button

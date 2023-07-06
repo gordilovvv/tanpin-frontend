@@ -1,17 +1,16 @@
 import { useState, useEffect, HTMLAttributes, forwardRef } from 'react';
-import { Input } from '../Input/Input';
-import { Search } from '..';
+import { Input, Search } from '@/uikit';
 import { useDebounce } from '@/hooks/useDebounce';
 import classNames from 'classnames';
-import styles from './InputSearch.module.scss';
+import styles from './SearchInput.module.scss';
 
-type InputProps = {
+type SearchInputProps = {
     value?: string
     placeholder?: string
     onChange: (value: string) => void
-}
+} & Omit<HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
-export const InputSearch = forwardRef<HTMLInputElement, InputProps & Omit<HTMLAttributes<HTMLInputElement>, 'onChange'>>(
+export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     ({ value = '', onChange, placeholder, className, ...props }, ref) => {
         const [inputValue, setInputValue] = useState(value);
 
@@ -39,10 +38,10 @@ export const InputSearch = forwardRef<HTMLInputElement, InputProps & Omit<HTMLAt
             >
                 <Input
                     ref={ref}
-                    className={styles.input}
                     type='text'
+                    className={styles.input}
                     value={inputValue}
-                    onInput={(event) => setInputValue(event.currentTarget.value)}
+                    onInput={setInputValue}
                     placeholder={placeholder}
                 />
 
@@ -54,4 +53,4 @@ export const InputSearch = forwardRef<HTMLInputElement, InputProps & Omit<HTMLAt
     }
 );
 
-InputSearch.displayName = 'InputSearch';
+SearchInput.displayName = 'InputSearch';

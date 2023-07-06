@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { InputSearch, Select, Button, Filter as FilterIcon, Modal } from '@/uikit';
+import { Select, Button, Filter as FilterIcon, Modal } from '@/uikit';
 import { Filter } from './Filter/Filter';
 import { NFTGrid } from './Grid/NFTGrid';
 import { EmptyResult } from '../EmptyResult/EmptyResult';
+import { SearchInput } from '@/components/SearchInput';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useTokensFilterState } from '@/states/explorer/hooks/useTokensFilterState';
@@ -89,7 +90,7 @@ export function NFTExplorer({ collection, ownerAddress }: NFTExplorerProps) {
                     Filters
                 </Button>
 
-                <InputSearch
+                <SearchInput
                     value={filterState.search}
                     placeholder="Search"
                     onChange={setSearch}

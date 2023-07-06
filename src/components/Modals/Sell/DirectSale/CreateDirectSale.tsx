@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Button, InputWithAddon } from '@/uikit';
+import { Button, Input } from '@/uikit';
 import { useCreateDirectSaleInfo, useSaleActions } from '@/states/sale/hooks';
 import styles from './CreateDirectSale.module.scss';
 
@@ -36,24 +36,24 @@ export function CreateDirectSale({ editionsAvailable, onConfirm }: CreateDirectS
         <div className={styles.wrap}>
             <div className={styles.inputs}>
                 {/* Only for multiple tokens */}
-                {editionsAvailable && <InputWithAddon
+                {editionsAvailable && <Input
                     numerical
                     value={amount}
                     onInput={onAmountChange}
                     placeholder='Enter amount'
-                    addonText={`/ ${editionsAvailable}`}
-                    error={amountInputError}
+                    rightAddon={`/ ${editionsAvailable}`}
+                    danger={amountInputError}
                     style={{ paddingRight: '120px' }}
 
                 />}
 
-                <InputWithAddon
+                <Input
                     numerical
                     value={price}
                     onInput={onPriceChange}
                     placeholder='Enter price'
-                    addonText={currency.symbol}
-                    error={priceInputError}
+                    rightAddon={currency.symbol}
+                    danger={priceInputError}
                     style={{ paddingRight: '80px' }}
                 />
             </div>

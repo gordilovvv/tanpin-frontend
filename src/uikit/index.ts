@@ -1,7 +1,6 @@
 export * from './Unstyle';
 
 export { Title } from './Title/Title';
-export { InputSearch } from './InputSearch/InputSearch';
 export { Select } from './Select/Select';
 
 

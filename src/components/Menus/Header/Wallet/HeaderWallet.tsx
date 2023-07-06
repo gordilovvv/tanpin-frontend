@@ -41,8 +41,7 @@ type HeaderWalletProps = {
 export function HeaderWallet({ address, isConnected }: HeaderWalletProps) {
     const animationRef = useRef<HTMLDivElement>(null);
     const walletPopoverState = usePopoverState({
-        placement: 'bottom-end',
-        gutter: 8
+        placement: 'bottom-end'
     });
 
     return (
@@ -55,6 +54,8 @@ export function HeaderWallet({ address, isConnected }: HeaderWalletProps) {
                 ref={animationRef}
                 state={walletPopoverState}
                 width={320}
+                gutter={8}
+                sameWidth
                 className={styles.popover}
                 {...animationMap}
                 variants={animationVariants}

@@ -28,8 +28,6 @@ export function HeaderSearch() {
     const debouncedSearchQuery = useDebounce(searchQuery, SEARCH_DEBOUNCE_TIMEOUT);
 
     const comboboxState = useComboboxState({
-        gutter: 8,
-        sameWidth: true,
         value: searchQuery,
         setValue: setSearchQuery
     });
@@ -65,6 +63,8 @@ export function HeaderSearch() {
                 <AnimatePresence>
                     {isComboboxMounted && <ComboboxPopover
                         as={motion.div}
+                        gutter={8}
+                        sameWidth
                         ref={animationRef}
                         hidden={false}
                         store={comboboxState}

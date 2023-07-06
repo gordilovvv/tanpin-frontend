@@ -27,9 +27,7 @@ const animationVariants = {
 
 export function Select<T extends string>({ options, selectedValue, placeholderText = '', onChange }: SelectProps<T>) {
     const state = usePopoverState({
-        placement: 'bottom',
-        sameWidth: true,
-        gutter: 8
+        placement: 'bottom-start'
     });
 
     const isOpen = state.useState('open');
@@ -66,6 +64,8 @@ export function Select<T extends string>({ options, selectedValue, placeholderTe
             <PopoverMenu
                 state={state}
                 maxHeight={144}
+                gutter={8}
+                sameWidth
                 {...animationMap}
                 variants={animationVariants}
                 transition={{ duration: 0.15, ease: [0.38, 0, 0.22, 1] }}

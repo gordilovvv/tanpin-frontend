@@ -54,6 +54,10 @@ export function useCreateDirectSaleInfo(editionsAvailable?: number) {
         if (parsedValues.amount && parsedValues.amount.isGreaterThan(editionsAvailable)) {
             amountError = `Available for sale are ${editionsAvailable} copies`;
         }
+
+        if (parsedValues.amount && !parsedValues.amount.isInteger()) {
+            amountError = 'Enter whole number';
+        }
     }
 
     if (!parsedValues.price) {

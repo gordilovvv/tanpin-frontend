@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
-import { InputSearch, Select } from '@/uikit';
+import { Select } from '@/uikit';
 import { GameCard, GameCardSkeleton } from '@/components/Game';
 import { CatalogHead, Container, PageWrapper } from '@/components/Layout';
+import { SearchInput } from '@/components/SearchInput';
 import { useGamesStore } from '@/states/game/store';
 import { useGamesQuery } from '@/states/game/hooks/useGamesQuery';
 import { GamesSort } from '@/states/game/types';
@@ -65,7 +66,7 @@ export function GamesView() {
                         description='Explore NFT collections from your favorite games'
                         addonBottom={
                             <div className={styles.filter}>
-                                <InputSearch
+                                <SearchInput
                                     value={typedSearchQuery}
                                     placeholder="Search"
                                     onChange={typeSearch}

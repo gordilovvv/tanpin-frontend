@@ -33,79 +33,79 @@ export async function fetchNFT(id: string): Promise<NFT> {
             contractAddress: '0x5e687642685E3c221364C570e6c4a84A66907ECe',
             tokenID: '2359',
 
-            owner: '0xE45133bD72217782d834C43Eb54adA97dE1B7a92',
-            sale: {
-                saleID: '1',
-                price: {
-                    amount: '100',
-                    currency: 'USDT'
-                }
-            },
-            // auction: {
-            //     highestBid: {
+            // owner: '0xE45133bD72217782d834C43Eb54adA97dE1B7a93',
+            // sale: {
+            //     saleID: '1',
+            //     price: {
             //         amount: '100',
             //         currency: 'USDT'
             //     },
-            //     endDate: '2023-06-26T03:50:26.615+00:00'
             // },
-            status: NFTSaleStatus.FIXED_PRICE,
+            // // auction: {
+            // //     highestBid: {
+            // //         amount: '100',
+            // //         currency: 'USDT'
+            // //     },
+            // //     endDate: '2023-06-26T03:50:26.615+00:00'
+            // // },
+            // status: NFTSaleStatus.FIXED_PRICE,
 
-            // sold: 4,
-            // stock: 1200,
-            // supply: 1400,
-            // owners: [
-            //     {
-            //         id: '5',
-            //         owner: '0x453f298e2dfb55777f8692959ce0a5379fe0c41f',
-            //         value: 100,
-            //         sales: [],
-            //         auctions: [],
-            //         date: '01-06-2023',
-            //         status: NFTSaleStatus.NOT_FOR_SALE
-            //     },
-            //     {
-            //         id: '3',
-            //         owner: '0xE45133bD72217782d834C43Eb54adA97dE1B7a93',
-            //         value: 4,
-            //         // sales: [{
-            //         //     saleID: '15',
-            //         //     sold: 0,
-            //         //     stock: 2,
-            //         //     price: {
-            //         //         amount: '100',
-            //         //         currency: 'USDT'
-            //         //     }
-            //         // }, {
-            //         //     saleID: '16',
-            //         //     sold: 0,
-            //         //     stock: 2,
-            //         //     price: {
-            //         //         amount: '80',
-            //         //         currency: 'USDT'
-            //         //     }
-            //         // }],
-            //         sales: [],
-            //         auctions: [],
-            //         date: '01-06-2023',
-            //         status: NFTSaleStatus.NOT_FOR_SALE
-            //     },
-            //     {
-            //         id: '4',
-            //         owner: '0x331f298e2dfb55777f8692959ce0a5379fe0c81f',
-            //         value: 100,
-            //         sales: [{
-            //             saleID: '5',
-            //             sold: 0,
-            //             stock: 60,
-            //             price: {
-            //                 amount: '30',
-            //                 currency: 'USDT'
-            //             }
-            //         }],
-            //         auctions: [],
-            //         date: '01-06-2023',
-            //         status: NFTSaleStatus.FIXED_PRICE
-            //     }],
+            sold: 4,
+            stock: 1200,
+            supply: 1400,
+            owners: [
+                {
+                    id: '5',
+                    owner: '0x453f298e2dfb55777f8692959ce0a5379fe0c41f',
+                    value: 100,
+                    sales: [],
+                    auctions: [],
+                    date: '01-06-2023',
+                    status: NFTSaleStatus.NOT_FOR_SALE
+                },
+                {
+                    id: '3',
+                    owner: '0xE45133bD72217782d834C43Eb54adA97dE1B7a93',
+                    value: 4,
+                    // sales: [{
+                    //     saleID: '15',
+                    //     sold: 0,
+                    //     stock: 2,
+                    //     price: {
+                    //         amount: '100',
+                    //         currency: 'USDT'
+                    //     }
+                    // }, {
+                    //     saleID: '16',
+                    //     sold: 0,
+                    //     stock: 2,
+                    //     price: {
+                    //         amount: '80',
+                    //         currency: 'USDT'
+                    //     }
+                    // }],
+                    sales: [],
+                    auctions: [],
+                    date: '01-06-2023',
+                    status: NFTSaleStatus.NOT_FOR_SALE
+                },
+                {
+                    id: '4',
+                    owner: '0x331f298e2dfb55777f8692959ce0a5379fe0c81f',
+                    value: 100,
+                    sales: [{
+                        saleID: '5',
+                        sold: 0,
+                        stock: 60,
+                        price: {
+                            amount: '30',
+                            currency: 'USDT'
+                        }
+                    }],
+                    auctions: [],
+                    date: '01-06-2023',
+                    status: NFTSaleStatus.FIXED_PRICE
+                }],
 
             collection: {
                 ID: '1',

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, InputWithAddon } from '@/uikit';
+import { Button, Input } from '@/uikit';
 import { NFTActionText } from '@/components/Nft';
 import { LoadingContent } from '../../Loading/LoadingContent';
 import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
@@ -78,11 +78,11 @@ export function UpdateSaleBody({ saleID, onError, onSuccess }: UpdateSaleBodyPro
                 gameID={tokenMetadata.collection.game.ID}
             />}
 
-            <InputWithAddon
+            <Input
                 value={price}
                 numerical
                 onInput={setPrice}
-                addonText='USDT'
+                rightAddon='USDT'
                 style={{ paddingRight: '72px' }}
             />
 
