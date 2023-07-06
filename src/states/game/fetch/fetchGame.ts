@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '@/app/api';
 import { MOCK_API_CALLS } from '@/config';
 import type { GameQueryResponse } from '../types';
 
@@ -31,7 +31,7 @@ export async function fetchGame(id: string): Promise<GameQueryResponse> {
         };
     }
 
-    const { data } = await axios.get<GameQueryResponse>('/game.get' + id);
+    const { data } = await api.get<GameQueryResponse>(`/game.get/${id}`);
 
     return data;
 }

@@ -40,7 +40,7 @@ export async function collectionFetch(body: CollectionQueryBody): Promise<Collec
         };
     }
 
-    const { data } = await api.post<CollectionResponse>('/collections/get.list', body);
+    const { data } = await api.post<CollectionResponse>('/collection/get.list', body);
 
     return data;
 }

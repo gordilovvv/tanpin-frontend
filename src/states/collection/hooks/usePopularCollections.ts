@@ -6,7 +6,7 @@ import { fetchPopularCollections } from '../fetch/fetchPopularCollections';
  */
 export function usePopularCollections() {
     const { data, isLoading } = useSWRImmutable(
-        'search.collections.popular',
+        'search.collection.popular',
         fetchPopularCollections
     );
 

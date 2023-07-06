@@ -33,7 +33,7 @@ const Slide = ({ loading, data }: { loading?: boolean } & SlideProps<Game | unde
             <GameCard game={data} />
 
             <div className={styles.collections}>
-                {data.popularCollections!.map(collection => <CollectionPreview
+                {data.collections!.map(collection => <CollectionPreview
                     key={collection.ID}
                     collection={collection}
                 />)}

@@ -29,7 +29,11 @@ export async function fetchPopularCollections() {
                         currency: 'USDT'
                     }
                 },
-                attributes: []
+                attributes: [],
+                game: {
+                    ID: '1',
+                    name: 'GTA'
+                }
             },
             {
                 ID: '2',
@@ -50,12 +54,16 @@ export async function fetchPopularCollections() {
                         currency: 'USDT'
                     }
                 },
-                attributes: []
+                attributes: [],
+                game: {
+                    ID: '1',
+                    name: 'GTA'
+                }
             },
         ] as Collection[];
     }
 
-    const { data } = await api.post<Collection[]>('/search/collections.popular');
+    const { data } = await api.get<Collection[]>('/search/collections.popular');
 
     return data;
 }

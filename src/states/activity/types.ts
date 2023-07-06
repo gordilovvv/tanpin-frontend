@@ -14,7 +14,7 @@ export enum ActivityType {
 }
 
 export type ActivityTransaction = {
-    id: string
+    ID: string
     type: ActivityType
     owner: Address,
     transferedTo?: Address
@@ -27,7 +27,7 @@ export type ActivityTransaction = {
     transactionHash: Hash
 }
 
-export type ActivityFilter =  {
+export type ActivityFilter = {
     userAddress?: Address
     tokenID?: string
     types: ActivityType[]

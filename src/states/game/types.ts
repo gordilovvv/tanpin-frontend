@@ -36,5 +36,5 @@ export type Game = {
             currency: string
         }
     }
-    popularCollections?: Collection[];
+    collections?: Collection[];
 };

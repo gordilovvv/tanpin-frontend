@@ -14,9 +14,9 @@ export async function fetchGames(
                 ID: '0',
                 name: 'NFTGTA',
                 imageURL:
-          'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
+                    'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
                 logoURL:
-          'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1290',
+                    'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1290',
                 stats: {
                     volume: {
                         currency: 'USDT',
@@ -25,13 +25,13 @@ export async function fetchGames(
                     items: 256,
                     collections: 3,
                 },
-                popularCollections: [
+                collections: [
                     {
                         ID: '0',
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -49,7 +49,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -67,7 +67,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -85,7 +85,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -104,7 +104,7 @@ export async function fetchGames(
                 ID: '1',
                 name: 'Minecraft',
                 imageURL:
-          'https://img.redbull.com/images/c_fill,w_1200,h_630,g_auto,f_auto,q_auto/redbullcom/2020/4/28/bjoyslzjb3uxqyg82uz2/minecraft',
+                    'https://img.redbull.com/images/c_fill,w_1200,h_630,g_auto,f_auto,q_auto/redbullcom/2020/4/28/bjoyslzjb3uxqyg82uz2/minecraft',
                 logoURL: 'https://img.icons8.com/color/512/minecraft-logo--v1.png',
                 // @ts-ignore
                 stats: {
@@ -115,13 +115,13 @@ export async function fetchGames(
                     items: 256,
                     collections: 3,
                 },
-                popularCollections: [
+                collections: [
                     {
                         ID: '0',
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -139,7 +139,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -157,7 +157,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -175,7 +175,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -194,9 +194,9 @@ export async function fetchGames(
                 ID: '2',
                 name: 'Fortnite',
                 imageURL:
-          'https://cdn2.unrealengine.com/social-image-battlepass-3840x2160-19b42864f188.jpg',
+                    'https://cdn2.unrealengine.com/social-image-battlepass-3840x2160-19b42864f188.jpg',
                 logoURL:
-          'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png',
+                    'https://upload.wikimedia.org/wikipedia/commons/7/7c/Fortnite_F_lettermark_logo.png',
                 // @ts-ignore
                 stats: {
                     volume: {
@@ -206,13 +206,13 @@ export async function fetchGames(
                     items: 256,
                     collections: 3,
                 },
-                popularCollections: [
+                collections: [
                     {
                         ID: '0',
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -230,7 +230,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -248,7 +248,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -266,7 +266,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -285,9 +285,9 @@ export async function fetchGames(
                 ID: '4',
                 name: 'NFTGTA',
                 imageURL:
-          'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
+                    'https://c4.wallpaperflare.com/wallpaper/514/241/320/gta-5-online-wallpaper-preview.jpg',
                 logoURL:
-          'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1290',
+                    'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/nft-logo-design-template-9a41fca75305c8d9d529826cee16e8b9_screen.jpg?ts=1290',
                 // @ts-ignore
                 stats: {
                     volume: {
@@ -297,13 +297,13 @@ export async function fetchGames(
                     items: 256,
                     collections: 3,
                 },
-                popularCollections: [
+                collections: [
                     {
                         ID: '0',
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -321,7 +321,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -339,7 +339,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
@@ -357,7 +357,7 @@ export async function fetchGames(
                         name: 'Hello',
                         description: 'World',
                         logoURL:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+                            'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
                         // @ts-ignore
                         stats: {
                             volume: {
