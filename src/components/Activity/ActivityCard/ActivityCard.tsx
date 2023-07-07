@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Link, Skeleton, UnstyleLink } from '@/uikit';
+import { Image, ImageSkeleton, Link, Skeleton, UnstyleLink } from '@/uikit';
 import { ActivityDescription } from './Description/ActivityDescription';
 import { ActivityTransaction } from '@/states/activity/types';
 import { formatDate } from '@/utils/date';
@@ -38,9 +38,12 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
         <div className={styles.card}>
             <div className={styles.content}>
                 <div className={styles.imageWrap}>
-                    <img
+                    <Image
                         className={styles.image}
                         src='https://lh3.googleusercontent.com/QTgdcdlXPZDNhBNiFPdEMrBuVs3p5gwvFoDqveKrKWOYQrdYa4e1jvlWJX8EnLt6alcatR5verlz6SFZNRoxo7LYtYBSoITmeA=s400'
+                        alt=''
+                        loading='lazy'
+                        pending={<ImageSkeleton className={styles.imageSkeleton} />}
                     />
                 </div>
 
@@ -76,7 +79,9 @@ export function ActivityCardSkeleton() {
     return (
         <div className={classNames(styles.card, styles.skeleton)}>
             <div className={styles.content}>
-                <Skeleton className={styles.imageSkeleton} />
+                <div className={styles.imageWrap}>
+                    <ImageSkeleton className={styles.imageSkeleton} />
+                </div>
 
                 <div className={styles.info}>
                     <Skeleton className={styles.titleSkeleton} />

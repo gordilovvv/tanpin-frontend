@@ -22,7 +22,7 @@ export function ActivityList() {
     // TODO: Error
     if (isLoading || !activity) {
         return (
-            <div className={styles.wrapper}>
+            <div className={styles.wrap}>
                 {times(6).map(index => <ActivityCardSkeleton key={index} />)}
             </div>
         );
