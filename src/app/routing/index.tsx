@@ -13,8 +13,10 @@ import { CollectionsView } from '@/views/Collections/CollectionsView';
 import { CollectionsView as CollectionsAssetsView } from '@/views/Assets/Collections/CollectionsView';
 import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
-import { ProtectedRoute } from './ProtectedRoute';
+import { RequireConnectedWallet } from './requireConnectedWallet';
 
+// TODO: LazyLoad Routes
+// https://loadable-components.com/docs/getting-started/
 export const router = createBrowserRouter([
     {
         element: <PageLayout />,
@@ -22,60 +24,61 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <HomeView />,
+                element: <HomeView />
             },
             {
                 path: '/games',
-                element: <GamesView />,
+                element: <GamesView />
             },
             {
                 path: '/collections',
-                element: <CollectionsView />,
+                element: <CollectionsView />
             },
             {
                 path: '/nft',
-                element: <NFTView />,
-            },
-            {
-                path: '/activity',
-                element: <ActivityView />,
-            },
-            {
-                element: <ProtectedRoute />,
-                children: [{
-                    element: <AssetsView />,
-                    children: [
-                        {
-                            path: '/assets/collections',
-                            element: <CollectionsAssetsView />
-                        },
-                        {
-                            path: '/assets/sale',
-                            element: <SaleView />
-                        },
-                        {
-                            path: '/assets/owned',
-                            element: <OwnedView />
-                        },
-                    ]
-                }],
+                element: <NFTView />
             },
             {
                 path: '/:gameID',
-                element: <SingleGameView />,
-            },
-            {
-                path: '/activity',
-                element: <ActivityView />,
+                element: <SingleGameView />
             },
             {
                 path: '/:gameID/:collectionID',
-                element: <SingleCollectionView />,
+                element: <SingleCollectionView />
             },
             {
                 path: '/:gameID/:collectionID/:tokenID',
-                element: <SingleNftView />,
+                element: <SingleNftView />
             },
+            {
+                element: (
+                    <RequireConnectedWallet>
+                        <AssetsView />
+                    </RequireConnectedWallet>
+                ),
+                children: [
+                    {
+                        path: '/assets/collections',
+                        element: <CollectionsAssetsView />
+                    },
+                    {
+                        path: '/assets/sale',
+                        element: <SaleView />
+                    },
+                    {
+                        path: '/assets/owned',
+                        element: <OwnedView />
+                    },
+                ]
+            },
+            {
+                path: '/activity',
+                element: (
+                    <RequireConnectedWallet>
+                        <ActivityView />
+                    </RequireConnectedWallet>
+                ),
+            }
         ],
     },
 ]);
