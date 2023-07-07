@@ -1,40 +1,32 @@
-import { SearchItem, SearchItemPlaceholder } from '../Item/SearchItem';
-import { useGlobalSearch } from '@/hooks/useGlobalSearch';
-import { searchNFT } from '@/states/nft/fetch/searchNft';
+import { useSearch } from '@/states/search/hooks/useSearch';
+import { SearchItem } from '../Item/SearchItem';
+import { ResultsEmpty } from '../Empty/ResultsEmpty';
+import { ResultsPlaceholder } from '../Placeholder/ResultsPlaceholder';
+import { searchNFT } from '@/states/search/fetch/searchNFT';
 
 type NFTListProps = {
-    searchQuery: string,
-    onError: (message: string) => void
+    searchQuery: string
 }
 
-export function NFTList({ searchQuery, onError }: NFTListProps) {
-    const { items, isLoading } = useGlobalSearch<{
-        ID: string
-        name: string
-        logoURL: string
-        collectionID: string
-    }>(
+export function NFTList({ searchQuery }: NFTListProps) {
+    const { items, isLoading } = useSearch({
         searchQuery,
-        searchNFT,
-        onError
-    );
+        fetchCallback: searchNFT
+    });
 
-    if (isLoading || !items) {
-        return (
-            <>
-                <SearchItemPlaceholder index={0} />
-                <SearchItemPlaceholder index={1} />
-                <SearchItemPlaceholder index={2} />
-                <SearchItemPlaceholder index={3} />
-            </>
-        );
+    if (isLoading) {
+        return (<ResultsPlaceholder />);
+    }
+
+    if (!items.length) {
+        return (<ResultsEmpty />);
     }
 
     return (
         <>
             {items.map(nft => <SearchItem
                 key={nft.ID}
-                href={`/collections/${nft.collectionID}/${nft.ID}`}
+                href={`/${nft.gameID}/${nft.collectionID}/${nft.ID}`}
                 name={nft.name}
                 image={nft.logoURL}
             />)}

@@ -1,6 +1,7 @@
-import { SearchItem, SearchItemPlaceholder } from '../Item/SearchItem';
-
-import { usePopularCollections } from '@/states/collection/hooks/usePopularCollections';
+import { SearchItem } from '../Item/SearchItem';
+import { ResultsPlaceholder } from '../Placeholder/ResultsPlaceholder';
+import { ResultsEmpty } from '../Empty/ResultsEmpty';
+import { usePopularCollections } from '@/states/search/hooks/usePopularCollections';
 import styles from './TrendingCollections.module.scss';
 
 export function TrendingCollections() {
@@ -8,14 +9,11 @@ export function TrendingCollections() {
 
     const renderList = () => {
         if (isLoading) {
-            return (
-                <>
-                    <SearchItemPlaceholder index={0} />
-                    <SearchItemPlaceholder index={1} />
-                    <SearchItemPlaceholder index={2} />
-                    <SearchItemPlaceholder index={3} />
-                </>
-            );
+            return (<ResultsPlaceholder />);
+        }
+
+        if (!collections.length) {
+            return (<ResultsEmpty />);
         }
 
         return (

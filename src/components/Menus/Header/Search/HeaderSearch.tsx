@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { AnimatePresence, LazyMotion, Variants, domMax, motion } from 'framer-motion';
 import { ComboboxPopover, useComboboxStore as useComboboxState } from '@ariakit/react';
-import { useDebounce } from '@/hooks/useDebounce';
 import { SearchInput } from '../../Search/Input/SearchInput';
 import { SearchResults } from '../../Search/Results/SearchResults';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useSearchStore } from '@/states/search/store';
 import { SEARCH_DEBOUNCE_TIMEOUT } from '@/config/constants';
 import styles from './HeaderSearch.module.scss';
 
@@ -19,12 +20,14 @@ const animationVariants = {
     exit: { translateY: 32, opacity: 0 },
 } as Variants;
 
-// TODO: ПОФИКСИТЬ ЕСЛИ ОТКРЫТЬ ПОИСК И ВКЛЮЧИТЬ АДАПТИВ - ПОПОВЕР ДОЛЖЕН ЗАКРЫТЬСЯ
 export function HeaderSearch() {
     const inputRef = useRef<HTMLInputElement>(null);
     const animationRef = useRef<HTMLDivElement>(null);
 
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [searchQuery, setSearchQuery] = useSearchStore(state => [
+        state.searchQuery,
+        state.setSearchQuery
+    ]);
     const debouncedSearchQuery = useDebounce(searchQuery, SEARCH_DEBOUNCE_TIMEOUT);
 
     const comboboxState = useComboboxState({

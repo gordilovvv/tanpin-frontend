@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ToggleButton, ToggleGroup } from '@/uikit';
-import { CollectionsList, GamesList, NFTList } from './List';
+import { NFTList } from './List/NFTList';
+import { CollectionsList } from './List/CollectionsList';
 import { TrendingCollections } from './TrendingCollections/TrendingCollections';
-import { SearchTask } from '@/hooks/useGlobalSearch';
+import { SearchTask } from '@/states/search/hooks/useSearch';
+import { useSearchStore } from '@/states/search/store';
 import styles from './SearchResults.module.scss';
 
 type SearchResultsProps = {
@@ -11,49 +13,33 @@ type SearchResultsProps = {
 
 export function SearchResults({ searchQuery }: SearchResultsProps) {
     const [searchTask, setSearchTask] = useState<SearchTask>(SearchTask.NFT);
-    const [searchError, setSearchError] = useState<string | undefined>();
+    const searchError = useSearchStore(state => state.searchError);
+    const setSearchError = useSearchStore(state => state.setSearchError);
+
+    const suggestList = useMemo(() => {
+        if (searchError) {
+            return (<div className={styles.error}>
+                {searchError}
+            </div>);
+        }
+
+        if (searchTask === SearchTask.COLLECTION) {
+            return (<CollectionsList searchQuery={searchQuery} />);
+        }
+
+        if (searchTask === SearchTask.NFT) {
+            return (<NFTList searchQuery={searchQuery} />);
+        }
+
+        return null;
+    }, [searchQuery, searchError, searchTask]);
 
     // Clear error on type search query
     useEffect(() => {
         if (searchError) {
             setSearchError(undefined);
         }
-    }, [searchQuery]);
-
-    const renderSuggestsList = useCallback(() => {
-        if (searchError) {
-            return (
-                <div className={styles.error}>
-                    {searchError}
-                </div>
-            );
-        }
-
-        if (searchTask === SearchTask.COLLECTION) {
-            return (
-                <CollectionsList
-                    searchQuery={searchQuery}
-                    onError={setSearchError}
-                />
-            );
-        }
-
-        if (searchTask === SearchTask.GAME) {
-            return (
-                <GamesList
-                    searchQuery={searchQuery}
-                    onError={setSearchError}
-                />
-            );
-        }
-
-        return (
-            <NFTList
-                searchQuery={searchQuery}
-                onError={setSearchError}
-            />
-        );
-    }, [searchQuery, searchError, searchTask]);
+    }, [searchQuery, setSearchError]);
 
     if (!searchQuery) {
         return (
@@ -74,13 +60,6 @@ export function SearchResults({ searchQuery }: SearchResultsProps) {
                 </ToggleButton>
 
                 <ToggleButton
-                    active={searchTask === SearchTask.GAME}
-                    onClick={() => setSearchTask(SearchTask.GAME)}
-                >
-                    Games
-                </ToggleButton>
-
-                <ToggleButton
                     active={searchTask === SearchTask.COLLECTION}
                     onClick={() => setSearchTask(SearchTask.COLLECTION)}
                 >
@@ -89,7 +68,7 @@ export function SearchResults({ searchQuery }: SearchResultsProps) {
             </ToggleGroup>
 
             <div className={styles.list}>
-                {renderSuggestsList()}
+                {suggestList}
             </div>
         </div>
     );

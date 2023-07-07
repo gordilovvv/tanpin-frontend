@@ -1,5 +1,5 @@
 import { MOCK_API_CALLS } from '@/config';
-import { Collection } from '../types';
+import { Collection } from '@/states/collection/types';
 import { api } from '@/app/api';
 
 /**

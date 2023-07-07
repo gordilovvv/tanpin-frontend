@@ -1,39 +1,32 @@
-import { SearchItem, SearchItemPlaceholder } from '../Item/SearchItem';
-import { useGlobalSearch } from '@/hooks/useGlobalSearch';
-import { searchCollections } from '@/states/collection/fetch/searchCollections';
+import { SearchItem } from '../Item/SearchItem';
+import { ResultsEmpty } from '../Empty/ResultsEmpty';
+import { ResultsPlaceholder } from '../Placeholder/ResultsPlaceholder';
+import { useSearch } from '@/states/search/hooks/useSearch';
+import { searchCollections } from '@/states/search/fetch/searchCollections';
 
 type CollectionsListProps = {
-    searchQuery: string,
-    onError: (message: string) => void
+    searchQuery: string
 }
 
-export function CollectionsList({ searchQuery, onError }: CollectionsListProps) {
-    const { items, isLoading } = useGlobalSearch<{
-        ID: string
-        name: string
-        logoURL: string
-    }>(
+export function CollectionsList({ searchQuery }: CollectionsListProps) {
+    const { items, isLoading } = useSearch({
         searchQuery,
-        searchCollections,
-        onError
-    );
+        fetchCallback: searchCollections
+    });
 
-    if (isLoading || !items) {
-        return (
-            <>
-                <SearchItemPlaceholder index={0} />
-                <SearchItemPlaceholder index={1} />
-                <SearchItemPlaceholder index={2} />
-                <SearchItemPlaceholder index={3} />
-            </>
-        );
+    if (isLoading) {
+        return (<ResultsPlaceholder />);
+    }
+
+    if (!items.length) {
+        return (<ResultsEmpty />);
     }
 
     return (
         <>
             {items.map(collection => <SearchItem
                 key={collection.ID}
-                href={`/collections/${collection.ID}`}
+                href={`/${collection.gameID}/${collection.ID}`}
                 name={collection.name}
                 image={collection.logoURL}
             />)}

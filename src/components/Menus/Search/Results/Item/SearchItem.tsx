@@ -36,7 +36,7 @@ type SearchItemPlaceholderProps = {
     index?: number
 }
 
-export function SearchItemPlaceholder({ index = 0 }: SearchItemPlaceholderProps) {
+export function SearchItemSkeleton({ index = 0 }: SearchItemPlaceholderProps) {
     const textSkeletonWidth = [160, 100, 140, 200][index];
 
     return (
