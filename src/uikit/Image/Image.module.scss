@@ -1,0 +1,13 @@
+.image {
+    transition: opacity 0.33s ease-in-out 0s;
+}
+
+.loading {
+    position: absolute;
+    opacity: 0;
+}
+
+.loaded {
+    position: relative;
+    opacity: 1;
+}

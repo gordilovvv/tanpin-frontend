@@ -7,6 +7,7 @@ export { Select } from './Select/Select';
 export * from './Button';
 export * from './Icons';
 export * from './Input';
+export * from './Image';
 export * from './Badge';
 export * from './Skeleton';
 export * from './Modal';

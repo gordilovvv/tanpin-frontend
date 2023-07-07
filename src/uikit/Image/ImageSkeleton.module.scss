@@ -1,0 +1,20 @@
+.skeleton {
+    position: relative;
+    display: inline-flex;
+    animation: 1.5s linear 0s infinite normal none running imageSkeleton;
+    background: var(--color-base);
+}
+
+@keyframes imageSkeleton {
+    0% {
+        opacity: 0.04;
+    }
+
+    50% {
+        opacity: 0.08;
+    }
+
+    100% {
+        opacity: 0.04;
+    }
+}

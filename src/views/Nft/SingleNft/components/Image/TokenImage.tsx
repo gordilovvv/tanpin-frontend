@@ -1,6 +1,6 @@
 import { NFT } from '@/states/types';
 import styles from './TokenImage.module.scss';
-import { Button, Link } from '@/uikit';
+import { Button, Image, ImageSkeleton, Link } from '@/uikit';
 import classNames from 'classnames';
 
 type TokenImageProps = {
@@ -12,10 +12,12 @@ export function TokenImage({ image, className }: TokenImageProps) {
     return (
         <div className={classNames(styles.wrap, className)}>
             <div className={styles.content}>
-                <img
+                <Image
                     src={image}
                     alt=''
                     className={styles.image}
+                    loading='lazy'
+                    pending={<ImageSkeleton className={styles.imageSkeleton} />}
                 />
 
                 <Button

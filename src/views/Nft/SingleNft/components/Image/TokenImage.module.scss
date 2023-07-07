@@ -9,6 +9,7 @@
     position: relative;
     display: flex;
     flex-flow: column;
+    width: 100%;
     max-width: 480px;
     margin: 0 auto;
 }
@@ -17,6 +18,12 @@
     max-height: 100%;
     max-width: 100%;
     object-fit: contain;
+    border-radius: 12px;
+}
+
+.imageSkeleton {
+    padding-top: 100%;
+    width: 100%;
     border-radius: 12px;
 }
 
