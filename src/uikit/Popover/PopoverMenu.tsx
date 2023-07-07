@@ -22,7 +22,6 @@ type PopoverProps = {
 export const PopoverMenu = forwardRef<HTMLDivElement, PropsWithChildren<PopoverProps>>(
     ({ state, width, gutter, sameWidth, maxHeight, className, children, ...animProps }, ref) => {
         const mounted = state.useState('mounted');
-        // const currentPlacement = state.useState('currentPlacement');
 
         const style: CSSProperties = {
             width: width && `${width}px`,
@@ -48,7 +47,7 @@ export const PopoverMenu = forwardRef<HTMLDivElement, PropsWithChildren<PopoverP
                             {children}
                         </Menu>}
                     </AnimatePresence>
-                </LazyMotion >
+                </LazyMotion>
             );
         }
 

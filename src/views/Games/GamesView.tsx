@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Select } from '@/uikit';
+import { EmptyResult } from '@/components/Explorer';
 import { GameCard, GameCardSkeleton } from '@/components/Game';
 import { CatalogHead, Container, PageWrapper } from '@/components/Layout';
 import { SearchInput } from '@/components/SearchInput';
@@ -52,7 +53,10 @@ export function GamesView() {
         }
 
         return <div className={styles.empty}>
-            Games not found
+            <EmptyResult
+                title='Nothing found'
+                text="We couldn't find any games"
+            />
         </div>;
     }, [games, isLoading]);
 

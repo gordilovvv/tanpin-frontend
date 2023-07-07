@@ -15,7 +15,7 @@
     position: relative;
     font-family: var(--font-primary);
     color: var(--color-typo-base);
-    padding: 12px;
+    padding: 8px 12px;
     background-color: var(--color-essential);
     border: 2px solid var(--color-stroke);
     border-radius: 12px;
@@ -47,6 +47,10 @@
 }
 
 @include max767 {
+    .input {
+        padding: 10px 12px;
+    }
+
     .rightAddon {
         font-size: 14px;
     }

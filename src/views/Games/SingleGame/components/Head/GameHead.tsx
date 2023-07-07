@@ -74,8 +74,8 @@ export function GameHead({ game }: GameHeadProps) {
 
                     <div className={styles.stats}>
                         <div className={styles.statsItem}>
-                            <div className={styles.statsLabel}>Floor Price</div>
-                            <div className={styles.statsValue}>{formatTokenAmount(stats.floor.amount)} {stats.floor.currency}</div>
+                            <div className={styles.statsLabel}>Items</div>
+                            <div className={styles.statsValue}>{stats.items}</div>
                         </div>
 
                         <div className={styles.statsItem}>

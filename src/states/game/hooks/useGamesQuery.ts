@@ -7,6 +7,7 @@ export function useGamesQuery(body: GamesQueryBody) {
         ['games.get', body],
         () => fetchGames(body)
     );
+
     return {
         games,
         isLoading

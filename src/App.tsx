@@ -2,18 +2,15 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './app/routing';
 import { WagmiConfig } from 'wagmi';
 import { wagmiConfig } from './config/wagmi';
-import { useAccountEventListener } from './hooks/useAccountEventListener';
 import { ToastProvider } from './uikit';
 
 function App() {
-    useAccountEventListener();
-
     return (
-        <ToastProvider>
-            <WagmiConfig config={wagmiConfig}>
+        <WagmiConfig config={wagmiConfig}>
+            <ToastProvider>
                 <RouterProvider router={router} />
-            </WagmiConfig>
-        </ToastProvider>
+            </ToastProvider>
+        </WagmiConfig>
     );
 }
 

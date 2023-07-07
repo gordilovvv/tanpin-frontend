@@ -22,16 +22,12 @@ export async function fetchGame(id: string): Promise<GameQueryResponse> {
                     amount: '1290',
                 },
                 items: 256,
-                collections: 3,
-                floor: {
-                    amount: '34234',
-                    currency: 'USDT',
-                },
+                collections: 3
             },
         };
     }
 
-    const { data } = await api.get<GameQueryResponse>(`/game.get/${id}`);
+    const { data } = await api.get<GameQueryResponse>(`/game/get/${id}`);
 
     return data;
 }

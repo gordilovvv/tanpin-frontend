@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Button } from '@/uikit';
 import { CollectionRow, CollectionRowSkeleton } from './Row/CollectionRow';
-import { EmptyResult } from '@/components/Explorer/EmptyResult/EmptyResult';
+import { EmptyResult } from '@/components/Explorer';
 import { CollectionsFilter } from '@/states/collection/types';
 import { useCollections } from '@/states/collection/hooks/useCollections';
 import { times } from 'lodash';
@@ -15,7 +15,7 @@ export const CollectionTable = memo(({ filter }: CollectionTableProps) => {
     const { collections, isLoading, isFinished, loadMore } = useCollections(filter);
 
     const isFirstLoading = collections.length === 0 && isLoading;
-    const showMoreButton = !isFinished && !isFirstLoading;
+    const showMoreButton = !isFinished && !isFirstLoading && !!collections.length;
 
     const headColumns = [
         '#',

@@ -31,10 +31,6 @@ export type Game = {
             amount: string
             currency: string
         }
-        floor: {
-            amount: string
-            currency: string
-        }
     }
     collections?: Collection[];
 };

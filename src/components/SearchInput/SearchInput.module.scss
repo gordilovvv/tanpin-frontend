@@ -1,6 +1,8 @@
 .wrap {
     position: relative;
-    display: flex;
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(0, auto);
 
     .input {
         padding-left: 46px;

@@ -55,7 +55,6 @@ export function HeaderWallet({ address, isConnected }: HeaderWalletProps) {
                 state={walletPopoverState}
                 width={320}
                 gutter={8}
-                sameWidth
                 className={styles.popover}
                 {...animationMap}
                 variants={animationVariants}

@@ -34,7 +34,7 @@ export function NftCard({ nft }: NftCardProps) {
                         </div>
 
                         <div className={styles.stockCount}>
-                            {formatTokenAmountShort(nft.stock)}
+                            {formatTokenAmountShort(nft.supply)}
                         </div>
                     </div>}
                 </div>

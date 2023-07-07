@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import useSWRImmutable from 'swr/immutable';
 import { api } from '@/app/api';
-import { MOCK_API_CALLS } from '@/config';
 import { CONTRACTS } from '@/config/constants/contracts';
 
 /**
@@ -20,7 +19,8 @@ export function useTokenAmountPrice(
     const { data: priceFromLlama, isLoading } = useSWRImmutable<number | undefined>(
         ['fiat-price-ethereum', tokenSymbol],
         async () => {
-            if (MOCK_API_CALLS && tokenAddress === CONTRACTS['usdt']['80001'].address) {
+            // Testnet Contract
+            if (tokenAddress === CONTRACTS['usdt']['80001'].address) {
                 await new Promise<void>(r => setTimeout(r, 300));
 
                 return 1;
