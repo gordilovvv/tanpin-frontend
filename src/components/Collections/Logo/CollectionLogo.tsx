@@ -1,6 +1,7 @@
 import { HTMLAttributes } from 'react';
 import styles from './CollectionLogo.module.scss';
 import classNames from 'classnames';
+import { Image, ImageSkeleton } from '@/uikit';
 
 type CollectionLogoProps = {
     image: string;
@@ -24,9 +25,11 @@ export function CollectionLogo({
             className={classNames(styles.logo, styles[size], className)}
             {...props}
         >
-            <img
+            <Image
                 src={image}
+                alt=''
                 className={styles.image}
+                pending={<ImageSkeleton className={styles.imageSkeleton} />}
             />
         </div>
     );

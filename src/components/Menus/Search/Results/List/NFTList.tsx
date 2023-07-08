@@ -28,7 +28,7 @@ export function NFTList({ searchQuery }: NFTListProps) {
                 key={nft.ID}
                 href={`/${nft.gameID}/${nft.collectionID}/${nft.ID}`}
                 name={nft.name}
-                image={nft.logoURL}
+                image={nft.imageURL}
             />)}
         </>
     );

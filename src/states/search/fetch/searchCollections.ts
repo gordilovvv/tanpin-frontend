@@ -4,7 +4,7 @@ import { MOCK_API_CALLS } from '@/config';
 type Response = {
     ID: string
     name: string
-    logoURL: string
+    imageURL: string
     gameID: string
 }[] | undefined;
 
@@ -20,7 +20,7 @@ export async function searchCollections(query: string, signal?: AbortSignal): Pr
             {
                 ID: '1',
                 name: 'Graffities by rektguy',
-                logoURL: 'https://lh3.googleusercontent.com/4CWZrrNgHhB2pCwGS8-Tc2mFZYSyXsWbvu_relvKm7d62rVXodcIlTOpnmoH25RrX2d9ecaFGL1g00v4vhtOpQynWg27-YHGKA=s400',
+                imageURL: 'https://lh3.googleusercontent.com/4CWZrrNgHhB2pCwGS8-Tc2mFZYSyXsWbvu_relvKm7d62rVXodcIlTOpnmoH25RrX2d9ecaFGL1g00v4vhtOpQynWg27-YHGKA=s400',
                 gameID: '1'
             }
         ];
