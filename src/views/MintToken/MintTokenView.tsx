@@ -9,10 +9,13 @@ import styles from './MintTokenView.module.scss';
 export function MintTokenView() {
     return (
         <div className={styles.wrapper}>
-            <Container maxWidth={480}>
+            <Container
+                maxWidth={480}
+                className={styles.container}
+            >
                 <TokenImage
                     className={styles.logo}
-                    image={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwvUtpwXPhn4AQOOwvtCmVMaRXYUhOZgyv-w&usqp=CAU'}
+                    image={'https://lh3.googleusercontent.com/SPA1zdqNLo9JrLHB7Z-I7ivwgMYmeIEjvIJVL0E7njvCyL9t9ewCs4imG2t9-UhQ5MOp4u_Pp26l1neLNWSN7l9wOV_b_rQA4nY=s1000'}
                 />
 
                 <div className={styles.body}>
@@ -23,7 +26,7 @@ export function MintTokenView() {
                                 className={styles.collection}
                             >
                                 <CollectionLogo
-                                    image={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwvUtpwXPhn4AQOOwvtCmVMaRXYUhOZgyv-w&usqp=CAU'}
+                                    image={'https://lh3.googleusercontent.com/SPA1zdqNLo9JrLHB7Z-I7ivwgMYmeIEjvIJVL0E7njvCyL9t9ewCs4imG2t9-UhQ5MOp4u_Pp26l1neLNWSN7l9wOV_b_rQA4nY=s1000'}
                                     size='xxs'
                                 />
 

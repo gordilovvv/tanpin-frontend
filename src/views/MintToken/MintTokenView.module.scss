@@ -13,7 +13,10 @@
     min-height: 480px;
 }
 
-
+.container {
+    display: grid;
+    gap: 48px;
+}
 
 .collectionWrap {
     display: flex;
