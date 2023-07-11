@@ -14,6 +14,7 @@ import { CollectionsView as CollectionsAssetsView } from '@/views/Assets/Collect
 import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
 import { RequireConnectedWallet } from './requireConnectedWallet';
+import { MintTokenView } from '@/views/MintToken/MintTokenView';
 
 // TODO: LazyLoad Routes
 // https://loadable-components.com/docs/getting-started/
@@ -80,5 +81,9 @@ export const router = createBrowserRouter([
                 ),
             }
         ],
+    },
+    {
+        path: '/token/mint/:tokenID',
+        element: <MintTokenView />
     },
 ]);

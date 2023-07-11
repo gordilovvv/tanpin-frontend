@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { Container, PageError, PageLoader, PageWrapper } from '@/components/Layout';
 import { BlockWrap } from './components/BlockWrap/BlockWrap';
-import { TokenAttributes } from './components/Attributes/TokenAttributes';
+import { TokenAttributes } from "@/components/Nft";
 import { TokenDetails } from './components/Details/TokenDetails';
-import { TokenImage } from './components/Image/TokenImage';
+import { TokenImage } from "@/components/Nft";
 import { TokenHead } from './components/Head/TokenHead';
 import { TokenTabs } from './components/Tabs/TokenTabs';
 import { OwnerAction } from './components/Action/Owner/OwnerAction';
