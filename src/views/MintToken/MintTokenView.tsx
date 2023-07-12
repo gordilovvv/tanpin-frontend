@@ -8,15 +8,29 @@ import styles from './MintTokenView.module.scss';
 
 export function MintTokenView() {
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrap}>
+            <div className={styles.background}>
+                <div
+                    className={styles.image}
+                    style={{ backgroundImage: 'url(https://lh3.googleusercontent.com/Y3ntI_ck-RFUAEYQdQ9q2V4RHhTfkD_mbpGMtP_1YuOXYTmwjCH9EiWz-5o6i_95jV35_9UJlYkj9HdrFbbkF-1OpPNg1oAmsIVD)' }}
+                ></div>
+            </div>
+
             <Container
-                maxWidth={480}
+                maxWidth={510}
                 className={styles.container}
             >
-                <TokenImage
-                    className={styles.logo}
-                    image={'https://lh3.googleusercontent.com/SPA1zdqNLo9JrLHB7Z-I7ivwgMYmeIEjvIJVL0E7njvCyL9t9ewCs4imG2t9-UhQ5MOp4u_Pp26l1neLNWSN7l9wOV_b_rQA4nY=s1000'}
-                />
+                <div className={styles.imageWrap}>
+                    <div
+                        className={styles.blurImage}
+                        style={{ backgroundImage: 'url(https://lh3.googleusercontent.com/Y3ntI_ck-RFUAEYQdQ9q2V4RHhTfkD_mbpGMtP_1YuOXYTmwjCH9EiWz-5o6i_95jV35_9UJlYkj9HdrFbbkF-1OpPNg1oAmsIVD)' }}
+                    ></div>
+
+                    <TokenImage
+                        image={'https://lh3.googleusercontent.com/Y3ntI_ck-RFUAEYQdQ9q2V4RHhTfkD_mbpGMtP_1YuOXYTmwjCH9EiWz-5o6i_95jV35_9UJlYkj9HdrFbbkF-1OpPNg1oAmsIVD'}
+                        className={styles.image}
+                    />
+                </div>
 
                 <div className={styles.body}>
                     <div className={styles.header}>
@@ -39,8 +53,6 @@ export function MintTokenView() {
 
                         <div className={styles.title}>Title</div>
                     </div>
-
-                    <Button block >Mint this NFT for 1 USDT</Button>
 
                     <div className={styles.item}>
                         <div className={styles.itemTitle}>Properties</div>
@@ -69,6 +81,8 @@ export function MintTokenView() {
                             The Mercedes-Benz A-Class is a compact car produced by the German automobile manufacturer Mercedes-Benz as the brand's entry-level vehicle. The A 45 AMG is a performance version of the A-Class.
                         </div>
                     </div>
+
+                    <Button>Mint this NFT for 1 USDT</Button>
                 </div>
             </Container>
         </div>
