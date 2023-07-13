@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 
-export type RerenderCellHandler<T> = (params: {
-    item: T,
+export type RerenderGridCell = (params: {
+    item: any,
     index: number,
     width: CSSProperties['width'],
     measure: () => void

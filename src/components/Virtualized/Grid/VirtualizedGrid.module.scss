@@ -1,0 +1,13 @@
+.wrap {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+
+    :global(.ReactVirtualized__Grid) {
+        overflow: visible !important;
+    }
+
+    :global(.ReactVirtualized__Grid__innerScrollContainer) {
+        overflow: visible !important;
+    }
+}
