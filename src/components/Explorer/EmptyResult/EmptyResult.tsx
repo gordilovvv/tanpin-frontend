@@ -5,7 +5,6 @@ type EmptyResultProps = {
     text: string
 }
 
-
 export function EmptyResult({ title, text }: EmptyResultProps) {
     return (
         <div className={styles.wrapper}>
