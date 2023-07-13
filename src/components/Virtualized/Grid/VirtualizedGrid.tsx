@@ -1,120 +1,99 @@
-import { useCallback, useMemo, useRef } from 'react';
-import { CellMeasurerCache, InfiniteLoader, InfiniteLoaderProps } from 'react-virtualized';
-import { GridInner } from './Inner/GridInner';
-import { InfinityScroller } from './Scroller/InfinityScroller';
-import { RerenderCellHandler } from '../types';
-import { useVirtualizedGridState } from '../hooks';
+import { useCallback, useEffect, useRef } from 'react';
+import { CellMeasurerCache, GridProps, InfiniteLoaderProps } from 'react-virtualized';
+import { Grid } from './Grid';
+import { Loader } from './Loader';
+import { GridDataLoader, useGridPagination, useGridState } from './hooks';
+import { RerenderGridCell } from '../types';
+import styles from './VirtualizedGrid.module.scss';
 
 type VirtualizedGridProps<T> = {
-    renderItem: (props: { data: T, loading: boolean, index: number, measure: () => void }) => JSX.Element
-    renderEmpty: () => JSX.Element,
-    loadItems: (offset: number, limit: number) => Promise<any>
-    minimumBatchSize: number
+    loadItems: GridDataLoader,
+    renderItem: (props: { data: T, loading: boolean, index: number, measure: () => void }) => JSX.Element,
+    /** Empty component */
+    empty: () => JSX.Element
+    /** Error component */
+    rejected?: () => JSX.Element
+    /** Threshold at which to pre-fetch data. A threshold X means that data will start loading when a user scrolls within X rows. This value defaults to 15. */
+    threshold?: InfiniteLoaderProps['threshold'],
+    /** Number of rows to render above/below the visible section of the grid. These rows can help for smoother scrolling on touch devices or browsers that send scroll events infrequently. */
+    overscanRowCount?: GridProps['overscanRowCount'],
+    /** Minimum number of rows to be loaded at a time. This property can be used to batch requests to reduce HTTP requests. */
+    minimumBatchSize?: InfiniteLoaderProps['minimumBatchSize']
 }
 
-// TODO:
-// 1. При первом изменении фильтра не обновляется грид
-// 2. При подгрузке может остаться скелетон
 export function VirtualizedGrid<T>({
     loadItems,
-    renderEmpty,
     renderItem,
+    empty,
+    rejected,
+    threshold,
+    overscanRowCount,
     minimumBatchSize
 }: VirtualizedGridProps<T>) {
-    const state = useVirtualizedGridState(loadItems);
+    const state = useGridState();
+    const pagination = useGridPagination(loadItems);
+    const cacheRef = useRef<CellMeasurerCache>(null);
+    const isMounted = useRef<boolean>(false);
 
-    const rowCount = Infinity;
-    const columnCount = useRef<number | null>(null);
+    useEffect(() => {
+        if (state.event === 'refresh') {
+            cacheRef.current?.clearAll();
+        }
+    }, [state.event]);
 
-    const cellCache = useRef<CellMeasurerCache | null>(null);
-    const loaderRef = useRef<InfiniteLoader | null>(null);
-
-    const rect = useMemo(() => {
-        return {
-            getColumnCount: (containerWidth: number) => {
-                if (containerWidth > 700) {
-                    return Math.ceil(containerWidth / 320);
-                }
-
-                if (containerWidth > 320) {
-                    return 2;
-                }
-
-                return 1;
-            },
-            horizontalGap: 16,
-            verticalGap: 8
-        };
+    useEffect(() => {
+        isMounted.current = true;
     }, []);
+
+    // Когда обновилась функция загрузки - сбрасываем пагинацию
+    useEffect(() => {
+        if (isMounted.current && state.event !== 'init') {
+            pagination.refresh();
+        }
+    }, [loadItems]);
 
     const isRowLoaded = useCallback<InfiniteLoaderProps['isRowLoaded']>(({ index }) => {
         return index <= state.index;
     }, [state.index]);
 
-    const onColumnCountChange = useCallback((count: number) => {
-        if (columnCount.current !== count) {
-            columnCount.current = count;
-
-            cellCache.current?.clearAll();
-            loaderRef.current?.resetLoadMoreRowsCache(true);
-        }
-    }, [columnCount, cellCache, loaderRef]);
-
-    const rerenderItem: RerenderCellHandler<T> = useCallback(({ item, index, measure }) => {
-        const empty = state.items.length === 0;
-        const loading = state.loading > 0 && index >= state.items.length;
+    const rerenderItem: RerenderGridCell = useCallback(({ item, index, measure }) => {
+        const empty = state.data.length === 0;
+        const fetching = state.loading > 0;
+        const isLoading = !(!empty && !fetching) && index >= state.data.length;
 
         return renderItem({
             data: item,
-            loading: empty && loading || !item,
+            loading: isLoading,
             index,
             measure
         });
-    }, [state.items, state.loading, renderItem]);
-
-    const registerLoaderRef = useCallback((loader: InfiniteLoader) => {
-        loaderRef.current = loader;
-    }, [loaderRef]);
-
-    if (state.finished && !state.items.length) {
-        return renderEmpty();
-    }
+    }, [state.data, state.loading, renderItem]);
 
     return (
-        <InfinityScroller
-            registerLoaderRef={registerLoaderRef}
-            rowCount={rowCount}
-            isRowLoaded={isRowLoaded}
-            loadMoreRows={state.loadItems}
-            minimumBatchSize={minimumBatchSize}
-        >
-            {({
-                width,
-                height,
-                scrollTop,
-                scrollLeft,
-                isScrolling,
-                onScroll,
-                registerChild,
-                onRowsRendered
-            }) => (
-                <GridInner
-                    items={state.items}
-                    rect={rect}
-                    width={width}
-                    height={height}
-                    extraRowCount={state.loading && state.items.length > 0 ? state.loading : 0}
-                    isScrolling={isScrolling}
-                    cellCache={cellCache}
-                    scrollTop={scrollTop}
-                    scrollLeft={scrollLeft}
-                    onScroll={onScroll}
-                    innerRef={registerChild}
-                    rerenderCell={rerenderItem}
-                    onRowsRerender={onRowsRendered}
-                    onColumnCountChange={onColumnCountChange}
-                />
-            )}
-        </InfinityScroller>
+        <div className={styles.wrap}>
+            <Loader
+                state={state}
+                pagination={pagination}
+                empty={empty}
+                rejected={rejected}
+                threshold={threshold}
+                rowCount={Infinity}
+                isRowLoaded={isRowLoaded}
+                loadMoreRows={pagination.loadPart}
+                minimumBatchSize={minimumBatchSize}
+            >
+                {({ registerChild, ...loaderChildProps }) => (
+                    <Grid
+                        data={state.data}
+                        rerender={rerenderItem}
+                        cacheRef={cacheRef}
+                        innerRef={registerChild}
+                        extraRowCount={state.loading && state.data.length > 0 ? state.loading : 0}
+                        overscanRowCount={overscanRowCount}
+                        {...loaderChildProps}
+                    />
+                )}
+            </Loader>
+        </div>
     );
 }

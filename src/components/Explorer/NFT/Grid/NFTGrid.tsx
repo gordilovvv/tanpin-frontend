@@ -9,11 +9,12 @@ type NFTGridProps = {
     collectionID?: string
     ownerAddress?: string,
     filter: TokensFilterState
-    empty: () => JSX.Element
+    empty: () => JSX.Element,
+    rejected?: () => JSX.Element
 }
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
-export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty }: NFTGridProps) => {
+export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty, rejected }: NFTGridProps) => {
     const fetchList = useCallback(async (offset: number, limit: number) => {
         return fetchTokensList({
             collectionID,
@@ -24,21 +25,27 @@ export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty }: NFTG
         });
     }, [collectionID, ownerAddress, filter]);
 
-    const renderGridItem = useCallback(({ data, loading }) => {
+    const renderCard = useCallback(({ data, loading }) => {
         if (loading)
             return (<NftCardSkeleton />);
 
-        return (<NftCard nft={data} />);
+        if (data)
+            return (<NftCard nft={data} />);
+
+        return <></>;
     }, []);
 
     return (
-        <div className={styles.list}>
-            <VirtualizedGrid
-                renderItem={renderGridItem}
-                renderEmpty={empty}
-                loadItems={fetchList}
-                minimumBatchSize={30}
-            />
+        <div className={styles.grid}>
+            <div className={styles.content}>
+                <VirtualizedGrid
+                    loadItems={fetchList}
+                    renderItem={renderCard}
+                    empty={empty}
+                    rejected={rejected}
+                    minimumBatchSize={30}
+                />
+            </div>
         </div>
     );
 });

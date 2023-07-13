@@ -1,6 +1,6 @@
 import { CSSProperties, memo } from 'react';
 import { CellMeasurer, CellMeasurerCache, GridCellProps } from 'react-virtualized';
-import { RerenderCellHandler } from '../types';
+import { RerenderGridCell } from '../types';
 
 type CellProps = {
     item: any,
@@ -10,10 +10,10 @@ type CellProps = {
     verticalGap: number
     horizontalGap: number
     cache: CellMeasurerCache
-    rerender: RerenderCellHandler<any>
+    rerender: RerenderGridCell
 } & GridCellProps;
 
-export const GridCell = memo(({
+export const Cell = memo(({
     item,
     index,
     rowIndex,
@@ -56,7 +56,6 @@ export const GridCell = memo(({
     const position = gridPosition();
 
     return (
-        // @ts-ignore
         <CellMeasurer
             cache={cache}
             parent={parent}
@@ -64,9 +63,8 @@ export const GridCell = memo(({
             rowIndex={rowIndex}
         >
             {({ registerChild, measure }) => <div
-                style={position}
-                // @ts-ignore
-                ref={registerChild}
+                style={gridPosition()}
+                ref={registerChild as any}
             >
                 {rerender({
                     item,
@@ -79,4 +77,4 @@ export const GridCell = memo(({
     );
 });
 
-GridCell.displayName = 'GridCell';
+Cell.displayName = 'Cell';
