@@ -14,11 +14,11 @@ export function HomeView() {
                     <HeroBlock />
                 </Container>
 
-                <div style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>
+                {/* <div style={{ overflow: 'hidden', transform: 'translateZ(0)' }}>
                     <Container space>
                         <GamesCarousel />
                     </Container>
-                </div>
+                </div> */}
 
                 <Container space>
                     <PopularCollections />
