@@ -72,6 +72,32 @@ export function findBestNFTOffer(owners: MultipleNFT['owners']): NFTBestOffer {
     }
 }
 
+export function findOwnerOffer(owners: MultipleNFT['owners'], userAddress: Address): {
+    sale?: Sale,
+    auction?: Auction,
+    status?: NFTSaleStatus
+} {
+    let sale: Sale | undefined;
+    let auction: Auction | undefined;
+    let status: NFTSaleStatus | undefined;
+
+    for (const owner of owners) {
+        if (owner.owner === userAddress) {
+            sale = owner.sales[0];
+            auction = owner.auctions[0];
+            status = owner.status;
+
+            break;
+        }
+    }
+
+    return {
+        sale,
+        auction,
+        status
+    };
+}
+
 export function isOwnerOfMultipleNFT(address: Address | undefined, owners: MultipleNFT['owners']) {
     if (!address || !owners.length) {
         return undefined;
