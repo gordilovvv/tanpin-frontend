@@ -13,7 +13,7 @@ type CardPropertiesProps = {
 }
 
 export function CardProperties({ type, price, currency, auctionEndDate, status }: CardPropertiesProps) {
-    if (price && currency && status === NFTSaleStatus.FIXED_PRICE) {
+    if (price && status === NFTSaleStatus.FIXED_PRICE) {
         return (
             <PropertiesList>
                 <Property
@@ -24,7 +24,7 @@ export function CardProperties({ type, price, currency, auctionEndDate, status }
         );
     }
 
-    if (price && currency && auctionEndDate && status === NFTSaleStatus.AUCTION) {
+    if (price && auctionEndDate && status === NFTSaleStatus.AUCTION) {
         return (
             <PropertiesList>
                 <Property

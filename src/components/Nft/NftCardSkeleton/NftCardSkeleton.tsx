@@ -1,11 +1,11 @@
 import styles from './NftCardSkeleton.module.scss';
-import { Skeleton } from '@/uikit';
+import { ImageSkeleton, Skeleton } from '@/uikit';
 
 export function NftCardSkeleton() {
     return (
         <div className={styles.card}>
             <div className={styles.image}>
-                <Skeleton className={styles.imageSkeleton} />
+                <ImageSkeleton className={styles.imageSkeleton} />
             </div>
 
             <div className={styles.info}>
