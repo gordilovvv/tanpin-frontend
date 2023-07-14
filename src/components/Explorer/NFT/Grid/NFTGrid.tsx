@@ -23,7 +23,7 @@ export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty, reject
             offset,
             filter
         });
-    }, [collectionID, ownerAddress, filter]);
+    }, [collectionID, ownerAddress, filter.hash]);
 
     const renderCard = useCallback(({ data, loading }) => {
         if (loading)

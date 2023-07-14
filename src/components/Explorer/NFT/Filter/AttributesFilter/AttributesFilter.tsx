@@ -1,28 +1,28 @@
 import { useCallback } from 'react';
 import { AttributesFilterOption } from './AttributesFilterOption/AttributesFilterOption';
 import { AttributesDisclosure } from '../AttributesDisclosure/AttributesDisclosure';
-import { useTokensFilterActions } from '@/states/explorer/hooks/useTokensFilterActions';
 import { ActiveAttributesHashMap } from '../types';
+import { NFTAttribute } from '@/states/types';
 import styles from './AttributesFilter.module.scss';
 
 type AttributesFilterProps = {
     values: string[]
     traitType: string
-    activeAttributes: ActiveAttributesHashMap
+    activeAttributes: ActiveAttributesHashMap,
+    onAddAttribute: (attr: NFTAttribute) => void,
+    onRemoveAttribute: (attr: NFTAttribute) => void
 }
 
-export function AttributesFilter({ values = [], traitType, activeAttributes }: AttributesFilterProps) {
-    const { addAttribute, removeAttribute } = useTokensFilterActions();
-
+export function AttributesFilter({ values = [], traitType, activeAttributes, onAddAttribute, onRemoveAttribute }: AttributesFilterProps) {
     const handleChange = useCallback((isActive: boolean, value: string) => {
         const attribute = { value, traitType };
 
         if (isActive) {
-            addAttribute(attribute);
+            onAddAttribute(attribute);
         } else {
-            removeAttribute(attribute);
+            onRemoveAttribute(attribute);
         }
-    }, [addAttribute, removeAttribute]);
+    }, [onAddAttribute, onRemoveAttribute]);
 
     return (
         <AttributesDisclosure
@@ -37,7 +37,7 @@ export function AttributesFilter({ values = [], traitType, activeAttributes }: A
                             <AttributesFilterOption
                                 key={value}
                                 value={value}
-                                initialActive={activeAttributes[traitType]?.[value]}
+                                active={activeAttributes[traitType]?.[value]}
                                 onChange={handleChange}
                             />
                         );

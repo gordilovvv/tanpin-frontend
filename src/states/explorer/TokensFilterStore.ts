@@ -1,5 +1,7 @@
 import { create } from 'zustand';
+import { v4 as uuid } from 'uuid';
 import { NFTAttribute, NFTSaleStatus } from '../types';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 
 export enum NFTSort {
     RECENTLY_ADDED = 'RECENTLY_ADDED',
@@ -8,9 +10,10 @@ export enum NFTSort {
 }
 
 export type TokensFilterState = {
+    hash: string
     search: string
     sort: NFTSort
-    status: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE
+    status: NFTSaleStatus
     minPrice: string
     maxPrice: string
     attributes: {
@@ -20,8 +23,7 @@ export type TokensFilterState = {
 }
 
 type Actions = {
-    setMinPrice: (minPrice: TokensFilterState['minPrice']) => void
-    setMaxPrice: (maxPrice: TokensFilterState['maxPrice']) => void
+    setPrice: (price: TokensFilterState['minPrice'] | TokensFilterState['maxPrice'], type: 'min' | 'max') => void
     addAttribute: (attribute: NFTAttribute) => void
     removeAttribute: (attribute: NFTAttribute) => void
     clearAttributes: () => void
@@ -29,22 +31,39 @@ type Actions = {
     setSearch: (search: TokensFilterState['search']) => void
     setSort: (sort: TokensFilterState['sort']) => void
     setStatus: (status: TokensFilterState['status']) => void
-    replaceFilterState: (newState: Partial<TokensFilterState>) => void
+    replaceFilterState: (newState: Partial<TokensFilterState>) => void,
+    updateHash: () => void
+}
+
+export const initialTokensFilterState: Omit<TokensFilterState, 'hash'> = {
+    search: '',
+    sort: NFTSort.RECENTLY_ADDED,
+    status: NFTSaleStatus.FIXED_PRICE,
+    minPrice: '',
+    maxPrice: '',
+    attributes: [],
+};
+
+function generateFilterHash() {
+    return `explorer-filter-${uuid()}`;
 }
 
 export const useTokensFilterStore = create<TokensFilterState & Actions>()(
     (set) => ({
-        search: '',
-        sort: NFTSort.RECENTLY_ADDED,
-        status: NFTSaleStatus.FIXED_PRICE,
-        minPrice: '',
-        maxPrice: '',
-        attributes: [],
-        setMinPrice: (minPrice) => {
-            set({ minPrice });
+        hash: generateFilterHash(),
+        ...initialTokensFilterState,
+
+        updateHash: () => {
+            set({ hash: generateFilterHash() });
         },
-        setMaxPrice: (maxPrice) => {
-            set({ maxPrice });
+        setPrice: (price, type) => {
+            set(() => {
+                if (type === 'min') {
+                    return { minPrice: price };
+                } else {
+                    return { maxPrice: price };
+                }
+            });
         },
         addAttribute: (attribute) => {
             set((store) => {
@@ -145,3 +164,7 @@ export const useTokensFilterStore = create<TokensFilterState & Actions>()(
         replaceFilterState: set
     })
 );
+
+if (process.env.NODE_ENV === 'development') {
+    mountStoreDevtool('Store', useTokensFilterStore);
+}
