@@ -176,30 +176,48 @@
     }
 }
 
+@include max1400 {
+    .background {
+        .gradientFirst {
+            left: 150px;
+        }
+
+        .gradientSecond {
+            left: -20px;
+        }
+
+        .gradientThird {
+            right: -160px;
+        }
+    }
+}
+
 @include max1200 {
     .content {
         gap: 75px;
     }
-}
-
-@include max1000 {
 
     .background {
         .gradientFirst {
+            top: -190px;
             left: -30px;
         }
 
         .gradientSecond {
+            top: 95px;
             left: -333px;
-            top: 10px;
         }
 
         .gradientThird {
-            right: -334px;
+            top: unset;
+            left: 372px;
+            bottom: -100px;
+            right: unset;
         }
-
     }
+}
 
+@include max1000 {
     .content {
         gap: 64px;
     }
@@ -238,20 +256,21 @@
 @include max767 {
     .background {
         .gradientFirst {
-            top: -140px;
-            left: -340px;
+            top: -130px;
+            left: -315px;
         }
 
         .gradientSecond {
-            left: -638px;
-            top: 144px;
+            top: 146px;
+            left: -620px;
         }
 
         .gradientThird {
-            right: -644px;
-            top: -426px;
+            top: unset;
+            left: 60px;
+            right: unset;
+            bottom: 85px;
         }
-
     }
 
     .content {
