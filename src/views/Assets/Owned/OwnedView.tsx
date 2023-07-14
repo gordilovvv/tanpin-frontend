@@ -6,7 +6,10 @@ export function OwnedView() {
     const { address } = useAccount();
     return (
         <Container space>
-            <NFTExplorer ownerAddress={address} />
+            <NFTExplorer
+                type='ownership'
+                ownerAddress={address}
+            />
         </Container>
     );
 }

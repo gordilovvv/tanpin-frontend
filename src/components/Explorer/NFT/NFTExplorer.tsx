@@ -1,57 +1,51 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Select, Button, Filter as FilterIcon, Modal } from '@/uikit';
+import { Select, Button, Filter as FilterIcon } from '@/uikit';
 import { Filter } from './Filter/Filter';
 import { NFTGrid } from './Grid/NFTGrid';
 import { EmptyResult } from '../EmptyResult/EmptyResult';
 import { SearchInput } from '@/components/SearchInput';
+import { MobileFilter } from '@/components/Modals';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useOpenedState } from '@/hooks/useOpenedState';
+import { useScrollEffect } from '@/hooks/useScrollEffect';
 import { useTokensFilterState } from '@/states/explorer/hooks/useTokensFilterState';
 import { useTokensFilterActions } from '@/states/explorer/hooks/useTokensFilterActions';
-import { NFTSort } from '@/states/explorer/TokensFilterStore';
 import { Collection } from '@/states/collection/types';
+import { NFTExplorerCategory } from '@/states/explorer/types';
+import { NFTSort, initialTokensFilterState } from '@/states/explorer/TokensFilterStore';
 import styles from './NFTExplorer.module.scss';
 
 type NFTExplorerProps = {
+    type: `${NFTExplorerCategory}`,
     collection?: Collection
     ownerAddress?: string
 }
 
 // TODO:
 // 1. ДОБАВИТЬ ПОДДЕРЖКУ URL
-// 2. ДОБАВИТЬ КНОПКУ В МОБИЛЬНОМ ФИЛЬТРЕ
-export function NFTExplorer({ collection, ownerAddress }: NFTExplorerProps) {
-    const filterState = useTokensFilterState();
-    const { setSearch, setSort } = useTokensFilterActions();
-
-    // useNFTFilterDefaultsFromURL();
-    // useTokensFilterQueryParams();
-
-    const wrapperRef = useRef<HTMLDivElement>(null);
+// useNFTFilterDefaultsFromURL();
+// useTokensFilterQueryParams();
+export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps) {
     const isPhone = useMediaQuery('(max-width: 1000px)');
-    const mobileFilterState = useOpenedState();
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    const mobileFilter = useOpenedState();
     const [isFilterVisible, setIsFilterVisible] = useState(true);
+    const filterState = useTokensFilterState();
+    const { handleSearch, handleSort, handleReplaceFilterState } = useTokensFilterActions({ filterImmediately: true });
 
     // After filter change - scroll to start
-    useEffect(() => {
-        if (wrapperRef.current) {
-            const top = wrapperRef.current.getBoundingClientRect().top;
+    useScrollEffect(
+        wrapperRef,
+        filterState.hash
+    );
 
-            if (top < 0) {
-                window.scrollTo({
-                    top: top + window.scrollY - 100,
-                    behavior: 'smooth'
-                });
-            }
-        }
-    }, [filterState]);
-
-    // After filter change - close modal
+    // Reset filter state on unmount
     useEffect(() => {
-        if (mobileFilterState.isOpen) {
-            mobileFilterState.close();
-        }
-    }, [filterState]);
+        return () => {
+            handleReplaceFilterState(initialTokensFilterState);
+        };
+    }, []);
 
     const renderEmpty = useCallback(() => {
         return <EmptyResult
@@ -68,18 +62,18 @@ export function NFTExplorer({ collection, ownerAddress }: NFTExplorerProps) {
 
     const handleFilterToggle = useCallback(() => {
         if (isPhone) {
-            mobileFilterState.isOpen
-                ? mobileFilterState.close()
-                : mobileFilterState.open();
+            mobileFilter.isOpen
+                ? mobileFilter.close()
+                : mobileFilter.open();
         } else {
             setIsFilterVisible(isVisible => !isVisible);
         }
-    }, [mobileFilterState, setIsFilterVisible]);
+    }, [mobileFilter, setIsFilterVisible]);
 
     return (
         <div
-            className={styles.wrapper}
             ref={wrapperRef}
+            className={styles.wrapper}
         >
             <div className={styles.top}>
                 <Button
@@ -93,12 +87,12 @@ export function NFTExplorer({ collection, ownerAddress }: NFTExplorerProps) {
                 <SearchInput
                     value={filterState.search}
                     placeholder="Search"
-                    onChange={setSearch}
+                    onChange={handleSearch}
                 />
 
                 <Select
                     placeholderText="Sort"
-                    onChange={setSort}
+                    onChange={handleSort}
                     selectedValue={filterState.sort}
                     options={sortOptions}
                 />
@@ -110,6 +104,7 @@ export function NFTExplorer({ collection, ownerAddress }: NFTExplorerProps) {
                     && isFilterVisible
                     && <div className={styles.filterWrap}>
                         <Filter
+                            explorer={type}
                             collection={collection}
                             sticky
                         />
@@ -126,12 +121,12 @@ export function NFTExplorer({ collection, ownerAddress }: NFTExplorerProps) {
                 </div>
             </div>
 
-            {isPhone && <Modal
-                isOpen={mobileFilterState.isOpen}
-                onClose={mobileFilterState.close}
-            >
-                <Filter collection={collection} />
-            </Modal>}
+            {isPhone && <MobileFilter
+                isOpen={mobileFilter.isOpen}
+                explorer={type}
+                collection={collection}
+                onClose={mobileFilter.close}
+            />}
         </div>
     );
 }

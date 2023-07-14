@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import { useTokensFilterStore } from '../TokensFilterStore';
 
 export function useTokensFilterState() {
-    const [minPrice, maxPrice, attributes, search, sort, status] = useTokensFilterStore(state => [
+    const [hash, minPrice, maxPrice, attributes, search, sort, status] = useTokensFilterStore(state => [
+        state.hash,
         state.minPrice,
         state.maxPrice,
         state.attributes,
@@ -11,23 +12,15 @@ export function useTokensFilterState() {
         state.status
     ]);
 
-    // return useMemo(() => {
-    //     return {
-    //         minPrice,
-    //         maxPrice,
-    //         attributes,
-    //         search,
-    //         sort,
-    //         status
-    //     };
-    // }, [minPrice, maxPrice, attributes, search, sort, status]);
-
-    return {
-        minPrice,
-        maxPrice,
-        attributes,
-        search,
-        sort,
-        status
-    };
+    return useMemo(() => {
+        return {
+            hash,
+            minPrice,
+            maxPrice,
+            attributes,
+            search,
+            sort,
+            status
+        };
+    }, [hash, minPrice, maxPrice, attributes, search, sort, status]);
 }

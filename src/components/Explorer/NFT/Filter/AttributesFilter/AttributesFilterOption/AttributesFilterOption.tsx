@@ -1,26 +1,22 @@
-import { useState } from 'react';
 import { Mark, UnstyleButton } from '@/uikit';
 import classNames from 'classnames';
 import styles from './AttributesFilterOption.module.scss';
 
 type AttributesFilterOptionProps = {
     value: string
+    active: boolean
     onChange: (isActive: boolean, value: string) => void,
-    initialActive: boolean
 }
 
-export function AttributesFilterOption({ value, onChange, initialActive = false }: AttributesFilterOptionProps) {
-    const [isActive, setIsActive] = useState(initialActive);
-
+export function AttributesFilterOption({ value, onChange, active }: AttributesFilterOptionProps) {
     const handleClick = () => {
-        onChange(!isActive, value);
-        setIsActive(prev => !prev);
+        onChange(!active, value);
     };
 
     return (
         <UnstyleButton
             className={classNames(styles.label, {
-                [styles.active]: isActive
+                [styles.active]: active
             })}
             onClick={handleClick}
         >

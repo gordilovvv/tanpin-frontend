@@ -6,20 +6,20 @@ import classNames from 'classnames';
 import styles from './PriceFilter.module.scss';
 
 type PriceFilterProps = {
-    initialMin?: string
-    initialMax?: string
+    min: string,
+    max: string,
     onMinPriceChange: (value: string) => void
     onMaxPriceChange: (value: string) => void
 }
 
 export function PriceFilter({
+    min: minFromState,
+    max: maxFromState,
     onMinPriceChange,
     onMaxPriceChange,
-    initialMin = '',
-    initialMax = ''
 }: PriceFilterProps) {
-    const [min, setMin] = useState(initialMin);
-    const [max, setMax] = useState(initialMax);
+    const [min, setMin] = useState(minFromState);
+    const [max, setMax] = useState(maxFromState);
     const isValid = useMinMaxValidation(min, max);
 
     const debouncedOnMinPriceChange = useMemo(() => {
@@ -29,6 +29,14 @@ export function PriceFilter({
     const debouncedOnMaxPriceChange = useMemo(() => {
         return debounce(onMaxPriceChange, 400);
     }, [onMaxPriceChange]);
+
+    useEffect(() => {
+        setMin(minFromState);
+    }, [minFromState]);
+
+    useEffect(() => {
+        setMax(maxFromState);
+    }, [maxFromState]);
 
     // Stop all callbacks on error
     useEffect(() => {
