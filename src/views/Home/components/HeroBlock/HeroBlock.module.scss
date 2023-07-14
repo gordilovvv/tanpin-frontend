@@ -183,6 +183,23 @@
 }
 
 @include max1000 {
+
+    .background {
+        .gradientFirst {
+            left: -30px;
+        }
+
+        .gradientSecond {
+            left: -333px;
+            top: 10px;
+        }
+
+        .gradientThird {
+            right: -334px;
+        }
+
+    }
+
     .content {
         gap: 64px;
     }
@@ -219,6 +236,24 @@
 }
 
 @include max767 {
+    .background {
+        .gradientFirst {
+            top: -140px;
+            left: -340px;
+        }
+
+        .gradientSecond {
+            left: -638px;
+            top: 144px;
+        }
+
+        .gradientThird {
+            right: -644px;
+            top: -426px;
+        }
+
+    }
+
     .content {
         gap: 32px;
         grid-template-columns: minmax(0, auto);
