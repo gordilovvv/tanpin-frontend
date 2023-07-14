@@ -1,6 +1,6 @@
 import { PageLayout } from '@/components/Layout';
 import { ErrorView } from '@/views/Error';
-import { GamesView } from '@/views/Games/GamesView';
+// import { GamesView } from '@/views/Games/GamesView';
 import { HomeView } from '@/views/Home/HomeView';
 import { SingleGameView } from '@/views/Games/SingleGame/SingleGameView';
 import { SingleCollectionView } from '@/views/Collections/SingleCollection/SingleCollectionView';
@@ -26,10 +26,10 @@ export const router = createBrowserRouter([
                 path: '/',
                 element: <HomeView />
             },
-            {
-                path: '/games',
-                element: <GamesView />
-            },
+            // {
+            //     path: '/games',
+            //     element: <GamesView />
+            // },
             {
                 path: '/collections',
                 element: <CollectionsView />
