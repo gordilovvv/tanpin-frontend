@@ -1,0 +1,309 @@
+.wrap {
+    position: relative;
+}
+
+.content {
+    position: relative;
+    display: grid;
+    gap: 120px;
+
+    @include min768 {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(min-content, max-content);
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: -1;
+
+    .gradientFirst,
+    .gradientSecond,
+    .gradientThird {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(210px);
+    }
+
+    .gradientFirst {
+        top: -190px;
+        left: 305px;
+        width: 550px;
+        height: 550px;
+        background-color: var(--gradient-1);
+    }
+
+    .gradientSecond {
+        top: 88px;
+        left: 0;
+        width: 1101px;
+        height: 460px;
+        background-color: var(--gradient-2);
+    }
+
+    .gradientThird {
+        top: -480px;
+        right: 0;
+        width: 888px;
+        height: 888px;
+        background-color: var(--gradient-3);
+    }
+}
+
+.main {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 64px;
+
+    @include min768 {
+        justify-items: start;
+    }
+}
+
+.info {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+}
+
+.title {
+    span {
+        color: var(--color-primary);
+    }
+}
+
+.text {
+    max-width: 380px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: -0.216px;
+    color: var(--color-typo-base);
+}
+
+.featured {
+    position: relative;
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.cards {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    max-width: 720px;
+
+    &Link {
+        display: flex;
+        flex-grow: 1;
+        width: 100%;
+        height: 100%;
+        color: inherit;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    img {
+        position: relative;
+        object-fit: cover;
+        max-height: 100%;
+        max-width: 100%;
+    }
+}
+
+.label {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 8px;
+    align-items: center;
+    justify-content: initial;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 6px;
+    background-color: var(--color-essential-75);
+    pointer-events: none;
+
+    @include min768 {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        backdrop-filter: blur(2px);
+        z-index: 1;
+    }
+
+    &Icon {
+        display: flex;
+        color: var(--color-typo-base);
+    }
+
+    &Text {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: -0.14px;
+    }
+}
+
+.game {
+    display: grid;
+
+    @include min768 {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(min-content, max-content);
+        gap: 32px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &Name {
+        color: var(--color-typo-base);
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 36px;
+        letter-spacing: -0.54px;
+    }
+}
+
+@include max1400 {
+    .background {
+        .gradientFirst {
+            left: 150px;
+        }
+
+        .gradientSecond {
+            left: -20px;
+        }
+
+        .gradientThird {
+            right: -160px;
+        }
+    }
+}
+
+@include max1200 {
+    .content {
+        gap: 75px;
+    }
+
+    .background {
+        .gradientFirst {
+            top: -190px;
+            left: -30px;
+        }
+
+        .gradientSecond {
+            top: 95px;
+            left: -333px;
+        }
+
+        .gradientThird {
+            top: unset;
+            left: 372px;
+            bottom: -100px;
+            right: unset;
+        }
+    }
+}
+
+@include max1000 {
+    .content {
+        gap: 64px;
+    }
+
+    @include min768 {
+        .title {
+            font-size: 28px;
+        }
+    }
+
+    .main {
+        gap: 32px;
+    }
+
+    .info {
+        gap: 18px;
+    }
+
+    .featured {
+        gap: 24px;
+    }
+
+    .label {
+        top: 12px;
+        left: 12px;
+    }
+
+    .game {
+        &Name {
+            font-size: 22px;
+            line-height: 28px;
+        }
+    }
+}
+
+@include max767 {
+    .background {
+        .gradientFirst {
+            top: -130px;
+            left: -315px;
+        }
+
+        .gradientSecond {
+            top: 146px;
+            left: -620px;
+        }
+
+        .gradientThird {
+            top: unset;
+            left: 60px;
+            right: unset;
+            bottom: 85px;
+        }
+    }
+
+    .content {
+        gap: 32px;
+        grid-template-columns: minmax(0, auto);
+    }
+
+    .main {
+        text-align: center;
+    }
+
+    .info {
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .text {
+        max-width: 320px;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.16px;
+    }
+
+    .featured {
+        gap: 16px;
+    }
+
+    .label {
+        justify-self: flex-start;
+    }
+
+    .game {
+        gap: 14px;
+        grid-template-columns: minmax(0, auto);
+    }
+}

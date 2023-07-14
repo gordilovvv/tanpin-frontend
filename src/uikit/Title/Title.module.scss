@@ -6,7 +6,24 @@
     line-height: 1.12;
     letter-spacing: -0.02em;
     color: #FFFFFF;
+}
 
+@include max1400 {
+    .title {
+        font-size: 44px;
+    }
+}
+
+@include max1200 {
+    .title {
+        font-size: 40px;
+    }
+}
+
+@include max1000 {
+    .title {
+        font-size: 36px;
+    }
 }
 
 @include max767 {

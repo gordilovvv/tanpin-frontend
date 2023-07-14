@@ -91,13 +91,13 @@ export function CollectionHead({ game, collection }: CollectionHeadProps) {
 
                                 <div className={styles.propertyValue}>
                                     {/* TODO: format number '10 000' */}
-                                    {collection.stats.sales} 
+                                    {collection.stats.sales}
                                 </div>
                             </div>
 
                             <div className={styles.property}>
                                 <div className={styles.propertyLabel}>
-                                   Volume (1D)
+                                    Volume (1D)
                                 </div>
 
                                 <div className={styles.propertyValue}>
