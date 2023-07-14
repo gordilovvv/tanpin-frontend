@@ -1,36 +1,92 @@
 import { useMemo } from 'react';
 import { CardButton } from './Button/CardButton';
 import { CardProperties } from './Properties/CardProperties';
-import { findBestNFTOffer } from '@/utils/nft';
+import { findBestNFTOffer, findOwnerOffer } from '@/utils/nft';
 import { MultipleNFT, NFTSaleStatus } from '@/states/types';
+import { isAddressOwner } from '@/utils/addressHelper';
+import { Address } from 'viem';
+import { NFTBestOffer } from '@/states/nft/types';
 
 type NftMultipleProps = {
-    nft: MultipleNFT
+    nft: MultipleNFT,
+    userAddress?: Address,
     buttonClass?: string
 }
 
-export function NftMultiple({ nft, buttonClass }: NftMultipleProps) {
-    const bestOffer = useMemo(() => {
+export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps) {
+    const isOwner = useMemo(() => {
+        if (userAddress) {
+            const addresses = nft.owners.map(
+                ({ owner }) => owner
+            );
+
+            return isAddressOwner(userAddress, addresses);
+        }
+
+        return false;
+    }, [nft.owners, userAddress]);
+
+    const offer = useMemo<NFTBestOffer>(() => {
+        if (isOwner && userAddress) {
+            const { sale, auction, status } = findOwnerOffer(nft.owners, userAddress);
+
+            if (status) {
+                return {
+                    status,
+                    offer: {
+                        maker: userAddress,
+                        sale,
+                        auction
+                    }
+                };
+            }
+        }
+
         return findBestNFTOffer(nft.owners);
-    }, [nft.owners]);
+    }, [nft.owners, isOwner, userAddress]);
+
+    const properties = useMemo(() => {
+        if (offer.status === NFTSaleStatus.FIXED_PRICE && offer.offer.sale) {
+            const sale = offer.offer.sale;
+
+            return (
+                <CardProperties
+                    type='multipleNFT'
+                    price={sale.price.amount}
+                    currency={sale.price.currency}
+                    status={offer.status}
+                />
+            );
+        }
+
+        if (offer.status === NFTSaleStatus.AUCTION && offer.offer.auction) {
+            const auction = offer.offer.auction;
+
+            return (
+                <CardProperties
+                    type='multipleNFT'
+                    price={auction.highestBid.amount}
+                    currency={auction.highestBid.currency}
+                    auctionEndDate={auction.endDate}
+                    status={offer.status}
+                />
+            );
+        }
+
+        return (
+            <CardProperties
+                type='multipleNFT'
+                status={offer.status}
+            />
+        );
+    }, [offer]);
 
     return (
         <>
-            {bestOffer.status === NFTSaleStatus.NOT_FOR_SALE
-                ? <CardProperties
-                    type='multipleNFT'
-                    status={bestOffer.status}
-                />
-                : <CardProperties
-                    type='multipleNFT'
-                    price={bestOffer.offer.price}
-                    currency={bestOffer.offer.currency}
-                    auctionEndDate={bestOffer.offer.auctionEndDate}
-                    status={bestOffer.status}
-                />}
+            {properties}
 
-            {bestOffer.status !== NFTSaleStatus.NOT_FOR_SALE && <CardButton
-                status={bestOffer.status}
+            {offer.status !== NFTSaleStatus.NOT_FOR_SALE && !isOwner && <CardButton
+                status={offer.status}
                 nftID={nft.ID}
                 collectionID={nft.collection.ID}
                 gameID={nft.collection.game.ID}

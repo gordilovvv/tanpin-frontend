@@ -1,13 +1,18 @@
+import { Address } from 'viem';
 import { CardButton } from './Button/CardButton';
 import { CardProperties } from './Properties/CardProperties';
 import { NFTSaleStatus, SingleNFT } from '@/states/types';
+import { isAddressOwner } from '@/utils/addressHelper';
 
 type NftSingleProps = {
     nft: SingleNFT
+    userAddress?: Address,
     buttonClass?: string
 }
 
-export function NftSingle({ nft, buttonClass }: NftSingleProps) {
+export function NftSingle({ nft, userAddress, buttonClass }: NftSingleProps) {
+    const isOwner = isAddressOwner(userAddress, nft.owner);
+
     const renderProperties = () => {
         if (nft.status === NFTSaleStatus.NOT_FOR_SALE) {
             return (
@@ -43,11 +48,12 @@ export function NftSingle({ nft, buttonClass }: NftSingleProps) {
 
         return null;
     };
+
     return (
         <>
             {renderProperties()}
 
-            {nft.status !== NFTSaleStatus.NOT_FOR_SALE && <CardButton
+            {nft.status !== NFTSaleStatus.NOT_FOR_SALE && !isOwner && <CardButton
                 status={nft.status}
                 nftID={nft.ID}
                 collectionID={nft.collection.ID}

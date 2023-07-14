@@ -1,6 +1,7 @@
 import { memo, useCallback } from 'react';
 import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import { VirtualizedGrid } from '@/components/Virtualized/Grid/VirtualizedGrid';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { TokensFilterState } from '@/states/explorer/TokensFilterStore';
 import { fetchTokensList } from '@/states/explorer/fetch/fetchTokensList';
 import styles from './NFTGrid.module.scss';
@@ -15,6 +16,7 @@ type NFTGridProps = {
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
 export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty, rejected }: NFTGridProps) => {
+    const { address } = useAccount();
     const fetchList = useCallback(async (offset: number, limit: number) => {
         return fetchTokensList({
             collectionID,
@@ -30,10 +32,13 @@ export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty, reject
             return (<NftCardSkeleton />);
 
         if (data)
-            return (<NftCard nft={data} />);
+            return (<NftCard
+                nft={data}
+                userAddress={address}
+            />);
 
         return <></>;
-    }, []);
+    }, [address]);
 
     return (
         <div className={styles.grid}>

@@ -1,17 +1,19 @@
-import { Stock } from '@/uikit';
+import { Image, ImageSkeleton, Stock } from '@/uikit';
 import { NftSingle } from './NftSingle';
 import { NftMultiple } from './NftMultiple';
 import { Link, useNavigate } from 'react-router-dom';
 import { isSingleNFT } from '@/utils/nft';
 import { formatTokenAmountShort } from '@/utils/formatTokenAmount';
 import { NFT } from '@/states/types';
+import { Address } from 'viem';
 import styles from './NftCard.module.scss';
 
 type NftCardProps = {
-    nft: NFT
+    nft: NFT,
+    userAddress?: Address
 }
 
-export function NftCard({ nft }: NftCardProps) {
+export function NftCard({ nft, userAddress }: NftCardProps) {
     const isSingle = isSingleNFT(nft);
     const navigate = useNavigate();
 
@@ -22,10 +24,12 @@ export function NftCard({ nft }: NftCardProps) {
                 className={styles.cardLink}
             >
                 <div className={styles.imageWrap}>
-                    <img
+                    <Image
                         className={styles.image}
                         src={nft.imageURL}
                         alt=''
+                        loading='lazy'
+                        pending={<ImageSkeleton className={styles.imageSkeleton} />}
                     />
 
                     {!isSingle && <div className={styles.stock}>
@@ -59,10 +63,12 @@ export function NftCard({ nft }: NftCardProps) {
                     {isSingle
                         ? <NftSingle
                             nft={nft}
+                            userAddress={userAddress}
                             buttonClass={styles.action}
                         />
                         : <NftMultiple
                             nft={nft}
+                            userAddress={userAddress}
                             buttonClass={styles.action}
                         />}
                 </div>
