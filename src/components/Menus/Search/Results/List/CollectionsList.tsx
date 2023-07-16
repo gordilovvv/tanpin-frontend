@@ -28,7 +28,7 @@ export function CollectionsList({ searchQuery }: CollectionsListProps) {
                 key={collection.ID}
                 href={`/${collection.gameID}/${collection.ID}`}
                 name={collection.name}
-                image={collection.imageURL}
+                image={collection.logoURL}
             />)}
         </>
     );
