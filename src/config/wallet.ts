@@ -6,7 +6,7 @@ import type { ExtendEthereum } from 'global';
 export enum ConnectorNames {
     MetaMask = 'metaMask',
     Injected = 'injected',
-    WalletConnect = 'walletConnectLegacy',
+    WalletConnect = 'walletConnect',
     WalletLink = 'coinbaseWallet',
     TrustWallet = 'trustWallet',
 }
@@ -66,7 +66,7 @@ const walletsConfig = (): WalletConfig[] => {
             get installed() {
                 return !!getTrustWalletProvider();
             },
-            deepLink: `https://link.trustwallet.com/open_url?coin_id=20000714&url=${ APP_URL }`,
+            deepLink: `https://link.trustwallet.com/open_url?coin_id=20000714&url=${APP_URL}`,
         },
         {
             id: 'walletconnect',

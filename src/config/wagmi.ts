@@ -4,7 +4,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { TrustWalletConnector } from '@/utils/trustWalletConnector';
 import { PUBLIC_NODES, activeChain } from './chain';
 
@@ -45,22 +45,19 @@ export const coinbaseConnector = new CoinbaseWalletConnector({
         appLogoUrl: 'https://tanpin.io/logo.png',
     }
 });
- 
-export const walletConnectConnector = new WalletConnectLegacyConnector({
+
+export const walletConnectConnector = new WalletConnectConnector({
     chains,
     options: {
-        // @ts-ignore
         projectId: import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID as string,
-        qrcode: true
+        showQrModal: true
     }
 });
 
 export const metaMaskConnector = new MetaMaskConnector({
     chains,
     options: {
-        shimDisconnect: true,
-        // @ts-ignore
-        shimChainChangedDisconnect: false
+        shimDisconnect: true
     }
 });
 

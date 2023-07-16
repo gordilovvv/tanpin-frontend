@@ -10,7 +10,7 @@ export const viemClient = createPublicClient({
             }),
         ),
         {
-            rank: false,
+            rank: false
         },
     ),
     batch: {
