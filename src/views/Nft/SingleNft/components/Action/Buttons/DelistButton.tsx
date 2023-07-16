@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ActionButton } from '../Button/ActionButton';
 import { ErrorMessageModal } from '@/components/Modals';
-import { LoadingModal } from '@/components/Modals/Loading/LoadingModal';
+import { LoadingModal } from '@/components/Modals';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
 import { usePendingTransactionModal } from '@/states/global/hooks';
@@ -36,9 +36,11 @@ export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
                 args: [BigInt(saleID)]
             });
 
-            pendingTransactionModal.open(hash, 'Sale is successfully cancelled. Updates will appear as soon as transaction is confirmed.');
-
-            refetchNFT();
+            pendingTransactionModal.open({
+                hash,
+                text: 'Sale is successfully cancelled. Updates will appear as soon as transaction is confirmed.',
+                onReceipt: refetchNFT
+            });
         } catch (error) {
             logError(error);
             setTransactionError(walletErrorToUserReadableMessage(error));

@@ -1,6 +1,8 @@
+import { useMemo } from 'react';
 import { ApproveConfirmModal, SellModal } from '@/components/Modals';
 import { ActionButton } from '../Button/ActionButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
 import { useSaleState } from '@/states/sale/hooks';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
@@ -10,17 +12,18 @@ import { CONTRACTS } from '@/config/constants/contracts';
 import { logError } from '@/utils/sentry';
 import { activeChainId } from '@/config/chain';
 import { formatValueToRaw } from '@/utils/formatRawAmount';
-import { useMemo } from 'react';
 
 type ListButtonProps = {
+    nftID: string,
     tokenID: string,
     availableEditions?: number
 }
 
 // TODO:
 // 1. ДОБАВИТЬ АУКЦИОН
-export function ListButton({ tokenID, availableEditions }: ListButtonProps) {
+export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProps) {
     const { address } = useAccount();
+    const { refetchNFT } = useNFTFetch(nftID);
     const { callContract } = useContractCall();
     const { amount, price } = useSaleState();
     const saleModal = useOpenedState();
@@ -100,7 +103,11 @@ export function ListButton({ tokenID, availableEditions }: ListButtonProps) {
         },
         onConfirmSent: (hash) => {
             approveConfirmModal.close();
-            pendingTransactionModal.open(hash, 'Listing is successfully initiated. Updates will appear as soon as the transaction is confirmed.');
+            pendingTransactionModal.open({
+                hash,
+                text: 'Listing is successfully initiated. Updates will appear as soon as the transaction is confirmed.',
+                onReceipt: refetchNFT
+            });
         }
     });
 

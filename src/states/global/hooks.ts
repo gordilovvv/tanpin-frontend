@@ -12,6 +12,8 @@ export function usePendingTransactionModal() {
         isOpen,
         hash: pendingTransaction?.hash,
         text: pendingTransaction?.text,
+        onReject: pendingTransaction?.onReject,
+        onReceipt: pendingTransaction?.onReceipt,
         open: setPendingTransaction,
         close: resetPendingTransaction
     };

@@ -1,20 +1,28 @@
 import { useCallback, useState } from 'react';
-import { Hash } from 'viem';
+import { Hash, TransactionReceipt } from 'viem';
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { TransactionInfo } from './Info/TransactionInfo';
 import styles from './PendingTransactionModal.module.scss';
 
 type PendingTransactionModalProps = {
     hash?: Hash
-    text?: string
+    text?: string,
+    onReject?: () => void
+    onReceipt?: (receipt: TransactionReceipt) => void,
 }
 
-export function PendingTransactionModal({ isOpen, text, hash, onClose }: PendingTransactionModalProps & ModalProps) {
+export function PendingTransactionModal({ isOpen, text, hash, onReject, onReceipt, onClose }: PendingTransactionModalProps & ModalProps) {
     const [canClose, setCanClose] = useState(false);
 
     const handleClose = canClose ? onClose : undefined;
-    const handleTransactionReceipt = useCallback(() => {
+
+    const handleReject = useCallback(() => {
+        onReject?.();
+    }, []);
+
+    const handleReceipt = useCallback((receipt: TransactionReceipt) => {
         setCanClose(true);
+        onReceipt?.(receipt);
     }, [setCanClose]);
 
     return (
@@ -34,7 +42,8 @@ export function PendingTransactionModal({ isOpen, text, hash, onClose }: Pending
                     {hash && <TransactionInfo
                         hash={hash}
                         onClose={handleClose}
-                        onTransactionReceipt={handleTransactionReceipt}
+                        onReject={handleReject}
+                        onReceipt={handleReceipt}
                     />}
                 </div>
             </ModalBody>

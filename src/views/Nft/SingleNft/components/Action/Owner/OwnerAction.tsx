@@ -22,6 +22,7 @@ export function OwnerAction({ nftID, tokenID, availableEditions, sale, status }:
                 </div>
 
                 <ListButton
+                    nftID={nftID}
                     tokenID={tokenID}
                     availableEditions={availableEditions}
                 />

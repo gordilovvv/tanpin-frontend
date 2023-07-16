@@ -75,11 +75,12 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
             return sendRes;
         },
         onConfirmSent: (hash) => {
-            // TODO: Может его вызывать позже ???
-            refetchNFT();
-
             approveConfirmModal.close();
-            pendingTransactionModal.open(hash, 'Purchase is successfully initiated. Updates will appear as soon as the transaction is confirmed.');
+            pendingTransactionModal.open({
+                hash,
+                text: 'Purchase is successfully initiated. Updates will appear as soon as the transaction is confirmed.',
+                onReceipt: refetchNFT
+            });
         }
     });
 

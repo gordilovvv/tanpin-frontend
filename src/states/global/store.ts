@@ -1,13 +1,13 @@
-import { Hash } from 'viem';
 import { create } from 'zustand';
+import { PendingTransaction } from './types';
 
 type State = {
-    pendingTransaction: { hash: Hash, text: string } | undefined
+    pendingTransaction: PendingTransaction | undefined
     wrongNetworkModalOpened: boolean
 }
 
 type Actions = {
-    setPendingTransaction: (hash: Hash, text: string) => void
+    setPendingTransaction: (transaction: PendingTransaction) => void
     resetPendingTransaction: () => void
     openWrongNetworkModal: () => void
     closeWrongNetworkModal: () => void
@@ -16,12 +16,7 @@ type Actions = {
 export const useGlobalStore = create<State & Actions>()(
     set => ({
         pendingTransaction: undefined,
-        setPendingTransaction: (hash, text) => set({
-            pendingTransaction: {
-                hash,
-                text
-            }
-        }),
+        setPendingTransaction: (pendingTransaction) => set({ pendingTransaction }),
         resetPendingTransaction: () => set({ pendingTransaction: undefined }),
 
         wrongNetworkModalOpened: false,

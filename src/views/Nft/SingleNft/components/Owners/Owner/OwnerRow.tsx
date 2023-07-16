@@ -58,6 +58,7 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
                 </>);
             } else {
                 return (<BuyButton
+                    nftID={nftID}
                     saleID={owner.sale.saleID}
                     price={owner.sale.price.amount}
                     stock={owner.sale.stock}

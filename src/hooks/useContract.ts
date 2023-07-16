@@ -6,7 +6,8 @@ import { activeChainId } from '@/config/chain';
 import { marketABI } from '@/config/ABI/market';
 import { erc1155ABI } from '@/config/ABI/erc1155';
 import { CONTRACTS } from '@/config/constants/contracts';
-import { GetWalletClientResult, SendTransactionResult } from 'wagmi/actions';
+import { SendTransactionReturnType } from 'viem';
+import { GetWalletClientResult } from 'wagmi/actions';
 
 export type Contract<TAbi extends Abi> = GetContractReturnType<TAbi, typeof viemClient, GetWalletClientResult | undefined> & {
     account?: Account
@@ -70,7 +71,7 @@ export function useContractCall() {
         method: InferFunctionName<TAbi, TFunctionName>
         args: GetFunctionArgs<TAbi, TFunctionName>['args']
         config?: Omit<CallParameters, 'chain' | 'to' | 'data'>
-    }): Promise<SendTransactionResult> => {
+    }): Promise<{ hash: SendTransactionReturnType }> => {
         if (!walletClient) {
             throw new Error('No walletClient!');
         }

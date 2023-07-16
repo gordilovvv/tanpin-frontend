@@ -15,12 +15,13 @@ enum TransactionStatus {
 }
 
 type TransactionInfoProps = {
-    hash: Hash
-    onClose?: () => void
-    onTransactionReceipt: (receipt?: TransactionReceipt) => void
+    hash: Hash,
+    onClose?: () => void,
+    onReject: () => void,
+    onReceipt: (receipt: TransactionReceipt) => void
 }
 
-export function TransactionInfo({ hash, onClose, onTransactionReceipt }: TransactionInfoProps) {
+export function TransactionInfo({ hash, onClose, onReject, onReceipt }: TransactionInfoProps) {
     const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.PENDING);
 
     const statusNames: Record<TransactionStatus, string> = {
@@ -41,11 +42,11 @@ export function TransactionInfo({ hash, onClose, onTransactionReceipt }: Transac
                     setStatus(TransactionStatus.FAIL);
                 }
 
-                onTransactionReceipt(receipt);
+                onReceipt(receipt);
             })
             .catch(() => {
                 setStatus(TransactionStatus.FAIL);
-                onTransactionReceipt(undefined);
+                onReject();
             });
     }, [hash]);
 

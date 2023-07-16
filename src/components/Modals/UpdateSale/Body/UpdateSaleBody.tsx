@@ -53,7 +53,11 @@ export function UpdateSaleBody({ saleID, onError, onSuccess }: UpdateSaleBodyPro
                 args: [BigInt(saleID), rawPrice]
             });
 
-            pendingTransactionModal.open(hash, 'The NFT price is successfully changed. Updates will appear as soon as transaction is confirmed.');
+            // TODO: ПОСЛЕ ТРАНЗАКЦИИ ОБНОВИТЬ NFT
+            pendingTransactionModal.open({
+                hash,
+                text: 'The NFT price is successfully changed. Updates will appear as soon as transaction is confirmed.'
+            });
 
             onSuccess?.();
         } catch (error) {

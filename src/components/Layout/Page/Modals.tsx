@@ -18,6 +18,8 @@ export function Modals({ children }: PropsWithChildren<unknown>) {
                 isOpen={pendingTransactionModal.isOpen}
                 hash={pendingTransactionModal.hash}
                 text={pendingTransactionModal.text}
+                onReject={pendingTransactionModal.onReject}
+                onReceipt={pendingTransactionModal.onReceipt}
                 onClose={pendingTransactionModal.close}
             />
 
