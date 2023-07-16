@@ -1,0 +1,48 @@
+.wrap {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.loader {
+    position: relative;
+    display: flex;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+
+    img {
+        width: 100%;
+    }
+}
+
+.text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.error {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--color-danger);
+    text-align: center;
+}
+
+.buttons {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+}
+
+@include max767 {
+    .wrap {
+        gap: 24px;
+    }
+
+    .error {
+        font-size: 14px;
+    }
+}

@@ -21,7 +21,7 @@ export function ConnectWalletButton() {
         if (connectPopupState.isOpen && logged && isConnected) {
             connectPopupState.close();
         }
-    }, [connectPopupState.isOpen, logged, isConnected]);
+    }, [connectPopupState.isOpen, connectPopupState.close, logged, isConnected]);
 
     const handleLogin = useCallback(async (id: ConnectorNames) => {
         try {
@@ -29,7 +29,7 @@ export function ConnectWalletButton() {
         } catch (error) {
             setConnectError((error as Error).message as string);
         }
-    }, [wallets, setConnectError]);
+    }, [login, setConnectError]);
 
     return (
         <>

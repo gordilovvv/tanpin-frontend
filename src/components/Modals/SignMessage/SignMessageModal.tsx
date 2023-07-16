@@ -1,68 +1,25 @@
-import { Button, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
-import { useAuth } from '@/states/user/hooks/useAuth';
-import { useWalletSignature } from '@/states/user/hooks/useWalletSignature';
-import lottieImg from '@/app/assets/images/lottie.gif';
-import styles from './SignMessageModal.module.scss';
+import { useCallback, useState } from 'react';
+import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
+import { SignMessageBody } from './Body/SingMessageBody';
 
 export function SignMessageModal({ isOpen }: ModalProps) {
-    const { logout } = useAuth();
-    const { signLoginMessage, reset, error, canSign } = useWalletSignature();
+    const [error, setError] = useState<string | undefined>();
 
-    if (canSign && !error) {
-        signLoginMessage();
-    }
-
-    const handleCancel = () => {
-        logout();
-        reset();
-    };
+    const handleRetry = useCallback(() => {
+        setError(undefined);
+    }, [setError]);
 
     return (
-        <>
-            <Modal isOpen={isOpen}>
-                <ModalHead title={error ? 'Error' : 'Connecting Wallet'} />
+        <Modal isOpen={isOpen}>
+            <ModalHead title={error ? 'Error' : 'Connecting Wallet'} />
 
-                <ModalBody>
-                    {!error
-                        ? <div className={styles.wrap}>
-                            <div className={styles.loader}>
-                                <img
-                                    src={lottieImg}
-                                    alt='loader'
-                                />
-                            </div>
+            <ModalBody>
+                <SignMessageBody
+                    onRetry={handleRetry}
+                    onError={setError}
+                />
+            </ModalBody>
+        </Modal>
 
-                            <div className={styles.text}>
-                                Sign the message with your wallet
-                            </div>
-
-                            <Button
-                                view='secondary'
-                                onClick={logout}
-                            >
-                                Cancel
-                            </Button>
-                        </div>
-                        : <div className={styles.wrap}>
-                            <div className={styles.error}>
-                                {error}
-                            </div>
-
-                            <div className={styles.buttons}>
-                                <Button onClick={reset}>
-                                    Try again
-                                </Button>
-
-                                <Button
-                                    view='secondary'
-                                    onClick={handleCancel}
-                                >
-                                    Cancel
-                                </Button>
-                            </div>
-                        </div>}
-                </ModalBody>
-            </Modal>
-        </>
     );
 }

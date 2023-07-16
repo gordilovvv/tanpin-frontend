@@ -13,6 +13,7 @@ type ConnectWalletModalProps = {
 const sortWallets = (wallets: WalletConfig[]) => {
     return [...wallets].sort((a, b) => {
         if (a.installed === b.installed) return 0;
+
         return a.installed === true ? -1 : 1;
     });
 };

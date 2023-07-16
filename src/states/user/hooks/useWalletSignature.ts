@@ -1,60 +1,79 @@
-import { useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useAccount, useSignMessage } from 'wagmi';
 import { useUserStore } from '../store';
 import { loginWeb3 } from '../fetch/loginWeb3';
 import { POLICY_URL, TERMS_URL } from '@/config';
+import { times } from 'lodash';
+import { logError } from '@/utils/sentry';
+import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
+
+function randomHex(size: number) {
+    return times(size)
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join('');
+}
+
+export enum LoadingStatus {
+    IDLE = 'IDLE',
+    LOADING = 'loading',
+    SUCCESS = 'success',
+    FAIL = 'fail'
+}
 
 /**
- * User sign message because we want to securely prove control of a specific address. Then we receive accessToken from server.
+ * Хук подписи сообщения входа, для того чтобы убедиться что юзер действительно владеет кошельком. Бекенд проверит подпись и будет уверен, что это истинный владелец.
  */
 export function useWalletSignature() {
-    const message = `I accept the Tanpin Terms of Service ${TERMS_URL} and Privacy Policy ${POLICY_URL}.`;
-    const setUser = useUserStore(state => state.setUser);
-    const hasAccessToken = useUserStore(state => !!state.accessToken);
-
     const { address, connector } = useAccount();
-    const { error: errorWagmi, isLoading, isSuccess, signMessageAsync: signMessageWagmi, reset } = useSignMessage({
-        message
-    });
+    const { signMessageAsync: signMessageWagmi, reset: resetWagmi } = useSignMessage();
+    const setUser = useUserStore(state => state.setUser);
+    const isLoading = useRef<boolean>(false);
+    const isPreparing = address && !connector;
+    const [error, setError] = useState<string | undefined>();
+    const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.IDLE);
 
-    const error = errorWagmi?.message;
-    const canSign = !!address && !isLoading && !isSuccess && !hasAccessToken;
-
-    // TODO: add nonce to message
-    // const genRanHex = (size) =>
-    //   [...Array(size)]
-    //   .map(() => Math.floor(Math.random() * 16).toString(16))
-    //   .join('');
-    // const nonce = genRanHex(32);
     const signLoginMessage = useCallback(async () => {
         try {
-            if (!connector) {
+            if (isLoading.current) {
                 return;
             }
 
-            if (!canSign) {
-                throw new Error('Sign message is not ready');
+            if (!address || !connector) {
+                throw new Error('signMessage called unnecessary!');
             }
 
-            const signature = await signMessageWagmi();
+            isLoading.current = true;
+
+            const nonce = randomHex(32);
+            const message = `I accept the Tanpin Terms of Service ${TERMS_URL} and Privacy Policy ${POLICY_URL}. \n\n Nonce: ${nonce}`;
+
+            const signature = await signMessageWagmi({ message });
             const { accessToken, rulesAccept } = await loginWeb3({
                 address,
                 message,
                 signature
             });
 
-            setUser(
-                accessToken,
-                rulesAccept
-            );
+            setStatus(LoadingStatus.SUCCESS);
+            setUser(accessToken, rulesAccept);
         } catch (error) {
-            console.error(error);
+            setStatus(LoadingStatus.FAIL);
+            setError(walletErrorToUserReadableMessage(error));
+            logError(error);
+        } finally {
+            isLoading.current = false;
         }
-    }, [setUser, signMessageWagmi, address, canSign, connector]);
+    }, [address, connector, isLoading, signMessageWagmi, setStatus, setUser, setError]);
+
+    const reset = useCallback(() => {
+        resetWagmi();
+        setStatus(LoadingStatus.IDLE);
+    }, [resetWagmi, setStatus]);
 
     return {
+        isPreparing,
+        status,
         error,
-        canSign,
         reset,
         signLoginMessage
     };

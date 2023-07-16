@@ -21,6 +21,10 @@ export function walletErrorToUserReadableMessage(error: any) {
         return 'You rejected the transaction.';
     }
 
+    if (error instanceof Error && 'message' in error) {
+        return error.message;
+    }
+
     let reason: string | undefined;
     const parsedError = parseError(error);
 
