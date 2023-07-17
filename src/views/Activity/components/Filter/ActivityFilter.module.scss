@@ -6,6 +6,8 @@
     border-radius: 12px;
 }
 
+
+
 .title {
     font-weight: 600;
     font-size: 18px;
@@ -15,4 +17,29 @@
 .inner {
     display: grid;
     gap: 12px;
+}
+
+@include max1000 {
+    .wrapper {
+        padding: 0;
+        border: none;
+    }
+
+    .inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        margin-top: -16px;
+        margin-left: -16px;
+
+        &>* {
+            margin-top: 16px;
+            margin-left: 16px;
+        }
+
+    }
+
+    .title {
+        display: none;
+    }
 }

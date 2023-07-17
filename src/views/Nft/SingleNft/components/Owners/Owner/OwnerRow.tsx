@@ -44,7 +44,7 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
     const tokenAction = useMemo(() => {
         if (owner.sale && owner.status === NFTSaleStatus.FIXED_PRICE) {
             if (isUserOwner) {
-                return (<>
+                return (<div className={styles.btnWrap}>
                     <UpdateSaleButton
                         nftID={nftID}
                         saleID={owner.sale.saleID}
@@ -55,7 +55,7 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
                         saleID={owner.sale.saleID}
                         text='Delist'
                     />
-                </>);
+                </div>);
             } else {
                 return (<BuyButton
                     nftID={nftID}

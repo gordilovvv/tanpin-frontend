@@ -9,10 +9,53 @@ import styles from './ActivityList.module.scss';
 export function ActivityList() {
     const { address } = useAccount();
 
-    const [activity, filter] = useActivityStore(state => [
+    const [filter] = useActivityStore(state => [
         state.userActivity,
         state.userActivityFilter
     ]);
+
+    const activity = [
+        {
+            ID: '2',
+            type: 'minted',
+            owner: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
+            price: {
+                amount: '100',
+                currency: 'USDT',
+            },
+            date: '2023-05-29',
+            transactionHash: '0x0987654321fedcba4',
+        },
+        {
+            ID: '4',
+            type: 'transfer',
+            owner: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
+            date: '2023-05-29',
+            transactionHash: '0x0987654321fedcba4',
+        },
+        {
+            ID: '5',
+            type: 'mint',
+            price: {
+                amount: '100',
+                currency: 'USDT',
+            },
+            owner: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
+            date: '2023-05-29',
+            transactionHash: '0x0987654321fedcba4',
+        },
+        {
+            ID: '6',
+            type: 'mint',
+            price: {
+                amount: '100',
+                currency: 'USDT',
+            },
+            owner: '0xB592a1A50490829e9EEcB64ED39A255b1F4d7935',
+            date: '2023-05-29',
+            transactionHash: '0x0987654321fedcba4',
+        },
+    ];
 
     const { isLoading } = useActivity({
         userAddress: address,
