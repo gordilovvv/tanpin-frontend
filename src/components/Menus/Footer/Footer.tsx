@@ -58,7 +58,7 @@ export function Footer() {
                         </div>
 
                         <div className={styles.copyright}>
-                            © 2023 MMM Legacy Team
+                            2023 © All rights reserved
                         </div>
                     </div>
                 </div>

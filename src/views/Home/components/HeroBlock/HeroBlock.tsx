@@ -55,6 +55,7 @@ export function HeroBlock() {
                         </div>
 
                         <Button
+                            to='/collections'
                             view="secondary"
                             iconSlot={<ArrowDown />}
                         >
@@ -90,7 +91,8 @@ export function HeroBlock() {
                                 NFTGTA.io
                             </div>
 
-                            <Button>
+                            {/* TODO: real url */}
+                            <Button to='/aabb4a6c-eb73-458a-9f72-2f4438e49e18/026dcd1f-f604-4f61-b9f0-b367f55d8dcd'>
                                 View collections
                             </Button>
                         </div>

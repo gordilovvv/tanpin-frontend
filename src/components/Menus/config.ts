@@ -1,3 +1,4 @@
+import { POLICY_URL, TERMS_URL } from '@/config';
 import { Activity, Assets } from '@/uikit';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 
@@ -14,9 +15,8 @@ export const headerLinks: NavLink[] = [
 ];
 
 export const footerLinks: NavLink[] = [
-    { to: '/about', text: 'About' },
-    { to: 'https://docs.tanpin.org/whitepaper', text: 'Whitepaper', target: '_blank' },
-    { to: 'https://blog.tanpin.org', text: 'Blog', target: '_blank' }
+    { to: POLICY_URL, text: 'Privacy policy', target: '_blank' },
+    { to: TERMS_URL, text: 'Terms', target: '_blank' }
 ];
 
 export const walletMenuLinks: (NavLink & { icon: (...args: any) => JSX.Element })[] = [

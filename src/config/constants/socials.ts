@@ -8,17 +8,17 @@ type Social = {
 
 export const socials: Record<string, Social> = {
     twitter: {
-        url: 'https://twitter.com',
+        url: 'https://twitter.com/tanpin_io',
         name: 'Twitter',
         icon: Twitter
     },
     telegram: {
-        url: 'https://telegram.org',
+        url: 'https://t.me/tanpin_io',
         name: 'Telegram',
         icon: Telegram
     },
     discord: {
-        url: 'https://discord.com/',
+        url: 'https://ds.tanpin.io',
         name: 'Discord',
         icon: Discord
     }

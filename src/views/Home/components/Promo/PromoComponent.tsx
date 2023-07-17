@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react';
-import { Title, Button, Cat } from '@/uikit';
+import { Title, Cat } from '@/uikit';
 import classNames from 'classnames';
 import styles from './PromoComponent.module.scss';
 import promoImg from '@/app/assets/bg/promo.png';
@@ -22,7 +22,7 @@ export function PromoComponent({ className, ...props }: HTMLAttributes<HTMLDivEl
                     </div>
                 </div>
 
-                <div className={styles.wrapperBtn}>
+                {/* <div className={styles.wrapperBtn}>
                     <Button>
                         Become a partner
                     </Button>
@@ -30,7 +30,7 @@ export function PromoComponent({ className, ...props }: HTMLAttributes<HTMLDivEl
                     <Button view='secondary'>
                         Learn more
                     </Button>
-                </div>
+                </div> */}
             </div>
 
             <div className={styles.cat}>
