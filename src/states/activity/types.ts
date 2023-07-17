@@ -9,20 +9,28 @@ export enum ActivityType {
     UNLISTED = 'unlisted',
     BID = 'bid',
     CREATE_AUCTION = 'createAuction',
+    WON_AUCTION = 'wonAuction',
     CLOSE_AUCTION = 'closeAuction',
-    REFUND_BID = 'refundBid'
+    LOST_AUCTION = 'lostAuction'
 }
 
 export type ActivityTransaction = {
     ID: string
     type: ActivityType
     owner: Address,
+    nftID: string,
+    nftName: string,
+    nftImage: string,
     transferedTo?: Address
     amount?: number
     price?: {
         amount: string
         currency: string
-    }
+    },
+    /** ID аукциона. Только для типов `wonAuction`, `closeAuction`, `loseAuction` */
+    auctionID?: string,
+    /** Закрыт ли аукцион для юзера. Только для типов `wonAuction`, `closeAuction`, `loseAuction` */
+    doneAuctionAction?: boolean,
     date: string
     transactionHash: Hash
 }

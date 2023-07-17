@@ -14,11 +14,20 @@
     }
 }
 
+
+.content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 24px;
+}
+
 .imageWrap {
     position: relative;
     width: 96px;
     overflow: hidden;
     transform: translateZ(0);
+    border-radius: 6px;
 
     &::before {
         height: 0px;
@@ -28,13 +37,6 @@
     }
 }
 
-.content {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 24px;
-}
-
 .image,
 .imageSkeleton {
     position: absolute;
@@ -42,8 +44,8 @@
     top: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    border-radius: 6px;
+    min-height: 100%;
+    object-fit: cover;
 }
 
 .info {

@@ -41,7 +41,25 @@ export function ActivityDescription({ activity }: ActivityDescriptionProps) {
         return (<>Sold for {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
     }
 
-    // TODO: add auction descriptions
+    if (activity.type === ActivityType.CREATE_AUCTION) {
+        return (<>Auction started</>);
+    }
+
+    if (activity.type === ActivityType.BID && activity.price) {
+        return (<>You’ve bid {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
+    }
+
+    if (activity.type === ActivityType.WON_AUCTION && activity.price) {
+        return (<>Auction won for {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
+    }
+
+    if (activity.type === ActivityType.LOST_AUCTION) {
+        return (<>Auction lost</>);
+    }
+
+    if (activity.type === ActivityType.CLOSE_AUCTION && activity.price) {
+        return (<>Received {renderTokenAmount(activity.price.amount, activity.price.currency)} for finished auction</>);
+    }
 
     return <>Unknown transaction: <span>{activity.type}</span></>;
 }

@@ -8,7 +8,7 @@ import styles from './TransactionsHistory.module.scss';
 const SKELETONS_COUNT = 5;
 
 export function TransactionsHistory() {
-    const tokenActivity = useActivityStore(state => state.tokenActivity);
+    const tokenActivity = useActivityStore(state => state.activityList);
     const isLoading = useNFTStore(state => state.isLoadingActivity);
 
     if (isLoading || !tokenActivity) {

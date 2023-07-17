@@ -1,4 +1,4 @@
-import { ActionButton } from '../Button/ActionButton';
+import { ActionButton } from './ActionButton';
 import { UpdateSaleModal } from '@/components/Modals';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';

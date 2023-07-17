@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { ButtonProps } from '@/uikit';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import { ActionButton } from '../Button/ActionButton';
+import { ActionButton } from './ActionButton';
 import { ApproveConfirmModal, BuyModal } from '@/components/Modals';
 import { usePendingTransactionModal } from '@/states/global/hooks';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';

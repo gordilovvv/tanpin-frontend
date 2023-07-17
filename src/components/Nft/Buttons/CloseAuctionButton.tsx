@@ -1,28 +1,27 @@
-import { useState } from 'react';
-import { ActionButton } from '../Button/ActionButton';
-import { ErrorMessageModal } from '@/components/Modals';
-import { LoadingModal } from '@/components/Modals';
-import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
+import { Button, ButtonProps } from '@/uikit';
+import { LoadingModal, ErrorMessageModal } from '@/components/Modals';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
 import { usePendingTransactionModal } from '@/states/global/hooks';
+import { useState } from 'react';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
-type DelistButtonProps = {
-    nftID: string
-    saleID: string
-    text: string
-}
+type CloseAuctionButtonProps = {
+    text: string,
+    loadingText: string,
+    pendingTransactionText: string,
+    auctionID: string,
+    onSuccess?: () => void
+} & Omit<ButtonProps<'button'>, 'children'>;
 
-export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
-    const { refetchNFT } = useNFTFetch(nftID);
+export function CloseAuctionButton({ auctionID, text, loadingText, pendingTransactionText, onSuccess, ...props }: CloseAuctionButtonProps) {
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
     const pendingTransactionModal = usePendingTransactionModal();
     const [isLoading, setIsLoading] = useState(false);
     const [transactionError, setTransactionError] = useState<string | undefined>();
 
-    const handleDelist = async () => {
+    const handleClick = async () => {
         try {
             if (!marketContract) {
                 throw new Error('Delist is not ready!');
@@ -32,14 +31,14 @@ export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
 
             const { hash } = await callContract({
                 contract: marketContract,
-                method: 'closeDirectSale',
-                args: [BigInt(saleID)]
+                method: 'closeAuctionSale',
+                args: [BigInt(auctionID)]
             });
 
             pendingTransactionModal.open({
                 hash,
-                text: 'Sale is successfully cancelled. Updates will appear as soon as transaction is confirmed.',
-                onReceipt: refetchNFT
+                text: pendingTransactionText,
+                onReceipt: onSuccess
             });
         } catch (error) {
             logError(error);
@@ -51,16 +50,16 @@ export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
 
     return (
         <>
-            <ActionButton
-                view='secondary'
-                onClick={handleDelist}
+            <Button
+                {...props}
+                onClick={handleClick}
             >
                 {text}
-            </ActionButton>
+            </Button>
 
             <LoadingModal
                 isOpen={isLoading}
-                text={'Please confirm the transaction in your wallet to cancel the sale.'}
+                text={loadingText}
             />
 
             <ErrorMessageModal

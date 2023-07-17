@@ -17,7 +17,7 @@ type TokenDetailsProps = {
 
 export function TokenDetails({ nft }: TokenDetailsProps) {
     const isSingle = isSingleNFT(nft);
-    const historyTransactions = useActivityStore(state => state.tokenActivity);
+    const historyTransactions = useActivityStore(state => state.activityList);
 
     const mintTransaction = useMemo(() => {
         return historyTransactions?.find(tx => tx.type === ActivityType.MINT);

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useActivityStore } from '@/states/activity/store';
 import { ActivityFilterOption } from './ActivityFilterOption/ActivityFilterOption';
 import { ActivityType } from '@/states/activity/types';
@@ -10,16 +10,29 @@ export function ActivityFilter() {
         state.removeUserActivityOption
     ]);
 
-    const options = useMemo(() => {
-        return [
-            { value: ActivityType.SALE, label: 'Sales' },
-            { value: [ActivityType.LISTED, ActivityType.UNLISTED], label: 'Listings' },
-            { value: [ActivityType.BID, ActivityType.REFUND_BID], label: 'Bids' },
-            { value: ActivityType.TRANSFER, label: 'Transfers' },
-            { value: ActivityType.BUY, label: 'Purchases' },
-            { value: ActivityType.MINT, label: 'Mints' },
-        ];
-    }, []);
+    const options = [
+        { value: ActivityType.SALE, label: 'Sales' },
+        {
+            value: [
+                ActivityType.LISTED,
+                ActivityType.UNLISTED
+            ],
+            label: 'Listings'
+        },
+        {
+            value: [
+                ActivityType.BID,
+                ActivityType.CREATE_AUCTION,
+                ActivityType.CLOSE_AUCTION,
+                ActivityType.LOST_AUCTION,
+                ActivityType.WON_AUCTION
+            ],
+            label: 'Auctions'
+        },
+        { value: ActivityType.TRANSFER, label: 'Transfers' },
+        { value: ActivityType.BUY, label: 'Purchases' },
+        { value: ActivityType.MINT, label: 'Mints' },
+    ];
 
     const handleChange = useCallback((value: ActivityType | ActivityType[], isActive: boolean) => {
         if (isActive) {

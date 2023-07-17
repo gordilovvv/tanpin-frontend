@@ -1,7 +1,7 @@
-import { Auction, NFTSaleStatus, Sale } from '@/states/types';
+import { ListButton } from '@/components/Nft';
 import { ActionBox } from '../Box/ActionBox';
-import { ListButton } from '../Buttons/ListButton';
 import { DirectSale } from '../DirectSale/DirectSale';
+import { Auction, NFTSaleStatus, Sale } from '@/states/types';
 import styles from './OwnerAction.module.scss';
 
 type OwnerActionProps = {

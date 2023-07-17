@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { ApproveConfirmModal, SellModal } from '@/components/Modals';
-import { ActionButton } from '../Button/ActionButton';
+import { ActionButton } from './ActionButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
 import { useSaleState } from '@/states/sale/hooks';

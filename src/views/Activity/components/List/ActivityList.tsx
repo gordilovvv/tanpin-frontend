@@ -10,7 +10,7 @@ export function ActivityList() {
     const { address } = useAccount();
 
     const [activity, filter] = useActivityStore(state => [
-        state.userActivity,
+        state.activityList,
         state.userActivityFilter
     ]);
 

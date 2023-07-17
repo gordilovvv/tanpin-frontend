@@ -1,15 +1,13 @@
 import { useMemo } from 'react';
 import { UnstyleLink } from '@/uikit';
 import { UserAvatar } from '@/components/User';
+import { BuyButton, DelistButton, UpdateSaleButton } from '@/components/Nft';
 import { Offer } from './Offer';
-import { BuyButton } from '../../Action/Buttons/BuyButton';
-import { DelistButton } from '../../Action/Buttons/DelistButton';
-import { UpdateSaleButton } from '../../Action/Buttons/UpdateSaleButton';
 import { Auction, NFTOwner, NFTSaleStatus, Sale } from '@/states/types';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import { ellipseAddress } from '@/utils/addressHelper';
-import styles from './OwnerRow.module.scss';
 import classNames from 'classnames';
+import styles from './OwnerRow.module.scss';
 
 type OwnerRowProps = {
     nftID: string,
