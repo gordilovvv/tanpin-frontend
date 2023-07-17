@@ -16,6 +16,7 @@ import { SaleView } from '@/views/Assets/Sale/SaleView';
 import { RequireConnectedWallet } from './requireConnectedWallet';
 import { MintTokenView } from '@/views/MintToken/MintTokenView';
 import { DepositView } from '@/views/Deposit/DepositView';
+import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSuccessView';
 
 // TODO: LazyLoad Routes
 // https://loadable-components.com/docs/getting-started/
@@ -46,7 +47,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/deposit',
-                element: <DepositView />
+                element: <DepositView />,
+
+            },
+            {
+                path: '/deposit/success',
+                element: <DepositSuccessView />
             },
             {
                 path: '/:gameID/:collectionID',

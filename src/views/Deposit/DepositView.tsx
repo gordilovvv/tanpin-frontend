@@ -1,7 +1,10 @@
 import { Container, PageWrapper, } from '@/components/Layout';
 import { Gas, Input, Title, Button, UnstyleLink } from '@/uikit';
 import { TERMS_URL } from '@/config';
+
 import styles from './DepositView.module.scss';
+
+
 
 export function DepositView() {
     return (
@@ -10,7 +13,6 @@ export function DepositView() {
                 maxWidth={390}
                 className={styles.wrapp}
             >
-
                 <Title className={styles.title}>
                     Buy USDT
                 </Title>
@@ -42,9 +44,7 @@ export function DepositView() {
                         </div>
                     </div>
                 </div>
-
-
             </Container>
-        </PageWrapper>
+        </PageWrapper >
     );
 }
