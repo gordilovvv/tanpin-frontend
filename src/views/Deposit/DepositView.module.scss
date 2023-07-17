@@ -1,0 +1,124 @@
+.wrapp {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 48px;
+}
+
+.inputWrapp {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+}
+
+.title {
+    text-align: center;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 16px;
+}
+
+.gas {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--color-typo-base);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+
+    &Icon {
+        color: var(--color-primary);
+    }
+
+    span {
+        color: var(--color-primary);
+        font-weight: 700;
+    }
+}
+
+
+.down {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+}
+
+.offer {
+    text-align: center;
+
+    color: var(--color-typo-base);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+
+    span {
+        color: var(--color-primary);
+        font-weight: 700;
+    }
+}
+
+.buttonWrap {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 16px;
+}
+
+
+
+.terms {
+    color: var(--color-typo-base);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.12px;
+    text-align: center;
+
+    &Link {
+        color: var(--color-primary);
+        font-weight: 600;
+        text-decoration-line: underline;
+    }
+}
+
+@include max767 {
+    .wrapp {
+        gap: 24px;
+    }
+
+    .inputWrapp {
+        gap: 8px;
+    }
+
+    .gas {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: -0.12px;
+
+        &Icon {
+            height: 16px;
+        }
+    }
+
+    .offer {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: -0.12px;
+    }
+
+    .terms {
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: -0.12px;
+    }
+
+    .buttonWrap {
+        gap: 16px;
+    }
+}

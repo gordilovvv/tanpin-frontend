@@ -29,3 +29,4 @@ export { Share } from './components/Share';
 export { Cart } from './components/Cart';
 export { Bell } from './components/Bell';
 export { FeaturedGame } from './components/FeaturedGame';
+export { Gas } from './components/Gas';
