@@ -40,25 +40,33 @@ export function DepositSuccessView() {
     return (
         // TODO: Конфети вылезают за страницу
         <PageWrapper>
-            <Container className={styles.success}>
-                <Cat
-                    className={styles.img}
-                />
-
-                <div className={styles.body}>
-                    <Confetti
-                        active={launchConfetti}
-                        config={confettiConfig}
+            <Container
+                space
+                className={styles.container}
+            >
+                <div
+                    className={styles.success}
+                >
+                    <Cat
+                        className={styles.img}
                     />
 
-                    <div className={styles.successTitle}>
-                        You’ve successfully <br />
-                        bought <span>300 USDT</span>
-                    </div>
+                    <div className={styles.body}>
+                        <Confetti
+                            active={launchConfetti}
+                            config={confettiConfig}
+                        />
 
-                    <Button>Explore Tanpin</Button>
+                        <div className={styles.successTitle}>
+                            You’ve successfully <br />
+                            bought <span>300 USDT</span>
+                        </div>
+
+                        <Button to='/'>Explore Tanpin</Button>
+                    </div>
                 </div>
             </Container>
         </PageWrapper>
+
     );
 }
