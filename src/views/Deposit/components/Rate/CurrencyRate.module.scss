@@ -1,0 +1,35 @@
+.rate {
+    display: flex;
+    justify-content: center;
+
+    span {
+        color: var(--color-primary);
+        font-weight: 700;
+    }
+}
+
+.text {
+    color: var(--color-typo-base);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+.rateSkeleton {
+    width: 200px;
+    height: 22px;
+    margin: 1px 0;
+}
+
+@include max767 {
+    .text {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .rateSkeleton {
+        width: 160px;
+        height: 14px;
+    }
+}

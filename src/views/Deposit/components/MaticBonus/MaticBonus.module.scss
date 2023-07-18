@@ -1,0 +1,42 @@
+.maticBonus {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    &Icon {
+        display: flex;
+        color: var(--color-primary);
+    }
+
+    &Text {
+        color: var(--color-typo-base);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: -0.14px;
+
+        span {
+            color: var(--color-primary);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+    }
+}
+
+@include max767 {
+    .maticBonus {
+        &Icon {
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        &Text {
+            font-size: 12px;
+            line-height: 16px;
+        }
+    }
+}

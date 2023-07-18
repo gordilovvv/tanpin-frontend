@@ -42,7 +42,9 @@ module.exports = {
         'react/jsx-closing-bracket-location': [1, 'line-aligned'],
         'react/no-unescaped-entities': 'off',
         'indent': 'off',
-        '@typescript-eslint/indent': ['error', 4],
+        '@typescript-eslint/indent': ['error', 4, {
+            ignoredNodes: ['TSUnionType']
+        }],
         '@typescript-eslint/no-unused-vars': ['error', { 'destructuredArrayIgnorePattern': '^_' }],
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-explicit-any': 'off',

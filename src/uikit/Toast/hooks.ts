@@ -32,11 +32,17 @@ export function useToast() {
     }, [enqueueSnackbar, closeSnackbar]);
 
     const toastDanger = useCallback((text: string) => {
-        enqueueSnackbar(text, { variant: ToastVariant.DANGER });
+        enqueueSnackbar(text, {
+            variant: ToastVariant.DANGER,
+            autoHideDuration: 3_000
+        });
     }, [enqueueSnackbar]);
 
     const toastWarning = useCallback((text: string) => {
-        enqueueSnackbar(text, { variant: ToastVariant.WARNING });
+        enqueueSnackbar(text, {
+            variant: ToastVariant.WARNING,
+            autoHideDuration: 3_000
+        });
     }, [enqueueSnackbar]);
 
     return {
