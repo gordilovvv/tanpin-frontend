@@ -1,9 +1,9 @@
 import { Container, PageWrapper } from '@/components/Layout';
-import styles from './DepositSuccessView.module.scss';
 import Confetti from 'react-dom-confetti';
-import cat from '@/app/assets/img/cat2.svg';
 import { useEffect, useState } from 'react';
 import { Button } from '@/uikit';
+import { Cat } from './Cat';
+import styles from './DepositSuccessView.module.scss';
 
 const config = {
     angle: 90,
@@ -26,11 +26,11 @@ export function DepositSuccessView() {
     useEffect(() => {
         setIsMounted(true);
     }, []);
+
     return (
         <PageWrapper style={{ justifyContent: 'center' }}>
-            {<Container className={styles.success}>
-                <img
-                    src={cat}
+            <Container className={styles.success}>
+                <Cat
                     className={styles.img}
                 />
 
@@ -49,9 +49,6 @@ export function DepositSuccessView() {
                 </div>
 
             </Container>
-            }
-
-
         </PageWrapper>
     );
 }
