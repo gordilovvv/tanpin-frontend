@@ -2,9 +2,14 @@ import { useCallback, useMemo } from 'react';
 import { useActivityStore } from '@/states/activity/store';
 import { ActivityFilterOption } from './ActivityFilterOption/ActivityFilterOption';
 import { ActivityType } from '@/states/activity/types';
+import classNames from 'classnames';
 import styles from './ActivityFilter.module.scss';
 
-export function ActivityFilter() {
+type ActivityFilterProps = {
+    className?: string
+}
+
+export function ActivityFilter({ className }: ActivityFilterProps) {
     const [selectUserActivityOption, removeUserActivityOption] = useActivityStore(state => [
         state.selectUserActivityOption,
         state.removeUserActivityOption
@@ -30,7 +35,7 @@ export function ActivityFilter() {
     }, [selectUserActivityOption, removeUserActivityOption]);
 
     return (
-        <div className={styles.wrapper}>
+        <div className={classNames(styles.wrapper, className)}>
             <div className={styles.title}>Filters</div>
 
             <div className={styles.inner}>

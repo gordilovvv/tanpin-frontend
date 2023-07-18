@@ -4,7 +4,7 @@ import styles from './PageWrapper.module.scss';
 
 type PageWrapProps = {
     hasPaddingTop?: boolean,
-    style: CSSProperties
+    style?: CSSProperties
 }
 
 export function PageWrapper({ hasPaddingTop = true, style, children }: PropsWithChildren<PageWrapProps>) {

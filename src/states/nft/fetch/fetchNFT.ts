@@ -65,29 +65,29 @@ export async function fetchNFT(id: string): Promise<NFT> {
                 },
                 {
                     id: '3',
-                    owner: '0x1e6927eec93092a3271a0e73db875b8840875cac',
+                    owner: '0xE45133bD72217782d834C43Eb54adA97dE1B7a93',
                     value: 4,
-                    sales: [{
-                        saleID: '15',
-                        sold: 0,
-                        stock: 2,
-                        price: {
-                            amount: '100',
-                            currency: 'USDT'
-                        }
-                    }, {
-                        saleID: '16',
-                        sold: 0,
-                        stock: 2,
-                        price: {
-                            amount: '80',
-                            currency: 'USDT'
-                        }
-                    }],
-                    // sales: [],
+                    // sales: [{
+                    //     saleID: '15',
+                    //     sold: 0,
+                    //     stock: 2,
+                    //     price: {
+                    //         amount: '100',
+                    //         currency: 'USDT'
+                    //     }
+                    // }, {
+                    //     saleID: '16',
+                    //     sold: 0,
+                    //     stock: 2,
+                    //     price: {
+                    //         amount: '80',
+                    //         currency: 'USDT'
+                    //     }
+                    // }],
+                    sales: [],
                     auctions: [],
                     date: '01-06-2023',
-                    status: NFTSaleStatus.FIXED_PRICE
+                    status: NFTSaleStatus.NOT_FOR_SALE
                 },
                 {
                     id: '4',

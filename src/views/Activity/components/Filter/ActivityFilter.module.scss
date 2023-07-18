@@ -2,11 +2,10 @@
     padding: 24px;
     display: grid;
     gap: 24px;
+    grid-template-columns: minmax(0, auto);
     border: 1px solid var(--color-stroke);
     border-radius: 12px;
 }
-
-
 
 .title {
     font-weight: 600;
