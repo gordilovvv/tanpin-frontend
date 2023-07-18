@@ -1,6 +1,6 @@
 import { SvgProps } from '..';
 
-export function Gas(props: SvgProps) {
+export function Gift(props: SvgProps) {
     return (
         <svg
             width="19"

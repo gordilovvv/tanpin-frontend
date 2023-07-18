@@ -1,49 +1,66 @@
-.wrapp {
+.container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.wrap {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 48px;
+    width: 360px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 42px;
+    letter-spacing: -0.648px;
+    text-align: center;
+}
+
+.form {
     display: grid;
     grid-template-columns: minmax(0, auto);
     gap: 48px;
 }
 
-.inputWrapp {
-    display: grid;
-    grid-template-columns: minmax(0, auto);
-    gap: 12px;
-}
-
-.title {
-    text-align: center;
-}
-
-.main {
+.fields {
     display: grid;
     grid-template-columns: minmax(0, auto);
     gap: 16px;
 }
 
-.gas {
+.maticBonus {
     display: grid;
     grid-auto-flow: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    color: var(--color-typo-base);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: -0.14px;
 
     &Icon {
+        display: flex;
         color: var(--color-primary);
     }
 
-    span {
-        color: var(--color-primary);
-        font-weight: 700;
+    &Text {
+        color: var(--color-typo-base);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: -0.14px;
+
+        span {
+            color: var(--color-primary);
+            font-weight: 700;
+            white-space: nowrap;
+        }
     }
 }
 
-
-.down {
+.bottom {
     display: grid;
     grid-template-columns: minmax(0, auto);
     gap: 24px;
@@ -64,13 +81,11 @@
     }
 }
 
-.buttonWrap {
+.button {
     display: grid;
     grid-template-columns: minmax(0, auto);
     gap: 16px;
 }
-
-
 
 .terms {
     color: var(--color-typo-base);
@@ -80,7 +95,7 @@
     letter-spacing: -0.12px;
     text-align: center;
 
-    &Link {
+    a {
         color: var(--color-primary);
         font-weight: 600;
         text-decoration-line: underline;
@@ -88,38 +103,43 @@
 }
 
 @include max767 {
-    .wrapp {
+    .wrap {
+        width: 100%;
         gap: 24px;
     }
 
-    .inputWrapp {
-        gap: 8px;
+    .title {
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 32px;
+        letter-spacing: -0.384px;
     }
 
-    .gas {
-        font-size: 12px;
-        line-height: 16px;
-        letter-spacing: -0.12px;
+    .form {
+        gap: 24px;
+    }
 
+    .fields {
+        gap: 12px;
+    }
+
+    .maticBonus {
         &Icon {
-            height: 16px;
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        &Text {
+            font-size: 12px;
+            line-height: 16px;
         }
     }
 
-    .offer {
-        font-size: 12px;
-        line-height: 16px;
-        letter-spacing: -0.12px;
-    }
-
+    .offer,
     .terms {
         font-size: 12px;
         line-height: 16px;
-        letter-spacing: -0.12px;
     }
-
-    .buttonWrap {
-        gap: 16px;
-    }
-
 }
