@@ -1,33 +1,45 @@
-import { Container, PageWrapper } from '@/components/Layout';
-import styles from './DepositSuccessView.module.scss';
-import Confetti from 'react-dom-confetti';
-import cat from '@/app/assets/img/cat2.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/uikit';
-
-const config = {
-    angle: 90,
-    spread: 360,
-    startVelocity: 100,
-    elementCount: 160,
-    dragFriction: 0.12,
-    duration: 3000,
-    stagger: 10,
-    width: '50px',
-    height: '15px',
-    perspective: '500px',
-    colors: ['#3CE361', '#3ce36199', '#3ce361d9', '#3ce36159']
-};
-
+import { Container, PageWrapper } from '@/components/Layout';
+import Confetti from 'react-dom-confetti';
+import { ConfettiConfig } from 'react-dom-confetti';
+import cat from '@/app/assets/img/cat2.svg';
+import styles from './DepositSuccessView.module.scss';
 
 export function DepositSuccessView() {
-    const [isMounted, setIsMounted] = useState(false);
+    const [launchConfetti, setLaunchConfetti] = useState(false);
+
+    const confettiConfig = useMemo<ConfettiConfig>(() => {
+        return {
+            angle: 75,
+            spread: 240,
+            startVelocity: 50,
+            elementCount: 90,
+            dragFriction: 0.18,
+            duration: 3810,
+            stagger: 3,
+            width: '16px',
+            height: '16px',
+            perspective: '700px',
+            colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a']
+        };
+    }, []);
 
     useEffect(() => {
-        setIsMounted(true);
+        const launch = () => {
+            setLaunchConfetti(true);
+        };
+
+        window.addEventListener('load', launch);
+
+        return () => {
+            window.removeEventListener('load', launch);
+        };
     }, []);
+
     return (
-        <PageWrapper style={{ justifyContent: 'center' }}>
+        // TODO: Конфети вылезают за страницу
+        <PageWrapper>
             {<Container className={styles.success}>
                 <img
                     src={cat}
@@ -35,12 +47,12 @@ export function DepositSuccessView() {
                 />
 
                 <div className={styles.body}>
-                    <div className={styles.successTitle}>
-                        <Confetti
-                            active={isMounted}
-                            config={config}
-                        />
+                    <Confetti
+                        active={launchConfetti}
+                        config={confettiConfig}
+                    />
 
+                    <div className={styles.successTitle}>
                         You’ve successfully <br />
                         bought <span>300 USDT</span>
                     </div>
@@ -50,7 +62,6 @@ export function DepositSuccessView() {
 
             </Container>
             }
-
 
         </PageWrapper>
     );
