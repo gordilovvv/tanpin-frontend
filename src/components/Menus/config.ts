@@ -1,17 +1,25 @@
-import { POLICY_URL, TERMS_URL } from '@/config';
+import { FAQ_URL, POLICY_URL, TERMS_URL } from '@/config';
 import { Activity, Assets } from '@/uikit';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 
-type NavLink = {
+export type NavLink = {
     text: string,
     to: string,
+    rel?: NavLinkProps['rel'],
     target?: NavLinkProps['target']
+    /** Only for header! */
+    gradient?: boolean
 }
 
 export const headerLinks: NavLink[] = [
     // { to: '/games', text: 'Games' },
     { to: '/collections', text: 'Collections' },
     { to: '/nft', text: 'NFT' },
+];
+
+export const headerAdditionalLinks: NavLink[] = [
+    { to: FAQ_URL, text: 'FAQ', target: '_blank' },
+    { to: '/deposit', text: 'Buy USDT', gradient: true }
 ];
 
 export const footerLinks: NavLink[] = [
