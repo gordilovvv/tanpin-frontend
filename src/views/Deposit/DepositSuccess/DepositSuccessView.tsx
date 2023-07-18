@@ -3,7 +3,7 @@ import { Button } from '@/uikit';
 import { Container, PageWrapper } from '@/components/Layout';
 import Confetti from 'react-dom-confetti';
 import { ConfettiConfig } from 'react-dom-confetti';
-import cat from '@/app/assets/img/cat2.svg';
+import { Cat } from './Cat';
 import styles from './DepositSuccessView.module.scss';
 
 export function DepositSuccessView() {
@@ -40,9 +40,8 @@ export function DepositSuccessView() {
     return (
         // TODO: Конфети вылезают за страницу
         <PageWrapper>
-            {<Container className={styles.success}>
-                <img
-                    src={cat}
+            <Container className={styles.success}>
+                <Cat
                     className={styles.img}
                 />
 
@@ -59,10 +58,7 @@ export function DepositSuccessView() {
 
                     <Button>Explore Tanpin</Button>
                 </div>
-
             </Container>
-            }
-
         </PageWrapper>
     );
 }
