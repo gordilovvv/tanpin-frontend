@@ -18,6 +18,7 @@ import { MintTokenView } from '@/views/MintToken/MintTokenView';
 import { DepositView } from '@/views/Deposit/DepositView';
 import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSuccessView';
 import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositRejectedView';
+import { GameLoginView } from '@/views/GameLogin/GameLoginView';
 
 // TODO: LazyLoad Routes
 // https://loadable-components.com/docs/getting-started/
@@ -101,5 +102,9 @@ export const router = createBrowserRouter([
     {
         path: '/token/mint/:tokenID',
         element: <MintTokenView />
+    },
+    {
+        path: '/login',
+        element: <GameLoginView />
     },
 ]);

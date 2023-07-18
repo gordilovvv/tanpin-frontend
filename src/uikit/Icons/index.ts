@@ -32,3 +32,5 @@ export { Cart } from './components/Cart';
 export { Bell } from './components/Bell';
 export { FeaturedGame } from './components/FeaturedGame';
 export { Gift } from './components/Gift';
+export { Question } from './components/Question';
+ 

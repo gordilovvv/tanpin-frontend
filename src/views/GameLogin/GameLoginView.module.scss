@@ -1,0 +1,32 @@
+.wrapper {
+    min-height: 100vh;
+    position: relative;
+    padding: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+        pointer-events: none;
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: url('@/app/assets/bg/login.png') no-repeat center;
+        opacity: 0.06;
+    }
+}
+
+.body {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 32px;
+}
+
+@include max767 {
+    .wrapper {
+        padding: 24px;
+    }
+}
