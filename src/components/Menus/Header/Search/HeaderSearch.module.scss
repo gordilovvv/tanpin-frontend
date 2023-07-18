@@ -37,15 +37,15 @@
     }
 }
 
-@include max1200 {
+@include max1400 {
     .search {
-        width: 320px;
+        width: 260px;
     }
 }
 
-@include max1000 {
+@include max1200 {
     .search {
-        width: 260px;
+        width: 200px;
     }
 }
 

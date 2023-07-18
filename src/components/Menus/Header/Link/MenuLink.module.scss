@@ -1,0 +1,42 @@
+.link {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    color: var(--color-typo-ghost);
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    padding: 0 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transition: color 0.15s linear;
+
+    @include hover {
+        color: var(--color-typo-base);
+    }
+
+    &.active {
+        color: var(--color-typo-base);
+        background-color: var(--color-surface);
+    }
+
+    &.gradient {
+        -webkit-text-fill-color: transparent;
+        text-fill-color: transparent;
+        mix-blend-mode: normal;
+        background: var(--color-primary-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+}
+
+@include max1000 {
+    .link {
+        font-size: 14px;
+        padding: 0 12px;
+    }
+}

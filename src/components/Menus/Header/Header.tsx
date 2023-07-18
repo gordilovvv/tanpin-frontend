@@ -1,6 +1,7 @@
 import { Container } from '@/components/Layout';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
+import { MenuLink } from './Link/MenuLink';
 import { MobileMenu } from './Mobile/Menu/MobileMenu';
 import { MobileButton } from './MobileButton/MobileButton';
 import { Burger } from './MobileButton/Svg/Burger';
@@ -13,8 +14,7 @@ import { HeaderSearch } from './Search/HeaderSearch';
 import { NotificationsButton } from './NotificationsButton/NotificationsButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import { headerLinks } from '../config';
-import classNames from 'classnames';
+import { headerAdditionalLinks, headerLinks } from '../config';
 import styles from './Header.module.scss';
 
 export function Header() {
@@ -37,19 +37,21 @@ export function Header() {
                         <HeaderSearch />
 
                         <div className={styles.menu}>
-                            {headerLinks.map(link => <NavLink
+                            {headerLinks.map(link => <MenuLink
                                 key={link.to}
-                                to={link.to}
-                                className={({ isActive }) => classNames(styles.menuLink, {
-                                    [styles.active]: isActive
-                                })}
-                            >
-                                {link.text}
-                            </NavLink>)}
+                                {...link}
+                            />)}
                         </div>
                     </div>
 
                     <div className={styles.stack}>
+                        <div className={styles.menu}>
+                            {headerAdditionalLinks.map(link => <MenuLink
+                                key={link.to}
+                                {...link}
+                            />)}
+                        </div>
+
                         {isConnected && <NotificationsButton className={styles.desktopNotification} />}
 
                         <HeaderWallet

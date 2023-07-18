@@ -67,10 +67,10 @@ export function HeaderSearch() {
                     {isComboboxMounted && <ComboboxPopover
                         as={motion.div}
                         gutter={8}
-                        sameWidth
                         ref={animationRef}
                         hidden={false}
                         store={comboboxState}
+                        style={{ width: '360px' }}
                         className={styles.popover}
                         {...animationMap}
                         variants={animationVariants}

@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.wrap {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 48px;
+    width: 360px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 42px;
+    letter-spacing: -0.648px;
+    text-align: center;
+}
+
+@include max767 {
+    .wrap {
+        width: 100%;
+        gap: 24px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 32px;
+        letter-spacing: -0.384px;
+    }
+}
