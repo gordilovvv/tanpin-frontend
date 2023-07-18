@@ -2,7 +2,8 @@
     display: grid;
     gap: 12px;
     grid-template-columns: minmax(0, auto);
-    padding: 119px 24px;
+    padding: 60px 0;
+    min-height: 300px;
     border: 1px solid var(--color-stroke);
     border-radius: 12px;
 }
@@ -24,7 +25,16 @@
     color: var(--color-typo-ghost);
 }
 
+.image {
+    width: 240px;
+    margin: 0 auto;
+}
+
 @include max767 {
+    .image {
+        width: 200px;
+    }
+
     .title {
         font-size: 20px;
     }
