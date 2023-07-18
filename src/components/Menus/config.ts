@@ -18,7 +18,7 @@ export const headerLinks: NavLink[] = [
 ];
 
 export const headerAdditionalLinks: NavLink[] = [
-    { to: FAQ_URL, text: 'FAQ', target: '_blank' },
+    { to: FAQ_URL, text: 'FAQ', rel: 'noreferrer noopener', target: '_blank' },
     { to: '/deposit', text: 'Buy USDT', gradient: true }
 ];
 
