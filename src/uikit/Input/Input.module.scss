@@ -48,8 +48,16 @@
     transition: color 0.15s linear;
 }
 
-.input:enabled:focus+.leftAddon {
-    color: var(--color-typo-base);
+.input {
+    @include hover {
+        &+.leftAddon {
+            color: var(--color-typo-base);
+        }
+    }
+
+    &:enabled:focus+.leftAddon {
+        color: var(--color-typo-base);
+    }
 }
 
 .rightAddon {
