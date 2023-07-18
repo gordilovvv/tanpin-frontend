@@ -52,6 +52,26 @@
 }
 
 @include max767 {
+    .row.ownerSale {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: minmax(0, auto);
+        align-items: stretch;
+        justify-content: stretch;
+
+        .action {
+            gap: 4px;
+            grid-auto-columns: unset;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .action {
+        &>button {
+            height: 36px;
+        }
+    }
+
     .title {
         font-size: 14px;
         line-height: 20px;

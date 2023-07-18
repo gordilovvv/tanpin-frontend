@@ -20,7 +20,6 @@ type OwnerRowProps = {
 
 // TODO:
 // 1. ДОБАВИТЬ АУКЦИОН
-// 2. АДАПТИВ
 export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
     const saleDescription = useMemo(() => {
         if (owner.status === NFTSaleStatus.NOT_FOR_SALE) {
@@ -71,7 +70,7 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
     return (
         <div
             className={classNames(styles.row, {
-                [styles.isUser]: isUserOwner
+                [styles.ownerSale]: isUserOwner && owner.status === NFTSaleStatus.FIXED_PRICE
             })}
         >
             <div className={styles.content}>

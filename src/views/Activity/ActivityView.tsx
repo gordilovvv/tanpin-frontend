@@ -16,7 +16,7 @@ export function ActivityView() {
 
                 <div className={styles.wrapper}>
                     <ActivityList />
-                    <ActivityFilter />
+                    <ActivityFilter className={styles.filter} />
                 </div>
             </Container>
         </PageWrapper>

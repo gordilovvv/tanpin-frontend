@@ -1,5 +1,3 @@
-//TODO: mobile adaptive
-
 .title {
     text-align: center;
 }
@@ -15,4 +13,19 @@
     grid-template-rows: 1fr;
     gap: 48px;
     align-items: start
+}
+
+@include max1000 {
+    .container {
+        gap: 24px;
+    }
+
+    .wrapper {
+        grid-template-columns: minmax(0, auto);
+        gap: 24px;
+    }
+
+    .filter {
+        order: -1;
+    }
 }
