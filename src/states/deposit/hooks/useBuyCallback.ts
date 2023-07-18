@@ -24,14 +24,13 @@ export function useBuyCallback(
                 address
             );
 
-            setIsLoading(false);
-
             if (!redirectURL) {
                 throw new Error('redirectURL is undefined!');
             }
 
             window.location.href = redirectURL;
         } catch (error) {
+            setIsLoading(false);
             toastDanger('Something went wrong!');
         }
     }, [amountIn, address, inputError, setIsLoading, toastDanger]);
