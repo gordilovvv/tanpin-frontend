@@ -17,6 +17,12 @@
     max-width: 456px;
 }
 
+.logo {
+    width: 68px;
+    height: 64px;
+    margin: 0 auto;
+}
+
 @include max767 {
     .title {
         font-size: 24px;

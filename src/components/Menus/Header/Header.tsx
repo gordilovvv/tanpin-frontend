@@ -1,6 +1,6 @@
 import { Container } from '@/components/Layout';
 import { Link, NavLink } from 'react-router-dom';
-import { Logo } from './Logo';
+import { Logo } from '@/uikit';
 import { MobileMenu } from './Mobile/Menu/MobileMenu';
 import { MobileButton } from './MobileButton/MobileButton';
 import { Burger } from './MobileButton/Svg/Burger';

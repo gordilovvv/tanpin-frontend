@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Confetti, { ConfettiConfig } from 'react-dom-confetti';
 import styles from './SuccessStage.module.scss';
+import { Logo } from '@/uikit';
 
 export function SuccessStage() {
     const [launchConfetti, setLaunchConfetti] = useState(false);
@@ -32,6 +33,7 @@ export function SuccessStage() {
                 config={confettiConfig}
             />
 
+            <Logo className={styles.logo} />
             <div className={styles.title}> Connection successful</div>
             <div className={styles.info}>You can now return to the game</div>
         </>

@@ -33,4 +33,5 @@ export { Bell } from './components/Bell';
 export { FeaturedGame } from './components/FeaturedGame';
 export { Gift } from './components/Gift';
 export { Question } from './components/Question';
+export { Logo } from './components/Logo';
  
