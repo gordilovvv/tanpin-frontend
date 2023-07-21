@@ -8,7 +8,6 @@ import { useTokensFilterActions } from '@/states/explorer/hooks/useTokensFilterA
 import { TokensFilterState } from '@/states/explorer/TokensFilterStore';
 import { convertToHashmap } from '@/utils/convertToHashmap';
 import { ActiveAttributesHashMap } from './types';
-import { NFTSaleStatus } from '@/states/types';
 import { Collection } from '@/states/collection/types';
 import { NFTExplorerCategory } from '@/states/explorer/types';
 import classNames from 'classnames';
@@ -49,18 +48,22 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
     const statuses = useMemo<{ value: TokensFilterState['status'], label: string }[]>(() => {
         const options = [
             {
-                value: NFTSaleStatus.FIXED_PRICE,
+                value: 'ALL',
+                label: 'All'
+            },
+            {
+                value: 'FIXED_PRICE',
                 label: 'Buy now'
             },
             {
-                value: NFTSaleStatus.AUCTION,
+                value: 'AUCTION',
                 label: 'Auction'
             }
-        ];
+        ] as { value: TokensFilterState['status'], label: string }[];
 
         if (explorer === 'ownership') {
             options.unshift({
-                value: NFTSaleStatus.NOT_FOR_SALE,
+                value: 'NOT_FOR_SALE',
                 label: 'Not for sale'
             });
         }
