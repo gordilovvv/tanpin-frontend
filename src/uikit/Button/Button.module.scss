@@ -84,6 +84,11 @@
     &:active {
         background-color: var(--color-essential);
     }
+
+    &.disabled {
+        border-color: var(--color-stroke);
+        box-shadow: none;
+    }
 }
 
 .button.secondary {
