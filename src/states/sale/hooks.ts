@@ -68,6 +68,7 @@ export function useCreateDirectSaleInfo(editionsAvailable?: number) {
         priceError = 'Price is less than 0.1 USDT';
     }
 
+    // TODO: ПОФИКСИТЬ! При закрытии окна нарушит логику!
     useEffect(() => {
         return () => {
             replaceSaleState({

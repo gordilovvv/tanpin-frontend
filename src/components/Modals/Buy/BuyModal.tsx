@@ -1,41 +1,13 @@
-import { Button, Input, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
-import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
-import { NFTActionText } from '@/components/Nft';
-import { useMemo } from 'react';
-import BigNumber from 'bignumber.js';
-import styles from './BuyModal.module.scss';
+import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
+import { BuyForm } from './Form/BuyForm';
 
 type BuyModalProps = {
-    amount?: string,
-    availableAmount?: number,
-    onAmountChange?: (amount: string) => void,
+    tokenPrice: string,
+    availableAmount: number,
     onPurchase: () => void
 } & ModalProps;
 
-export function BuyModal({ isOpen, amount, availableAmount, onAmountChange, onPurchase, onClose }: BuyModalProps) {
-    const metadata = useTokenMetadata();
-    const canInputAmount = amount !== undefined && availableAmount && onAmountChange;
-
-    const parsedAmount = useMemo(() => {
-        return amount ? new BigNumber(amount) : undefined;
-    }, [amount]);
-
-    let amountError: string | undefined;
-
-    if (canInputAmount) {
-        if (!parsedAmount) {
-            amountError = 'Enter amount';
-        }
-
-        if (parsedAmount && parsedAmount.isLessThanOrEqualTo(0)) {
-            amountError = 'Enter amount';
-        }
-
-        if (parsedAmount && parsedAmount.isGreaterThan(availableAmount)) {
-            amountError = `Available for sale are ${availableAmount} copies`;
-        }
-    }
-
+export function BuyModal({ isOpen, tokenPrice, availableAmount, onPurchase, onClose }: BuyModalProps) {
     return (
         <Modal
             isOpen={isOpen}
@@ -44,31 +16,11 @@ export function BuyModal({ isOpen, amount, availableAmount, onAmountChange, onPu
             <ModalHead title='Buy NFT' />
 
             <ModalBody>
-                <div className={styles.body}>
-                    {metadata && <NFTActionText
-                        text='You are going to buy'
-                        nftName={metadata.name}
-                        collectionID={metadata.collection.ID}
-                        collectionName={metadata.collection.name}
-                        gameID={metadata.collection.game.ID}
-                    />}
-
-                    {canInputAmount && <Input
-                        numerical
-                        value={amount}
-                        onInput={onAmountChange}
-                        style={{ paddingRight: '120px' }}
-                        danger={parsedAmount && !!amountError}
-                        rightAddon={`/ ${availableAmount}`}
-                    />}
-
-                    <Button
-                        disabled={!!amountError}
-                        onClick={onPurchase}
-                    >
-                        {amountError || 'Proceed to payment'}
-                    </Button>
-                </div>
+                <BuyForm
+                    tokenPrice={tokenPrice}
+                    availableAmount={availableAmount}
+                    onPurchase={onPurchase}
+                />
             </ModalBody>
         </Modal>
     );

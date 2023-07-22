@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { ButtonProps } from '@/uikit';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { ActionButton } from './ActionButton';
@@ -6,10 +6,12 @@ import { ApproveConfirmModal, BuyModal } from '@/components/Modals';
 import { usePendingTransactionModal } from '@/states/global/hooks';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
 import { useTokenApprove } from '@/hooks/useTokenApprove';
-import { useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
+import { LoadingStatus, useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { activeChainId } from '@/config/chain';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
+import { useBuyActions, useBuyState } from '@/states/buy/hooks';
+import { initialBuyStoreState } from '@/states/buy/store';
 
 type BuyButtonProps = {
     nftID: string,
@@ -20,15 +22,12 @@ type BuyButtonProps = {
     buttonView?: ButtonProps<'button'>['view']
 }
 
-// TODO:
-// 1. РЕФАКТОР, ТАК КАК НЕТ КОЛИЧЕСТВА + ПРОВЕРКА АПРУВА ВЫЗЫВАЕТСЯ РАНЬШЕ ВРЕМЕНИ
-// 2. А ТАКЖЕ ТРАНЗЫ ПО 2 РАЗА ВЫЗЫАВАЮТСЯ
-// 3. НУЖНО ЛИ ПОЛЕ ДЛЯ УНИКАЛЬНЕХ ТОКЕНОВ ???
 export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView }: BuyButtonProps) {
     const { refetchNFT } = useNFTFetch(nftID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
-    const [amount, setAmount] = useState('');
+    const { typedAmount, totalPrice } = useBuyState();
+    const { handleReplaceBuyState } = useBuyActions();
     const buyModal = useOpenedState();
     const approveConfirmModal = useOpenedState();
     const pendingTransactionModal = usePendingTransactionModal();
@@ -46,20 +45,22 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
         };
     }, []);
 
-    const { approve, isApproved, isPreparing } = useTokenApprove({
+    const { approve, checkApproved } = useTokenApprove({
         spender: CONTRACTS.market[activeChainId],
-        amountToApprove: price,
+        amountToApprove: totalPrice,
         tokenAddress: CONTRACTS.usdt[activeChainId].address,
         tokenDecimals: CONTRACTS.usdt[activeChainId].decimals
     });
 
-    const { state, handleApprove, handleConfirm } = useApproveConfirmCallbacks({
-        isApproved,
+    const { state, handleApprove, handleConfirm, handleApproveConfirmReset } = useApproveConfirmCallbacks({
         onApprove: () => {
             return approve();
         },
+        onCheckApproved: () => {
+            return checkApproved();
+        },
         onConfirm: async () => {
-            if (!marketContract || !amount) {
+            if (!marketContract || !typedAmount) {
                 throw new Error('Confirm was called unnecessary!');
             }
 
@@ -68,7 +69,7 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
                 method: 'buyDirectSale',
                 args: [
                     BigInt(saleID),
-                    BigInt(amount)
+                    BigInt(typedAmount)
                 ]
             });
 
@@ -81,8 +82,22 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
                 text: 'Purchase is successfully initiated. Updates will appear as soon as the transaction is confirmed.',
                 onReceipt: refetchNFT
             });
+            // Reset buy state
+            handleReplaceBuyState(initialBuyStoreState);
         }
     });
+
+    // When price changed we should reset approveConfirm (new price -> new approve)
+    useEffect(() => {
+        if (state.approveState.status !== LoadingStatus.IDLE || state.confirmState.status !== LoadingStatus.IDLE) {
+            handleApproveConfirmReset();
+        }
+    }, [totalPrice]);
+
+    const handleOpenBuyModal = useCallback(() => {
+        handleReplaceBuyState(initialBuyStoreState);
+        buyModal.open();
+    }, [buyModal.open, handleReplaceBuyState]);
 
     const handlePurchase = useCallback(() => {
         buyModal.close();
@@ -94,16 +109,15 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
             <ActionButton
                 view={buttonView}
                 iconSlot={buttonIcon}
-                onClick={buyModal.open}
+                onClick={handleOpenBuyModal}
             >
                 Buy now
             </ActionButton>
 
             <BuyModal
                 isOpen={buyModal.isOpen}
-                amount={amount}
+                tokenPrice={price}
                 availableAmount={stock}
-                onAmountChange={setAmount}
                 onClose={buyModal.close}
                 onPurchase={handlePurchase}
             />
@@ -112,7 +126,6 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
                 isOpen={approveConfirmModal.isOpen}
                 state={state}
                 texts={texts}
-                isLoading={isPreparing}
                 onApprove={handleApprove}
                 onConfirm={handleConfirm}
                 onClose={approveConfirmModal.close}

@@ -43,7 +43,9 @@ module.exports = {
         'react/no-unescaped-entities': 'off',
         'indent': 'off',
         '@typescript-eslint/indent': ['error', 4, {
-            ignoredNodes: ['TSUnionType']
+            'SwitchCase': 1,
+            'flatTernaryExpressions': false,
+            'ignoredNodes': ['TSUnionType']
         }],
         '@typescript-eslint/no-unused-vars': ['error', { 'destructuredArrayIgnorePattern': '^_' }],
         '@typescript-eslint/ban-ts-comment': 'off',

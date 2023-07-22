@@ -1,0 +1,26 @@
+.wrap {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.info {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+
+    &Icon {
+        display: flex;
+        color: var(--color-typo-base);
+    }
+
+    &Text {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: -0.14px;
+    }
+}

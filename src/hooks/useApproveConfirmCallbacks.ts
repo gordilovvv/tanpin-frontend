@@ -24,7 +24,7 @@ export type ApproveConfirmState = {
 }
 
 type Action = {
-    type: 'approveSending' | 'approveReceipt' | 'confirmSending' | 'confirmSent'
+    type: 'approveSending' | 'approveReceipt' | 'confirmSending' | 'confirmSent' | 'approveConfirmReset'
 } | {
     type: 'approveError' | 'confirmError'
     errorMessage: string
@@ -91,6 +91,9 @@ function reducer(state: ApproveConfirmState, actions: Action): ApproveConfirmSta
                     status: LoadingStatus.FAIL
                 }
             };
+        case 'approveConfirmReset': {
+            return initialState;
+        }
         default:
             return state;
     }
@@ -122,6 +125,8 @@ export function useApproveConfirmCallbacks({
                 return dispatch({ type: 'approveReceipt' });
             }
 
+            dispatch({ type: 'approveSending' });
+
             if (onCheckApproved) {
                 const isApprovedTokens = await onCheckApproved();
 
@@ -129,8 +134,6 @@ export function useApproveConfirmCallbacks({
                     return dispatch({ type: 'approveReceipt' });
                 }
             }
-
-            dispatch({ type: 'approveSending' });
 
             const { hash } = await onApprove();
 
@@ -144,7 +147,7 @@ export function useApproveConfirmCallbacks({
             });
             logError(error);
         }
-    }, [state.approveState.status, isApproved, onApprove, dispatch]);
+    }, [state.approveState.status, isApproved, onApprove, onCheckApproved, dispatch]);
 
     // Confirm transaction
     const handleConfirm = useCallback(async () => {
@@ -168,9 +171,14 @@ export function useApproveConfirmCallbacks({
         }
     }, [state.confirmState.status, dispatch, onConfirm, onConfirmSent]);
 
+    const handleApproveConfirmReset = useCallback(() => {
+        dispatch({ type: 'approveConfirmReset' });
+    }, [dispatch]);
+
     return {
         state,
         handleApprove,
-        handleConfirm
+        handleConfirm,
+        handleApproveConfirmReset
     };
 }
