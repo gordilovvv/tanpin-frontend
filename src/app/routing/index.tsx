@@ -14,10 +14,11 @@ import { CollectionsView as CollectionsAssetsView } from '@/views/Assets/Collect
 import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
 import { RequireConnectedWallet } from './requireConnectedWallet';
-import { MintTokenView } from '@/views/MintToken/MintTokenView';
 import { DepositView } from '@/views/Deposit/DepositView';
 import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSuccessView';
 import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositRejectedView';
+import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
+import { GameAuthView } from '@/views/GameAuth/GameAuthView';
 
 // TODO: LazyLoad Routes
 // https://loadable-components.com/docs/getting-started/
@@ -99,7 +100,13 @@ export const router = createBrowserRouter([
         ],
     },
     {
-        path: '/token/mint/:tokenID',
-        element: <MintTokenView />
-    },
+        element: <EmptyLayout />,
+        errorElement: <ErrorView />,
+        children: [
+            {
+                path: '/game/auth',
+                element: <GameAuthView />
+            }
+        ]
+    }
 ]);

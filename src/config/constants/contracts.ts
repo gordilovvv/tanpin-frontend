@@ -13,11 +13,11 @@ export const CONTRACTS = {
         }
     },
     market: {
-        [polygon.id]: '' as Address,
+        [polygon.id]: '0x6b4AD3bEB045a3ed412C47611c9C18AA6ae0405d' as Address,
         [polygonMumbai.id]: '0x5e687642685E3c221364C570e6c4a84A66907ECe' as Address
     },
     ERC1155: {
-        [polygon.id]: '' as Address,
-        [polygonMumbai.id]: '0x4690b3f9013770e283fed8b765a625adc4372a03' as Address
+        [polygon.id]: '0x5D7e5b6523D709D9F95b2b9EFd52AFb6d8D48d81' as Address,
+        [polygonMumbai.id]: '0x096eCA74eB4ebc59addA3Cf3edF860523c7F0C28' as Address
     }
 };

@@ -1,0 +1,35 @@
+.wrapper {
+    min-height: 100vh;
+    position: relative;
+    padding: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+        pointer-events: none;
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: url('/images/crystal.png') no-repeat center;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.06;
+    }
+}
+
+.body {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 32px;
+}
+
+@include max767 {
+    .wrapper {
+        padding: 24px;
+    }
+}

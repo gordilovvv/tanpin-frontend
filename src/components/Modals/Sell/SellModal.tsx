@@ -53,7 +53,7 @@ export function SellModal({ isOpen, availableEditions, onClose, onConfirm }: Sel
                         gameID={metadata.collection.game.ID}
                     />}
 
-                    <ToggleGroup>
+                    {/* <ToggleGroup>
                         <ToggleButton
                             active={stage === ViewStage.SALE}
                             onClick={() => setStage(ViewStage.SALE)}
@@ -67,7 +67,7 @@ export function SellModal({ isOpen, availableEditions, onClose, onConfirm }: Sel
                         >
                             Auction
                         </ToggleButton>
-                    </ToggleGroup>
+                    </ToggleGroup> */}
 
                     {renderStage()}
                 </div>

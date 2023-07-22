@@ -75,7 +75,7 @@ export function UpdateSaleBody({ saleID, onError, onSuccess }: UpdateSaleBodyPro
     return (
         <div className={styles.wrap}>
             {tokenMetadata && <NFTActionText
-                text='You are going to place a bid for'
+                text='You are going to update the price for'
                 nftName={tokenMetadata.name}
                 collectionID={tokenMetadata.collection.ID}
                 collectionName={tokenMetadata.collection.name}
