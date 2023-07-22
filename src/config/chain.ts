@@ -3,7 +3,7 @@ import { polygon, polygonMumbai } from 'wagmi/chains';
 /**
  * Change this const to switch network mode
  */
-export const network: 'mainnet' | 'testnet' = 'testnet';
+export const network: 'mainnet' | 'testnet' = 'mainnet';
 
 // @ts-ignore
 export const activeChain = network === 'mainnet' ? polygon : polygonMumbai;
@@ -11,6 +11,7 @@ export const activeChainId = activeChain.id;
 
 export const PUBLIC_NODES = {
     [polygon.id]: [
+        'https://rpc.ankr.com/polygon',
         'https://polygon.llamarpc.com'
     ],
     [polygonMumbai.id]: [
