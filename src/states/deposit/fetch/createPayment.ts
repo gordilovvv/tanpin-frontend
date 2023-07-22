@@ -11,7 +11,7 @@ export async function createPayment(amountIn: string, buyerAddress: Address): Pr
         return { redirectURL: 'https://tanpin.io' };
     }
 
-    const { data } = await gateApi.post<CreatePaymentResponse>('/create-payment', {
+    const { data } = await gateApi.post<CreatePaymentResponse>('/payment/create', {
         amountIn,
         buyerAddress
     });
