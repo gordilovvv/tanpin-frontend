@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button } from '@/uikit';
+import { Button, ButtonProps } from '@/uikit';
 import { ErrorMessageModal } from '@/components/Modals';
 import { ConnectWalletModal } from '../ConnectWalletModal/ConnectWalletModal';
 import { ConnectorNames, createWallets } from '@/config/wallet';
@@ -8,7 +8,9 @@ import { useUserStore } from '@/states/user/store';
 import { useAuth } from '@/states/user/hooks/useAuth';
 import { useOpenedState } from '@/hooks/useOpenedState';
 
-export function ConnectWalletButton() {
+type ConnectWalletButtonProps = Omit<ButtonProps<'button'>, 'onClick'>;
+
+export function ConnectWalletButton(props: ConnectWalletButtonProps) {
     const { login } = useAuth();
     const { isConnected } = useAccount();
     const [connectError, setConnectError] = useState<string | undefined>();
@@ -33,7 +35,10 @@ export function ConnectWalletButton() {
 
     return (
         <>
-            <Button onClick={connectPopupState.open}>
+            <Button
+                {...props}
+                onClick={connectPopupState.open}
+            >
                 Connect wallet
             </Button>
 

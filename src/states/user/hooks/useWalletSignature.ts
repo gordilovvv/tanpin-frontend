@@ -1,17 +1,8 @@
-import { useCallback, useRef, useState } from 'react';
-import { useAccount, useSignMessage } from 'wagmi';
-import { useUserStore } from '../store';
-import { loginWeb3 } from '../fetch/loginWeb3';
-import { POLICY_URL, TERMS_URL } from '@/config';
+import { useCallback, useState } from 'react';
+import { Address, useAccount, useSignMessage } from 'wagmi';
 import { times } from 'lodash';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
-
-function randomHex(size: number) {
-    return times(size)
-        .map(() => Math.floor(Math.random() * 16).toString(16))
-        .join('');
-}
 
 export enum LoadingStatus {
     IDLE = 'IDLE',
@@ -20,21 +11,29 @@ export enum LoadingStatus {
     FAIL = 'fail'
 }
 
-/**
- * Хук подписи сообщения входа, для того чтобы убедиться что юзер действительно владеет кошельком. Бекенд проверит подпись и будет уверен, что это истинный владелец.
- */
+function randomHex(size: number) {
+    return times(size)
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join('');
+}
+
 export function useWalletSignature() {
     const { address, connector } = useAccount();
     const { signMessageAsync: signMessageWagmi, reset: resetWagmi } = useSignMessage();
-    const setUser = useUserStore(state => state.setUser);
-    const isLoading = useRef<boolean>(false);
-    const isPreparing = address && !connector;
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | undefined>();
     const [status, setStatus] = useState<LoadingStatus>(LoadingStatus.IDLE);
 
-    const signLoginMessage = useCallback(async () => {
+    const signMessage = useCallback(async ({ text, onSignature }: {
+        text: string,
+        onSignature?: (data: {
+            address: Address,
+            message: string,
+            signature: string
+        }) => Promise<any>
+    }) => {
         try {
-            if (isLoading.current) {
+            if (loading) {
                 return;
             }
 
@@ -42,39 +41,40 @@ export function useWalletSignature() {
                 throw new Error('signMessage called unnecessary!');
             }
 
-            isLoading.current = true;
+            setLoading(true);
 
             const nonce = randomHex(32);
-            const message = `I accept the Tanpin Terms of Service ${TERMS_URL} and Privacy Policy ${POLICY_URL}. \n\n Nonce: ${nonce}`;
+            const message = `${text} \n\n Nonce: ${nonce}`;
 
             const signature = await signMessageWagmi({ message });
-            const { accessToken, rulesAccept } = await loginWeb3({
+
+            await onSignature?.({
                 address,
                 message,
                 signature
             });
 
             setStatus(LoadingStatus.SUCCESS);
-            setUser(accessToken, rulesAccept);
         } catch (error) {
-            setStatus(LoadingStatus.FAIL);
             setError(walletErrorToUserReadableMessage(error));
+            setStatus(LoadingStatus.FAIL);
             logError(error);
         } finally {
-            isLoading.current = false;
+            setLoading(false);
         }
-    }, [address, connector, isLoading, signMessageWagmi, setStatus, setUser, setError]);
+    }, [address, connector, loading, signMessageWagmi, setStatus, setError, setLoading]);
 
     const reset = useCallback(() => {
         resetWagmi();
+        setError(undefined);
         setStatus(LoadingStatus.IDLE);
-    }, [resetWagmi, setStatus]);
+    }, [resetWagmi, setError, setStatus]);
 
     return {
-        isPreparing,
         status,
         error,
+        loading,
         reset,
-        signLoginMessage
+        signMessage
     };
 }

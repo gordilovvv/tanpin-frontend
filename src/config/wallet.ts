@@ -32,6 +32,7 @@ export type WalletConfig = {
     title: string
     icon: (...args: any) => JSX.Element,
     connectorId: ConnectorNames
+    recommended?: boolean,
     deepLink?: string
     installed?: boolean
     guide?: string
@@ -50,6 +51,7 @@ const walletsConfig = (): WalletConfig[] => {
                 return isMetamaskInstalled();
             },
             connectorId: ConnectorNames.MetaMask,
+            recommended: true,
             deepLink: 'https://metamask.app.link/dapp/tanpin.io'
         },
         {

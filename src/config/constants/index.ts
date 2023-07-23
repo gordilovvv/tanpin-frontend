@@ -3,7 +3,7 @@ export const MEDIA_SIZES = {
     phone: 768
 };
 
-export const HOW_TO_CREATE_WALLET_INSTRUCTION_URL = 'https://docs.pancakeswap.finance/readme/get-started/wallet-guide';
+export const HOW_TO_CREATE_WALLET_INSTRUCTION_URL = 'https://docs.tanpin.io/s-chego-nachat/chto-takoe-koshelek';
 
 export const FAST_INTERVAL = 10_000;
 export const NORMAL_INTERVAL = 30_000;

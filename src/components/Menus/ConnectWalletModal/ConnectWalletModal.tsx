@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Button, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
-import { WalletButton } from './WalletButton/WalletButton';
+import { WalletButton } from '@/components/Wallet';
 import { ConnectorNames, WalletConfig } from '@/config/wallet';
 import { HOW_TO_CREATE_WALLET_INSTRUCTION_URL } from '@/config/constants';
 import styles from './ConnectWalletModal.module.scss';

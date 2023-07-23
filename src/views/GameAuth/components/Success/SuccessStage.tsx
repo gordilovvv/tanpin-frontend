@@ -1,25 +1,24 @@
 import { useEffect, useMemo, useState } from 'react';
-import styles from './SuccessStage.module.scss';
 import Confetti, { ConfettiConfig } from 'react-dom-confetti';
-import { Logo } from '@/components/Menus/Header/Logo';
+import styles from './SuccessStage.module.scss';
 
 export function SuccessStage() {
     const [launchConfetti, setLaunchConfetti] = useState(false);
 
-    const confettiConfig = useMemo<ConfettiConfig>(() => {
+    const confettiConfig = useMemo(() => {
         return {
-            angle: 75,
-            spread: 240,
+            angle: 216,
+            spread: 320,
             startVelocity: 50,
-            elementCount: 90,
+            elementCount: 75,
             dragFriction: 0.18,
-            duration: 3810,
+            duration: 3000,
             stagger: 3,
-            width: '16px',
-            height: '16px',
-            perspective: '700px',
+            width: '10px',
+            height: '10px',
+            perspective: '681px',
             colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a']
-        };
+        } as ConfettiConfig;
     }, []);
 
     useEffect(() => {
@@ -28,14 +27,24 @@ export function SuccessStage() {
 
     return (
         <>
-            <Confetti
-                active={launchConfetti}
-                config={confettiConfig}
-            />
+            <div className={styles.wrap}>
+                <div className={styles.confetti}>
+                    <Confetti
+                        active={launchConfetti}
+                        config={confettiConfig}
+                    />
+                </div>
 
-            <Logo className={styles.logo} />
-            <div className={styles.title}> Connection successful</div>
-            <div className={styles.info}>You can now return to the game</div>
+                <div className={styles.content}>
+                    <div className={styles.title}>
+                        Connection successful
+                    </div>
+
+                    <div className={styles.text}>
+                        You can now return to the game
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

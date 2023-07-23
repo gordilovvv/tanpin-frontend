@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Spin, UnstyleButton, UnstyleLink } from '@/uikit';
 import { WalletConfig } from '@/config/wallet';
-import { isTouchDevice } from '@/utils/isTouchDevice';
 import classNames from 'classnames';
 import styles from './WalletButton.module.scss';
 
@@ -11,9 +10,9 @@ type WalletButtonProps = {
 }
 
 export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
-    const { icon: Icon, title, installed, deepLink } = wallet;
-    const isLink = isTouchDevice && deepLink && installed === false;
+    const { icon: Icon, title, installed, recommended, deepLink } = wallet;
     const [isLoading, setIsLoading] = useState(false);
+    const isLink = deepLink && installed === false;
 
     const handleClick = () => {
         if (installed === false) {
@@ -51,8 +50,14 @@ export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
                 <Spin size='s' />
             </div>}
 
-            <div className={styles.title}>
-                {title}
+            <div className={styles.content}>
+                <div className={styles.title}>
+                    {title}
+                </div>
+
+                {recommended && <div className={styles.label}>
+                    Recommended
+                </div>}
             </div>
 
             <Icon />
