@@ -35,7 +35,7 @@ export function SignMessageBody({ onError, onRetry }: SignMessageBodyProps) {
                 }
             });
         }
-    }, [status, connector, signMessage]);
+    }, [status, connector]);
 
     useEffect(() => {
         if (error) {
