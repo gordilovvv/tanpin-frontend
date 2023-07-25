@@ -1,4 +1,5 @@
-import { ImgHTMLAttributes, ReactNode, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { ImgHTMLAttributes, ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
+import { useLoaded } from './hooks';
 import classNames from 'classnames';
 import styles from './Image.module.scss';
 
@@ -7,35 +8,16 @@ type ImageProps = {
     rejected?: ReactNode
 } & ImgHTMLAttributes<HTMLImageElement>
 
+// TODO: Позже можно доделать отображение ошибки
 export const Image = forwardRef<HTMLImageElement, ImageProps>(
     ({ src, pending, rejected, className, ...props }, ref) => {
         const imageRef = useRef<HTMLImageElement>(null);
-        const [isLoaded, setLoaded] = useState(false);
+        const isLoaded = useLoaded(src);
 
         useImperativeHandle(
             ref,
             () => imageRef.current!
         );
-
-        useEffect(() => {
-            if (imageRef.current) {
-                const onLoad = () => {
-                    setLoaded(true);
-                };
-
-                const onError = () => {
-                    setLoaded(false);
-                };
-
-                imageRef.current.addEventListener('load', onLoad);
-                imageRef.current.addEventListener('error', onError);
-
-                return () => {
-                    imageRef.current?.addEventListener('load', onLoad);
-                    imageRef.current?.addEventListener('error', onError);
-                };
-            }
-        }, [imageRef]);
 
         if (src) {
             return (<>
