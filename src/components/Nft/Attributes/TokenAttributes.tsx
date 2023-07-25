@@ -11,7 +11,7 @@ export function TokenAttributes({ attributes }: TokenAttributesProps) {
             {(attributes).map((attribute) =>
                 <div
                     className={styles.item}
-                    key={attribute.value}
+                    key={`${attribute.traitType}-${attribute.value}`}
                 >
                     <div className={styles.itemTitle}>{attribute.traitType}</div>
                     <div className={styles.itemBody}>{attribute.value}</div>
