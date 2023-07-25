@@ -111,7 +111,7 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
                     />
                 </FilterItem>
 
-                {collection?.attributes && <FilterItem title='Properties'>
+                {collection?.attributes.length ? <FilterItem title='Properties'>
                     <div className={styles.inner}>
                         <div className={styles.group}>
                             {
@@ -130,7 +130,7 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
                             }
                         </div>
                     </div>
-                </FilterItem>}
+                </FilterItem> : null}
 
                 {filterOnButton && <div className={styles.buttons}>
                     <div className={styles.buttonsGrid}>
