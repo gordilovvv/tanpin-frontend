@@ -1,37 +1,67 @@
-import { ImgHTMLAttributes, ReactNode, forwardRef, useImperativeHandle, useRef } from 'react';
-import { useLoaded } from './hooks';
+import { ImgHTMLAttributes, ReactNode, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import classNames from 'classnames';
 import styles from './Image.module.scss';
 
 type ImageProps = {
     pending?: ReactNode,
-    rejected?: ReactNode
-} & ImgHTMLAttributes<HTMLImageElement>
+    rejected?: ReactNode,
+    onError?: () => void,
+    onFulfilled?: () => void
+} & Omit<ImgHTMLAttributes<HTMLImageElement>, 'onLoad' | 'onError'>
 
-// TODO: Позже можно доделать отображение ошибки
 export const Image = forwardRef<HTMLImageElement, ImageProps>(
-    ({ src, pending, rejected, className, ...props }, ref) => {
+    ({ src, pending, rejected, onError, onFulfilled, className, ...props }, ref) => {
         const imageRef = useRef<HTMLImageElement>(null);
-        const isLoaded = useLoaded(src);
+        const [loaded, setLoaded] = useState<boolean>(false);
+
+        useEffect(() => {
+            if (src) {
+                const image = imageRef.current;
+
+                if (image) {
+                    const handleError = () => {
+                        onError?.();
+                    };
+
+                    image.addEventListener('error', handleError);
+
+                    return () => {
+                        image.removeEventListener('error', handleError);
+                    };
+                }
+            }
+
+        }, [src, imageRef, onError]);
 
         useImperativeHandle(
             ref,
             () => imageRef.current!
         );
 
+        const onLoad = useCallback(() => {
+            const image = imageRef.current;
+
+            if (image) {
+                setLoaded(true);
+                onFulfilled?.();
+            }
+        }, [imageRef, setLoaded, onFulfilled]);
+
         if (src) {
             return (<>
                 <img
                     ref={imageRef}
-                    src={src}
                     {...props}
+                    src={src}
+                    loading='lazy'
+                    onLoad={onLoad}
                     className={classNames(styles.image, className, {
-                        [styles.loading]: !isLoaded,
-                        [styles.loaded]: isLoaded
+                        [styles.loading]: !loaded,
+                        [styles.loaded]: loaded
                     })}
                 />
 
-                {!isLoaded && pending}
+                {!loaded && pending}
             </>);
         }
 
