@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: minmax(0, auto);
     background-color: var(--color-essential);
+    width: 341px;
     border: 1px solid var(--color-stroke);
     padding: 0 6px;
     border-radius: 12px;
@@ -67,5 +68,17 @@
 
     & button {
         box-shadow: 0px 4px 16px 0px #000;
+    }
+}
+
+@include max1200 {
+    .filter {
+        width: 320px;
+    }
+}
+
+@include max1000 {
+    .filter {
+        width: auto;
     }
 }
