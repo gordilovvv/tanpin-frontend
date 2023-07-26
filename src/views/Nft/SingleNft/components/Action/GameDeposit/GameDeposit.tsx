@@ -1,6 +1,6 @@
 import { Button } from '@/uikit';
 import { ActionBox } from '../Box/ActionBox';
-import styles from './gameDeposit.module.scss';
+import styles from './GameDeposit.module.scss';
 
 export function GameDeposit() {
     return (
