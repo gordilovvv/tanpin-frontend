@@ -19,6 +19,7 @@ import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSucces
 import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositRejectedView';
 import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
 import { GameAuthView } from '@/views/GameAuth/GameAuthView';
+import { BUY_USDT_AVAILABLE } from '@/config';
 
 // TODO: LazyLoad Routes
 // https://loadable-components.com/docs/getting-started/
@@ -47,10 +48,9 @@ export const router = createBrowserRouter([
                 path: '/:gameID',
                 element: <SingleGameView />
             },
-            {
+            ...(BUY_USDT_AVAILABLE ? [{
                 path: '/deposit',
                 element: <DepositView />,
-
             },
             {
                 path: '/deposit/success',
@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
             {
                 path: '/deposit/rejected',
                 element: <DepositRejectedView />
-            },
+            }] : []),
             {
                 path: '/:gameID/:collectionID',
                 element: <SingleCollectionView />

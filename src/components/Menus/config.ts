@@ -1,4 +1,4 @@
-import { FAQ_URL, POLICY_URL, TERMS_URL } from '@/config';
+import { BUY_USDT_AVAILABLE, FAQ_URL, POLICY_URL, TERMS_URL } from '@/config';
 import { Activity, Assets } from '@/uikit';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 
@@ -19,8 +19,11 @@ export const headerLinks: NavLink[] = [
 
 export const headerAdditionalLinks: NavLink[] = [
     { to: FAQ_URL, text: 'FAQ', rel: 'noreferrer noopener', target: '_blank' },
-    { to: '/deposit', text: 'Buy USDT', gradient: true }
 ];
+
+if (BUY_USDT_AVAILABLE) {
+    headerAdditionalLinks.push({ to: '/deposit', text: 'Buy USDT', gradient: true });
+}
 
 export const footerLinks: NavLink[] = [
     { to: POLICY_URL, text: 'Privacy policy', target: '_blank' },
