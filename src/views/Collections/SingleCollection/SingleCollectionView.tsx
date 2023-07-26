@@ -35,7 +35,10 @@ export function SingleCollectionView() {
             />
 
             <Container space>
-                <NFTExplorer collection={collection} />
+                <NFTExplorer
+                    type='items'
+                    collection={collection}
+                />
             </Container>
         </div>
     );

@@ -76,7 +76,7 @@ export function HeroBlock() {
 
                         <div className={styles.cards}>
                             <Link
-                                to='/'
+                                to='/collections'
                                 className={styles.cardsLink}
                             >
                                 <img
@@ -91,8 +91,7 @@ export function HeroBlock() {
                                 NFTGTA.io
                             </div>
 
-                            {/* TODO: real url */}
-                            <Button to='/aabb4a6c-eb73-458a-9f72-2f4438e49e18/026dcd1f-f604-4f61-b9f0-b367f55d8dcd'>
+                            <Button to='/collections'>
                                 View collections
                             </Button>
                         </div>

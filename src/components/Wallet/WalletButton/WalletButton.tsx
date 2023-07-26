@@ -30,8 +30,14 @@ export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
             target='_blank'
             className={classNames(styles.button)}
         >
-            <div className={styles.title}>
-                {title}
+            <div className={styles.content}>
+                <div className={styles.title}>
+                    {title}
+                </div>
+
+                {recommended && <div className={styles.label}>
+                    Recommended
+                </div>}
             </div>
 
             <Icon />

@@ -13,7 +13,7 @@ export function NFTView() {
                         description='Discover NFT from your favorite games'
                     />
 
-                    <NFTExplorer />
+                    <NFTExplorer type='items' />
                 </div>
             </Container>
         </PageWrapper>
