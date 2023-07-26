@@ -16,6 +16,10 @@
     &.danger {
         border: 1px solid var(--color-danger);
     }
+
+    &.nftgta {
+        border: 1px solid var(--color-nftgta);
+    }
 }
 
 @include max767 {

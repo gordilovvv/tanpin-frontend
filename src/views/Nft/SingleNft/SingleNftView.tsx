@@ -16,6 +16,8 @@ import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
 import { useTransactionsHistory } from '@/states/nft/hooks/useTransactionsHistory';
 import { isAddressOwner } from '@/utils/addressHelper';
 import { isMultipleNFT, isOwnerOfMultipleNFT, isSingleNFT } from '@/utils/nft';
+import { moneyTokensIds } from '@/config/constants/nftgta';
+import { GameDeposit } from './components/Action/GameDeposit/GameDeposit';
 import styles from './SingleNftView.module.scss';
 
 // TODO: Доделать кнопку share
@@ -80,14 +82,17 @@ export function SingleNftView() {
                     availableEditions -= auction.amount;
                 }
 
-                return (<OwnerAction
-                    nftID={nft.ID}
-                    tokenID={nft.tokenID}
-                    availableEditions={availableEditions}
-                    sale={ownerOfCopy.sales[0]}
-                    auction={ownerOfCopy.auctions[0]}
-                    status={ownerOfCopy.status}
-                />);
+                return (<>
+                    {moneyTokensIds.includes(nft.tokenID) && < GameDeposit />}
+                    <OwnerAction
+                        nftID={nft.ID}
+                        tokenID={nft.tokenID}
+                        availableEditions={availableEditions}
+                        sale={ownerOfCopy.sales[0]}
+                        auction={ownerOfCopy.auctions[0]}
+                        status={ownerOfCopy.status}
+                    />
+                </>);
             } else {
                 return (<BestOfferAction nft={nft} />)
             }
@@ -128,9 +133,9 @@ export function SingleNftView() {
                             {/* <TokenShareLinks nft={nft} /> */}
                         </>}
 
-                        <BlockWrap title="Properties">
+                        {!!nft.attributes.length && <BlockWrap title="Properties">
                             <TokenAttributes attributes={nft.attributes} />
-                        </BlockWrap>
+                        </BlockWrap>}
 
                         <BlockWrap title="Description">
                             <div className={styles.description}>

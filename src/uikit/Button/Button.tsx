@@ -7,6 +7,7 @@ import styles from './Button.module.scss';
 enum View {
     PRIMARY = 'primary',
     SECONDARY = 'secondary',
+    NFTGTA = 'nftgta',
     DANGER = 'danger'
 }
 

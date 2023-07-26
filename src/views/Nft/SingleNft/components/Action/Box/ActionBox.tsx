@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './ActionBox.module.scss';
 
 type ActionBoxProps = {
-    view?: 'primary' | 'danger' | 'default'
+    view?: 'primary' | 'danger' | 'default' | 'nftgta'
 } & HTMLAttributes<HTMLDivElement>
 
 export function ActionBox({ view = 'default', children, className, ...props }: PropsWithChildren<ActionBoxProps>) {

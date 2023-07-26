@@ -106,6 +106,17 @@
     }
 }
 
+.button.nftgta {
+    color: var(--color-typo-base);
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-nftgta);
+    box-shadow: 0px 8px 12px 0px rgba(120, 49, 233, 0.10);
+
+    &:active {
+        background-color: var(--color-essential);
+    }
+}
+
 .button.danger {
     color: var(--color-danger);
     background-color: var(--color-danger-10);

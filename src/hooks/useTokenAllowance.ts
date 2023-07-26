@@ -29,7 +29,7 @@ export function useTokenAllowance(
 
             return formatValueFromRaw(allowance, tokenDecimals);
         },
-        { refreshInterval: FAST_INTERVAL, revalidateOnMount: true }
+        { refreshInterval: FAST_INTERVAL, revalidateOnMount: true, revalidateOnFocus: true }
     );
 
     if (isLoading) {
