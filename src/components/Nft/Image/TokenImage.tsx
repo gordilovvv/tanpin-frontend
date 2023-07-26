@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { NFT } from '@/states/types';
 import styles from './TokenImage.module.scss';
-import { Button, Image, ImageSkeleton, Link } from '@/uikit';
+import { Button, Image, Link, Spin } from '@/uikit';
 import classNames from 'classnames';
 
 type TokenImageProps = {
@@ -9,6 +10,8 @@ type TokenImageProps = {
 }
 
 export function TokenImage({ image, className }: TokenImageProps) {
+    const [loaded, setLoaded] = useState(false);
+
     return (
         <div className={classNames(styles.wrap, className)}>
             <div className={styles.content}>
@@ -17,10 +20,13 @@ export function TokenImage({ image, className }: TokenImageProps) {
                     alt=''
                     className={styles.image}
                     loading='lazy'
-                    pending={<ImageSkeleton className={styles.imageSkeleton} />}
+                    pending={<div className={styles.loader}>
+                        <Spin size='s' />
+                    </div>}
+                    onFulfilled={() => setLoaded(true)}
                 />
 
-                <Button
+                {loaded && <Button
                     as='a'
                     href={image}
                     rel='noreferrer noopener'
@@ -30,7 +36,7 @@ export function TokenImage({ image, className }: TokenImageProps) {
                     iconSlot={<Link />}
                 >
                     View original
-                </Button>
+                </Button>}
             </div>
         </div>
     );
