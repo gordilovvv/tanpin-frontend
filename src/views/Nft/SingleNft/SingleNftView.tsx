@@ -83,7 +83,11 @@ export function SingleNftView() {
                 }
 
                 return (<>
-                    {moneyTokensIds.includes(nft.tokenID) && < GameDeposit />}
+                    {moneyTokensIds.includes(nft.tokenID) && availableEditions > 0 && <GameDeposit
+                        nftID={nft.ID}
+                        tokenID={nft.tokenID}
+                        editionsAvailable={availableEditions}
+                    />}
                     <OwnerAction
                         nftID={nft.ID}
                         tokenID={nft.tokenID}

@@ -1,17 +1,25 @@
-import { Button } from '@/uikit';
 import { ActionBox } from '../Box/ActionBox';
+import { TransferButton } from '@/components/Nft/Buttons/TransferButton';
 import styles from './GameDeposit.module.scss';
 
-export function GameDeposit() {
+type GameDepositProps = {
+    nftID: string,
+    tokenID: string,
+    editionsAvailable: number
+}
+
+export function GameDeposit({ nftID, tokenID, editionsAvailable }: GameDepositProps) {
     return (
         <ActionBox view='nftgta'>
             <div className={styles.description}>
-                Transfer money to your account in NFTGTA
+                Send money to the NFTGTA<br /> to top up your game's account.
             </div>
 
-            <Button view='nftgta'>
-                Available after 23:30 MSK
-            </Button>
+            <TransferButton
+                nftID={nftID}
+                tokenID={tokenID}
+                editionsAvailable={editionsAvailable}
+            />
         </ActionBox>
     );
 }
