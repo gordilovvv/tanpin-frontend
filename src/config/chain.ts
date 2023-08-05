@@ -11,11 +11,11 @@ export const activeChainId = activeChain.id;
 
 export const PUBLIC_NODES = {
     [polygon.id]: [
-        'https://rpc.ankr.com/polygon',
-        'https://polygon.llamarpc.com'
+        import.meta.env.VITE_PUBLIC_NODE_MAINNET,
+        'https://polygon-rpc.com',
     ],
     [polygonMumbai.id]: [
-        'https://polygon-testnet.public.blastapi.io'
+        import.meta.env.VITE_PUBLIC_NODE_TESTNET,
     ]
 } as Record<number, string[]>;
 
