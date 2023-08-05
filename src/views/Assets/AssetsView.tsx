@@ -28,13 +28,6 @@ export function AssetsView() {
                         >
                             On sale
                         </ToggleButton>
-
-                        <ToggleButton
-                            as='NavLink'
-                            to="/assets/collections"
-                        >
-                            Collections
-                        </ToggleButton>
                     </ToggleGroup>
                 </div>
             </Container>

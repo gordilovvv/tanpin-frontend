@@ -10,7 +10,6 @@ import { NFTView } from '@/views/Nft/NFTView';
 import { ActivityView } from '@/views/Activity/ActivityView';
 import { AssetsView } from '@/views/Assets/AssetsView';
 import { CollectionsView } from '@/views/Collections/CollectionsView';
-import { CollectionsView as CollectionsAssetsView } from '@/views/Assets/Collections/CollectionsView';
 import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
 import { RequireConnectedWallet } from './requireConnectedWallet';
@@ -75,10 +74,6 @@ export const router = createBrowserRouter([
                     </RequireConnectedWallet>
                 ),
                 children: [
-                    {
-                        path: '/assets/collections',
-                        element: <CollectionsAssetsView />
-                    },
                     {
                         path: '/assets/sale',
                         element: <SaleView />
