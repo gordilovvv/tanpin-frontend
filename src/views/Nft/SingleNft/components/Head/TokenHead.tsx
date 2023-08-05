@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CollectionLogo } from '@/components/Collections';
+import { TokenStock } from './TokenStock';
 import { isMultipleNFT } from '@/utils/nft';
 import { NFT } from '@/states/types';
 import styles from './TokenHead.module.scss';
@@ -36,7 +37,10 @@ export function TokenHead({ nft, className }: TokenHeadProps) {
             </div>
 
             {isMultiple && <div className={styles.stock}>
-                <span>{nft.stock}</span> / {nft.supply} available
+                <TokenStock
+                    supply={nft.supply}
+                    available={nft.stock}
+                />
             </div>}
         </div>
     );

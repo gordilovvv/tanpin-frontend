@@ -37,3 +37,59 @@ const shortFormatter = Intl.NumberFormat('en', {
 export function formatTokenAmountShort(value: string | number) {
     return shortFormatter.format(typeof value === 'string' ? parseFloat(value) : value);
 }
+
+enum NumberFormat {
+    ERC1155Amount = 'ERC1155Amount'
+}
+
+const numberFormats = {
+    [NumberFormat.ERC1155Amount]: (locale: string, minimumFractionDigits?: number, maximumFractionDigits?: number) => {
+        return new Intl.NumberFormat(locale, {
+            style: 'decimal',
+            minimumFractionDigits: minimumFractionDigits ?? 0,
+            maximumFractionDigits: maximumFractionDigits ?? 0,
+            useGrouping: true
+        });
+    }
+};
+
+const numberSuffixes = {
+    'en': ['K', 'M', 'B', 'T', 'Q'],
+    'ru': [' тыс', ' млн', ' млрд', ' трлн', ' квадр']
+};
+
+function formatAmountWithSuffix(format: (amount: number) => string, value: number, locale: string, decimalPlaces = 1) {
+    const selectedSuffixes = numberSuffixes[locale] || numberSuffixes.en;
+
+    for (let suffixIndex = selectedSuffixes.length - 1; suffixIndex >= 0; suffixIndex--) {
+        const threshold = Math.pow(1e3, suffixIndex + 1);
+        if (value <= -threshold || value >= threshold) {
+            return `${(value / threshold).toFixed(decimalPlaces)}${selectedSuffixes[suffixIndex]}`;
+        }
+    }
+
+    return format(value);
+}
+
+export function formatERC1155Amount(value: number, locale: string) {
+    const noDecimalsFormatter = numberFormats[NumberFormat.ERC1155Amount](locale, 0, 0);
+
+    const decimalsFormatter = {
+        one: numberFormats[NumberFormat.ERC1155Amount](locale, 0, 1),
+        two: numberFormats[NumberFormat.ERC1155Amount](locale, 0, 2),
+    };
+
+    const amountFormatter = (amount: number) => {
+        if (amount > 999) {
+            return noDecimalsFormatter.format(amount);
+        } else if (amount > 10) {
+            return decimalsFormatter.one.format(amount);
+        } else if (amount === 0) {
+            return '0';
+        } else {
+            return decimalsFormatter.two.format(amount);
+        }
+    };
+
+    return formatAmountWithSuffix(amountFormatter, value, locale);
+}
