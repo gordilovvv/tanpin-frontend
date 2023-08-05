@@ -125,7 +125,7 @@ export function CollectionRow({ collection, index }: CollectionRowProps) {
                 </div>
 
                 <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Sales (7D)</span> <span>{collection.stats.sales}</span>
+                    <span className={styles.mobileLabel}>Sales</span> <span>{collection.stats.sales}</span>
                 </div>
 
                 <div className={styles.col}>
