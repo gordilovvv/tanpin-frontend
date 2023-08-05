@@ -16,10 +16,11 @@ export function useSearch<Res>({
 }) {
     const [items, setItems] = useState<Res[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const sanitizedSearchQuery = encodeURIComponent(searchQuery) ?? '';
     const onError = useSearchStore(state => state.setSearchError);
 
     useEffect(() => {
-        if (isLoading || !searchQuery) {
+        if (isLoading || !sanitizedSearchQuery) {
             return;
         }
 
@@ -27,7 +28,7 @@ export function useSearch<Res>({
             try {
                 setIsLoading(true);
 
-                const items = await fetchCallback(searchQuery);
+                const items = await fetchCallback(sanitizedSearchQuery);
 
                 if (items?.length) {
                     setItems(items.slice(0, 4));
@@ -40,7 +41,7 @@ export function useSearch<Res>({
         };
 
         load();
-    }, [searchQuery]);
+    }, [sanitizedSearchQuery]);
 
     return {
         items,
