@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { NFT } from '@/states/types';
 import styles from './TokenImage.module.scss';
-import { Button, Image, Link, Spin } from '@/uikit';
+import { Image, Spin } from '@/uikit';
+import { RefreshMetadataButton } from './RefreshMetadataButton';
 import classNames from 'classnames';
 
 type TokenImageProps = {
+    nftID: string,
     image: NFT['imageURL']
     className?: string
 }
 
-export function TokenImage({ image, className }: TokenImageProps) {
+export function TokenImage({ nftID, image, className }: TokenImageProps) {
     const [loaded, setLoaded] = useState(false);
 
     return (
@@ -26,17 +28,21 @@ export function TokenImage({ image, className }: TokenImageProps) {
                     onFulfilled={() => setLoaded(true)}
                 />
 
-                {loaded && <Button
-                    as='a'
-                    href={image}
-                    rel='noreferrer noopener'
-                    target='_blank'
-                    view="secondary"
-                    className={styles.button}
-                    iconSlot={<Link />}
-                >
-                    View original
-                </Button>}
+                {loaded && <div className={styles.buttons}>
+                    {/* <Button
+                        as='a'
+                        href={image}
+                        rel='noreferrer noopener'
+                        target='_blank'
+                        view="secondary"
+                        className={styles.button}
+                        iconSlot={<Link />}
+                    >
+                        View original
+                    </Button> */}
+
+                    <RefreshMetadataButton nftID={nftID} />
+                </div>}
             </div>
         </div>
     );

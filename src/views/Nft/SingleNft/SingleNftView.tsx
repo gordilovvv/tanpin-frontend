@@ -118,11 +118,15 @@ export function SingleNftView() {
             <Container space>
                 <div className={styles.wrapper}>
                     <div className={styles.leftColumn}>
-                        <TokenImage image={nft.imageURL} />
+                        <TokenImage
+                            nftID={nft.ID}
+                            image={nft.imageURL}
+                        />
                     </div>
 
                     <div className={styles.content}>
                         <TokenImage
+                            nftID={nft.ID}
                             image={nft.imageURL}
                             className={styles.image}
                         />

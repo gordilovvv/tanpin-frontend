@@ -34,3 +34,4 @@ export { FeaturedGame } from './components/FeaturedGame';
 export { Gift } from './components/Gift';
 export { Warning } from './components/Warning';
 export { Logo } from './components/Logo';
+export { Reload } from './components/Reload';
