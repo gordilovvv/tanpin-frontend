@@ -13,7 +13,7 @@ export function usePendingTransactionModal() {
         hash: pendingTransaction?.hash,
         text: pendingTransaction?.text,
         onReject: pendingTransaction?.onReject,
-        onReceipt: pendingTransaction?.onReceipt,
+        onConfirm: pendingTransaction?.onConfirm,
         open: setPendingTransaction,
         close: resetPendingTransaction
     };

@@ -1,0 +1,43 @@
+.status {
+    display: grid;
+    align-items: center;
+    gap: 12px;
+    grid-template-columns: auto 1fr;
+
+    &Circle {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    &.fail &Circle {
+        background-color: var(--color-danger);
+    }
+
+    &.success &Circle {
+        background-color: var(--color-success);
+    }
+
+    &.pending &Circle {
+        background-color: var(--color-warning);
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-fill-mode: backwards;
+        animation-duration: 1s;
+        animation-name: flash;
+    }
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

@@ -1,29 +1,35 @@
 import { useCallback, useState } from 'react';
-import { Hash, TransactionReceipt } from 'viem';
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { TransactionInfo } from './Info/TransactionInfo';
+import { PendingTransaction } from '@/states/global/types';
 import styles from './PendingTransactionModal.module.scss';
 
 type PendingTransactionModalProps = {
-    hash?: Hash
-    text?: string,
-    onReject?: () => void
-    onReceipt?: (receipt: TransactionReceipt) => void,
+    hash?: PendingTransaction['hash']
+    text?: PendingTransaction['text'],
+    onReject?: PendingTransaction['onReject'],
+    onConfirm?: PendingTransaction['onConfirm'],
 }
 
-export function PendingTransactionModal({ isOpen, text, hash, onReject, onReceipt, onClose }: PendingTransactionModalProps & ModalProps) {
+export function PendingTransactionModal({ isOpen, text, hash, onReject, onConfirm, onClose }: PendingTransactionModalProps & ModalProps) {
     const [canClose, setCanClose] = useState(false);
-
     const handleClose = canClose ? onClose : undefined;
 
-    const handleReject = useCallback(() => {
-        onReject?.();
-    }, []);
+    const handleReject = useCallback(async () => {
+        if (onReject) {
+            await onReject();
+        }
 
-    const handleReceipt = useCallback((receipt: TransactionReceipt) => {
         setCanClose(true);
-        onReceipt?.(receipt);
-    }, [setCanClose]);
+    }, [onReject, setCanClose]);
+
+    const handleConfirm = useCallback(async () => {
+        if (onConfirm) {
+            await onConfirm?.();
+        }
+
+        setCanClose(true);
+    }, [onConfirm, setCanClose]);
 
     return (
         <Modal
@@ -43,7 +49,7 @@ export function PendingTransactionModal({ isOpen, text, hash, onReject, onReceip
                         hash={hash}
                         onClose={handleClose}
                         onReject={handleReject}
-                        onReceipt={handleReceipt}
+                        onConfirm={handleConfirm}
                     />}
                 </div>
             </ModalBody>

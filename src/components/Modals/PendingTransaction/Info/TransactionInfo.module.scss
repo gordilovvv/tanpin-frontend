@@ -13,53 +13,21 @@
     border-radius: 12px;
 }
 
-.status {
-    display: grid;
-    align-items: center;
-    gap: 12px;
-    grid-template-columns: auto 1fr;
-
-    &Circle {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-    }
-
-    &.fail &Circle {
-        background-color: var(--color-danger);
-    }
-
-    &.success &Circle {
-        background-color: var(--color-success);
-    }
-
-    &.pending &Circle {
-        background-color: var(--color-warning);
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-        animation-fill-mode: backwards;
-        animation-duration: 1.6s;
-        animation-name: flash;
-    }
-}
-
 .bottom {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-@keyframes flash {
-    0% {
-        opacity: 0;
-    }
+.loader {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
 
-    40% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 1;
+    &Text {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 18px;
     }
 }
 
@@ -71,5 +39,12 @@
     .box {
         gap: 12px;
         padding: 12px;
+    }
+
+    .loader {
+        &Text {
+            font-size: 14px;
+            line-height: 16px;
+        }
     }
 }

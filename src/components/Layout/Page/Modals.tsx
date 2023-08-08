@@ -19,7 +19,7 @@ export function Modals({ children }: PropsWithChildren<unknown>) {
                 hash={pendingTransactionModal.hash}
                 text={pendingTransactionModal.text}
                 onReject={pendingTransactionModal.onReject}
-                onReceipt={pendingTransactionModal.onReceipt}
+                onConfirm={pendingTransactionModal.onConfirm}
                 onClose={pendingTransactionModal.close}
             />
 

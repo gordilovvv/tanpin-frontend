@@ -1,59 +1,52 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useToast } from '@/uikit';
+import { useCallback, useEffect } from 'react';
+import useSWRImmutable from 'swr/immutable';
 import { useNFTStore } from '../store';
 import { fetchNFT as fetchNFTRequest } from '../fetch/fetchNFT';
 import { logError } from '@/utils/sentry';
+import { AxiosError } from 'axios';
+import { NORMAL_INTERVAL } from '@/config/constants';
 
-// TODO: ДОБАВИТЬ АУКЦИОН
-/**
- * Hook for NFT Fetch and Refetch.
- * You can refetch nft after Auction End for example.
- */
 export function useNFTFetch(nftID: string) {
-    const { toastDanger } = useToast();
-    const [error, setError] = useState<string | undefined>();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
+    const nft = useNFTStore(state => state.nft);
     const setNFT = useNFTStore(state => state.setNFT);
 
-    const fetchNFT = async () => {
-        try {
-            setIsLoading(true);
-
+    const { isLoading, error, mutate } = useSWRImmutable(
+        [`fetch.token-${nftID}`],
+        async () => {
             const nft = await fetchNFTRequest(nftID);
 
-            setNFT(nft);
-            setIsLoading(false);
-
-            // setAuction(auction);
-        } catch (error) {
-            setError((error as Error).message);
+            return setNFT(nft);
+        },
+        {
+            refreshInterval: NORMAL_INTERVAL,
+            revalidateOnFocus: true
         }
-    };
+    );
 
-    const refetchNFT = useCallback(async () => {
-        try {
-            if (isLoading) {
-                return;
-            }
+    let formattedError: string | undefined;
 
-            const nft = await fetchNFTRequest(nftID);
-
-            setNFT(nft);
-            // setAuction(auction);
-        } catch (error) {
-            logError(error);
-            toastDanger('NFT update was failed!');
+    if (error) {
+        if (error instanceof AxiosError) {
+            formattedError = `NFT with key "${nftID}" not found`;
+        } else {
+            formattedError = 'Something went wrong while loading the NFT. Please try reloading the page';
         }
-    }, [isLoading, setNFT, toastDanger]);
+    }
 
     useEffect(() => {
-        fetchNFT();
-    }, []);
+        if (error) {
+            logError(error);
+        }
+    }, [error]);
+
+    const loading = !nft && isLoading;
+    const refetch = useCallback(async () => {
+        return mutate();
+    }, [mutate]);
 
     return {
-        error,
-        isLoading,
-        refetchNFT
+        error: formattedError,
+        isLoading: loading,
+        refetchNFT: refetch
     };
 }

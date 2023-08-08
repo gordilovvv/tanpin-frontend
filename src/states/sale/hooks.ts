@@ -64,8 +64,8 @@ export function useCreateDirectSaleInfo(editionsAvailable?: number) {
         priceError = 'Enter price';
     }
 
-    if (parsedValues.price && parsedValues.price.isLessThan(0.1)) {
-        priceError = 'Price is less than 0.1 USDT';
+    if (parsedValues.price && parsedValues.price.isLessThan(0.01)) {
+        priceError = 'Price is less than 0.01 USDT';
     }
 
     // TODO: ПОФИКСИТЬ! При закрытии окна нарушит логику!

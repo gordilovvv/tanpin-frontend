@@ -1,54 +1,34 @@
 import { useEffect, useState } from 'react';
-import { Hash, TransactionReceipt } from 'viem';
 import { Button, Spin, UnstyleLink } from '@/uikit';
+import { StatusLoader } from '../Status/StatusLoader';
+import { TransactionStatus } from '../Status/TransactionStatus';
 import { TransactionDetail } from '../Detail/TransactionDetail';
-import { viemClient } from '@/config/viem';
-import { FAST_INTERVAL } from '@/config/constants';
+import { TransactionStatus as TransactionStatusEnum } from '@/hooks/useTransactionStatus';
 import { getTransactionExplorerURL } from '@/utils/explorer';
-import classNames from 'classnames';
+import { PendingTransaction } from '@/states/global/types';
 import styles from './TransactionInfo.module.scss';
 
-enum TransactionStatus {
-    PENDING = 'pending',
-    FAIL = 'fail',
-    SUCCESS = 'success'
-}
-
 type TransactionInfoProps = {
-    hash: Hash,
+    hash: PendingTransaction['hash'],
     onClose?: () => void,
-    onReject: () => void,
-    onReceipt: (receipt: TransactionReceipt) => void
+    onReject: () => Promise<void>,
+    onConfirm: () => Promise<void>
 }
 
-export function TransactionInfo({ hash, onClose, onReject, onReceipt }: TransactionInfoProps) {
-    const [status, setStatus] = useState<TransactionStatus>(TransactionStatus.PENDING);
-
-    const statusNames: Record<TransactionStatus, string> = {
-        [TransactionStatus.PENDING]: 'Pending',
-        [TransactionStatus.FAIL]: 'Fail',
-        [TransactionStatus.SUCCESS]: 'Success'
-    };
+export function TransactionInfo({ hash, onClose, onReject, onConfirm }: TransactionInfoProps) {
+    const [status, setStatus] = useState<TransactionStatusEnum>(TransactionStatusEnum.PENDING);
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        viemClient.waitForTransactionReceipt({
-            hash,
-            pollingInterval: FAST_INTERVAL
-        })
-            .then(receipt => {
-                if (receipt.status) {
-                    setStatus(TransactionStatus.SUCCESS);
-                } else {
-                    setStatus(TransactionStatus.FAIL);
-                }
+        if (status === TransactionStatusEnum.FAIL) {
+            onReject();
+        }
 
-                onReceipt(receipt);
-            })
-            .catch(() => {
-                setStatus(TransactionStatus.FAIL);
-                onReject();
-            });
-    }, [hash]);
+        if (status === TransactionStatusEnum.SUCCESS) {
+            setLoading(true);
+            onConfirm().then(() => setLoading(false));
+        }
+    }, [status, onReject, onConfirm]);
 
     return (
         <div className={styles.wrap}>
@@ -65,24 +45,32 @@ export function TransactionInfo({ hash, onClose, onReject, onReceipt }: Transact
                 </TransactionDetail>
 
                 <TransactionDetail label='Status'>
-                    <div className={classNames(styles.status, styles[status])}>
-                        <div className={styles.statusCircle}></div>
-
-                        <div className={styles.statusText}>
-                            {statusNames[status]}
-                        </div>
-                    </div>
+                    {status === TransactionStatusEnum.PENDING
+                        ? <StatusLoader
+                            hash={hash}
+                            onChange={setStatus}
+                        >
+                            <TransactionStatus status={status} />
+                        </StatusLoader>
+                        : <TransactionStatus status={status} />
+                    }
                 </TransactionDetail>
             </div>
 
             <div className={styles.bottom}>
-                {status === TransactionStatus.PENDING
-                    ? <Spin size='s' />
+                {status === TransactionStatusEnum.PENDING || isLoading
+                    ? <div className={styles.loader}>
+                        <Spin size='s' />
+
+                        <div className={styles.loaderText}>
+                            Waiting for confirmations...
+                        </div>
+                    </div>
                     : <Button
                         view='secondary'
                         onClick={onClose}
                     >
-                        Close
+                        View NFT
                     </Button>}
             </div>
         </div>

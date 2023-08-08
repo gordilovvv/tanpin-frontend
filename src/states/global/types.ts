@@ -1,8 +1,8 @@
-import { Hash, TransactionReceipt } from 'viem';
+import { Hash } from 'viem';
 
 export type PendingTransaction = {
     hash: Hash,
     text: string,
-    onReject?: () => void,
-    onReceipt?: (receipt: TransactionReceipt) => void
+    onReject?: () => Promise<void> | void,
+    onConfirm?: () => Promise<void> | void,
 }
