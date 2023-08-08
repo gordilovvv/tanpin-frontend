@@ -1,26 +1,33 @@
+import { useEffect } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { fetchActivity } from '../fetch/fetchActivity';
 import { useActivityStore } from '../store';
 import { ActivityFilter, ActivityTransaction } from '../types';
 import { NORMAL_INTERVAL } from '@/config/constants';
 
-export function useActivity(filter: ActivityFilter) {
+export function useActivity(fetchKey: string, filter: ActivityFilter) {
+    const cacheKey = `${fetchKey}.${filter.tokenID ?? 'no-token'}.${filter.userAddress ?? 'no-address'}.${filter.types.join(';')}`;
     const setActivityList = useActivityStore(state => state.setActivityList);
 
-    const { isLoading, error } = useSWRImmutable<ActivityTransaction[] | undefined>(
-        ['activity', filter],
-        async () => {
-            const activity = await fetchActivity({ filter });
-
-            setActivityList(activity);
-
-            return activity;
-        },
+    const { data, isLoading, error } = useSWRImmutable<ActivityTransaction[] | undefined>(
+        cacheKey,
+        async () => fetchActivity({ filter }),
         {
+            revalidateOnFocus: true,
             dedupingInterval: NORMAL_INTERVAL,
             refreshInterval: NORMAL_INTERVAL
         }
     );
+
+    useEffect(() => {
+        setActivityList(data);
+    }, [data]);
+
+    useEffect(() => {
+        return () => {
+            setActivityList(undefined);
+        };
+    }, []);
 
     return {
         isLoading,

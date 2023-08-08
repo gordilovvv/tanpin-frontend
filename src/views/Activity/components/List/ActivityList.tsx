@@ -14,7 +14,7 @@ export function ActivityList() {
         state.userActivityFilter
     ]);
 
-    const { isLoading } = useActivity({
+    const { isLoading } = useActivity('user.activity', {
         userAddress: address,
         types: filter
     });
