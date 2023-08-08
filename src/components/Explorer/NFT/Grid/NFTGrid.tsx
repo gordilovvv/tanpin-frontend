@@ -4,9 +4,11 @@ import { VirtualizedGrid } from '@/components/Virtualized/Grid/VirtualizedGrid';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { TokensFilterState } from '@/states/explorer/TokensFilterStore';
 import { fetchTokensList } from '@/states/explorer/fetch/fetchTokensList';
+import { NFTExplorerCategory } from '@/states/explorer/types';
 import styles from './NFTGrid.module.scss';
 
 type NFTGridProps = {
+    category: `${NFTExplorerCategory}`,
     collectionID?: string
     ownerAddress?: string,
     filter: TokensFilterState
@@ -15,8 +17,12 @@ type NFTGridProps = {
 }
 
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
-export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty, rejected }: NFTGridProps) => {
+export const NFTGrid = memo(({ category, collectionID, ownerAddress, filter, empty, rejected }: NFTGridProps) => {
     const { address } = useAccount();
+    const ownerUserAddress = category === 'ownership' || category === 'ownershipSale'
+        ? address
+        : undefined;
+
     const fetchList = useCallback(async (offset: number, limit: number) => {
         return fetchTokensList({
             collectionID,
@@ -34,11 +40,11 @@ export const NFTGrid = memo(({ collectionID, ownerAddress, filter, empty, reject
         if (data)
             return (<NftCard
                 nft={data}
-                userAddress={address}
+                userAddress={ownerUserAddress}
             />);
 
         return <></>;
-    }, [address]);
+    }, [ownerUserAddress]);
 
     return (
         <div className={styles.grid}>

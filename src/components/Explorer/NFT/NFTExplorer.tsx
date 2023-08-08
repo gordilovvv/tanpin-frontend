@@ -42,6 +42,10 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
 
     // Reset filter state on unmount
     useEffect(() => {
+        if (type === 'ownershipSale' && filterState.status === 'ALL') {
+            handleReplaceFilterState({ status: 'FIXED_PRICE' }); // Special status for ownershipSale category
+        }
+
         return () => {
             handleReplaceFilterState(initialTokensFilterState);
         };
@@ -113,6 +117,7 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
 
                 <div className={styles.listWrap}>
                     <NFTGrid
+                        category={type}
                         filter={filterState}
                         empty={renderEmpty}
                         ownerAddress={ownerAddress}
