@@ -4,7 +4,7 @@ import { activeChainId } from '@/config/chain';
 import { CONTRACTS } from '@/config/constants/contracts';
 
 // TODO: ДОБАВИТЬ АУКЦИОН
-type State = {
+type CreateDirectSaleState = {
     amount: string, // For unique tokens always should be 1!
     price: string,
     currency: {
@@ -13,13 +13,13 @@ type State = {
     }
 }
 
-type Actions = {
-    setAmount: (amount: State['amount']) => void,
-    setPrice: (price: State['price']) => void,
-    replaceSaleState: (state: Partial<State>) => void
+type CreateDirectSaleActions = {
+    setAmount: (amount: CreateDirectSaleState['amount']) => void,
+    setPrice: (price: CreateDirectSaleState['price']) => void,
+    replaceSaleState: (state: Partial<CreateDirectSaleState>) => void
 }
 
-export const useSaleStore = create<State & Actions>()(
+export const useCreateDirectSaleStore = create<CreateDirectSaleState & CreateDirectSaleActions>()(
     (set) => ({
         amount: '',
         price: '',
@@ -39,6 +39,23 @@ export const useSaleStore = create<State & Actions>()(
                 ...prevState,
                 ...state
             }));
+        }
+    })
+);
+
+type State = {
+    price: string
+}
+
+type Actions = {
+    setPrice: (price: State['price']) => void
+}
+
+export const useUpdateDirectSaleStore = create<State & Actions>()(
+    (set) => ({
+        price: '',
+        setPrice: (price) => {
+            set({ price });
         }
     })
 );
