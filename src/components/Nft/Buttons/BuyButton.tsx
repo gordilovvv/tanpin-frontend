@@ -80,10 +80,12 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
             pendingTransactionModal.open({
                 hash,
                 text: 'Purchase is successfully initiated. Updates will appear as soon as the transaction is confirmed.',
-                onReceipt: refetchNFT
+                onConfirm: () => {
+                    handleReplaceBuyState(initialBuyStoreState);
+
+                    return refetchNFT();
+                }
             });
-            // Reset buy state
-            handleReplaceBuyState(initialBuyStoreState);
         }
     });
 

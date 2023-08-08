@@ -32,6 +32,7 @@ export function DirectSale({ nftID, sale, isOwner }: DirectSaleProps) {
                     ? <UpdateSaleButton
                         nftID={nftID}
                         saleID={sale.saleID}
+                        currentPrice={sale.price.amount}
                     />
                     : <BuyButton
                         nftID={nftID}

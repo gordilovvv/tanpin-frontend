@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Button, Input } from '@/uikit';
-import { useCreateDirectSaleInfo, useSaleActions } from '@/states/sale/hooks';
+import { useCreateDirectSaleInfo, useCreateDirectSaleActions } from '@/states/sale/hooks/createDirectSale';
 import styles from './CreateDirectSale.module.scss';
 
 type CreateDirectSaleProps = {
@@ -9,7 +9,7 @@ type CreateDirectSaleProps = {
 }
 
 export function CreateDirectSale({ editionsAvailable, onConfirm }: CreateDirectSaleProps) {
-    const { onPriceChange, onAmountChange } = useSaleActions();
+    const { onPriceChange, onAmountChange } = useCreateDirectSaleActions();
     const { amount, amountError, price, priceError, currency, parsedValues } = useCreateDirectSaleInfo(editionsAvailable);
 
     const amountInputError = parsedValues.amount && !!amountError;

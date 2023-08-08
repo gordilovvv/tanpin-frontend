@@ -4,7 +4,7 @@ import { ErrorMessageModal, LoadingModal, UpdateSaleModal } from '@/components/M
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
-import { useUpdateSaleStore } from '@/states/sale/updateSaleStore';
+import { useUpdateDirectSaleStore } from '@/states/sale/store';
 import { usePendingTransactionModal } from '@/states/global/hooks';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { formatValueToRaw } from '@/utils/formatRawAmount';
@@ -25,7 +25,7 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
     const updateSaleModal = useOpenedState();
     const pendingTransactionModal = usePendingTransactionModal();
 
-    const [price, setPrice] = useUpdateSaleStore(state => [
+    const [price, setPrice] = useUpdateDirectSaleStore(state => [
         state.price,
         state.setPrice
     ]);

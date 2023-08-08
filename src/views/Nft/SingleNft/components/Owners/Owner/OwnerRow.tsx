@@ -45,6 +45,7 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
                     <UpdateSaleButton
                         nftID={nftID}
                         saleID={owner.sale.saleID}
+                        currentPrice={owner.sale.price.amount}
                     />
 
                     <DelistButton
