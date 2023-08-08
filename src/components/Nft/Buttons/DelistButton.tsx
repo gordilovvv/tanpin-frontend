@@ -39,7 +39,7 @@ export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
             pendingTransactionModal.open({
                 hash,
                 text: 'Sale is successfully cancelled. Updates will appear as soon as transaction is confirmed.',
-                onReceipt: refetchNFT
+                onConfirm: refetchNFT
             });
         } catch (error) {
             logError(error);

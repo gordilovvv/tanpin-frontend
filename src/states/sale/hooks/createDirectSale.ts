@@ -2,20 +2,6 @@ import { useMemo } from 'react';
 import { useCreateDirectSaleStore } from '../store';
 import BigNumber from 'bignumber.js';
 
-export function useCreateDirectSaleState() {
-    const [amount, price, currency] = useCreateDirectSaleStore(state => [
-        state.amount,
-        state.price,
-        state.currency
-    ]);
-
-    return {
-        amount,
-        price,
-        currency
-    };
-}
-
 export function useCreateDirectSaleActions() {
     const [setPrice, setAmount] = useCreateDirectSaleStore(state => [
         state.setPrice,
@@ -29,7 +15,11 @@ export function useCreateDirectSaleActions() {
 }
 
 export function useCreateDirectSaleInfo(editionsAvailable?: number) {
-    const { amount, price, currency } = useCreateDirectSaleState();
+    const [amount, price, currency] = useCreateDirectSaleStore(state => [
+        state.amount,
+        state.price,
+        state.currency
+    ]);
 
     const parsedValues = useMemo(() => {
         return {

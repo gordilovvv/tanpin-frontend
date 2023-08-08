@@ -38,7 +38,7 @@ export function CloseAuctionButton({ auctionID, text, loadingText, pendingTransa
             pendingTransactionModal.open({
                 hash,
                 text: pendingTransactionText,
-                onReceipt: onSuccess
+                onConfirm: onSuccess
             });
         } catch (error) {
             logError(error);

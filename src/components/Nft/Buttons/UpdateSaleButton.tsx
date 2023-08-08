@@ -59,10 +59,7 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
             pendingTransactionModal.open({
                 hash,
                 text: 'The NFT price is successfully changed. Updates will appear as soon as transaction is confirmed.',
-                onConfirm: () => {
-                    setPrice('');
-                    return refetchNFT();
-                }
+                onConfirm: refetchNFT
             });
         } catch (error) {
             logError(error);

@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { ApproveConfirmModal, SellModal } from '@/components/Modals';
 import { ActionButton } from './ActionButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
-import { useSaleState } from '@/states/sale/hooks';
 import { useOpenedState } from '@/hooks/useOpenedState';
+import { useCreateDirectSaleStore } from '@/states/sale/store';
 import { useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
 import { usePendingTransactionModal } from '@/states/global/hooks';
 import { useContractCall, useERC1155, useMarketContract } from '@/hooks/useContract';
@@ -25,12 +25,17 @@ export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProp
     const { address } = useAccount();
     const { refetchNFT } = useNFTFetch(nftID);
     const { callContract } = useContractCall();
-    const { amount, price } = useSaleState();
     const saleModal = useOpenedState();
     const approveConfirmModal = useOpenedState();
     const pendingTransactionModal = usePendingTransactionModal();
     const nftContract = useERC1155(CONTRACTS.ERC1155[activeChainId]);
     const marketContract = useMarketContract();
+
+    const [amount, price, replaceSaleState] = useCreateDirectSaleStore(state => [
+        state.amount,
+        state.price,
+        state.replaceSaleState
+    ]);
 
     const texts = useMemo(() => {
         return {
@@ -106,14 +111,27 @@ export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProp
             pendingTransactionModal.open({
                 hash,
                 text: 'Listing is successfully initiated. Updates will appear as soon as the transaction is confirmed.',
-                onReceipt: refetchNFT
+                onConfirm: refetchNFT
             });
         }
     });
 
+    const handleOpenBuyModal = () => {
+        replaceSaleState({
+            amount: '',
+            price: ''
+        });
+        saleModal.open();
+    };
+
+    const handleCreateSale = useCallback(() => {
+        saleModal.close();
+        approveConfirmModal.open();
+    }, [saleModal.close, approveConfirmModal.open]);
+
     return (
         <>
-            <ActionButton onClick={saleModal.open}>
+            <ActionButton onClick={handleOpenBuyModal}>
                 List for Sale
             </ActionButton>
 
@@ -121,7 +139,7 @@ export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProp
                 isOpen={saleModal.isOpen}
                 availableEditions={availableEditions}
                 onClose={saleModal.close}
-                onConfirm={approveConfirmModal.open}
+                onConfirm={handleCreateSale}
             />
 
             <ApproveConfirmModal

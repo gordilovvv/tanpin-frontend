@@ -48,7 +48,7 @@ export function TransferButton({ nftID, tokenID, editionsAvailable }: TransferBu
             pendingTransactionModal.open({
                 hash,
                 text: 'NFT is successfully transfered to the NFTGTA. Updates will appear as soon as transaction is confirmed.',
-                onReceipt: refetchNFT
+                onConfirm: refetchNFT
             });
         } catch (error) {
             logError(error);
