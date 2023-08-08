@@ -11,7 +11,7 @@ type CollectionHeadProps = {
     collection: Collection
 }
 
-export function CollectionHead({ game, collection }: CollectionHeadProps) {
+export function CollectionHead({ collection }: CollectionHeadProps) {
     return (
         <div className={styles.wrapper}>
             <div className={styles.background}>
@@ -24,21 +24,16 @@ export function CollectionHead({ game, collection }: CollectionHeadProps) {
             <Container>
                 <div className={styles.content}>
                     <div className={styles.top}>
-                        <div className={styles.game}>
-                            <Link
-                                to="/"
-                                className={styles.gameLink}
-                            >
-                                <CollectionLogo
-                                    image={game.logoURL}
-                                    size='xxs'
-                                />
+                        {/* <div className={styles.game}>
+                            <CollectionLogo
+                                image={game.logoURL}
+                                size='xxs'
+                            />
 
-                                <div className={styles.gameName}>
-                                    {game.name}
-                                </div>
-                            </Link>
-                        </div>
+                            <div className={styles.gameName}>
+                                {game.name}
+                            </div>
+                        </div> */}
 
                         <div className={styles.collection}>
                             <Link
