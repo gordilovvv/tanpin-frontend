@@ -9,7 +9,7 @@
     text-decoration: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-    @include min768 {
+    @include min1001 {
         &:not(:last-child) {
             border-bottom: 1px solid var(--color-stroke);
         }
@@ -17,7 +17,6 @@
 
     &.loading {
         cursor: default;
-        pointer-events: none;
     }
 }
 
@@ -62,7 +61,7 @@ a.row {
     text-align: left;
     color: var(--color-typo-base);
 
-    @include min768 {
+    @include min1001 {
         @include ellipsis;
     }
 }
@@ -118,7 +117,7 @@ a.row {
     color: var(--color-typo-ghost);
     margin-right: 4px;
 
-    @include min768 {
+    @include min1001 {
         display: none;
     }
 }
@@ -133,7 +132,7 @@ a.row {
     }
 }
 
-@include max767 {
+@include max1000 {
     .row {
         &::before {
             display: none;
@@ -145,6 +144,10 @@ a.row {
 
         &.loading {
             background-color: var(--color-surface);
+
+            .col {
+                justify-content: flex-start;
+            }
         }
     }
 
@@ -168,12 +171,11 @@ a.row {
 
     .col {
         display: flex;
+        align-items: baseline;
         font-size: 14px;
 
         &:nth-of-type(1) {
-            grid-area: counter;
-            order: 20;
-            display: none;
+            display: none !important;
         }
 
         &:nth-of-type(2) {
@@ -210,6 +212,7 @@ a.row {
 
     .metadata {
         gap: 12px;
+        align-items: center;
         margin-bottom: 12px;
 
         &Name {
@@ -235,7 +238,7 @@ a.row {
     }
 
     .row.loading .wrap {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         grid-template-areas: 'collection collection'
             'price price'
             'items items'

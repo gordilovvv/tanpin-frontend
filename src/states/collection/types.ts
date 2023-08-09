@@ -19,6 +19,7 @@ export type Collection = {
             amount: string
             currency: string
         }
+        volumeChange?: string,
         floor: {
             amount: string
             currency: string

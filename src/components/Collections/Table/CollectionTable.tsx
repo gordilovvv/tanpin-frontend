@@ -24,14 +24,14 @@ export const CollectionTable = memo(({ filter }: CollectionTableProps) => {
         'Items',
         'Sales',
         'Volume (7D)',
-        '1D Change',
+        // '1D Change',
     ];
 
     const renderBody = () => {
         if (isFirstLoading) {
             return (
                 <div className={styles.body}>
-                    {times(12).map((index) => (
+                    {times(7).map((index) => (
                         <CollectionRowSkeleton
                             key={index}
                             index={index}

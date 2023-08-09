@@ -1,13 +1,23 @@
 @mixin tableRow {
-    $gap: 16px;
-
-    $small: calc(38px - $gap);
-    $medium: calc(92px - $gap);
-    $big: calc(166px - $gap);
-    gap: $gap;
-
+    // $gap: 16px;
+    // $small: calc(38px - $gap);
+    // $medium: calc(92px - $gap);
+    // $big: calc(166px - $gap);
+    // grid-template-columns: minmax($small, $small) minmax(200px, 100%) minmax(164px, $big) repeat(2, minmax($medium, $big)) minmax($big, $big) minmax($medium, $big);
     display: grid;
-    grid-template-columns: minmax($small, $small) minmax(200px, 100%) minmax(164px, $big) repeat(2, minmax($medium, $big)) minmax($big, $big) minmax($medium, $big);
+    gap: 16px;
+    // grid-template-columns: 20px 1fr repeat(4, 170px);
+    grid-template-columns: 20px 1fr repeat(4, 200px);
+
+    @include min1001 {
+        @include max1400 {
+            grid-template-columns: 20px 1fr repeat(4, 160px);
+        }
+
+        @include max1200 {
+            grid-template-columns: 20px minmax(200px, 1fr) repeat(4, 140px);
+        }
+    }
 
     align-items: center;
 

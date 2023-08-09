@@ -1,4 +1,4 @@
-import { PercentBadge, Skeleton } from '@/uikit';
+import { Skeleton } from '@/uikit';
 import { CollectionLogo } from '@/components/Collections';
 import { Collection } from '@/states/collection/types';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,58 @@ type CollectionRowProps = {
     collection: Collection
     index: number
 };
+
+export function CollectionRow({ collection, index }: CollectionRowProps) {
+    // const isVolumeChangeNotZero = useMemo(() => {
+    //     return collection.stats.volumeChange
+    //         ? !new BigNumber(collection.stats.volumeChange).isEqualTo(0)
+    //         : false;
+    // }, [collection.stats.volumeChange]);
+
+    return (
+        <Link
+            to={`/${collection.game.ID}/${collection.ID}`}
+            className={styles.row}
+        >
+            <div className={styles.wrap}>
+                <div className={classNames(styles.col, styles.secondary)}>
+                    {index + 1}
+                </div>
+
+                <div className={classNames(styles.col, styles.metadata)}>
+                    <CollectionLogo
+                        size="s"
+                        image={collection.logoURL}
+                    />
+
+                    <div className={styles.metadataContent}>
+                        <div className={styles.metadataName}>{collection.name}</div>
+                    </div>
+                </div>
+
+                <div className={styles.col}>
+                    <span className={styles.mobileLabel}>Floor Price</span> <span>{formatTokenAmount(collection.stats.floor.amount)} {collection.stats.floor.currency}</span>
+                </div>
+
+                <div className={styles.col}>
+                    <span className={styles.mobileLabel}>Items</span> <span>{collection.stats.items}</span>
+                </div>
+
+                <div className={styles.col}>
+                    <span className={styles.mobileLabel}>Sales</span> <span>{collection.stats.sales}</span>
+                </div>
+
+                <div className={styles.col}>
+                    <span className={styles.mobileLabel}>Volume (7D)</span> <span>{formatTokenAmount(collection.stats.volume.amount)} {collection.stats.volume.currency}</span>
+                </div>
+
+                {/* <div className={styles.col}>
+                    {isVolumeChangeNotZero && collection.stats.volumeChange ? <PercentBadge value={collection.stats.volumeChange} /> : '-'}
+                </div> */}
+            </div>
+        </Link>
+    );
+}
 
 const skeletonWidths = {
     desktop: [
@@ -43,7 +95,7 @@ export const CollectionRowSkeleton = ({ index }: { index: number }) => {
         <div className={classNames(styles.row, styles.loading)}>
             <div className={styles.wrap}>
                 <div className={classNames(styles.col, styles.secondary)}>
-                    {index}
+                    {index + 1}
                 </div>
 
                 <div className={styles.col}>
@@ -81,62 +133,13 @@ export const CollectionRowSkeleton = ({ index }: { index: number }) => {
                     />
                 </div>
 
-                <div className={styles.col}>
+                {/* <div className={styles.col}>
                     <Skeleton
                         className={styles.skeletonText}
                         style={{ width: `${widthsData[5][widthIndex]}px` }}
                     />
-                </div>
+                </div> */}
             </div>
         </div>
     );
 };
-
-export function CollectionRow({ collection, index }: CollectionRowProps) {
-    return (
-        <Link
-            to={`/${collection.game.ID}/${collection.ID}`}
-            className={styles.row}
-        >
-            <div className={styles.wrap}>
-                <div className={classNames(styles.col, styles.secondary)}>
-                    {index + 1}
-                </div>
-
-                <div className={classNames(styles.col, styles.metadata)}>
-                    <CollectionLogo
-                        size="s"
-                        image={collection.logoURL}
-                    />
-
-                    <div className={styles.metadataContent}>
-                        <div className={styles.metadataName}>{collection.name}</div>
-                        {/* TODO: add description */}
-                        {/* <div className={styles.metadataDescription}>{description}</div> */}
-                    </div>
-                </div>
-
-                <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Floor Price</span> <span>{formatTokenAmount(collection.stats.floor.amount)} {collection.stats.floor.currency}</span>
-                </div>
-
-                <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Items</span> <span>{collection.stats.items}</span>
-                </div>
-
-                <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Sales</span> <span>{collection.stats.sales}</span>
-                </div>
-
-                <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Volume (7D)</span> <span>{formatTokenAmount(collection.stats.volume.amount)} {collection.stats.volume.currency}</span>
-                </div>
-
-                <div className={styles.col}>
-                    {/* TODO: Add percent Badge */}
-                    <PercentBadge value={0} />
-                </div>
-            </div>
-        </Link>
-    );
-}

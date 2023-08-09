@@ -33,11 +33,13 @@
     padding: 24px 0;
 }
 
-@include max767 {
+@include max1000 {
     .head {
         display: none;
     }
+}
 
+@include max767 {
     .body {
         margin-bottom: 24px;
     }
