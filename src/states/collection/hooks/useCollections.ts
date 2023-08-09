@@ -11,21 +11,22 @@ export function useCollections(filter: CollectionsFilter) {
     const [isFinished, setFinished] = useState(false);
     const [collections, setCollections] = useState<Collection[]>([]);
 
-    const { isLoading, error } = useSWRImmutable(
-        ['collection.list', {
-            filter,
-            offset,
-            limit: limit.current
-        }],
-        async ([_, requestPayload]) => {
-            const { collections, counts } = await collectionFetch(requestPayload);
+    const { isLoading, error, mutate } = useSWRImmutable(
+        ['collection.list', filter],
+        async ([_, collectionsFilter]) => {
+            const { collections, counts } = await collectionFetch({
+                filter: collectionsFilter,
+                offset,
+                limit: limit.current
+            });
 
-            setCollections((prev) => ([
-                ...prev,
-                ...collections
-            ]));
+            if (offset === 0) {
+                setCollections(collections);
+            } else {
+                setCollections((prev) => ([...prev, ...collections]));
+            }
 
-            if (requestPayload.offset + limit.current >= counts) {
+            if (offset + limit.current >= counts) {
                 setFinished(true);
             }
         }
@@ -34,21 +35,21 @@ export function useCollections(filter: CollectionsFilter) {
     const hasError = !!error;
 
     useEffect(() => {
-        if (offset > 0) {
-            setOffset(0);
+        if (offset === 0) {
             setCollections([]);
         }
     }, [filter]);
 
-    // Reset on unmount
     useEffect(() => {
-        return () => {
-            setOffset(0);
-        };
-    }, []);
+        setOffset(0);
+    }, [filter]);
+
+    useEffect(() => {
+        mutate();
+    }, [offset]);
 
     const loadMore = useCallback(() => {
-        setOffset(offset => offset + limit.current);
+        setOffset((offset) => offset + limit.current);
     }, [limit.current, setOffset]);
 
     return {
