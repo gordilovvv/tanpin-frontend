@@ -2,7 +2,7 @@ import { PercentBadge, Skeleton } from '@/uikit';
 import { CollectionLogo } from '@/components/Collections';
 import { Collection } from '@/states/collection/types';
 import { Link } from 'react-router-dom';
-import { isTouchDevice } from "@/utils/isTouchDevice";
+import { isTouchDevice } from '@/utils/isTouchDevice';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import classNames from 'classnames';
 import styles from './CollectionRow.module.scss';
@@ -33,7 +33,7 @@ const skeletonWidths = {
         [72, 72, 72],
         [96, 96, 96]
     ]
-}
+};
 
 export const CollectionRowSkeleton = ({ index }: { index: number }) => {
     const widthIndex = index % 3;
@@ -138,5 +138,5 @@ export function CollectionRow({ collection, index }: CollectionRowProps) {
                 </div>
             </div>
         </Link>
-    )
+    );
 }

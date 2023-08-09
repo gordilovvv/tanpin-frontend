@@ -23,7 +23,7 @@ export const CollectionTable = memo(({ filter }: CollectionTableProps) => {
         'Floor Price',
         'Items',
         'Sales',
-        'Volume',
+        'Volume (7D)',
         '1D Change',
     ];
 
