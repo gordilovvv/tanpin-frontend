@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { NFTBestOffer } from '@/states/nft/types';
 import { Auction, MultipleNFT, NFT, NFTSaleStatus, Sale, SingleNFT } from '@/states/types';
 import { Address } from 'viem';
-import { isAddressOwner } from './addressHelper';
+import { isAddressEqual, isAddressOwner } from './addressHelper';
 
 export function isSingleNFT(nft: NFT): nft is SingleNFT {
     return 'owner' in nft;
@@ -82,7 +82,7 @@ export function findOwnerOffer(owners: MultipleNFT['owners'], userAddress: Addre
     let status: NFTSaleStatus | undefined;
 
     for (const owner of owners) {
-        if (owner.owner === userAddress) {
+        if (isAddressEqual(owner.owner, userAddress)) {
             sale = owner.sales[0];
             auction = owner.auctions[0];
             status = owner.status;
