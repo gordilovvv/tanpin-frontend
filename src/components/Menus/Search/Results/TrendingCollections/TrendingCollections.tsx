@@ -20,7 +20,7 @@ export function TrendingCollections() {
             <>
                 {collections.map(collection => <SearchItem
                     key={collection.ID}
-                    href={`/collections/${collection.ID}`}
+                    href={`/${collection.gameID}/${collection.ID}`}
                     name={collection.name}
                     image={collection.logoURL}
                 />)}

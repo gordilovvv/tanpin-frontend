@@ -1,6 +1,4 @@
-import { PageLayout } from '@/components/Layout';
-// import { ErrorView } from '@/views/Error';
-// import { GamesView } from '@/views/Games/GamesView';
+import { PageError, PageLayout } from '@/components/Layout';
 import { HomeView } from '@/views/Home/HomeView';
 import { SingleGameView } from '@/views/Games/SingleGame/SingleGameView';
 import { SingleCollectionView } from '@/views/Collections/SingleCollection/SingleCollectionView';
@@ -25,6 +23,7 @@ import { BUY_USDT_AVAILABLE } from '@/config';
 export const router = createBrowserRouter([
     {
         element: <PageLayout />,
+        errorElement: <PageError />,
         children: [
             {
                 path: '/',
@@ -87,7 +86,7 @@ export const router = createBrowserRouter([
     },
     {
         element: <EmptyLayout />,
-        errorElement: null,
+        errorElement: <PageError />,
         children: [
             {
                 path: '/game/auth',
