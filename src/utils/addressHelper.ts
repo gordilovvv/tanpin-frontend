@@ -9,7 +9,11 @@ export function ellipseAddress(address: string) {
 }
 
 export function isAddressEqual(address1: string, address2: string) {
-    return getAddress(address1) === getAddress(address2);
+    try {
+        return getAddress(address1) === getAddress(address2);
+    } catch (error) {
+        return false;
+    }
 }
 
 /**

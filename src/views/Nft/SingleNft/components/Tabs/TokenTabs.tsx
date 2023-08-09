@@ -42,14 +42,6 @@ export function TokenTabs({ nft }: TokenTabsProps) {
     return (
         <div className={styles.wrap}>
             <ToggleGroup>
-                <ToggleButton
-                    view='outline'
-                    active={activeTab === Tab.HISTORY}
-                    onClick={() => setActiveTab(Tab.HISTORY)}
-                >
-                    History
-                </ToggleButton>
-
                 {/* <ToggleButton
                     active={activeTab === Tab.BIDS}
                     onClick={() => setActiveTab(Tab.BIDS)}
@@ -64,6 +56,14 @@ export function TokenTabs({ nft }: TokenTabsProps) {
                 >
                     Owners
                 </ToggleButton>}
+
+                <ToggleButton
+                    view='outline'
+                    active={activeTab === Tab.HISTORY}
+                    onClick={() => setActiveTab(Tab.HISTORY)}
+                >
+                    History
+                </ToggleButton>
             </ToggleGroup>
 
             <div className={styles.content}>

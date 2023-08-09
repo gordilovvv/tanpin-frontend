@@ -32,7 +32,7 @@ export function NftCard({ nft, userAddress }: NftCardProps) {
                         pending={<ImageSkeleton className={styles.imageSkeleton} />}
                     />
 
-                    {!isSingle && <div className={styles.stock}>
+                    {!isSingle && nft.supply > 1 && <div className={styles.stock}>
                         <div className={styles.stockIcon}>
                             <Stock />
                         </div>

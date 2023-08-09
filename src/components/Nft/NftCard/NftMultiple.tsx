@@ -14,6 +14,7 @@ type NftMultipleProps = {
 }
 
 export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps) {
+    const isSingleOwner = nft.owners.length === 1;
     const isOwner = useMemo(() => {
         if (userAddress) {
             const addresses = nft.owners.map(
@@ -46,12 +47,14 @@ export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps)
     }, [nft.owners, isOwner, userAddress]);
 
     const properties = useMemo(() => {
+        const propertiesType = isSingleOwner ? 'singleNFT' : 'multipleNFT';
+
         if (offer.status === NFTSaleStatus.FIXED_PRICE && offer.offer.sale) {
             const sale = offer.offer.sale;
 
             return (
                 <CardProperties
-                    type='multipleNFT'
+                    type={propertiesType}
                     price={sale.price.amount}
                     currency={sale.price.currency}
                     status={offer.status}
@@ -64,7 +67,7 @@ export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps)
 
             return (
                 <CardProperties
-                    type='multipleNFT'
+                    type={propertiesType}
                     price={auction.highestBid.amount}
                     currency={auction.highestBid.currency}
                     auctionEndDate={auction.endDate}
@@ -75,11 +78,11 @@ export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps)
 
         return (
             <CardProperties
-                type='multipleNFT'
+                type={propertiesType}
                 status={offer.status}
             />
         );
-    }, [offer]);
+    }, [offer, isSingleOwner]);
 
     return (
         <>
