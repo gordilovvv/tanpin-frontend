@@ -1,5 +1,5 @@
 import { PageLayout } from '@/components/Layout';
-import { ErrorView } from '@/views/Error';
+// import { ErrorView } from '@/views/Error';
 // import { GamesView } from '@/views/Games/GamesView';
 import { HomeView } from '@/views/Home/HomeView';
 import { SingleGameView } from '@/views/Games/SingleGame/SingleGameView';
@@ -25,7 +25,6 @@ import { BUY_USDT_AVAILABLE } from '@/config';
 export const router = createBrowserRouter([
     {
         element: <PageLayout />,
-        errorElement: <ErrorView />,
         children: [
             {
                 path: '/',
@@ -50,14 +49,6 @@ export const router = createBrowserRouter([
             ...(BUY_USDT_AVAILABLE ? [{
                 path: '/deposit',
                 element: <DepositView />,
-            },
-            {
-                path: '/deposit/success',
-                element: <DepositSuccessView />
-            },
-            {
-                path: '/deposit/rejected',
-                element: <DepositRejectedView />
             }] : []),
             {
                 path: '/:gameID/:collectionID',
@@ -96,12 +87,20 @@ export const router = createBrowserRouter([
     },
     {
         element: <EmptyLayout />,
-        errorElement: <ErrorView />,
+        errorElement: null,
         children: [
             {
                 path: '/game/auth',
                 element: <GameAuthView />
-            }
+            },
+            ...(BUY_USDT_AVAILABLE ? [{
+                path: '/deposit/success',
+                element: <DepositSuccessView />
+            },
+            {
+                path: '/deposit/rejected',
+                element: <DepositRejectedView />
+            }] : []),
         ]
     }
 ]);

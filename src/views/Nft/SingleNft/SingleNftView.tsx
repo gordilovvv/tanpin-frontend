@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Container, PageError, PageLoader, PageWrapper } from '@/components/Layout';
 import { BlockWrap } from './components/BlockWrap/BlockWrap';
-import { TokenAttributes, TokenImage } from "@/components/Nft";
+import { TokenAttributes, TokenImage } from '@/components/Nft';
 import { TokenDetails } from './components/Details/TokenDetails';
 import { TokenHead } from './components/Head/TokenHead';
 import { TokenTabs } from './components/Tabs/TokenTabs';
@@ -13,7 +13,7 @@ import { useAccount } from '@/states/user/hooks/useAccount';
 import { useNFTStore } from '@/states/nft/store';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
-import { useTransactionsHistory } from '@/states/nft/hooks/useTransactionsHistory';
+import { useTokenHistory } from '@/states/nft/hooks/useTokenHistory';
 import { isAddressOwner } from '@/utils/addressHelper';
 import { isMultipleNFT, isOwnerOfMultipleNFT, isSingleNFT } from '@/utils/nft';
 import { moneyTokensIds } from '@/config/constants/nftgta';
@@ -29,7 +29,7 @@ export function SingleNftView() {
         tokenID: string
     };
 
-    useTransactionsHistory(tokenID);
+    useTokenHistory(tokenID);
 
     const nft = useNFTStore(state => state.nft);
     const isMobile = useMediaQuery('(max-width: 1000px)');
@@ -60,7 +60,7 @@ export function SingleNftView() {
                     sale={nft.sale}
                     auction={nft.auction}
                     status={nft.status}
-                />)
+                />);
             }
         }
 
@@ -98,7 +98,7 @@ export function SingleNftView() {
                     />
                 </>);
             } else {
-                return (<BestOfferAction nft={nft} />)
+                return (<BestOfferAction nft={nft} />);
             }
         }
 

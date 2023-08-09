@@ -5,10 +5,15 @@ import { Outlet } from 'react-router-dom';
 export function EmptyLayout() {
     return (
         <div className={styles.wrap}>
-            <div className={styles.content}>
-                <ErrorBoundary>
-                    <Outlet />
-                </ErrorBoundary>
+            <div
+                className={styles.content}
+                style={{ overflow: 'hidden' }}
+            >
+                <div className={styles.main}>
+                    <ErrorBoundary>
+                        <Outlet />
+                    </ErrorBoundary>
+                </div>
             </div>
         </div>
     );

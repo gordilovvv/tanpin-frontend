@@ -3,7 +3,6 @@ import { router } from './app/routing';
 import { WagmiConfig } from 'wagmi';
 import { wagmiConfig } from './config/wagmi';
 import { ToastProvider } from './uikit';
-// import './test';
 
 function App() {
     return (

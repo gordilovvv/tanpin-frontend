@@ -11,11 +11,11 @@ export function DepositSuccessView() {
 
     const confettiConfig = useMemo<ConfettiConfig>(() => {
         return {
-            angle: 75,
+            angle: 90,
             spread: 240,
-            startVelocity: 50,
+            startVelocity: 60,
             elementCount: 90,
-            dragFriction: 0.18,
+            dragFriction: 0.15,
             duration: 3810,
             stagger: 3,
             width: '16px',
@@ -26,40 +26,41 @@ export function DepositSuccessView() {
     }, []);
 
     useEffect(() => {
+        const rootElement = document.getElementById('root');
         const launch = () => {
             setLaunchConfetti(true);
         };
 
-        window.addEventListener('load', launch);
+        if (rootElement && rootElement.firstElementChild) {
+            const element = rootElement.firstElementChild as HTMLElement;
 
-        return () => {
-            window.removeEventListener('load', launch);
-        };
+            element.style.overflow = 'hidden';
+            window.addEventListener('load', launch);
+
+            return () => {
+                element.style.overflow = '';
+                window.removeEventListener('load', launch);
+            };
+        }
     }, []);
 
     return (
-        // TODO: Конфети вылезают за страницу
-        <PageWrapper>
-            <Container
-                space
-                className={styles.container}
-            >
-                <div
-                    className={styles.success}
-                >
-                    <Cat
-                        className={styles.img}
+        <PageWrapper hasPaddingTop={false}>
+            <Container className={styles.container}>
+                <div className={styles.confetti}>
+                    <Confetti
+                        active={launchConfetti}
+                        config={confettiConfig}
                     />
+                </div>
+
+                <div className={styles.success}>
+                    <Cat className={styles.img} />
 
                     <div className={styles.body}>
-                        <Confetti
-                            active={launchConfetti}
-                            config={confettiConfig}
-                        />
-
                         <div className={styles.successTitle}>
-                            You’ve successfully <br />
-                            bought <span>300 USDT</span>
+                            You’ve <span>successfully</span> <br />
+                            bought USDT
                         </div>
 
                         <Button to='/'>Explore Tanpin</Button>

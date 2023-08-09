@@ -36,7 +36,10 @@ export function PageLayout() {
     return (
         <ScrollTopOnMount>
             <Modals>
-                <div className={styles.page}>
+                <div
+                    className={styles.page}
+                    style={{ overflow: 'hidden' }}
+                >
                     <div className={styles.content}>
                         <Header />
 
