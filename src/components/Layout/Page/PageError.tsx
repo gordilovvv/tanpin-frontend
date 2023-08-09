@@ -2,12 +2,18 @@ import { Button } from '@/uikit';
 import styles from './PageError.module.scss';
 
 type PageErrorProps = {
-    error?: string
+    error?: string,
+    details?: string,
+    onReload?: () => void
 }
 
-export function PageError({ error }: PageErrorProps) {
+export function PageError({ error, details, onReload }: PageErrorProps) {
     const handlePageReload = () => {
-        location.reload();
+        if (onReload) {
+            onReload();
+        } else {
+            location.reload();
+        }
     };
 
     return (
@@ -15,15 +21,15 @@ export function PageError({ error }: PageErrorProps) {
             <div className={styles.content}>
                 <div className={styles.info}>
                     <div className={styles.title}>
-                        Something went wrong
+                        An error occurred
                     </div>
 
                     <div className={styles.description}>
-                        Try to reload the page
+                        {error ?? 'Something went wrong'}
                     </div>
 
-                    {error && <div className={styles.error}>
-                        {error}
+                    {details && <div className={styles.error}>
+                        {details}
                     </div>}
                 </div>
 

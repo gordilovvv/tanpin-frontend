@@ -1,27 +1,33 @@
 import { Component, ReactNode } from 'react';
-import { AppError } from './Layout';
+import { PageError } from './Layout';
+import { logError } from '@/utils/sentry';
 
 interface ErrorBoundaryState {
+    details?: string,
     hasError: boolean;
 }
 
 class ErrorBoundary extends Component<{ children: ReactNode }, ErrorBoundaryState> {
     state: ErrorBoundaryState = {
+        details: undefined,
         hasError: false,
     };
 
     static getDerivedStateFromError() {
-        return { hasError: true };
+        return {
+            detail: undefined,
+            hasError: true
+        };
     }
 
     componentDidCatch(error: Error) {
-        console.error(error);
-        // TODO: add logger
+        this.setState({ details: error.message ?? undefined });
+        logError(error);
     }
 
     render() {
         if (this.state.hasError) {
-            return <AppError />;
+            return (<PageError details={this.state.details} />);
         }
 
         return this.props.children;
