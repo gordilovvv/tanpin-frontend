@@ -1,0 +1,66 @@
+.lockScreen {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 60px 0;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: contain;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--color-essential);
+        opacity: 0.82;
+    }
+}
+
+.body {
+    position: relative;
+    display: grid;
+    gap: 32px;
+    justify-items: center;
+    grid-template-columns: minmax(0, auto);
+}
+
+.logo {
+    svg {
+        width: 68px;
+        height: 64px;
+    }
+}
+
+.title {
+    position: relative;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 42px;
+    /* 116.667% */
+    letter-spacing: -0.648px;
+    text-align: center;
+
+    span {
+        color: var(--color-primary)
+    }
+}
+
+.description {
+    position: relative;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    text-align: center;
+}
+
+@include max767 {
+    .body {
+        gap: 24px;
+    }
+}

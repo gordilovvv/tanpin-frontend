@@ -17,63 +17,8 @@
     flex-flow: column;
 }
 
-
 :global(html),
 :global(body),
 :global(#root) {
     height: 100%;
-}
-
-.lockScreen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: column;
-    padding: 60px 0;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: contain;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: var(--color-essential);
-        opacity: 0.82;
-    }
-}
-
-.title {
-    position: relative;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 42px;
-    /* 116.667% */
-    letter-spacing: -0.648px;
-
-    span {
-        color: var(--color-primary)
-    }
-}
-
-.description {
-    position: relative;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    letter-spacing: -0.16px;
-    margin-top: 32px;
-    max-width: 320px;
-    text-align: center;
-}
-
-.link {
-    color: var(--color-primary);
-    text-decoration: underline;
-    cursor: pointer;
 }

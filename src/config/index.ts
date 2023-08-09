@@ -10,8 +10,6 @@ export const FAQ_URL = 'https://docs.tanpin.io';
 export const TERMS_URL = 'https://tanpin.io/terms.pdf';
 export const POLICY_URL = 'https://tanpin.io/policy.pdf';
 
-export const BUY_USDT_AVAILABLE = false;
+export const BUY_USDT_AVAILABLE = true;
 export const MOCK_API_CALLS = false;
-
-
 export const LOCK_MARKET = false;

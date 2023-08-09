@@ -35,7 +35,6 @@ module.exports = {
         'no-debugger': 'error',
         'no-unused-vars': 'off',
         'react-hooks/exhaustive-deps': 'off',
-        'react/jsx-newline': [1, { 'prevent': true, 'allowMultilines': true }],
         'react/jsx-max-props-per-line': [1, { 'maximum': 1 }],
         'react/jsx-first-prop-new-line': [2, 'multiline'],
         'react/jsx-filename-extension': ['warn', { 'extensions': ['.tsx'] }],
