@@ -1,50 +1,52 @@
 
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 import { TransactionRow } from '../TransactionRow/TransactionRow';
 import { Account } from '../Common/Account';
+import { Editions } from '../Common/Editions';
 import { Amount } from '../Common/Amount';
 import { ActivityTransaction, ActivityType } from '@/states/activity/types';
-import { Editions } from '../Common/Editions';
-import styles from './HistoryTransaction.module.scss';
 
 type HistoryTransactionProps = {
     transaction: ActivityTransaction
 }
 
 export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps) => {
-    // TODO: ДОБАВИТЬ АУКЦИОН
-    const renderContent = () => {
-        switch (transaction.type) {
 
-            case ActivityType.MINT:
-                return (<div><Account address={transaction.owner} /> minted</div>);
+    let description: ReactNode;
 
-            case ActivityType.BUY:
-                return (
-                    // eslint-disable-next-line react/jsx-newline
-                    <div><Account address={transaction.owner} /> bought <Editions num={transaction.amount!} /> for <Amount
-                        amount={transaction.price!.amount}
-                        currency={transaction.price!.currency}
-                    /></div>
-                );
+    if (transaction.type === ActivityType.MINT) {
+        description = (<div><Account address={transaction.owner} /> minted</div>);
+    }
 
-            case ActivityType.LISTED:
-                return (<div><Account address={transaction.owner} /> listed <Editions num={transaction.amount!} /> for <Amount
-                    amount={transaction.price!.amount}
-                    currency={transaction.price!.currency}
-                /></div>);
+    if (transaction.type === ActivityType.BUY && transaction.price && transaction.amount) {
+        description = (
+            <div><Account address={transaction.owner} /> bought <Editions num={transaction.amount} /> for <Amount
+                amount={transaction.price.amount}
+                currency={transaction.price.currency}
+            /></div>
+        );
+    }
 
-            case ActivityType.UNLISTED:
-                return (<div><Account address={transaction.owner} /> unlisted <Editions num={transaction.amount!} /></div>);
+    if (transaction.type === ActivityType.LISTED && transaction.price && transaction.amount) {
+        description = (
+            <div><Account address={transaction.owner} /> listed <Editions num={transaction.amount} /> for <Amount
+                amount={transaction.price.amount}
+                currency={transaction.price.currency}
+            /></div>
+        );
+    }
 
-            case ActivityType.TRANSFER:
-                return (<div><Account address={transaction.owner} /> transfered <Editions num={transaction.amount!} /> to <Account address={transaction.transferedTo!} /></div>);
+    if (transaction.type == ActivityType.UNLISTED && transaction.amount) {
+        description = (<div><Account address={transaction.owner} /> unlisted <Editions num={transaction.amount} /></div>);
+    }
 
-            default:
-                return (<div className={styles.white}>Unknown transaction: {transaction.type}</div>);
-        }
-    };
+    if (transaction.type === ActivityType.TRANSFER && transaction.amount && transaction.transferedTo) {
+        description = (<div><Account address={transaction.owner} /> transfered <Editions num={transaction.amount} /> to <Account address={transaction.transferedTo} /></div>);
+    }
 
+    if (!description) {
+        description = (<div><span>Unknown transaction: {transaction.type}</span></div>);
+    }
 
     return (
         <TransactionRow
@@ -52,10 +54,9 @@ export const HistoryTransaction = memo(({ transaction }: HistoryTransactionProps
             userAddress={transaction.owner}
             transactionHash={transaction.transactionHash}
         >
-            {renderContent()}
+            {description}
         </TransactionRow>
     );
-
 });
 
 HistoryTransaction.displayName = 'HistoryTransaction';
