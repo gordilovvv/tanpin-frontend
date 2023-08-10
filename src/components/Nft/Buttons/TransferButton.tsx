@@ -23,10 +23,10 @@ export function TransferButton({ nftID, tokenID, editionsAvailable }: TransferBu
     const { refetchNFT } = useNFTFetch(nftID);
     const { callContract } = useContractCall();
     const { address } = useAccount();
-    const [amount, setAmount] = useState('');
     const erc1155Contract = useERC1155(CONTRACTS.ERC1155[activeChainId]);
     const transferModal = useOpenedState();
     const pendingTransactionModal = usePendingTransactionModal();
+    const [amount, setAmount] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [transactionError, setTransactionError] = useState<string | undefined>();
 
@@ -38,6 +38,10 @@ export function TransferButton({ nftID, tokenID, editionsAvailable }: TransferBu
 
             setIsLoading(true);
             transferModal.close();
+
+            if (BigInt(amount) <= 0n) {
+                throw new Error('Transfer amount should be greater than 0!');
+            }
 
             const { hash } = await callContract({
                 contract: erc1155Contract,
@@ -58,11 +62,16 @@ export function TransferButton({ nftID, tokenID, editionsAvailable }: TransferBu
         }
     };
 
+    const handleTransferModalOpen = () => {
+        setAmount('');
+        transferModal.open();
+    };
+
     return (
         <>
             <ActionButton
                 view='nftgta'
-                onClick={transferModal.open}
+                onClick={handleTransferModalOpen}
             >
                 Transfer to game
             </ActionButton>

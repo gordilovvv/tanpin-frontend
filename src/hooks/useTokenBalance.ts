@@ -5,8 +5,7 @@ import { useAccount } from '@/states/user/hooks/useAccount';
 import { formatValueFromRaw } from '@/utils/formatRawAmount';
 import { FAST_INTERVAL } from '@/config/constants';
 
-// TODO: useContractRead
-export function useTokenBalance(tokenAddress: Address, decimals: number) {  
+export function useTokenBalance(tokenAddress: Address, decimals: number) {
     const { address: account } = useAccount();
     const contract = useERC20(tokenAddress);
 
@@ -29,7 +28,12 @@ export function useTokenBalance(tokenAddress: Address, decimals: number) {
                 };
             }
         },
-        { refreshInterval: FAST_INTERVAL }
+        {
+            dedupingInterval: FAST_INTERVAL,
+            refreshInterval: FAST_INTERVAL,
+            revalidateOnFocus: true,
+            revalidateOnMount: true
+        }
     );
 
     return {

@@ -10,7 +10,12 @@ export function useNativeBalance(address: Address) {
             address,
             formatUnits: 'ether'
         }),
-        { refreshInterval: FAST_INTERVAL }
+        {
+            dedupingInterval: FAST_INTERVAL,
+            refreshInterval: FAST_INTERVAL,
+            revalidateOnFocus: true,
+            revalidateOnMount: true
+        }
     );
 
     return {

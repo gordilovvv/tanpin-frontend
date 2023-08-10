@@ -92,7 +92,7 @@ export function CollectionHead({ collection }: CollectionHeadProps) {
 
                             <div className={styles.property}>
                                 <div className={styles.propertyLabel}>
-                                    Volume (1D)
+                                    Volume (7D)
                                 </div>
 
                                 <div className={styles.propertyValue}>

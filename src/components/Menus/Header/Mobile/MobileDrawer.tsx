@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence, LazyMotion, domMax, motion } from 'framer-motion';
 import { MEDIA_SIZES } from '@/config/constants';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import styles from './MobileDrawer.module.scss';
 
 //TODO: Отключить скролл у body при открытии мобильного бургера
@@ -40,6 +41,7 @@ type MobileDrawerProps = {
 
 export function MobileDrawer({ isOpen, children, close }: PropsWithChildren<MobileDrawerProps>) {
     const location = useLocation();
+    const contentRef = useRef<HTMLDivElement>(null);
     const animationRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -57,6 +59,18 @@ export function MobileDrawer({ isOpen, children, close }: PropsWithChildren<Mobi
 
         return () => window.removeEventListener('resize', resizeHandler);
     }, [isOpen]);
+
+    useEffect(() => {
+        if (isOpen && contentRef.current) {
+            const content = contentRef.current;
+
+            disableBodyScroll(content);
+
+            return () => {
+                enableBodyScroll(content);
+            };
+        }
+    }, [isOpen, contentRef]);
 
     useEffect(() => {
         if (isOpen) {
@@ -79,7 +93,10 @@ export function MobileDrawer({ isOpen, children, close }: PropsWithChildren<Mobi
                     variants={animationVariants}
                     transition={{ duration: 0.3, ease: [0.46, 0.32, 0.2, 0.9] }}
                 >
-                    <div className={styles.content}>
+                    <div
+                        ref={contentRef}
+                        className={styles.content}
+                    >
                         {children}
                     </div>
                 </motion.div>}

@@ -1,13 +1,14 @@
 import { Address } from 'viem';
+import { Button } from '@/uikit';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import styles from './MobileMenu.module.scss';
 import { WalletMenu } from '@/components/Menus/WalletMenu/WalletMenu';
 import { WalletButton } from '@/components/Menus/WalletButton/WalletButton';
 import { ConnectWalletButton } from '@/components/Menus/ConnectWalletButton/ConnectWalletButton';
 import { NavLink } from 'react-router-dom';
-import { headerLinks } from '@/components/Menus/config';
+import { headerAdditionalLinks, headerLinks } from '@/components/Menus/config';
 import { socialsList } from '@/config/constants/socials';
-import { Button } from '@/uikit';
+import classNames from 'classnames';
+import styles from './MobileMenu.module.scss';
 
 type MobileMenuProps = {
     address?: Address,
@@ -36,6 +37,16 @@ export function MobileMenu({ address, isConnected }: MobileMenuProps) {
                         key={link.to}
                         to={link.to}
                         className={styles.menuLink}
+                    >
+                        {link.text}
+                    </NavLink>)}
+
+                    {headerAdditionalLinks.map(link => <NavLink
+                        key={link.to}
+                        to={link.to}
+                        className={classNames(styles.menuLink, {
+                            [styles.menuLinkGradient]: link.gradient
+                        })}
                     >
                         {link.text}
                     </NavLink>)}

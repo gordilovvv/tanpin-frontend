@@ -18,6 +18,15 @@
         text-decoration: none;
         cursor: pointer;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+        &Gradient {
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+            mix-blend-mode: normal;
+            background: var(--color-primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
     }
 }
 
