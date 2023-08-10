@@ -19,9 +19,9 @@ export function ActivityDescription({ activity }: ActivityDescriptionProps) {
         </div>);
     }
 
-    if (activity.type === ActivityType.TRANSFER) {
+    if (activity.type === ActivityType.TRANSFER && activity.transferedTo) {
         return (<div className={styles.wrap}>
-            <ActivityTransfer transactionOwner={activity.owner} />
+            <ActivityTransfer recipient={activity.transferedTo} />
         </div>);
     }
 

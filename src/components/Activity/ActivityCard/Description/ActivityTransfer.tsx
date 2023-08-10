@@ -4,17 +4,17 @@ import { useAccount } from '@/states/user/hooks/useAccount';
 import { isAddressOwner } from '@/utils/addressHelper';
 
 type ActivityTransferProps = {
-    transactionOwner: Address
+    recipient: Address
 }
 
-export function ActivityTransfer({ transactionOwner }: ActivityTransferProps) {
+export function ActivityTransfer({ recipient }: ActivityTransferProps) {
     const { address } = useAccount();
 
     return (<>
         Transferred to <Owner
-            address={transactionOwner}
+            address={recipient}
             size='xs'
-            isUser={address && isAddressOwner(address, transactionOwner)}
+            isUser={address && isAddressOwner(address, recipient)}
         />
     </>);
 }
