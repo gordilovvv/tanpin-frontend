@@ -1,3 +1,3 @@
 export { CollectionPreview } from './Preview/CollectionPreview';
 export { CollectionLogo } from './Logo/CollectionLogo';
-export { CollectionTable } from './Table/CollectionTable';
+export { CollectionRow, CollectionRowSkeleton } from './Row/CollectionRow';

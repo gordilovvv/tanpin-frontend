@@ -1,5 +1,5 @@
-import { Title, Button } from '@/uikit';
-import { CollectionTable } from '@/components/Collections';
+import { Title } from '@/uikit';
+import { CollectionsExplorer } from '@/components/Explorer';
 import styles from './PopularCollections.module.scss';
 
 export function PopularCollections() {
@@ -9,19 +9,7 @@ export function PopularCollections() {
                 Trending Collections
             </Title>
 
-            <div>
-                <CollectionTable
-                    filter={{ popular: true }}
-                />
-
-                <Button
-                    to='/collections'
-                    view='secondary'
-                    block
-                >
-                    View collections
-                </Button>
-            </div>
+            <CollectionsExplorer popularCollections />
         </div>
     );
 }

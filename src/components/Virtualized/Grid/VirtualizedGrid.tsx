@@ -3,7 +3,7 @@ import { CellMeasurerCache, GridProps, InfiniteLoaderProps } from 'react-virtual
 import { Grid } from './Grid';
 import { Loader } from './Loader';
 import { GridDataLoader, useGridPagination, useGridState } from './hooks';
-import { RerenderGridCell } from '../types';
+import { Rect, RerenderGridCell } from '../types';
 import styles from './VirtualizedGrid.module.scss';
 
 type VirtualizedGridProps<T> = {
@@ -13,6 +13,8 @@ type VirtualizedGridProps<T> = {
     empty: () => JSX.Element
     /** Error component */
     rejected?: () => JSX.Element
+    /** Отступы + кол-во колонок */
+    rect: Rect,
     /** Threshold at which to pre-fetch data. A threshold X means that data will start loading when a user scrolls within X rows. This value defaults to 15. */
     threshold?: InfiniteLoaderProps['threshold'],
     /** Number of rows to render above/below the visible section of the grid. These rows can help for smoother scrolling on touch devices or browsers that send scroll events infrequently. */
@@ -26,6 +28,7 @@ export function VirtualizedGrid<T>({
     renderItem,
     empty,
     rejected,
+    rect,
     threshold,
     overscanRowCount,
     minimumBatchSize
@@ -85,6 +88,7 @@ export function VirtualizedGrid<T>({
                 {({ registerChild, ...loaderChildProps }) => (
                     <Grid
                         data={state.data}
+                        rect={rect}
                         rerender={rerenderItem}
                         cacheRef={cacheRef}
                         innerRef={registerChild}

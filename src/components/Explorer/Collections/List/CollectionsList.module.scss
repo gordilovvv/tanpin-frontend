@@ -1,0 +1,12 @@
+.list {
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    flex-flow: column;
+}
+
+.content {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+}

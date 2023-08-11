@@ -1,29 +1,9 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { create } from 'zustand';
 import PQueue from 'p-queue';
 import { v4 as uuid } from 'uuid';
 import { IndexRange } from 'react-virtualized';
 import { logError } from '@/utils/sentry';
-
-export function useGridRect() {
-    return useMemo(() => {
-        return {
-            getColumnCount: (containerWidth: number) => {
-                if (containerWidth > 700) {
-                    return Math.ceil(containerWidth / 320);
-                }
-
-                if (containerWidth > 320) {
-                    return 2;
-                }
-
-                return 1;
-            },
-            horizontalGap: 16,
-            verticalGap: 8
-        };
-    }, []);
-}
 
 enum StateEvent {
     INIT = 'init',
@@ -205,6 +185,16 @@ export function useGridPagination(loader: GridDataLoader): GridPagination {
             loadPart(state.error.failedRange);
         }
     }, [setState, loadPart]);
+
+
+    // Сбросить store при unmount
+    useEffect(() => {
+        return () => {
+            refresh();
+            queue.clear();
+            currentNonce.current = undefined;
+        };
+    }, []);
 
     return {
         loadPart,

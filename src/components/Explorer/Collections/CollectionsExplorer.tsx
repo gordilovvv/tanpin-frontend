@@ -1,47 +1,44 @@
-import { useState, useMemo } from 'react';
-import { Select } from '@/uikit';
-import { SearchInput } from '@/components/SearchInput';
-import { CollectionTable } from '@/components/Collections';
-import { CollectionsSort } from '@/states/collection/types';
+import { useCallback } from 'react';
+import { Button } from '@/uikit';
+import { EmptyResult } from '..';
+import { CollectionsList } from './List/CollectionsList';
+import { CollectionsTable } from './Table/CollectionsTable';
+import { useCollectionsFilterState } from '@/states/explorer/hooks/useCollectionsFilterState';
 import styles from './CollectionsExplorer.module.scss';
 
 type CollectionsExplorerProps = {
-    gameID?: string
-    userAddress?: string
+    gameID?: string,
+    popularCollections?: boolean
 }
 
-export function CollectionsExplorer({ gameID, userAddress }: CollectionsExplorerProps) {
-    const [search, setSearch] = useState<string>('');
-    const [sort, setSort] = useState<CollectionsSort>(CollectionsSort.TRENDING);
-
-    const filter = useMemo(() => ({
-        search,
-        sort,
+export function CollectionsExplorer({ gameID, popularCollections }: CollectionsExplorerProps) {
+    const filterState = useCollectionsFilterState({
         gameID,
-        userAddress
-    }), [search, sort, gameID, userAddress]);
+        popular: popularCollections
+    });
 
-    const options: { value: CollectionsSort; label: string }[] = [
-        { value: CollectionsSort.TRENDING, label: 'Trending' },
-        { value: CollectionsSort.RECENTLY_ADDED, label: 'Recently Added' },
-    ];
+    const renderEmpty = useCallback(() => {
+        return <EmptyResult
+            title="Nothing found"
+            text="We couldn't find anything with this criteria"
+        />;
+    }, []);
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.header}>
-                <SearchInput
-                    value={search}
-                    onChange={(val) => setSearch(val)}
-                />
+            <CollectionsTable
+                list={<CollectionsList
+                    filter={filterState}
+                    empty={renderEmpty}
+                />}
+            />
 
-                <Select
-                    options={options}
-                    selectedValue={sort}
-                    onChange={(value) => setSort(value as CollectionsSort)}
-                />
-            </div>
-
-            <CollectionTable filter={filter} />
+            {popularCollections && <Button
+                to='/collections'
+                view='secondary'
+            >
+                View collections
+            </Button>}
         </div>
     );
 }

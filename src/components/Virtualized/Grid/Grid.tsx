@@ -2,8 +2,7 @@ import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from 'react
 import { Grid as VirtualizedGrid, GridProps as VirtualizedGridProps, CellMeasurerCache, GridCellProps, OverscanIndicesGetterParams, InfiniteLoaderChildProps, SectionRenderedParams } from 'react-virtualized';
 import { ScrollChildProps } from './Scroller';
 import { Cell } from './Cell';
-import { useGridRect } from './hooks';
-import { RerenderGridCell } from '../types';
+import { Rect, RerenderGridCell } from '../types';
 
 function getRowCount(data: any[], columnCount: number) {
     if (data.length === 0) {
@@ -25,6 +24,7 @@ function overscanIndicesGetter({ cellCount, overscanCellsCount, startIndex, stop
 
 type GridProps = {
     data: any[],
+    rect: Rect,
     cacheRef: MutableRefObject<CellMeasurerCache | null>,
     innerRef: (child: any) => void,
     extraRowCount?: number,
@@ -35,6 +35,7 @@ type GridProps = {
 
 export function Grid({
     data,
+    rect,
     cacheRef,
     innerRef,
     extraRowCount = 0,
@@ -49,7 +50,6 @@ export function Grid({
     scrollTop,
     scrollLeft,
 }: GridProps) {
-    const rect = useGridRect();
     const gridRef = useRef<VirtualizedGrid>(null);
 
     const columnCount = rect.getColumnCount(width);

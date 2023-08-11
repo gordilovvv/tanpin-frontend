@@ -1,15 +1,30 @@
-@import './_tableRow.scss';
-
 .table {
     margin: 0 -9px;
     overflow-x: auto;
 }
 
 .head {
+    display: grid;
+    gap: 16px;
+    align-items: center;
+    grid-template-columns: 20px 1fr repeat(4, 200px);
     padding: 0 9px;
-    @include tableRow;
 
-    &Item {
+    @include min1001 {
+        @include max1400 {
+            grid-template-columns: 20px 1fr repeat(4, 160px);
+        }
+
+        @include max1200 {
+            grid-template-columns: 20px minmax(200px, 1fr) repeat(4, 140px);
+        }
+    }
+
+    &>*:nth-child(n+3) {
+        text-align: right;
+    }
+
+    &Col {
         font-weight: 600;
         font-size: 14px;
         line-height: 1.43;
@@ -25,14 +40,6 @@
     margin-bottom: 32px;
 }
 
-.footer {
-    padding: 0 9px;
-}
-
-.empty {
-    padding: 24px 0;
-}
-
 @include max1000 {
     .head {
         display: none;
@@ -42,9 +49,5 @@
 @include max767 {
     .body {
         margin-bottom: 24px;
-    }
-
-    .empty {
-        padding: 0 9px;
     }
 }

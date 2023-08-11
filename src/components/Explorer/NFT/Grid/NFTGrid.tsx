@@ -2,6 +2,7 @@ import { memo, useCallback } from 'react';
 import { NftCard, NftCardSkeleton } from '@/components/Nft';
 import { VirtualizedGrid } from '@/components/Virtualized/Grid/VirtualizedGrid';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useGridRect } from '@/components/Virtualized';
 import { TokensFilterState } from '@/states/explorer/TokensFilterStore';
 import { fetchTokensList } from '@/states/explorer/fetch/fetchTokensList';
 import { NFTExplorerCategory } from '@/states/explorer/types';
@@ -19,6 +20,7 @@ type NFTGridProps = {
 // TODO: грид выкидывает только id, а по нему уже получаем из хеш мапа объект
 export const NFTGrid = memo(({ category, collectionID, ownerAddress, filter, empty, rejected }: NFTGridProps) => {
     const { address } = useAccount();
+    const rect = useGridRect();
     const ownerUserAddress = category === 'ownership' || category === 'ownershipSale'
         ? address
         : undefined;
@@ -54,6 +56,7 @@ export const NFTGrid = memo(({ category, collectionID, ownerAddress, filter, emp
                     renderItem={renderCard}
                     empty={empty}
                     rejected={rejected}
+                    rect={rect}
                     minimumBatchSize={30}
                 />
             </div>

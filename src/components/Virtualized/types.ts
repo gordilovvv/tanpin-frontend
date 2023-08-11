@@ -1,5 +1,11 @@
 import { CSSProperties } from 'react';
 
+export type Rect = {
+    getColumnCount: (containerWidth: number) => number,
+    horizontalGap: number,
+    verticalGap: number
+}
+
 export type RerenderGridCell = (params: {
     item: any,
     index: number,
