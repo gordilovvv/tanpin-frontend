@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import url from 'node:url';
+import htmlPlugin from 'vite-plugin-html-config';
 import { createRequire } from 'node:module';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
@@ -12,7 +13,40 @@ export default defineConfig({
     plugins: [
         react(),
         nodePolyfills({ protocolImports: true }),
-        reactVirtualized()
+        reactVirtualized(),
+        htmlPlugin({
+            links: [
+                {
+                    rel: 'apple-touch-icon',
+                    sizes: '180x180',
+                    href: '/apple-touch-icon.png',
+                },
+                {
+                    rel: 'icon',
+                    sizes: '32x32',
+                    href: '/favicon-32.png',
+                },
+                {
+                    rel: 'icon',
+                    sizes: '16x16',
+                    href: '/favicon-16.png',
+                },
+            ],
+            metas: [
+                { name: 'title', content: 'Tanpin - Next Generation Marketplace' },
+                { name: 'description', content: 'Discover, Buy and Sell Unique Gaming NFTs' },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:url', content: 'https://tanpin.io' },
+                { property: 'og:title', content: 'Tanpin - Next Generation Marketplace' },
+                { property: 'og:description', content: 'Discover, Buy and Sell Unique Gaming NFTs' },
+                { property: 'og:image', content: '/cover.png' },
+                { property: 'twitter:card', content: 'summary_large_image' },
+                { property: 'twitter:url', content: 'https://tanpin.io' },
+                { property: 'twitter:title', content: 'Tanpin - Next Generation Marketplace' },
+                { property: 'twitter:description', content: 'Discover, Buy and Sell Unique Gaming NFTs' },
+                { property: 'twitter:image', content: 'https://tanpin.io/cover.png' },
+            ],
+        }),
     ],
     resolve: {
         alias: {
@@ -52,14 +86,6 @@ export default defineConfig({
         rollupOptions: {
             // https://rollupjs.org/guide/en/#outputmanualchunks
             output: {
-                // manualChunks: {
-                //     'group-user': [
-                //         './src/UserDetails',
-                //         './src/UserDashboard',
-                //         './src/UserProfileEdit',
-                //     ],
-                // },
-                // TODO: finish chunks
                 manualChunks(id) {
                     if (id.includes('/node_modules/')) {
                         return 'vendors';
@@ -68,10 +94,6 @@ export default defineConfig({
                     if (id.includes('uikit')) {
                         return 'uikit';
                     }
-
-                    // if (id.includes('App.vue') || id.includes('components/Popup') || id.includes('components/Tooltip') || id.includes('src/uikit') || id.includes('src/hooks') || id.includes('components/Menus')) {
-                    //     return 'app';
-                    // }
                 }
             },
         },
