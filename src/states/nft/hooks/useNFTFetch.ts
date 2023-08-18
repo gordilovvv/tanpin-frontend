@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import { mutate } from 'swr';
 import { useNFTStore } from '../store';
 import { fetchNFT as fetchNFTRequest } from '../fetch/fetchNFT';
 import { logError } from '@/utils/sentry';
@@ -10,13 +11,9 @@ export function useNFTFetch(nftID: string) {
     const nft = useNFTStore(state => state.nft);
     const setNFT = useNFTStore(state => state.setNFT);
 
-    const { isLoading, error, mutate } = useSWRImmutable(
-        [`fetch.token-${nftID}`],
-        async () => {
-            const nft = await fetchNFTRequest(nftID);
-
-            return setNFT(nft);
-        },
+    const { data, isLoading, error } = useSWRImmutable(
+        [`fetch.token.${nftID}`],
+        () => fetchNFTRequest(nftID),
         {
             refreshInterval: NORMAL_INTERVAL,
             revalidateOnFocus: true
@@ -34,19 +31,29 @@ export function useNFTFetch(nftID: string) {
     }
 
     useEffect(() => {
+        if (data) {
+            setNFT(data);
+        }
+
+        return () => setNFT(undefined);
+    }, [data]);
+
+    useEffect(() => {
         if (error) {
             logError(error);
         }
     }, [error]);
 
-    const loading = !nft && isLoading;
-    const refetch = useCallback(async () => {
-        return mutate();
-    }, [mutate]);
-
     return {
         error: formattedError,
-        isLoading: loading,
-        refetchNFT: refetch
+        isLoading: !nft && isLoading
     };
+}
+
+export function useNFTRefetch(nftID: string) {
+    const refetchNFT = useCallback(async () => {
+        return mutate([`fetch.token.${nftID}`]);
+    }, []);
+
+    return { refetchNFT };
 }

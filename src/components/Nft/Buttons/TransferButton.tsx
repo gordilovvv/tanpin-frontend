@@ -4,7 +4,7 @@ import { useContractCall, useERC1155 } from '@/hooks/useContract';
 import { usePendingTransactionModal } from '@/states/global/hooks';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { activeChainId } from '@/config/chain';
-import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
+import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 import { logError } from '@/utils/sentry';
 import { useAccount } from '@/states/user/hooks/useAccount';
@@ -20,7 +20,7 @@ type TransferButtonProps = {
 }
 
 export function TransferButton({ nftID, tokenID, editionsAvailable }: TransferButtonProps) {
-    const { refetchNFT } = useNFTFetch(nftID);
+    const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const { address } = useAccount();
     const erc1155Contract = useERC1155(CONTRACTS.ERC1155[activeChainId]);

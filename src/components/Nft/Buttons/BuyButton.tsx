@@ -9,7 +9,7 @@ import { useTokenApprove } from '@/hooks/useTokenApprove';
 import { LoadingStatus, useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { activeChainId } from '@/config/chain';
-import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
+import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useBuyActions, useBuyState } from '@/states/buy/hooks';
 import { initialBuyStoreState } from '@/states/buy/store';
 
@@ -23,7 +23,7 @@ type BuyButtonProps = {
 }
 
 export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView }: BuyButtonProps) {
-    const { refetchNFT } = useNFTFetch(nftID);
+    const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
     const { typedAmount, totalPrice } = useBuyState();

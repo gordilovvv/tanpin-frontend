@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { ActionButton } from './ActionButton';
 import { ErrorMessageModal, LoadingModal, UpdateSaleModal } from '@/components/Modals';
 import { useOpenedState } from '@/hooks/useOpenedState';
-import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
+import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
 import { useUpdateDirectSaleStore } from '@/states/sale/store';
 import { usePendingTransactionModal } from '@/states/global/hooks';
@@ -19,7 +19,7 @@ type UpdateSaleButtonProps = {
 }
 
 export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButtonProps) {
-    const { refetchNFT } = useNFTFetch(nftID);
+    const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
     const updateSaleModal = useOpenedState();

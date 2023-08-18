@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { ApproveConfirmModal, SellModal } from '@/components/Modals';
 import { ActionButton } from './ActionButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
-import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
+import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useCreateDirectSaleStore } from '@/states/sale/store';
 import { useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
@@ -23,7 +23,7 @@ type ListButtonProps = {
 // 1. ДОБАВИТЬ АУКЦИОН
 export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProps) {
     const { address } = useAccount();
-    const { refetchNFT } = useNFTFetch(nftID);
+    const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const saleModal = useOpenedState();
     const approveConfirmModal = useOpenedState();
