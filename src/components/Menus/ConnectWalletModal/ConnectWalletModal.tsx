@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Button, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { WalletButton } from '@/components/Wallet';
+import { sortWallets } from '@/utils/sortWallets';
 import { ConnectorNames, WalletConfig } from '@/config/wallet';
 import { HOW_TO_CREATE_WALLET_INSTRUCTION_URL } from '@/config/constants';
 import styles from './ConnectWalletModal.module.scss';
@@ -9,14 +10,6 @@ type ConnectWalletModalProps = {
     wallets: WalletConfig[],
     login: (connectorId: ConnectorNames) => Promise<any>
 }
-
-const sortWallets = (wallets: WalletConfig[]) => {
-    return [...wallets].sort((a, b) => {
-        if (a.installed === b.installed) return 0;
-
-        return a.installed === true ? -1 : 1;
-    });
-};
 
 export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectWalletModalProps & ModalProps) {
     const sortedWallets = useMemo(() => sortWallets(wallets), [wallets]);
