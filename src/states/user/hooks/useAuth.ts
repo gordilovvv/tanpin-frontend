@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { ConnectorNotFoundError, SwitchChainNotSupportedError, useAccount, useConnect, useDisconnect } from 'wagmi';
+import { ConnectorNotFoundError, useAccount, useConnect, useDisconnect } from 'wagmi';
+import { SwitchChainError } from 'viem';
 import { useUserStore } from '../store';
 import { ConnectorNames } from '@/config/wallet';
 import { activeChainId } from '@/config/chain';
@@ -25,7 +26,7 @@ export function useAuth() {
                     throw new Error('Connector not found.');
                 }
 
-                if (error instanceof SwitchChainNotSupportedError) {
+                if (error instanceof SwitchChainError) {
                     throw new Error('Unable to switch network. Please try it on your wallet');
                 }
             }

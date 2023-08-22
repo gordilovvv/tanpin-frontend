@@ -8,12 +8,14 @@ export function useAccountEventListener() {
 
     useEffect(() => {
         if (address && connector) {
-            connector.addListener('disconnect', resetUser);
-            connector.addListener('change', resetUser);
+            const handleDisconnect = () => {
+                resetUser();
+            };
+
+            connector.addListener('disconnect', handleDisconnect);
 
             return () => {
-                connector.removeListener('disconnect', resetUser);
-                connector.removeListener('change', resetUser);
+                connector.removeListener('disconnect', handleDisconnect);
             };
         }
         return undefined;
