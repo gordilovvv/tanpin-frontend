@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { useToast } from '@/uikit';
 import { useCallback, useState } from 'react';
+import { useNFTRefetch } from './useNFTFetch';
 import { refreshMetadata } from '../fetch/refreshMetadata';
 
 export enum RefreshStatus {
@@ -12,6 +13,7 @@ export enum RefreshStatus {
 
 export function useMetadataRefresh(nftID: string) {
     const { toastLoading } = useToast();
+    const { refetchNFT } = useNFTRefetch(nftID);
     const [error, setError] = useState<string | undefined>();
     const [status, setStatus] = useState<RefreshStatus>(RefreshStatus.IDLE);
 
@@ -29,6 +31,7 @@ export function useMetadataRefresh(nftID: string) {
             }, 1_000);
         })
             .then(() => {
+                refetchNFT();
                 setStatus(RefreshStatus.FULFILLED);
             })
             .catch(error => {
