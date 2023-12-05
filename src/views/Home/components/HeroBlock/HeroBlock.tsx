@@ -1,8 +1,7 @@
-import { Button, FeaturedGame, SvgProps, Title } from '@/uikit';
+import { Button, SvgProps, Title } from '@/uikit';
 import { Container } from '@/components/Layout';
-import heroCards from '@/app/assets/images/hero-cards.png';
+import { HeroCarousel } from './Carousel/HeroCarousel';
 import styles from './HeroBlock.module.scss';
-import { Link } from 'react-router-dom';
 
 const ArrowDown = (props: SvgProps) => {
     return (
@@ -63,38 +62,8 @@ export function HeroBlock() {
                         </Button>
                     </div>
 
-                    <div className={styles.featured}>
-                        <div className={styles.label}>
-                            <div className={styles.labelIcon}>
-                                <FeaturedGame />
-                            </div>
-
-                            <div className={styles.labelText}>
-                                Featured Game
-                            </div>
-                        </div>
-
-                        <div className={styles.cards}>
-                            <Link
-                                to='/collections'
-                                className={styles.cardsLink}
-                            >
-                                <img
-                                    src={heroCards}
-                                    alt=''
-                                />
-                            </Link>
-                        </div>
-
-                        <div className={styles.game}>
-                            <div className={styles.gameName}>
-                                NFTGTA.io
-                            </div>
-
-                            <Button to='/collections'>
-                                View collections
-                            </Button>
-                        </div>
+                    <div className={styles.carousel}>
+                        <HeroCarousel />
                     </div>
                 </div>
             </Container>

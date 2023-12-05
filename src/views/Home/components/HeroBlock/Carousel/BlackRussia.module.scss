@@ -1,0 +1,169 @@
+.banner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0px, auto);
+    border-radius: 12px;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: cover;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        box-shadow: inset 0 0 1px var(--color-typo-base-20);
+        border-radius: 13px;
+    }
+}
+
+.inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0px, auto);
+    padding: 40px;
+}
+
+.logos {
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 336px;
+        max-width: 54%;
+    }
+}
+
+.content {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 24px;
+    padding-top: 78px;
+}
+
+.top {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 14px;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.54px;
+}
+
+.description {
+    color: var(--color-typo-base-75);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+.socials {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 16px;
+    align-items: center;
+    justify-content: initial;
+
+    &Item {
+        width: 48px;
+        padding: 0;
+    }
+}
+
+@include max1400 {
+    .inner {
+        padding: 32px;
+    }
+
+    .content {
+        padding-top: 58px;
+    }
+}
+
+@include max1200 {
+    .inner {
+        padding: 24px;
+    }
+
+    .content {
+        padding-top: 52px;
+    }
+
+    .title {
+        font-size: 26px;
+        line-height: 1.2;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}
+
+@include max1000 {
+    .inner {
+        padding: 16px;
+    }
+
+    .logos {
+        img {
+            max-width: 60%;
+        }
+    }
+
+    .content {
+        gap: 16px;
+    }
+
+    .top {
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .socials {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+
+        &Item {
+            width: auto;
+            height: 38px;
+
+            svg {
+                height: 20px;
+            }
+        }
+    }
+}
+
+@include max767 {
+    .logos {
+        img {
+            max-width: 170px;
+        }
+    }
+
+    .content {
+        padding-top: 42px;
+    }
+}

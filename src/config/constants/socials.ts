@@ -1,4 +1,5 @@
 import { Discord, SvgProps, Telegram, Twitter } from '@/uikit';
+import { VK } from '@/uikit/Icons/components/VK';
 
 type Social = {
     url: string,
@@ -25,3 +26,20 @@ export const socials: Record<string, Social> = {
 };
 
 export const socialsList = Object.values(socials);
+
+export const blackRussiaSocials: Record<string, Omit<Social, 'name'>> = {
+    vk: {
+        url: 'https://vk.com/blackrussia.online',
+        icon: VK
+    },
+    discord: {
+        url: 'https://discord.com/invite/xPPAA4rAAd',
+        icon: Discord
+    },
+    telegram: {
+        url: 'https://t.me/br_dev',
+        icon: Telegram
+    }
+};
+
+export const blackRussiaSocialsList = Object.values(blackRussiaSocials);

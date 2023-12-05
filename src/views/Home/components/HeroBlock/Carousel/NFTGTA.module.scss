@@ -1,0 +1,123 @@
+.wrap {
+    position: relative;
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.cards {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    max-width: 720px;
+
+    &Link {
+        display: flex;
+        flex-grow: 1;
+        width: 100%;
+        height: 100%;
+        color: inherit;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    img {
+        position: relative;
+        object-fit: cover;
+        max-height: 100%;
+        max-width: 100%;
+    }
+}
+
+.label {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 8px;
+    align-items: center;
+    justify-content: initial;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid var(--color-stroke);
+    border-radius: 6px;
+    background-color: var(--color-essential-75);
+    pointer-events: none;
+
+    @include min768 {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        backdrop-filter: blur(2px);
+        z-index: 1;
+    }
+
+    &Icon {
+        display: flex;
+        color: var(--color-typo-base);
+    }
+
+    &Text {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: -0.14px;
+    }
+}
+
+.game {
+    display: grid;
+
+    @include min768 {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(min-content, max-content);
+        gap: 32px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &Name {
+        color: var(--color-typo-base);
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 36px;
+        letter-spacing: -0.54px;
+    }
+}
+
+@include max1000 {
+    .featured {
+        gap: 24px;
+    }
+
+    .label {
+        top: 12px;
+        left: 12px;
+    }
+
+    .game {
+        &Name {
+            font-size: 22px;
+            line-height: 28px;
+        }
+    }
+}
+
+@include max767 {
+    .featured {
+        gap: 16px;
+    }
+
+    .wrap {
+        gap: 14px;
+    }
+
+    .label {
+        // justify-self: flex-start;
+        display: none;
+    }
+
+    .game {
+        gap: 14px;
+        grid-template-columns: minmax(0, auto);
+    }
+}
