@@ -33,7 +33,6 @@ export default defineConfig({
                 },
             ],
             metas: [
-                { name: 'title', content: 'Tanpin - Next Generation Marketplace' },
                 { name: 'description', content: 'Discover, Buy and Sell Unique Gaming NFTs' },
                 { property: 'og:type', content: 'website' },
                 { property: 'og:url', content: 'https://tanpin.io' },
