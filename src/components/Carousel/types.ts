@@ -4,6 +4,8 @@ export type CarouselState = {
     canScrollPrev: boolean | undefined,
     canScrollNext: boolean | undefined,
     currentIndex: number | undefined,
+    currentSnap: number,
+    scrollSnaps: number[],
     scrollTo: (index: number) => void
 }
 

@@ -4,10 +4,10 @@ import { CarouselSlide } from './Slide/CarouselSlide';
 import { CarouselState, SlideProps } from './types';
 import styles from './Carousel.module.scss';
 
-type CarouselProps = {
+export type CarouselProps = {
     data: any[],
     options?: EmblaOptionsType,
-    onNavigate: (state: CarouselState) => void,
+    onNavigate?: (state: CarouselState) => void,
     renderSlide: (props: SlideProps) => JSX.Element
 }
 
@@ -46,7 +46,7 @@ export function Carousel({
     // Call onNavigate every time state have been changed
     useEffect(() => {
         if (emblaState) {
-            onNavigate(emblaState);
+            onNavigate?.(emblaState);
         }
     }, [emblaState, onNavigate]);
 
@@ -59,12 +59,14 @@ export function Carousel({
             next: () => {
                 embla.scrollNext();
             },
+            scrollTo: (index: number) => {
+                embla.scrollTo(index);
+            },
             canScrollPrev: embla.canScrollPrev(),
             canScrollNext: embla.canScrollNext(),
             currentIndex: embla.selectedScrollSnap(),
-            scrollTo: (index: number) => {
-                embla.scrollTo(index);
-            }
+            scrollSnaps: embla.scrollSnapList(),
+            currentSnap: embla.selectedScrollSnap()
         });
     }, [data]);
 
@@ -76,6 +78,10 @@ export function Carousel({
 
         // return () => emblaApi?.destroy();
     }, [data, emblaApi]);
+
+    useEffect(() => {
+        return () => emblaApi?.destroy();
+    }, []);
 
     // Watch for window resize
     useEffect(() => {

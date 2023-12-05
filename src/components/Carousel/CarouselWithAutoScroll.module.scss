@@ -1,0 +1,15 @@
+.inner {
+    position: relative;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0px, auto);
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    -webkit-mask-image: linear-gradient(to left, transparent, black 0px, black calc(100% - 0px), transparent);
+}
