@@ -9,7 +9,7 @@ type Social = {
 
 export const socials: Record<string, Social> = {
     twitter: {
-        url: 'https://twitter.com/tanpin_io',
+        url: 'https://twitter.com/tanpin_en',
         name: 'Twitter',
         icon: Twitter
     },
