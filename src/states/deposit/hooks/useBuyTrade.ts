@@ -83,11 +83,11 @@ export function useBuyTrade(
         inputError = 'Enter RUB amount';
     }
 
-    if (paymentLimits && tradeIn?.inputAmount.isLessThan(paymentLimits.min)) {
+    if (paymentLimits && exactTrade?.inputAmount.isLessThan(paymentLimits.min)) {
         inputError = `Minimum is ${formatFiatCurrency(paymentLimits.min, fiatCurrency.locale, fiatCurrency.code)}`;
     }
 
-    if (paymentLimits && tradeIn?.inputAmount?.isGreaterThan(paymentLimits.max)) {
+    if (paymentLimits && exactTrade?.inputAmount?.isGreaterThan(paymentLimits.max)) {
         inputError = `Maximum is ${formatFiatCurrency(paymentLimits.max, fiatCurrency.locale, fiatCurrency.code)}`;
     }
 
