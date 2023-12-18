@@ -1,0 +1,127 @@
+.wrapper {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.inner {
+    padding: 64px;
+    border-radius: 16px;
+    border: 1px solid var(--color-stroke);
+    background-position: left top;
+    background-repeat: no-repeat;
+    display: grid;
+    gap: 64px;
+    justify-items: center;
+    position: relative;
+    background-size: cover !important;
+}
+
+.top {
+    display: grid;
+    grid-template-columns: minmax(0, 320px) minmax(auto, 218px);
+    gap: 48px;
+    align-items: center;
+}
+
+.icon {
+    position: absolute;
+    width: 100%;
+    padding: 66px;
+}
+
+.border {
+    width: 100%;
+    position: absolute;
+}
+
+.images {
+    position: relative;
+    aspect-ratio: 1/1;
+    border: 1px solid red;
+}
+
+.title {
+    font-weight: 800;
+    font-size: 64px;
+    color: var(--color-typo--base);
+}
+
+.text {
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-typo-ghost);
+    text-align: center;
+}
+
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: -1;
+
+    .gradientFirst,
+    .gradientSecond,
+    .gradientThird {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(210px);
+    }
+
+    .gradientFirst {
+        top: -190px;
+        left: 305px;
+        width: 550px;
+        height: 550px;
+        background-color: var(--gradient-1);
+    }
+
+    .gradientSecond {
+        top: 88px;
+        left: 0;
+        width: 1101px;
+        height: 460px;
+        background-color: var(--gradient-2);
+    }
+
+    .gradientThird {
+        top: -480px;
+        right: 0;
+        width: 888px;
+        height: 888px;
+        background-color: var(--gradient-3);
+    }
+}
+
+
+
+.item {
+    text-align: center;
+    display: grid;
+    gap: 8px;
+
+    &Title {
+        font-weight: 500;
+        font-size: 16px;
+        color: var(--color-typo-ghost);
+    }
+
+    &Value {
+        font-weight: 800;
+        font-size: 36px;
+    }
+}
+
+.items {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 32px;
+    column-gap: 48px;
+}

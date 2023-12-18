@@ -16,6 +16,7 @@ import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSucces
 import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositRejectedView';
 import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
 import { GameAuthView } from '@/views/GameAuth/GameAuthView';
+import { TokenClaimView } from '@/views/TokenClaim/TokenClaimView';
 import { BUY_USDT_AVAILABLE } from '@/config';
 
 // TODO: LazyLoad Routes
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             {
                 path: '/nft',
                 element: <NFTView />
+            },
+            {
+                path: '/claim',
+                element: <TokenClaimView />
             },
             {
                 path: '/:gameID',
