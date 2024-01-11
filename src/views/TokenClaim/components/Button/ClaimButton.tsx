@@ -1,10 +1,14 @@
 import { useCallback, useState } from 'react';
+import { useNetwork } from 'wagmi';
 import { Button } from '@/uikit';
 import { ErrorMessageModal, LoadingModal } from '@/components/Modals';
 import { useContractCall, useLockerContract } from '@/hooks/useContract';
+import { useWrongNetworkModal } from '@/states/global/hooks';
+import { activeChainId } from '@/config/chain';
 import { logError } from '@/utils/sentry';
 import { formatTokenAmountV2 } from '@/utils/formatTokenAmount';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
+import styles from './ClaimButton.module.scss';
 
 type ClaimButtonProps = {
     lockId?: string,
@@ -18,7 +22,15 @@ export function ClaimButton({ lockId, amount, onClaimSent }: ClaimButtonProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [transactionError, setTransactionError] = useState<string | undefined>();
 
+    const { chain } = useNetwork();
+    const wrongNetworkModal = useWrongNetworkModal();
+    const isWrongChain = chain?.id !== activeChainId;
+
     const handleClaim = useCallback(async () => {
+        if (isWrongChain) {
+            return wrongNetworkModal.open();
+        }
+
         try {
             if (!lockerContract || !lockId) {
                 throw new Error('Claim is not ready!');
@@ -39,11 +51,12 @@ export function ClaimButton({ lockId, amount, onClaimSent }: ClaimButtonProps) {
         } finally {
             setIsLoading(false);
         }
-    }, [lockerContract, lockId, setIsLoading, callContract, onClaimSent]);
+    }, [lockerContract, lockId, isWrongChain, setIsLoading, callContract, onClaimSent, wrongNetworkModal.open]);
 
     return (
         <>
             <Button
+                className={styles.button}
                 disabled={!lockId}
                 onClick={() => handleClaim()}
             >

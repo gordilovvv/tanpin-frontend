@@ -56,6 +56,11 @@
 }
 
 @include max767 {
+    .container {
+        padding-top: 112px;
+        padding-bottom: 48px;
+    }
+
     .background {
         display: none;
     }

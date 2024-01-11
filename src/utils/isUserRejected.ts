@@ -1,26 +1,24 @@
-import { UnknownRpcError, UserRejectedRequestError } from 'viem';
+import { UserRejectedRequestError } from 'viem';
+
+const possibleRejectMessage = ['Cancelled by User', 'cancel', 'Transaction was rejected', 'denied', 'Транзакция отменена'];
 
 /**
  * Checks if user rejected transaction
  */
-export function isUserRejected(err): boolean {
+export function isUserRejected(err) {
     if (err instanceof UserRejectedRequestError) {
         return true;
     }
 
-    if (err instanceof UnknownRpcError) {
-        // Fallback for some wallets that don't follow EIP 1193, trust, safe
-        if (err.details?.includes('cancel') || err.details?.includes('Transaction was rejected')) {
+    if ('details' in err) {
+        // fallback for some wallets that don't follow EIP 1193, trust, safe
+        if (possibleRejectMessage.some((msg) => err.details?.includes(msg))) {
             return true;
         }
     }
 
-    // Fallback for raw rpc error code
-    if (typeof err === 'object') {
-        if (err.message.includes('User rejected the request')) {
-            return true;
-        }
-
+    // fallback for raw rpc error code
+    if (err && typeof err === 'object') {
         if (
             ('code' in err && (err.code === 4001 || err.code === 'ACTION_REJECTED')) ||
             ('cause' in err && 'code' in err.cause && err.cause.code === 4001)

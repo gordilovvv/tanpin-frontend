@@ -1,7 +1,9 @@
-import { Chain, ConnectorNotFoundError, WindowProvider } from 'wagmi';
+/* eslint-disable prefer-destructuring */
+/* eslint-disable consistent-return */
+/* eslint-disable class-methods-use-this */
+import { Chain, ConnectorNotFoundError, WindowProvider, Address } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import { Address, getConfig } from '@wagmi/core';
-import '@wagmi/core/window';
+import 'wagmi/window';
 import { getAddress, ResourceUnavailableRpcError, ProviderRpcError, UserRejectedRequestError } from 'viem';
 
 declare global {
@@ -98,7 +100,7 @@ export class TrustWalletConnector extends InjectedConnector {
             // Attempt to show wallet select prompt with `wallet_requestPermissions` when
             // `shimDisconnect` is active and account is in disconnected state (flag in storage)
             let account: Address | null = null;
-            if (this.options?.shimDisconnect && !getConfig().storage?.getItem(this.shimDisconnectKey)) {
+            if (this.options?.shimDisconnect && !this.storage?.getItem(this.shimDisconnectKey)) {
                 account = await this.getAccount().catch(() => null);
                 const isConnected = !!account;
                 if (isConnected) {
@@ -129,6 +131,7 @@ export class TrustWalletConnector extends InjectedConnector {
             // Switch to chain if provided
             let id = await this.getChainId();
             let unsupported = this.isChainUnsupported(id);
+
             if (chainId && id !== chainId) {
                 const chain = await this.switchChain(chainId);
                 id = chain.id;
@@ -136,7 +139,7 @@ export class TrustWalletConnector extends InjectedConnector {
             }
 
             if (this.options?.shimDisconnect) {
-                getConfig().storage?.setItem(this.shimDisconnectKey, true);
+                this.storage?.setItem(this.shimDisconnectKey, true);
             }
 
             return { account, chain: { id, unsupported }, provider };

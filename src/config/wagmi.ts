@@ -27,9 +27,11 @@ export const { publicClient, chains } = configureChains(
     {
         batch: {
             multicall: {
-                batchSize: 1024 * 200
-            }
-        }
+                batchSize: 1024 * 200,
+                wait: 16,
+            },
+        },
+        pollingInterval: 6_000
     }
 );
 

@@ -2,7 +2,7 @@ import { BaseError, UnknownRpcError } from 'viem';
 import { isUserRejected } from './isUserRejected';
 
 /// only show corrected parsed viem error
-function parseError<TError>(err: TError): BaseError | null {
+function parseViemError<TError>(err: TError): BaseError | null {
     if (err instanceof BaseError) {
         return err;
     }
@@ -12,7 +12,6 @@ function parseError<TError>(err: TError): BaseError | null {
     if (err instanceof Error) {
         return new UnknownRpcError(err);
     }
-
     return null;
 }
 
@@ -26,7 +25,7 @@ export function walletErrorToUserReadableMessage(error: any) {
     }
 
     let reason: string | undefined;
-    const parsedError = parseError(error);
+    const parsedError = parseViemError(error);
 
     if (parsedError) {
         reason = parsedError.shortMessage || parsedError.message;
