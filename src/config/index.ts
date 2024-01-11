@@ -5,6 +5,7 @@
 export const APP_URL = 'https://tanpin.io';
 export const API_URL = 'https://api.tanpin.io/';
 export const GATE_URL = 'https://gate.tanpin.io/';
+export const CLAIM_URL = 'https://claim.tanpin.io/';
 
 export const FAQ_URL = 'https://docs.tanpin.io';
 export const TERMS_URL = 'https://tanpin.io/terms.pdf';

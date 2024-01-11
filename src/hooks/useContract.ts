@@ -5,6 +5,7 @@ import { viemClient } from '@/config/viem';
 import { activeChainId } from '@/config/chain';
 import { marketABI } from '@/config/ABI/market';
 import { erc1155ABI } from '@/config/ABI/erc1155';
+import { lockerABI } from '@/config/ABI/locker';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { SendTransactionReturnType } from 'viem';
 import { GetWalletClientResult } from 'wagmi/actions';
@@ -53,6 +54,10 @@ export function useERC1155(address: Address) {
 
 export function useMarketContract() {
     return useContract(CONTRACTS.market[activeChainId], marketABI);
+}
+
+export function useLockerContract() {
+    return useContract(CONTRACTS.locker[activeChainId], lockerABI);
 }
 
 export function useContractCall() {

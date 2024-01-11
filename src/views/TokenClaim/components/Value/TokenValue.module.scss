@@ -1,0 +1,45 @@
+.item {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: minmax(0px, auto);
+    text-align: center;
+}
+
+.label {
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    white-space: nowrap;
+}
+
+.value {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.648px;
+    white-space: nowrap;
+}
+
+@include max1200 {
+    .value {
+        font-size: 32px;
+    }
+}
+
+@include max1000 {
+    .item {
+        gap: 6px;
+    }
+}
+
+@include max767 {
+    .label {
+        font-size: 14px;
+    }
+
+    .value {
+        font-size: 24px;
+    }
+}

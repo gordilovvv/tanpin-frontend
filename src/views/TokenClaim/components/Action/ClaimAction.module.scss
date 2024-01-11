@@ -1,0 +1,55 @@
+.wrap {
+    display: grid;
+    gap: 64px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.values {
+    @include min768 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: -32px;
+        margin-left: -48px;
+
+        &>div {
+            margin-top: 32px;
+            margin-left: 48px;
+        }
+    }
+}
+
+.action {
+    display: flex;
+    justify-content: center;
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@include max1000 {
+    .values {
+        gap: 36px;
+    }
+}
+
+@include max767 {
+    .wrap {
+        gap: 24px
+    }
+
+    .values {
+        display: grid;
+        grid-template-columns: minmax(0, auto);
+        gap: 20px;
+    }
+
+    .loader {
+        height: 52px;
+    }
+}

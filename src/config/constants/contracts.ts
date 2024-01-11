@@ -19,5 +19,13 @@ export const CONTRACTS = {
     ERC1155: {
         [polygon.id]: '0x5D7e5b6523D709D9F95b2b9EFd52AFb6d8D48d81' as Address,
         [polygonMumbai.id]: '0x096eCA74eB4ebc59addA3Cf3edF860523c7F0C28' as Address
+    },
+    locker: {
+        [polygon.id]: '0x76633f10d2BEA5684794a6c85A26C513069b9738' as Address,
+        [polygonMumbai.id]: '0x' as Address // Not deployed
+    },
+    tanpinToken: {
+        [polygon.id]: '0xd9D77B113e6Ef2696267E20C35f3AbD87cdaca2c' as Address,
+        [polygonMumbai.id]: '0x' as Address // Not deployed
     }
 };

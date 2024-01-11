@@ -1,16 +1,13 @@
-import { Button } from '@/uikit';
 import { Container, PageWrapper } from '@/components/Layout';
+import { ClaimForm } from './components/ClaimForm';
 import styles from './TokenClaimView.module.scss';
-import promoImg from '@/app/assets/bg/big-promo.png';
 
 export function TokenClaimView() {
-
     return (
-        <PageWrapper>
-
+        <PageWrapper hasPaddingTop={false}>
             <Container
-                className={styles.wrapper}
-                space
+                maxWidth={714}
+                className={styles.container}
             >
                 <div
                     className={styles.background}
@@ -25,47 +22,7 @@ export function TokenClaimView() {
                     <div className={styles.gradientThird}></div>
                 </div>
 
-                <div
-                    className={styles.inner}
-                    style={{ background: `#0C0C0C url(${promoImg})` }}
-                >
-                    <div className={styles.top}>
-                        <div className={styles.images}>
-                            <img
-                                src='src/app/assets/bg/dots-border.svg'
-                                className={styles.border}
-                            />
-                            <img
-                                src="src/app/assets/images/crystal2.png"
-                                className={styles.icon}
-                            />
-                        </div>
-                        <div className={styles.title}>TOKEN CLAIM</div>
-                    </div>
-
-                    <div className={styles.items}>
-                        <div className={styles.item}>
-                            <div className={styles.itemTitle}>Title</div>
-                            <div className={styles.itemValue}>sdfdsfsd</div>
-                        </div>
-                        <div className={styles.item}>
-                            <div className={styles.itemTitle}>Title</div>
-                            <div className={styles.itemValue}>sdfdsfsd</div>
-                        </div>
-                        <div className={styles.item}>
-                            <div className={styles.itemTitle}>Title</div>
-                            <div className={styles.itemValue}>sdfdsfsd</div>
-                        </div>
-                    </div>
-
-                    <Button>
-                        Connect Wallet
-                    </Button>
-
-                    <div className={styles.text}>You will need to sign multiple blockchain transactions<br />if you have tokens available to claim in multiple vesting rounds.</div>
-
-                </div>
-
+                <ClaimForm />
             </Container>
         </PageWrapper>
     );

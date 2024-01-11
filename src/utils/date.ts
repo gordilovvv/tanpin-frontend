@@ -25,7 +25,7 @@ function getFormatter(locale: string, type: DateFormat) {
 }
 
 export function formatDate(
-    value: string,
+    value: string | number,
     { type = 'full' }: { type?: DateFormat } = {}
 ) {
     const msValue = new Date(value).getTime();

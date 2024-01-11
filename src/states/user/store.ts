@@ -1,3 +1,4 @@
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { create } from 'zustand';
 
 export enum LoginStage {
@@ -24,9 +25,10 @@ export const useUserStore = create<State & Actions>()((set) => ({
     stage: undefined,
     accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || undefined,
     acceptedRules: JSON.parse(localStorage.getItem(ACCEPTED_RULES_KEY) ?? 'false'),
+
     setUser: (accessToken: string, acceptedRules: boolean) => {
         localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-        localStorage.setItem(ACCEPTED_RULES_KEY, `${ acceptedRules }`);
+        localStorage.setItem(ACCEPTED_RULES_KEY, `${acceptedRules}`);
 
         set({
             accessToken,
@@ -43,3 +45,7 @@ export const useUserStore = create<State & Actions>()((set) => ({
         });
     }
 }));
+
+if (process.env.NODE_ENV === 'development') {
+    mountStoreDevtool('Store', useUserStore);
+}

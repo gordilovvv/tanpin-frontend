@@ -30,6 +30,14 @@ export function formatTokenAmount(value: string | number) {
     return integer.plus(diff.precision(2, roundDown)).times(multipliedBy).toFixed();
 }
 
+export function formatTokenAmountV2(value: string | number, currency?: string) {
+    const numberFormat = new Intl.NumberFormat('en', {
+        maximumFractionDigits: 20
+    });
+
+    return `${numberFormat.format(Number(value))} ${currency}`;
+}
+
 const shortFormatter = Intl.NumberFormat('en', {
     notation: 'compact'
 });
