@@ -9,7 +9,7 @@ type LocksResponse = {
 }
 
 export async function fetchLocks(address: Address) {
-    const { data } = await api.get<LocksResponse>(`${CLAIM_URL}/locks?address=${address.toLowerCase().trim()}`);
+    const { data } = await api.get<LocksResponse>(`${CLAIM_URL}locks?address=${address.toLowerCase().trim()}`);
 
     return data.locks;
 }
