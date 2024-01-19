@@ -17,6 +17,7 @@ import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositReje
 import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
 import { GameAuthView } from '@/views/GameAuth/GameAuthView';
 import { TokenClaimView } from '@/views/TokenClaim/TokenClaimView';
+import { TelegramAuthView } from '@/views/TelegramAuth/TelegramAuthView';
 import { BUY_USDT_AVAILABLE } from '@/config';
 
 // TODO: LazyLoad Routes
@@ -97,14 +98,22 @@ export const router = createBrowserRouter([
                 path: '/game/auth',
                 element: <GameAuthView />
             },
-            ...(BUY_USDT_AVAILABLE ? [{
-                path: '/deposit/success',
-                element: <DepositSuccessView />
-            },
+            ...(
+                BUY_USDT_AVAILABLE
+                    ? [{
+                        path: '/deposit/success',
+                        element: <DepositSuccessView />
+                    },
+                    {
+                        path: '/deposit/rejected',
+                        element: <DepositRejectedView />
+                    }]
+                    : []
+            ),
             {
-                path: '/deposit/rejected',
-                element: <DepositRejectedView />
-            }] : []),
+                path: '/telegram/auth',
+                element: <TelegramAuthView />
+            },
         ]
     }
 ]);

@@ -1,0 +1,36 @@
+.wrap {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 0;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    opacity: 0.08;
+}
+
+.content {
+    position: relative;
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+@include max767 {
+    .wrap {
+        padding: 60px 0;
+    }
+
+    .content {
+        gap: 24px;
+    }
+}

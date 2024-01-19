@@ -7,6 +7,9 @@ export const API_URL = 'https://api.tanpin.io/';
 export const GATE_URL = 'https://gate.tanpin.io/';
 export const CLAIM_URL = 'https://claim.tanpin.io/';
 
+export const TELEGRAM_BOT_URL = 'https://t.me/TanpinAuthBot';
+export const TELEGRAM_AUTH_URL = 'https://tg-api.tanpin.io';
+
 export const FAQ_URL = 'https://docs.tanpin.io';
 export const TERMS_URL = 'https://tanpin.io/terms.pdf';
 export const POLICY_URL = 'https://tanpin.io/policy.pdf';

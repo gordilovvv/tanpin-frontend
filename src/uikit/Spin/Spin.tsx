@@ -3,7 +3,7 @@ import styles from './Spin.module.scss';
 import classNames from 'classnames';
 
 type SpinProps = {
-    size: 'xs' | 's' | 'm' // xs - 16px, s - 24px, m - 48px
+    size: 'xs' | 's' | 'm' | 'l' // xs - 16px, s - 24px, m - 32px, l - 48px
 }
 
 export const Spin = forwardRef<HTMLDivElement, SpinProps & HTMLAttributes<HTMLDivElement>>(

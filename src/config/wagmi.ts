@@ -4,7 +4,10 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { TelegramConnector } from '@/utils/telegramConnector';
 import { TrustWalletConnector } from '@/utils/trustWalletConnector';
+import { clientTransport } from './viem';
+import { TELEGRAM_AUTH_URL } from './index';
 import { PUBLIC_NODES, activeChain } from './chain';
 
 const mostNodesConfig = Object.values(PUBLIC_NODES).reduce((prev, cur) => {
@@ -73,6 +76,14 @@ export const trustWalletConnector = new TrustWalletConnector({
     },
 });
 
+export const telegramConnector = new TelegramConnector({
+    chains,
+    options: {
+        transport: clientTransport,
+        sessionBaseUrl: TELEGRAM_AUTH_URL
+    }
+});
+
 export const wagmiConfig = createConfig({
     autoConnect: true,
     publicClient,
@@ -81,6 +92,7 @@ export const wagmiConfig = createConfig({
         injectedConnector,
         coinbaseConnector,
         walletConnectConnector,
-        trustWalletConnector
+        trustWalletConnector,
+        telegramConnector
     ]
 });

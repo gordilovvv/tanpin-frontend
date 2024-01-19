@@ -65,16 +65,34 @@
     background-color: var(--color-surface);
 
     .content,
-    svg {
+    .icon {
         visibility: hidden;
+    }
+}
+
+.icon {
+    display: flex;
+
+    svg,
+    img {
+        width: 32px;
+        height: 32px;
+    }
+
+    img {
+        border-radius: 6px;
     }
 }
 
 @include max767 {
     .button {
-        svg {
-            width: 24px;
-            height: 24px;
+        .icon {
+
+            svg,
+            img {
+                width: 24px;
+                height: 24px;
+            }
         }
     }
 

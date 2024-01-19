@@ -25,6 +25,13 @@
     }
 
     &.m {
+        width: 32px;
+        height: 32px;
+        border-radius: 40px;
+        border-width: 3px;
+    }
+
+    &.l {
         width: 48px;
         height: 48px;
         border-radius: 40px;

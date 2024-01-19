@@ -4,6 +4,26 @@
     grid-template-columns: minmax(0, auto);
 }
 
+.groups {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.group {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.label {
+    color: var(--color-typo-ghost);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+}
+
 .list {
     display: grid;
     gap: 8px;

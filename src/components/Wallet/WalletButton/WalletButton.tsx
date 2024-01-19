@@ -1,33 +1,36 @@
-import { useState } from 'react';
+import { ReactNode } from 'react';
 import { Spin, UnstyleButton, UnstyleLink } from '@/uikit';
-import { WalletConfig } from '@/config/wallet';
 import classNames from 'classnames';
 import styles from './WalletButton.module.scss';
 
-type WalletButtonProps = {
-    wallet: WalletConfig,
-    onConnect: () => Promise<any>
+type LinkProps = {
+    href?: string,
+    target?: '_blank'
 }
 
-export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
-    const { icon: Icon, title, installed, recommended, deepLink } = wallet;
-    const [isLoading, setIsLoading] = useState(false);
-    const isLink = deepLink && installed === false;
+type ButtonProps = {
+    loading?: boolean,
+    disabled?: boolean,
+    onClick?: () => void
+}
 
-    const handleClick = () => {
-        if (installed === false) {
-            return;
-        }
+type WalletButtonProps<T extends 'link' | 'button'> = {
+    as?: T,
+    title: string,
+    icon: ReactNode,
+    recommended?: boolean
+} & (T extends 'link' ? LinkProps : ButtonProps);
 
-        setIsLoading(true);
-        onConnect().then(() => setIsLoading(false));
-    };
+export function WalletButton<Tag extends 'link' | 'button'>(props: WalletButtonProps<Tag>) {
+    const { as: tag, title, icon, recommended, ...rest } = props;
 
-    if (isLink) {
+    if (tag === 'link') {
+        const { href, target } = rest as LinkProps;
+
         return <UnstyleLink
-            href={deepLink}
+            href={href}
             rel='noreferrer noopener'
-            target='_blank'
+            target={target}
             className={classNames(styles.button)}
         >
             <div className={styles.content}>
@@ -40,19 +43,23 @@ export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
                 </div>}
             </div>
 
-            <Icon />
+            <div className={styles.icon}>
+                {icon}
+            </div>
         </UnstyleLink>;
     }
+
+    const { loading, disabled, onClick } = rest as ButtonProps;
 
     return (
         <UnstyleButton
             className={classNames(styles.button, {
-                [styles.loading]: isLoading,
-                [styles.disabled]: installed === false
+                [styles.loading]: loading,
+                [styles.disabled]: disabled
             })}
-            onClick={handleClick}
+            onClick={onClick}
         >
-            {isLoading && <div className={styles.spin}>
+            {loading && <div className={styles.spin}>
                 <Spin size='s' />
             </div>}
 
@@ -66,7 +73,9 @@ export function WalletButton({ wallet, onConnect }: WalletButtonProps) {
                 </div>}
             </div>
 
-            <Icon />
+            <div className={styles.icon}>
+                {icon}
+            </div>
         </UnstyleButton>
     );
 }

@@ -1,10 +1,9 @@
 import { useCallback, useState } from 'react';
 import { Logo } from '@/uikit';
-import { Container } from '@/components/Layout';
+import { AuthContainer } from '@/components/Layout';
 import { LoginStage } from './components/Login/LoginStage';
 import { SuccessStage } from './components/Success/SuccessStage';
 import { useSearchParams } from 'react-router-dom';
-import crystalImg from '@/app/assets/images/crystal.png';
 import styles from './GameAuthView.module.scss';
 
 enum Stage {
@@ -46,18 +45,9 @@ export function GameAuthView() {
     };
 
     return (
-        <div className={styles.wrap}>
-            <div
-                className={styles.background}
-                style={{ backgroundImage: `url(${crystalImg})` }}
-            ></div>
-
-            <Container>
-                <div className={styles.content}>
-                    <Logo className={styles.logo} />
-                    {renderContent()}
-                </div>
-            </Container>
-        </div>
+        <AuthContainer>
+            <Logo className={styles.logo} />
+            {renderContent()}
+        </AuthContainer>
     );
 }
