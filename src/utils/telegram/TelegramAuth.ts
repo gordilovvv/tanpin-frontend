@@ -107,15 +107,19 @@ export class TelegramAuth {
             throw new Error('User not logged in!');
         }
 
-        await destroySession({
-            sessionId: this.sessionId,
-            sessionBaseUrl: this.sessionBaseUrl
-        });
+        try {
+            await destroySession({
+                sessionId: this.sessionId,
+                sessionBaseUrl: this.sessionBaseUrl
+            });
+        } catch (error) {
+            logError(error);
+        } finally {
+            this.clearSessionStorage();
 
-        this.clearSessionStorage();
-
-        this.state = {};
-        this.status = AUTH_STATUS.READY;
+            this.state = {};
+            this.status = AUTH_STATUS.READY;
+        }
     }
 
     /** 

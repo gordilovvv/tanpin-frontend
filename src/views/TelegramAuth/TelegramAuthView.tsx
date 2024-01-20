@@ -49,6 +49,8 @@ export function TelegramAuthView() {
         } catch (error) {
             setStage(Stage.FAILED);
             logError(error);
+        } finally {
+            connecting.current = false;
         }
     };
 
@@ -67,7 +69,7 @@ export function TelegramAuthView() {
             return (
                 <div className={styles.content}>
                     <div className={styles.title}>
-                        You've successfully logged in!
+                        Ready to Go!
                     </div>
 
                     <div className={styles.button}>
@@ -87,7 +89,7 @@ export function TelegramAuthView() {
                     </div>
 
                     <div className={styles.description}>
-                        Oops! Something went wrong. Give it another shot later!
+                        Oops! Something went wrong.<br /> Give it another shot later!
                     </div>
 
                     <div className={styles.button}>
@@ -97,6 +99,13 @@ export function TelegramAuthView() {
                             rel="noreferrer noopener"
                         >
                             Try again
+                        </Button>
+
+                        <Button
+                            view='secondary'
+                            to='/'
+                        >
+                            Go home
                         </Button>
                     </div>
                 </div>

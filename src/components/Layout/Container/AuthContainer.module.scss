@@ -15,7 +15,7 @@
     bottom: 0;
     background-position: 50%;
     background-repeat: no-repeat;
-    opacity: 0.08;
+    opacity: 0.04;
 }
 
 .content {
@@ -26,6 +26,10 @@
 }
 
 @include max767 {
+    .background {
+        background-size: 540px;
+    }
+
     .wrap {
         padding: 60px 0;
     }
