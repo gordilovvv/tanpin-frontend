@@ -72,8 +72,8 @@ export class TelegramConnector extends Connector<unknown, { name: string }> {
         authQuery: string,
         sessionLifetime?: number
     }) {
-        if (this.telegramAuth.connected || this.telegramAuth.connecting) {
-            throw new Error('Telegram is connected!');
+        if (this.telegramAuth.connecting) {
+            throw new Error('Telegram is connecting!');
         }
 
         await this.waitForTelegramInit();
