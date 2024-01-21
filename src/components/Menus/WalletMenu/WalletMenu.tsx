@@ -1,9 +1,12 @@
+import { useCallback, useState } from 'react';
 import { Button, Close, InjectedWallet, Logout, UnstyleButton } from '@/uikit';
+import { ErrorMessageModal } from '@/components/Modals';
 import { MenuLink } from './Link/MenuLink';
 import { TokenInfo } from './Token/TokenInfo';
 import { useAuth } from '@/states/user/hooks/useAuth';
 import { useTokenBalance } from '@/hooks/useTokenBalance';
 import { useNativeBalance } from '@/hooks/useNativeBalance';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { Address } from 'wagmi';
 import { walletMenuLinks } from '../config';
 import { activeChain, activeChainId } from '@/config/chain';
@@ -20,12 +23,28 @@ type WalletMenuProps = {
 
 export function WalletMenu({ address, onClose }: WalletMenuProps) {
     const { logout } = useAuth();
+    const { connector } = useAccount();
+    const [isDisconnecting, setIsDisconnecting] = useState(false);
+    const [disconnectError, setDisconnectError] = useState<string | undefined>();
 
     const usdtBalance = useTokenBalance(
         CONTRACTS.usdt[activeChainId].address,
         CONTRACTS.usdt[activeChainId].decimals
     );
     const maticBalance = useNativeBalance(address);
+
+    const handleLogout = useCallback(() => {
+        if (connector?.name === 'Telegram') {
+            try {
+                setIsDisconnecting(true);
+                logout().then(() => setIsDisconnecting(false));
+            } catch (error) {
+                setDisconnectError((error as Error).message as string);
+            }
+        } else {
+            logout();
+        }
+    }, [connector, logout, setIsDisconnecting, setDisconnectError]);
 
     return (
         <div className={styles.wrap}>
@@ -79,27 +98,23 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                         iconSlot={<Icon />}
                     />
                 )}
-
-                {/* TODO: real links */}
-                {/* <MenuLink
-                    text='Swap TANP'
-                    iconSlot={<Swap />}
-                />
-
-                <MenuLink
-                    text='Buy USDT'
-                    iconSlot={<Buy />}
-                /> */}
             </div>
 
             <div className={styles.footer}>
                 <Button
                     view='danger'
                     iconSlot={<Logout />}
-                    onClick={logout}
+                    loading={isDisconnecting}
+                    onClick={handleLogout}
                 >
                     Log out
                 </Button>
+
+                <ErrorMessageModal
+                    isOpen={!!disconnectError}
+                    error={disconnectError}
+                    onClose={() => setDisconnectError(undefined)}
+                />
             </div>
         </div>
     );
