@@ -15,6 +15,7 @@ import { CONTRACTS } from '@/config/constants/contracts';
 import maticLogo from '@/app/assets/images/matic.png';
 import usdtLogo from '@/app/assets/images/usdt.png';
 import styles from './WalletMenu.module.scss';
+import { logError } from '@/utils/sentry';
 
 type WalletMenuProps = {
     address: Address,
@@ -39,7 +40,8 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                 setIsDisconnecting(true);
                 logout().then(() => setIsDisconnecting(false));
             } catch (error) {
-                setDisconnectError((error as Error).message as string);
+                logError(error);
+                setDisconnectError('Unable to logout. Please try again');
             }
         } else {
             logout();

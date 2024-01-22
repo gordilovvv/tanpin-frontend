@@ -19,7 +19,7 @@ export function useRulesAccept() {
 
             setIsLoading(true);
 
-            await acceptRulesFetch();
+            await acceptRulesFetch(accessToken);
 
             setUser(accessToken, true);
         } catch (error) {

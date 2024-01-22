@@ -3,8 +3,10 @@ import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
 import { Spin, Logo, Button } from '@/uikit';
 import { AuthContainer } from '@/components/Layout';
 import { useConnect } from 'wagmi';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useWalletAuthenticator } from '@/states/user/hooks/useAuth';
+import { LoadingStatus } from '@/states/user/hooks/useWalletSignature';
 import { TELEGRAM_BOT_URL } from '@/config';
 import { activeChainId } from '@/config/chain';
 import { telegramConnector } from '@/config/wagmi';
@@ -18,11 +20,14 @@ enum Stage {
 }
 
 export function TelegramAuthView() {
-    const { address } = useAccount();
+    const navigate = useNavigate();
+    const { address, isConnected } = useAccount();
     const { connectAsync } = useConnect();
     const [searchParams] = useSearchParams();
     const connecting = useRef(false);
     const [stage, setStage] = useState(address ? Stage.CONNECTED : Stage.LOADING);
+    const { authenticateWithServer, status } = useWalletAuthenticator();
+    const [isAuthenticateLoading, setIsAuthenticateLoading] = useState(false);
 
     const handleLogin = async () => {
         if (address) {
@@ -54,6 +59,20 @@ export function TelegramAuthView() {
         }
     };
 
+    // TODO: Убрать после обновления авторизации на беке, скорее всего просто уберем accessToken
+    // Это быстрый фикс под авторизацию, чтобы не показывать модалку подписи после входа по Телеге
+    const handleAuthenticate = useCallback(async () => {
+        if (status === LoadingStatus.IDLE && !isConnected) {
+            setIsAuthenticateLoading(true);
+
+            await authenticateWithServer();
+
+            setIsAuthenticateLoading(false);
+        }
+
+        navigate('/');
+    }, [navigate, authenticateWithServer, setIsAuthenticateLoading, status, isConnected]);
+
     // Auto-connect
     useEffect(() => {
         if (connecting.current) {
@@ -73,7 +92,10 @@ export function TelegramAuthView() {
                     </div>
 
                     <div className={styles.button}>
-                        <Button to='/'>
+                        <Button
+                            loading={isAuthenticateLoading}
+                            onClick={handleAuthenticate}
+                        >
                             Explore Tanpin
                         </Button>
                     </div>
@@ -132,7 +154,7 @@ export function TelegramAuthView() {
                 />
             </div>
         );
-    }, [stage]);
+    }, [stage, isAuthenticateLoading, handleAuthenticate]);
 
     return (
         <AuthContainer>

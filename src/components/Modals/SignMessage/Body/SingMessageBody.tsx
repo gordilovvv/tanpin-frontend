@@ -1,11 +1,8 @@
 import { useEffect } from 'react';
 import { Button } from '@/uikit';
-import { useAuth } from '@/states/user/hooks/useAuth';
+import { useAuth, useWalletAuthenticator } from '@/states/user/hooks/useAuth';
 import { useAccount } from '@/states/user/hooks/useAccount';
-import { useUserStore } from '@/states/user/store';
-import { LoadingStatus, useWalletSignature } from '@/states/user/hooks/useWalletSignature';
-import { loginWeb3 } from '@/states/user/fetch/loginWeb3';
-import { POLICY_URL, TERMS_URL } from '@/config';
+import { LoadingStatus } from '@/states/user/hooks/useWalletSignature';
 import lottieImg from '@/app/assets/images/lottie.gif';
 import styles from './SignMessageBody.module.scss';
 
@@ -15,25 +12,13 @@ type SignMessageBodyProps = {
 }
 
 export function SignMessageBody({ onError, onRetry }: SignMessageBodyProps) {
-    const setUser = useUserStore(state => state.setUser);
     const { logout } = useAuth();
     const { connector } = useAccount();
-    const { signMessage, reset, error, status } = useWalletSignature();
+    const { authenticateWithServer, reset, status, error } = useWalletAuthenticator();
 
     useEffect(() => {
         if (status === LoadingStatus.IDLE && connector) {
-            signMessage({
-                text: `I accept the Tanpin Terms of Service ${TERMS_URL} and Privacy Policy ${POLICY_URL}.`,
-                onSignature: async ({ address, message, signature }) => {
-                    const { accessToken, rulesAccept } = await loginWeb3({
-                        address,
-                        message,
-                        signature
-                    });
-
-                    setUser(accessToken, rulesAccept);
-                }
-            });
+            authenticateWithServer();
         }
     }, [status, connector]);
 
