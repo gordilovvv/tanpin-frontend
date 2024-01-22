@@ -51,7 +51,6 @@ const walletsConfig = (): WalletConfig[] => {
                 return isMetamaskInstalled();
             },
             connectorId: ConnectorNames.MetaMask,
-            recommended: true,
             deepLink: 'https://metamask.app.link/dapp/tanpin.io'
         },
         {
@@ -65,6 +64,7 @@ const walletsConfig = (): WalletConfig[] => {
             title: 'Trust Wallet',
             icon: TrustWallet,
             connectorId: ConnectorNames.TrustWallet,
+            recommended: true,
             get installed() {
                 return !!getTrustWalletProvider();
             },
