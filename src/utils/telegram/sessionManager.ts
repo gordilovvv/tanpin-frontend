@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { generatePrivateKey } from 'viem/accounts';
-import { getPublic, sign } from '@/packages';
-import { decryptData, encryptData } from '@/packages/cipher';
+import { getPublic, sign, decryptData, encryptData } from 'client-server-cipher-v2';
 import { Buffer } from 'buffer';
 import { keccak256 } from 'viem';
 
