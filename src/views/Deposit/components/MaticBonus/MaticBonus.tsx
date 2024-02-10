@@ -21,7 +21,7 @@ export function MaticBonus({ amount }: MaticBonusProps) {
                     {t('You will also receive')} <span>{formatTokenAmount(amount)} MATIC</span> {t('to pay for gas')}
                 </div>
                 : <div className={styles.maticBonusText}>
-                    {t('You will also receive')} <span>free</span> MATIC {t('for gas!')}
+                    {t('You will also receive')} <span>{t('free')}</span> MATIC {t('for gas!')}
                 </div>}
         </div>
     );
