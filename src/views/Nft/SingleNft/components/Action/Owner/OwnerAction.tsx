@@ -1,6 +1,7 @@
 import { ListButton } from '@/components/Nft';
 import { ActionBox } from '../Box/ActionBox';
 import { DirectSale } from '../DirectSale/DirectSale';
+import { useTranslation } from '@/localization';
 import { Auction, NFTSaleStatus, Sale } from '@/states/types';
 import styles from './OwnerAction.module.scss';
 
@@ -14,11 +15,13 @@ type OwnerActionProps = {
 }
 
 export function OwnerAction({ nftID, tokenID, availableEditions, sale, status }: OwnerActionProps) {
+    const { t } = useTranslation();
+
     if (status === NFTSaleStatus.NOT_FOR_SALE) {
         return (
             <ActionBox>
                 <div className={styles.description}>
-                    This NFT is in your wallet
+                    {t('This NFT is in your wallet')}
                 </div>
 
                 <ListButton

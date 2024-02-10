@@ -3,6 +3,7 @@ import { Button } from '@/uikit';
 import { EmptyResult } from '..';
 import { CollectionsList } from './List/CollectionsList';
 import { CollectionsTable } from './Table/CollectionsTable';
+import { useTranslation } from '@/localization';
 import { useCollectionsFilterState } from '@/states/explorer/hooks/useCollectionsFilterState';
 import styles from './CollectionsExplorer.module.scss';
 
@@ -12,6 +13,7 @@ type CollectionsExplorerProps = {
 }
 
 export function CollectionsExplorer({ gameID, popularCollections }: CollectionsExplorerProps) {
+    const { t } = useTranslation();
     const filterState = useCollectionsFilterState({
         gameID,
         popular: popularCollections
@@ -19,10 +21,10 @@ export function CollectionsExplorer({ gameID, popularCollections }: CollectionsE
 
     const renderEmpty = useCallback(() => {
         return <EmptyResult
-            title="Nothing found"
-            text="We couldn't find anything with this criteria"
+            title={t('Nothing found')}
+            text={t('We couldn\'t find anything with this criteria')}
         />;
-    }, []);
+    }, [t]);
 
     return (
         <div className={styles.wrapper}>
@@ -37,7 +39,7 @@ export function CollectionsExplorer({ gameID, popularCollections }: CollectionsE
                 to='/collections'
                 view='secondary'
             >
-                View collections
+                {t('View collections')}
             </Button>}
         </div>
     );

@@ -14,6 +14,7 @@ import { useNFTStore } from '@/states/nft/store';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
 import { useTokenHistory } from '@/states/nft/hooks/useTokenHistory';
+import { useTranslation } from '@/localization';
 import { isAddressOwner } from '@/utils/addressHelper';
 import { isMultipleNFT, isOwnerOfMultipleNFT, isSingleNFT } from '@/utils/nft';
 import { moneyTokensIds } from '@/config/constants/nftgta';
@@ -22,6 +23,7 @@ import styles from './SingleNftView.module.scss';
 
 // TODO: Доделать кнопку share
 export function SingleNftView() {
+    const { t } = useTranslation();
     const { address } = useAccount();
     const { tokenID } = useParams() as {
         gameID: string,
@@ -141,17 +143,17 @@ export function SingleNftView() {
                             {/* <TokenShareLinks nft={nft} /> */}
                         </>}
 
-                        {!!nft.attributes.length && <BlockWrap title="Properties">
+                        {!!nft.attributes.length && <BlockWrap title={t('Properties')}>
                             <TokenAttributes attributes={nft.attributes} />
                         </BlockWrap>}
 
-                        <BlockWrap title="Description">
+                        <BlockWrap title={t('Description')}>
                             <div className={styles.description}>
                                 {nft.description}
                             </div>
                         </BlockWrap>
 
-                        {isMobile && <BlockWrap title="Details">
+                        {isMobile && <BlockWrap title={t('Details')}>
                             <TokenDetails nft={nft} />
                         </BlockWrap >}
 
@@ -168,7 +170,7 @@ export function SingleNftView() {
                             {tokenAction}
                             {/* <TokenShareLinks nft={nft} /> */}
 
-                            <BlockWrap title="Details">
+                            <BlockWrap title={t('Details')}>
                                 <TokenDetails nft={nft} />
                             </BlockWrap>
                         </div>

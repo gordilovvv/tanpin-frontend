@@ -6,16 +6,17 @@ import { TokenInfo } from './Token/TokenInfo';
 import { useAuth } from '@/states/user/hooks/useAuth';
 import { useTokenBalance } from '@/hooks/useTokenBalance';
 import { useNativeBalance } from '@/hooks/useNativeBalance';
+import { useTranslation } from '@/localization';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { Address } from 'wagmi';
 import { walletMenuLinks } from '../config';
 import { activeChain, activeChainId } from '@/config/chain';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { CONTRACTS } from '@/config/constants/contracts';
+import { logError } from '@/utils/sentry';
 import maticLogo from '@/app/assets/images/matic.png';
 import usdtLogo from '@/app/assets/images/usdt.png';
 import styles from './WalletMenu.module.scss';
-import { logError } from '@/utils/sentry';
 
 type WalletMenuProps = {
     address: Address,
@@ -23,6 +24,7 @@ type WalletMenuProps = {
 }
 
 export function WalletMenu({ address, onClose }: WalletMenuProps) {
+    const { t } = useTranslation();
     const { logout } = useAuth();
     const { connector } = useAccount();
     const [isDisconnecting, setIsDisconnecting] = useState(false);
@@ -41,7 +43,7 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                 logout().then(() => setIsDisconnecting(false));
             } catch (error) {
                 logError(error);
-                setDisconnectError('Unable to logout. Please try again');
+                setDisconnectError(t('Unable to logout. Please try again'));
             }
         } else {
             logout();
@@ -109,7 +111,7 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                     loading={isDisconnecting}
                     onClick={handleLogout}
                 >
-                    Log out
+                    {t('Log out')}
                 </Button>
 
                 <ErrorMessageModal

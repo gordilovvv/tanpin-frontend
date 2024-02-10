@@ -2,6 +2,7 @@ import { Image, ImageSkeleton, Stock } from '@/uikit';
 import { NftSingle } from './NftSingle';
 import { NftMultiple } from './NftMultiple';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from '@/localization';
 import { isSingleNFT } from '@/utils/nft';
 import { formatTokenAmountShort } from '@/utils/formatTokenAmount';
 import { NFT } from '@/states/types';
@@ -14,6 +15,7 @@ type NftCardProps = {
 }
 
 export function NftCard({ nft, userAddress }: NftCardProps) {
+    const { locale } = useTranslation();
     const isSingle = isSingleNFT(nft);
     const navigate = useNavigate();
 
@@ -38,7 +40,7 @@ export function NftCard({ nft, userAddress }: NftCardProps) {
                         </div>
 
                         <div className={styles.stockCount}>
-                            {formatTokenAmountShort(nft.supply)}
+                            {formatTokenAmountShort(nft.supply, locale)}
                         </div>
                     </div>}
                 </div>

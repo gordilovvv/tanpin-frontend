@@ -1,5 +1,6 @@
 import { Gift } from '@/uikit';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
+import { useTranslation } from '@/localization';
 import styles from './MaticBonus.module.scss';
 
 type MaticBonusProps = {
@@ -7,6 +8,8 @@ type MaticBonusProps = {
 }
 
 export function MaticBonus({ amount }: MaticBonusProps) {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.maticBonus}>
             <div className={styles.maticBonusIcon}>
@@ -15,10 +18,10 @@ export function MaticBonus({ amount }: MaticBonusProps) {
 
             {amount
                 ? <div className={styles.maticBonusText}>
-                    You will also receive <span>{formatTokenAmount(amount)} MATIC</span> to pay for gas
+                    {t('You will also receive')} <span>{formatTokenAmount(amount)} MATIC</span> {t('to pay for gas')}
                 </div>
                 : <div className={styles.maticBonusText}>
-                    You will also receive <span>free</span> MATIC for gas!
+                    {t('You will also receive')} <span>free</span> MATIC {t('for gas!')}
                 </div>}
         </div>
     );

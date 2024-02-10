@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ActionButton } from './ActionButton';
 import { ErrorMessageModal } from '@/components/Modals';
 import { LoadingModal } from '@/components/Modals';
+import { useTranslation } from '@/localization';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
 import { usePendingTransactionModal } from '@/states/global/hooks';
@@ -15,6 +16,7 @@ type DelistButtonProps = {
 }
 
 export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
+    const { t } = useTranslation();
     const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
@@ -38,12 +40,12 @@ export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
 
             pendingTransactionModal.open({
                 hash,
-                text: 'Sale is successfully cancelled. Updates will appear as soon as transaction is confirmed.',
+                text: t('Sale is successfully cancelled. Updates will appear as soon as transaction is confirmed.'),
                 onConfirm: refetchNFT
             });
         } catch (error) {
             logError(error);
-            setTransactionError(walletErrorToUserReadableMessage(error));
+            setTransactionError(walletErrorToUserReadableMessage(error, t));
         } finally {
             setIsLoading(false);
         }
@@ -60,7 +62,7 @@ export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
 
             <LoadingModal
                 isOpen={isLoading}
-                text={'Please confirm the transaction in your wallet to cancel the sale.'}
+                text={t('Please confirm the transaction in your wallet to cancel the sale.')}
             />
 
             <ErrorMessageModal

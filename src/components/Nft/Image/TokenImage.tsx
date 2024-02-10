@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { NFT } from '@/states/types';
-import styles from './TokenImage.module.scss';
 import { Image, Spin } from '@/uikit';
 import { RefreshMetadataButton } from './RefreshMetadataButton';
 import classNames from 'classnames';
+import styles from './TokenImage.module.scss';
 
 type TokenImageProps = {
     nftID: string,

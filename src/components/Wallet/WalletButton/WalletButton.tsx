@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Spin, UnstyleButton, UnstyleLink } from '@/uikit';
+import { useTranslation } from '@/localization';
 import classNames from 'classnames';
 import styles from './WalletButton.module.scss';
 
@@ -23,6 +24,7 @@ type WalletButtonProps<T extends 'link' | 'button'> = {
 
 export function WalletButton<Tag extends 'link' | 'button'>(props: WalletButtonProps<Tag>) {
     const { as: tag, title, icon, recommended, ...rest } = props;
+    const { t } = useTranslation();
 
     if (tag === 'link') {
         const { href, target } = rest as LinkProps;
@@ -39,7 +41,7 @@ export function WalletButton<Tag extends 'link' | 'button'>(props: WalletButtonP
                 </div>
 
                 {recommended && <div className={styles.label}>
-                    Recommended
+                    {t('Recommended')}
                 </div>}
             </div>
 
@@ -69,7 +71,7 @@ export function WalletButton<Tag extends 'link' | 'button'>(props: WalletButtonP
                 </div>
 
                 {recommended && <div className={styles.label}>
-                    Recommended
+                    {t('Recommended')}
                 </div>}
             </div>
 

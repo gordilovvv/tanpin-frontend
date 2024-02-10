@@ -2,6 +2,7 @@ import { useCallback, useReducer } from 'react';
 import { Hash } from 'viem';
 import { SendTransactionResult } from 'wagmi/actions';
 import { viemClient } from '@/config/viem';
+import { useTranslation } from '@/localization';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
@@ -112,6 +113,7 @@ export function useApproveConfirmCallbacks({
     onConfirm: () => Promise<SendTransactionResult>
     onConfirmSent: (hash: Hash) => void
 }) {
+    const { t } = useTranslation();
     const [state, dispatch] = useReducer(reducer, initialState);
 
     // Approve transaction
@@ -143,11 +145,11 @@ export function useApproveConfirmCallbacks({
         } catch (error) {
             dispatch({
                 type: 'approveError',
-                errorMessage: walletErrorToUserReadableMessage(error)
+                errorMessage: walletErrorToUserReadableMessage(error, t)
             });
             logError(error);
         }
-    }, [state.approveState.status, isApproved, onApprove, onCheckApproved, dispatch]);
+    }, [state.approveState.status, isApproved, onApprove, onCheckApproved, dispatch, t]);
 
     // Confirm transaction
     const handleConfirm = useCallback(async () => {
@@ -165,11 +167,11 @@ export function useApproveConfirmCallbacks({
         } catch (error) {
             dispatch({
                 type: 'confirmError',
-                errorMessage: walletErrorToUserReadableMessage(error)
+                errorMessage: walletErrorToUserReadableMessage(error, t)
             });
             logError(error);
         }
-    }, [state.confirmState.status, dispatch, onConfirm, onConfirmSent]);
+    }, [state.confirmState.status, dispatch, onConfirm, onConfirmSent, t]);
 
     const handleApproveConfirmReset = useCallback(() => {
         dispatch({ type: 'approveConfirmReset' });

@@ -3,6 +3,7 @@ import { Image, ImageSkeleton, Link, Skeleton, UnstyleLink } from '@/uikit';
 import { AuctionAction } from './Auction/AuctionAction';
 import { ActivityDescription } from './Description/ActivityDescription';
 import { ActivityTransaction } from '@/states/activity/types';
+import { useTranslation } from '@/localization';
 import { formatDate } from '@/utils/date';
 import { getTransactionExplorerURL } from '@/utils/explorer';
 import classNames from 'classnames';
@@ -13,6 +14,8 @@ type ActivityCardProps = {
 }
 
 export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
+    const { locale } = useTranslation();
+
     return (
         <div className={styles.card}>
             <div className={styles.content}>
@@ -41,7 +44,7 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
                                 target='_blank'
                                 className={styles.date}
                             >
-                                {formatDate(activity.date)}
+                                {formatDate(activity.date, locale)}
                                 <Link />
                             </UnstyleLink>
                         </div>

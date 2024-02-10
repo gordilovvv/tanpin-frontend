@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { Field } from '../store';
+import { useTranslation } from '@/localization';
 import { fiatCurrencies } from '@/config/constants/fiatCurrencies';
 import { formatFiatCurrency } from '@/utils/fiat';
 import { tryToParseAmount } from '@/utils/tryToParseAmount';
@@ -51,6 +52,7 @@ export function useBuyTrade(
     paymentLimits: PaymentLimits | undefined,
     maticDistribution: MaticDistribution | undefined
 ) {
+    const { t } = useTranslation();
     const fiatCurrency = fiatCurrencies.rub;
     const parsedAmount = useMemo(() => {
         return tryToParseAmount(typedValue);
@@ -80,15 +82,19 @@ export function useBuyTrade(
     let inputError: string | undefined;
 
     if (!parsedAmount) {
-        inputError = 'Enter RUB amount';
+        inputError = t('Enter %currency% amount', { currency: 'RUB ' });
     }
 
     if (paymentLimits && exactTrade?.inputAmount.isLessThan(paymentLimits.min)) {
-        inputError = `Minimum is ${formatFiatCurrency(paymentLimits.min, fiatCurrency.locale, fiatCurrency.code)}`;
+        inputError = t('Minimum is %amount%', {
+            amount: formatFiatCurrency(paymentLimits.min, fiatCurrency.locale, fiatCurrency.code)
+        });
     }
 
     if (paymentLimits && exactTrade?.inputAmount?.isGreaterThan(paymentLimits.max)) {
-        inputError = `Maximum is ${formatFiatCurrency(paymentLimits.max, fiatCurrency.locale, fiatCurrency.code)}`;
+        inputError = t('Maximum is %amount%', {
+            amount: formatFiatCurrency(paymentLimits.max, fiatCurrency.locale, fiatCurrency.code)
+        });
     }
 
     return {

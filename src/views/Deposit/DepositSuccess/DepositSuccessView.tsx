@@ -4,9 +4,11 @@ import { Container, PageWrapper } from '@/components/Layout';
 import Confetti from 'react-dom-confetti';
 import { ConfettiConfig } from 'react-dom-confetti';
 import { Cat } from './Cat';
+import { useTranslation } from '@/localization';
 import styles from './DepositSuccessView.module.scss';
 
 export function DepositSuccessView() {
+    const { t } = useTranslation();
     const [launchConfetti, setLaunchConfetti] = useState(false);
 
     const confettiConfig = useMemo<ConfettiConfig>(() => {
@@ -59,11 +61,13 @@ export function DepositSuccessView() {
 
                     <div className={styles.body}>
                         <div className={styles.successTitle}>
-                            You’ve <span>successfully</span> <br />
-                            bought USDT
+                            {t('You’ve')} <span>{t('successfully')}</span> <br />
+                            {t('bought %currency%', { currency: 'USDT' })}
                         </div>
 
-                        <Button to='/'>Explore Tanpin</Button>
+                        <Button to='/'>
+                            {t('Explore Tanpin')}
+                        </Button>
                     </div>
                 </div>
             </Container>

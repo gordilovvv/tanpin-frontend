@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { ActionButton } from './ActionButton';
 import { ErrorMessageModal, LoadingModal, UpdateSaleModal } from '@/components/Modals';
+import { useTranslation } from '@/localization';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
@@ -19,6 +20,7 @@ type UpdateSaleButtonProps = {
 }
 
 export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButtonProps) {
+    const { t } = useTranslation();
     const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
@@ -58,16 +60,16 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
 
             pendingTransactionModal.open({
                 hash,
-                text: 'The NFT price is successfully changed. Updates will appear as soon as transaction is confirmed.',
+                text: t('The NFT price is successfully changed. Updates will appear as soon as transaction is confirmed.'),
                 onConfirm: refetchNFT
             });
         } catch (error) {
             logError(error);
-            setError(walletErrorToUserReadableMessage(error));
+            setError(walletErrorToUserReadableMessage(error, t));
         } finally {
             setIsLoading(false);
         }
-    }, [marketContract, saleID, price, setIsLoading, callContract, refetchNFT, pendingTransactionModal.open, setPrice, setError]);
+    }, [marketContract, saleID, price, setIsLoading, callContract, refetchNFT, pendingTransactionModal.open, setPrice, setError, t]);
 
     const handleOpenModal = () => {
         setPrice('');
@@ -85,7 +87,7 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
                 view='secondary'
                 onClick={handleOpenModal}
             >
-                Change price
+                {t('Change price')}
             </ActionButton>
 
             <UpdateSaleModal
@@ -97,7 +99,7 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
 
             <LoadingModal
                 isOpen={isLoading}
-                text='Please confirm the transaction in your wallet to update the NFT price.'
+                text={t('Please confirm the transaction in your wallet to update the NFT price.')}
             />
 
             <ErrorMessageModal

@@ -3,6 +3,7 @@ import { ToggleButton, ToggleGroup } from '@/uikit';
 import { BlockWrap } from '../BlockWrap/BlockWrap';
 import { TokenOwners } from '../Owners/TokenOwners';
 import { TransactionsHistory } from '../History/Transactions/TransactionsHistory';
+import { useTranslation } from '@/localization';
 import { isMultipleNFT, isSingleNFT } from '@/utils/nft';
 import { NFT } from '@/states/types';
 import styles from './TokenTabs.module.scss';
@@ -19,6 +20,7 @@ type TokenTabsProps = {
 
 // TODO: Добавить аукцион
 export function TokenTabs({ nft }: TokenTabsProps) {
+    const { t } = useTranslation();
     const isSingle = isSingleNFT(nft);
     const isMultiple = isMultipleNFT(nft);
     const [activeTab, setActiveTab] = useState<Tab>(Tab.OWNERS);
@@ -34,7 +36,7 @@ export function TokenTabs({ nft }: TokenTabsProps) {
     }, [activeTab, nft.ID]);
 
     if (isSingle && !nft.auction) {
-        return (<BlockWrap title='History'>
+        return (<BlockWrap title={t('History')}>
             <TransactionsHistory />
         </BlockWrap>);
     }
@@ -54,7 +56,7 @@ export function TokenTabs({ nft }: TokenTabsProps) {
                     active={activeTab === Tab.OWNERS}
                     onClick={() => setActiveTab(Tab.OWNERS)}
                 >
-                    Owners
+                    {t('Owners')}
                 </ToggleButton>}
 
                 <ToggleButton
@@ -62,7 +64,7 @@ export function TokenTabs({ nft }: TokenTabsProps) {
                     active={activeTab === Tab.HISTORY}
                     onClick={() => setActiveTab(Tab.HISTORY)}
                 >
-                    History
+                    {t('History')}
                 </ToggleButton>
             </ToggleGroup>
 

@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { TransactionInfo } from './Info/TransactionInfo';
 import { PendingTransaction } from '@/states/global/types';
+import { useTranslation } from '@/localization';
 import styles from './PendingTransactionModal.module.scss';
 
 type PendingTransactionModalProps = {
@@ -12,6 +13,7 @@ type PendingTransactionModalProps = {
 }
 
 export function PendingTransactionModal({ isOpen, text, hash, onReject, onConfirm, onClose }: PendingTransactionModalProps & ModalProps) {
+    const { t } = useTranslation();
     const [canClose, setCanClose] = useState(false);
     const handleClose = canClose ? onClose : undefined;
 
@@ -37,7 +39,7 @@ export function PendingTransactionModal({ isOpen, text, hash, onReject, onConfir
             onClose={handleClose}
             closeOnOverlayClick={canClose}
         >
-            <ModalHead title='Transaction sent' />
+            <ModalHead title={t('Transaction sent')} />
 
             <ModalBody>
                 <div className={styles.body}>

@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { NumericalInput } from '@/uikit';
+import { useTranslation } from '@/localization';
 import { useMinMaxValidation } from './hooks';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
@@ -18,6 +19,7 @@ export function PriceFilter({
     onMinPriceChange,
     onMaxPriceChange,
 }: PriceFilterProps) {
+    const { t } = useTranslation();
     const [min, setMin] = useState(minFromState);
     const [max, setMax] = useState(maxFromState);
     const isValid = useMinMaxValidation(min, max);
@@ -63,14 +65,14 @@ export function PriceFilter({
             <NumericalInput
                 onInput={(value) => setMin(value)}
                 value={min}
-                placeholder='Min'
+                placeholder={t('Min')}
                 className={styles.input}
             />
 
             <NumericalInput
                 onInput={(value) => setMax(value)}
                 value={max}
-                placeholder='Max'
+                placeholder={t('Max')}
                 className={classNames(styles.input, {
                     [styles.error]: !isValid
                 })}

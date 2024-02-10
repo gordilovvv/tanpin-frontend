@@ -3,10 +3,12 @@ import { EmptyResult } from '@/components/Explorer';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useActivity } from '@/states/activity/hooks/useActivity';
 import { useActivityStore } from '@/states/activity/store';
+import { useTranslation } from '@/localization';
 import { times } from 'lodash';
 import styles from './ActivityList.module.scss';
 
 export function ActivityList() {
+    const { t } = useTranslation();
     const { address } = useAccount();
 
     const [activity, filter] = useActivityStore(state => [
@@ -30,8 +32,8 @@ export function ActivityList() {
 
     if (!activity.length) {
         return (<EmptyResult
-            title='Nothing found'
-            text="We couldn't find anything with this criteria"
+            title={t('Nothing found')}
+            text={t('We couldn\'t find anything with this criteria')}
         />);
     }
 

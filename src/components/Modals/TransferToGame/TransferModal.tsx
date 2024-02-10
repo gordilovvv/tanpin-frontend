@@ -8,6 +8,7 @@ type TransferModalProps = {
     onConfirm: () => void
 } & ModalProps;
 
+// TODO: Translate
 export function TransferModal({ isOpen, editionsAvailable, amount, onAmountChange, onConfirm, onClose }: TransferModalProps) {
     return (
         <Modal

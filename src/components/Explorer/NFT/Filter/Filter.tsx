@@ -3,6 +3,7 @@ import { Button, Select } from '@/uikit';
 import { FilterItem } from './FilterItem/FilterItem';
 import { PriceFilter } from './PriceFilter/PriceFilter';
 import { AttributesFilter } from './AttributesFilter/AttributesFilter';
+import { useTranslation } from '@/localization';
 import { useTokensFilterState } from '@/states/explorer/hooks/useTokensFilterState';
 import { useTokensFilterActions } from '@/states/explorer/hooks/useTokensFilterActions';
 import { TokensFilterState } from '@/states/explorer/TokensFilterStore';
@@ -23,6 +24,7 @@ type FilterProps = {
 } & HTMLAttributes<HTMLDivElement>;
 
 export const Filter = memo(({ explorer, collection, filterOnButton = false, sticky, className, onFilterApply, onFilterReset, ...props }: FilterProps) => {
+    const { t } = useTranslation();
     const {
         applyFilters,
         resetFilters,
@@ -49,27 +51,27 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
         const options = [
             {
                 value: 'ALL',
-                label: 'All'
+                label: t('All')
             },
             {
                 value: 'FIXED_PRICE',
-                label: 'Buy now'
+                label: t('Buy now')
             },
             {
                 value: 'AUCTION',
-                label: 'Auction'
+                label: t('Auction')
             }
         ] as { value: TokensFilterState['status'], label: string }[];
 
         if (explorer === 'ownership') {
             options.unshift({
                 value: 'NOT_FOR_SALE',
-                label: 'Not for sale'
+                label: t('Not for sale')
             });
         }
 
         return options;
-    }, [explorer]);
+    }, [explorer, t]);
 
     const handleApplyFilters = () => {
         applyFilters();
@@ -89,9 +91,9 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
             {...props}
         >
             <div className={styles.content}>
-                {explorer !== 'ownershipSale' && <FilterItem title='Status'>
+                {explorer !== 'ownershipSale' && <FilterItem title={t('Status')}>
                     <Select
-                        placeholderText='Status'
+                        placeholderText={t('Status')}
                         selectedValue={status}
                         options={statuses}
                         onChange={handleStatus}
@@ -100,7 +102,7 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
 
                 {/* TODO: Replace USDT with dynamic variable */}
                 <FilterItem
-                    title='Price'
+                    title={t('Price')}
                     addon='USDT'
                 >
                     <PriceFilter
@@ -111,7 +113,7 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
                     />
                 </FilterItem>
 
-                {collection?.attributes.length ? <FilterItem title='Properties'>
+                {collection?.attributes.length ? <FilterItem title={t('Properties')}>
                     <div className={styles.inner}>
                         <div className={styles.group}>
                             {
@@ -138,14 +140,14 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
                             view='secondary'
                             onClick={handleResetFilters}
                         >
-                            Reset all
+                            {t('Reset all')}
                         </Button>
 
                         <Button
                             view='primary'
                             onClick={handleApplyFilters}
                         >
-                            Apply
+                            {t('Apply')}
                         </Button>
                     </div>
                 </div>}

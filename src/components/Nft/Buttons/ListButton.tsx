@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { ApproveConfirmModal, SellModal } from '@/components/Modals';
 import { ActionButton } from './ActionButton';
+import { useTranslation } from '@/localization';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useOpenedState } from '@/hooks/useOpenedState';
@@ -22,6 +23,7 @@ type ListButtonProps = {
 // TODO:
 // 1. ДОБАВИТЬ АУКЦИОН
 export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProps) {
+    const { t } = useTranslation();
     const { address } = useAccount();
     const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
@@ -40,12 +42,12 @@ export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProp
     const texts = useMemo(() => {
         return {
             approve: {
-                title: 'Approve',
-                description: 'This transaction is sent only once per asset'
+                title: t('Approve'),
+                description: t('This transaction is sent only once per asset')
             },
             confirm: {
-                title: 'List token',
-                description: 'Send transaction to list asset'
+                title: t('List token'),
+                description: t('Send transaction to list asset')
             }
         };
     }, []);
@@ -110,7 +112,7 @@ export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProp
             approveConfirmModal.close();
             pendingTransactionModal.open({
                 hash,
-                text: 'Listing is successfully initiated. Updates will appear as soon as the transaction is confirmed.',
+                text: t('Listing is successfully initiated. Updates will appear as soon as the transaction is confirmed.'),
                 onConfirm: refetchNFT
             });
         }
@@ -132,7 +134,7 @@ export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProp
     return (
         <>
             <ActionButton onClick={handleOpenBuyModal}>
-                List for Sale
+                {t('List for Sale')}
             </ActionButton>
 
             <SellModal

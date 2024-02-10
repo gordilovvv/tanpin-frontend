@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { mutate } from 'swr';
+import { useTranslation } from '@/localization';
 import { useNFTStore } from '../store';
 import { fetchNFT as fetchNFTRequest } from '../fetch/fetchNFT';
 import { logError } from '@/utils/sentry';
@@ -8,6 +9,7 @@ import { AxiosError } from 'axios';
 import { NORMAL_INTERVAL } from '@/config/constants';
 
 export function useNFTFetch(nftID: string) {
+    const { t } = useTranslation();
     const nft = useNFTStore(state => state.nft);
     const setNFT = useNFTStore(state => state.setNFT);
 
@@ -24,9 +26,9 @@ export function useNFTFetch(nftID: string) {
 
     if (error) {
         if (error instanceof AxiosError) {
-            formattedError = `NFT with key "${nftID}" not found`;
+            formattedError = t('NFT with key %nftID% not found', { nftID });
         } else {
-            formattedError = 'Something went wrong while loading the NFT. Please try reloading the page';
+            formattedError = t('Something went wrong while loading the NFT. Please try reloading the page');
         }
     }
 

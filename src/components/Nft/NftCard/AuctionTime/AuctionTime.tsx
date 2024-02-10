@@ -1,4 +1,5 @@
 import { memo, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from '@/localization';
 import { formatElapsedTime } from '@/utils/date';
 
 type AuctionTimeProps = {
@@ -6,12 +7,13 @@ type AuctionTimeProps = {
 }
 
 export const AuctionTime = memo(({ endDate }: AuctionTimeProps) => {
+    const { t, locale } = useTranslation();
     const date = useMemo(() => {
         return new Date(endDate);
     }, [endDate]);
 
     const [elapsedTime, setElapsedTime] = useState<string>(
-        formatElapsedTime(date.getTime() - Date.now())
+        formatElapsedTime(date.getTime() - Date.now(), locale)
     );
 
     useEffect(() => {
@@ -19,9 +21,9 @@ export const AuctionTime = memo(({ endDate }: AuctionTimeProps) => {
             const msLeft = date.getTime() - Date.now();
 
             if (msLeft <= 0) {
-                setElapsedTime('Timed out');
+                setElapsedTime(t('Timed out'));
             } else {
-                setElapsedTime(formatElapsedTime(msLeft));
+                setElapsedTime(formatElapsedTime(msLeft, locale));
             }
         }, 1000);
 

@@ -1,10 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useAccount, useSwitchNetwork as useSwitchNetworkWagmi } from 'wagmi';
 import { ConnectorNames } from '@/config/wallet';
+import { useTranslation } from '@/localization';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
 export function useSwitchNetwork() {
+    const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | undefined>('');
     const { isConnected, connector } = useAccount();
@@ -15,9 +17,9 @@ export function useSwitchNetwork() {
         error: _,
         ...switchNetworkArgs
     } = useSwitchNetworkWagmi();
-  
+
     const isLoading = _isLoading || loading;
-  
+
     const switchNetworkAsync = useCallback(async (chainId: number) => {
         if (isConnected && typeof _switchNetworkAsync === 'function') {
             if (isLoading) {
@@ -32,14 +34,14 @@ export function useSwitchNetwork() {
 
                 return res;
             } catch (error) {
-                setError(walletErrorToUserReadableMessage(error));
+                setError(walletErrorToUserReadableMessage(error, t));
                 logError(error);
             } finally {
                 setLoading(false);
             }
         }
-    }, [isConnected, _switchNetworkAsync, isLoading, setLoading, setError]);
-  
+    }, [isConnected, _switchNetworkAsync, isLoading, setLoading, setError, t]);
+
     const canSwitch = useMemo(
         () => {
             const switchSupported = !!_switchNetworkAsync;
@@ -53,7 +55,7 @@ export function useSwitchNetwork() {
         },
         [_switchNetworkAsync, isConnected, connector]
     );
-  
+
     return {
         ...switchNetworkArgs,
         error,

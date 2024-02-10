@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Button } from '@/uikit';
 import { useNetwork } from 'wagmi';
+import { useTranslation } from '@/localization';
 import { useSwitchNetwork } from '@/hooks/useSwitchNetwork';
 import { activeChain as supportedChain, activeChainId } from '@/config/chain';
 import styles from './NetworkSwitch.module.scss';
@@ -11,6 +12,7 @@ type NetworkSwitchProps = {
 }
 
 export function NetworkSwitch({ onError, onClose }: NetworkSwitchProps) {
+    const { t } = useTranslation();
     const { chain: currentChain } = useNetwork();
     const { switchNetworkAsync, canSwitch, error, isLoading } = useSwitchNetwork();
 
@@ -32,7 +34,7 @@ export function NetworkSwitch({ onError, onClose }: NetworkSwitchProps) {
         <div className={styles.body}>
             <div className={styles.text}>
                 {/* TODO: currentChain?.name СДЕЛАТЬ НАСТОЯЩЕЕ ИМЯ */}
-                You are connected to <span>{currentChain?.name}</span>. To prevent possible errors, connect to <span>{supportedChain.name}</span>
+                {t('You are connected to')} <span>{currentChain?.name}</span>. {t('To prevent possible errors, connect to')} <span>{supportedChain.name}</span>
             </div>
 
             <div className={styles.buttons}>
@@ -41,14 +43,14 @@ export function NetworkSwitch({ onError, onClose }: NetworkSwitchProps) {
                     loading={isLoading}
                     onClick={handleSwitchNetwork}
                 >
-                    Switch network
+                    {t('Switch network')}
                 </Button>}
 
                 <Button
                     view='secondary'
                     onClick={onClose}
                 >
-                    Cancel
+                    {t('Cancel')}
                 </Button>
             </div>
         </div>

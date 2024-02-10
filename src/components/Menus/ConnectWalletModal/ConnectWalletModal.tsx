@@ -3,6 +3,7 @@ import { Button, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { WalletButton } from '@/components/Wallet';
 import { ConnectButton } from './ConnectButton';
 import { sortWallets } from '@/utils/sortWallets';
+import { useTranslation } from '@/localization';
 import { TELEGRAM_BOT_URL } from '@/config';
 import { ConnectorNames, WalletConfig } from '@/config/wallet';
 import { HOW_TO_CREATE_WALLET_INSTRUCTION_URL } from '@/config/constants';
@@ -15,6 +16,7 @@ type ConnectWalletModalProps = {
 }
 
 export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectWalletModalProps & ModalProps) {
+    const { t } = useTranslation();
     const sortedWallets = useMemo(() => sortWallets(wallets), [wallets]);
 
     return (
@@ -22,14 +24,14 @@ export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectW
             isOpen={isOpen}
             onClose={onClose}
         >
-            <ModalHead title='Login to Tanpin' />
+            <ModalHead title={t('Login to Tanpin')} />
 
             <ModalBody>
                 <div className={styles.wrap}>
                     <div className={styles.groups}>
                         <div className={styles.group}>
                             <div className={styles.label}>
-                                Messengers
+                                {t('Messengers')}
                             </div>
                             <div className={styles.list}>
                                 <WalletButton
@@ -65,7 +67,7 @@ export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectW
                         target='_blank'
                         view='secondary'
                     >
-                        I don’t have a wallet
+                        {t('I don’t have a wallet')}
                     </Button>
                 </div>
             </ModalBody>

@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { useToast } from '@/uikit';
 import { useCallback, useState } from 'react';
+import { useTranslation } from '@/localization';
 import { useNFTRefetch } from './useNFTFetch';
 import { refreshMetadata } from '../fetch/refreshMetadata';
 
@@ -12,6 +13,7 @@ export enum RefreshStatus {
 }
 
 export function useMetadataRefresh(nftID: string) {
+    const { t } = useTranslation();
     const { toastLoading } = useToast();
     const { refetchNFT } = useNFTRefetch(nftID);
     const [error, setError] = useState<string | undefined>();
@@ -38,15 +40,15 @@ export function useMetadataRefresh(nftID: string) {
                 setStatus(RefreshStatus.REJECTED);
 
                 if (error instanceof AxiosError && error.response?.status === 429) {
-                    setError('Metadata refresh too frequently. Please try again later.');
+                    setError(t('Metadata refresh too frequently. Please try again later.'));
                 } else {
-                    setError('Something went wrong.');
+                    setError(t('Something went wrong!'));
                 }
             });
 
         setStatus(RefreshStatus.PENDING);
-        toastLoading('Reloading Metadata...', request);
-    }, [status, nftID, setStatus, setError, toastLoading]);
+        toastLoading(t('Reloading Metadata...'), request);
+    }, [status, nftID, setStatus, setError, toastLoading, t]);
 
     const resetState = useCallback(() => {
         setError(undefined);

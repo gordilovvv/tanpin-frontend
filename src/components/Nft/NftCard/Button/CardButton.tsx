@@ -1,5 +1,6 @@
 import { Button } from '@/uikit';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from '@/localization';
 import { NFTSaleStatus } from '@/states/types';
 import classNames from 'classnames';
 import styles from './CardButton.module.scss';
@@ -14,6 +15,7 @@ type CardButtonProps = {
 
 // TODO: КОГДА ПОЙДЕТ ЛОГИКА ПОКУПКИ ИЛИ СТАВКИ РАЗДЕЛИТЬ НА 2 КОМПОНЕНТА
 export const CardButton = ({ nftID, gameID, collectionID, status, className }: CardButtonProps) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const handleClick = () => {
         // TODO: logic
@@ -31,7 +33,7 @@ export const CardButton = ({ nftID, gameID, collectionID, status, className }: C
                     handleClick();
                 }}
             >
-                {status === NFTSaleStatus.FIXED_PRICE ? 'Purchase' : 'Bid'}
+                {status === NFTSaleStatus.FIXED_PRICE ? t('Purchase') : t('Bid')}
             </Button>
         </div>
     );

@@ -3,6 +3,7 @@ import { ActionBox } from '../Box/ActionBox';
 import { ActionTitle } from '../Title/ActionTitle';
 import { USDPrice } from '../USDPrice/USDPrice';
 import { BuyButton, DelistButton, UpdateSaleButton } from '@/components/Nft';
+import { useTranslation } from '@/localization';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import { Sale } from '@/states/types';
 import styles from './DirectSale.module.scss';
@@ -14,6 +15,8 @@ type DirectSaleProps = {
 }
 
 export function DirectSale({ nftID, sale, isOwner }: DirectSaleProps) {
+    const { t } = useTranslation();
+
     return (
         <>
             <ActionBox>
@@ -47,7 +50,7 @@ export function DirectSale({ nftID, sale, isOwner }: DirectSaleProps) {
             {isOwner && <DelistButton
                 nftID={nftID}
                 saleID={sale.saleID}
-                text='Delist from Sale'
+                text={t('Delist from Sale')}
             />}
         </>
     );

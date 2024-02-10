@@ -3,6 +3,7 @@ import { LoadingModal, ErrorMessageModal } from '@/components/Modals';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
 import { usePendingTransactionModal } from '@/states/global/hooks';
 import { useState } from 'react';
+import { useTranslation } from '@/localization';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
@@ -15,6 +16,7 @@ type CloseAuctionButtonProps = {
 } & Omit<ButtonProps<'button'>, 'children'>;
 
 export function CloseAuctionButton({ auctionID, text, loadingText, pendingTransactionText, onSuccess, ...props }: CloseAuctionButtonProps) {
+    const { t } = useTranslation();
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
     const pendingTransactionModal = usePendingTransactionModal();
@@ -42,7 +44,7 @@ export function CloseAuctionButton({ auctionID, text, loadingText, pendingTransa
             });
         } catch (error) {
             logError(error);
-            setTransactionError(walletErrorToUserReadableMessage(error));
+            setTransactionError(walletErrorToUserReadableMessage(error, t));
         } finally {
             setIsLoading(false);
         }

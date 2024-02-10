@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Link, Skeleton, UnstyleLink } from '@/uikit';
 import { UserAvatar } from '@/components/User';
+import { useTranslation } from '@/localization';
 import { formatDate } from '@/utils/date';
 import { getTransactionExplorerURL } from '@/utils/explorer';
 import styles from './TransactionRow.module.scss';
@@ -12,6 +13,8 @@ type TransactionRowProps = {
 }
 
 export function TransactionRow({ children, date, transactionHash, userAddress }: PropsWithChildren<TransactionRowProps>) {
+    const { locale } = useTranslation();
+
     return (
         <div className={styles.row}>
             <UserAvatar
@@ -31,7 +34,7 @@ export function TransactionRow({ children, date, transactionHash, userAddress }:
                         href={getTransactionExplorerURL(transactionHash)}
                         className={styles.date}
                     >
-                        {formatDate(date)} <Link />
+                        {formatDate(date, locale)} <Link />
                     </UnstyleLink>
                 </div>
             </div>

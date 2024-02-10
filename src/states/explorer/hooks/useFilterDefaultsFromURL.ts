@@ -21,7 +21,7 @@ function queryParamsToNFTFilterState(
     params: { [queryParam: string]: string },
     defaultSort: NFTSort,
     defaultStatus: NFTSaleStatus.AUCTION | NFTSaleStatus.FIXED_PRICE
-): TokensFilterState {
+): Omit<TokensFilterState, 'hash'> {
     return {
         sort: parseSort(params.sort) as TokensFilterState['sort'] || defaultSort,
         status: parseStatus(params.status) as TokensFilterState['status'] || defaultStatus,

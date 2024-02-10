@@ -6,11 +6,13 @@ import { ConnectorNames, createWallets } from '@/config/wallet';
 import { useAccount } from 'wagmi';
 import { useUserStore } from '@/states/user/store';
 import { useAuth } from '@/states/user/hooks/useAuth';
+import { useTranslation } from '@/localization';
 import { useOpenedState } from '@/hooks/useOpenedState';
 
 type ConnectWalletButtonProps = Omit<ButtonProps<'button'>, 'onClick'>;
 
 export function ConnectWalletButton(props: ConnectWalletButtonProps) {
+    const { t } = useTranslation();
     const { login } = useAuth();
     const { isConnected } = useAccount();
     const [connectError, setConnectError] = useState<string | undefined>();
@@ -39,7 +41,7 @@ export function ConnectWalletButton(props: ConnectWalletButtonProps) {
                 {...props}
                 onClick={connectPopupState.open}
             >
-                Connect wallet
+                {t('Connect wallet')}
             </Button>
 
             <ConnectWalletModal

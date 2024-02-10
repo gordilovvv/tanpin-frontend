@@ -1,4 +1,5 @@
 import { Button } from '@/uikit';
+import { useTranslation } from '@/localization';
 import styles from './PageError.module.scss';
 
 type PageErrorProps = {
@@ -8,6 +9,8 @@ type PageErrorProps = {
 }
 
 export function PageError({ error, details, onReload }: PageErrorProps) {
+    const { t } = useTranslation();
+
     const handlePageReload = () => {
         if (onReload) {
             onReload();
@@ -21,11 +24,11 @@ export function PageError({ error, details, onReload }: PageErrorProps) {
             <div className={styles.content}>
                 <div className={styles.info}>
                     <div className={styles.title}>
-                        An error occurred
+                        {t('An error occurred')}
                     </div>
 
                     <div className={styles.description}>
-                        {error ?? 'Something went wrong'}
+                        {error ?? t('Something went wrong!')}
                     </div>
 
                     {details && <div className={styles.error}>
@@ -38,7 +41,7 @@ export function PageError({ error, details, onReload }: PageErrorProps) {
                         view='primary'
                         onClick={handlePageReload}
                     >
-                        Reload
+                        {t('Reload')}
                     </Button>
 
                     <Button
@@ -46,7 +49,7 @@ export function PageError({ error, details, onReload }: PageErrorProps) {
                         href='/'
                         view='secondary'
                     >
-                        Go to homepage
+                        {t('Go to homepage')}
                     </Button>
                 </div>
             </div>

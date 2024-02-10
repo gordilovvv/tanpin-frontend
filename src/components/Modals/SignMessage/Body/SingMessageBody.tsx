@@ -3,6 +3,7 @@ import { Button } from '@/uikit';
 import { useAuth, useWalletAuthenticator } from '@/states/user/hooks/useAuth';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { LoadingStatus } from '@/states/user/hooks/useWalletSignature';
+import { useTranslation } from '@/localization';
 import lottieImg from '@/app/assets/images/lottie.gif';
 import styles from './SignMessageBody.module.scss';
 
@@ -12,6 +13,7 @@ type SignMessageBodyProps = {
 }
 
 export function SignMessageBody({ onError, onRetry }: SignMessageBodyProps) {
+    const { t } = useTranslation();
     const { logout } = useAuth();
     const { connector } = useAccount();
     const { authenticateWithServer, reset, status, error } = useWalletAuthenticator();
@@ -45,14 +47,14 @@ export function SignMessageBody({ onError, onRetry }: SignMessageBodyProps) {
                         view='primary'
                         onClick={handleRetry}
                     >
-                        Try again
+                        {t('Try again')}
                     </Button>
 
                     <Button
                         view='secondary'
                         onClick={logout}
                     >
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                 </div>
             </div>
@@ -69,14 +71,14 @@ export function SignMessageBody({ onError, onRetry }: SignMessageBodyProps) {
             </div>
 
             <div className={styles.text}>
-                Sign the message with your wallet
+                {t('Sign the message with your wallet')}
             </div>
 
             <Button
                 view='secondary'
                 onClick={logout}
             >
-                Cancel
+                {t('Cancel')}
             </Button>
         </div>
     );

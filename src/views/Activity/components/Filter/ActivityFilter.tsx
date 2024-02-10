@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useTranslation } from '@/localization';
 import { useActivityStore } from '@/states/activity/store';
 import { ActivityFilterOption } from './ActivityFilterOption/ActivityFilterOption';
 import { ActivityType } from '@/states/activity/types';
@@ -10,19 +11,20 @@ type ActivityFilterProps = {
 }
 
 export function ActivityFilter({ className }: ActivityFilterProps) {
+    const { t } = useTranslation();
     const [selectUserActivityOption, removeUserActivityOption] = useActivityStore(state => [
         state.selectUserActivityOption,
         state.removeUserActivityOption
     ]);
 
     const options = [
-        { value: ActivityType.SALE, label: 'Sales' },
+        { value: ActivityType.SALE, label: t('Sales') },
         {
             value: [
                 ActivityType.LISTED,
                 ActivityType.UNLISTED
             ],
-            label: 'Listings'
+            label: t('Listings')
         },
         {
             value: [
@@ -32,11 +34,11 @@ export function ActivityFilter({ className }: ActivityFilterProps) {
                 ActivityType.LOST_AUCTION,
                 ActivityType.WON_AUCTION
             ],
-            label: 'Auctions'
+            label: t('Auctions')
         },
-        { value: ActivityType.TRANSFER, label: 'Transfers' },
-        { value: ActivityType.BUY, label: 'Purchases' },
-        { value: ActivityType.MINT, label: 'Mints' },
+        { value: ActivityType.TRANSFER, label: t('Transfers') },
+        { value: ActivityType.BUY, label: t('Purchases') },
+        { value: ActivityType.MINT, label: t('Mints') },
     ];
 
     const handleChange = useCallback((value: ActivityType | ActivityType[], isActive: boolean) => {
@@ -49,7 +51,7 @@ export function ActivityFilter({ className }: ActivityFilterProps) {
 
     return (
         <div className={classNames(styles.wrapper, className)}>
-            <div className={styles.title}>Filters</div>
+            <div className={styles.title}>{t('Filters')}</div>
 
             <div className={styles.inner}>
                 {options.map(({ label, value }) => <ActivityFilterOption

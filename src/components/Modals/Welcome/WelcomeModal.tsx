@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Cat, Modal, ModalBody, ModalProps, UnstyleLink } from '@/uikit';
 import { ErrorMessageModal } from '..';
+import { useTranslation } from '@/localization';
 import { useRulesAccept } from '@/states/user/hooks/useRulesAccept';
 import { POLICY_URL, TERMS_URL } from '@/config';
 import { logError } from '@/utils/sentry';
@@ -8,6 +9,7 @@ import backgroundImage from '@/app/assets/images/background.png';
 import styles from './WelcomeModal.module.scss';
 
 export function WelcomeModal({ isOpen }: ModalProps) {
+    const { t } = useTranslation();
     const [acceptError, setAcceptError] = useState<string | undefined>();
     const { acceptRules, isLoading } = useRulesAccept();
 
@@ -33,20 +35,20 @@ export function WelcomeModal({ isOpen }: ModalProps) {
                         </div>
 
                         <div className={styles.title}>
-                            Welcome to Tanpin
+                            {t('Welcome to Tanpin')}
                         </div>
 
                         <div className={styles.text}>
-                            By continuing you agree with our<br />
+                            {t('By continuing you agree with our')}<br />
 
                             <UnstyleLink
                                 href={TERMS_URL}
                                 target='_blank'
                             // eslint-disable-next-line react/jsx-newline
-                            >Terms of Service</UnstyleLink> and <UnstyleLink
+                            >{t('Terms of Service')}</UnstyleLink> {t('and')} <UnstyleLink
                                 href={POLICY_URL}
                                 target='_blank'
-                            >Privacy Policy</UnstyleLink>
+                            >{t('Privacy Policy')}</UnstyleLink>
                         </div>
 
                         <Button
@@ -54,7 +56,7 @@ export function WelcomeModal({ isOpen }: ModalProps) {
                             loading={isLoading}
                             onClick={handleAcceptRules}
                         >
-                            Start Exploring
+                            {t('Start Exploring')}
                         </Button>
                     </div>
                 </ModalBody>

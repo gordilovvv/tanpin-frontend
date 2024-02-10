@@ -3,6 +3,7 @@ import { Button, Input, Ruble, Tether, UnstyleLink } from '@/uikit';
 import { ConnectWalletButton } from '@/components/Menus';
 import { MaticBonus } from '../MaticBonus/MaticBonus';
 import { CurrencyRate, CurrencyRateSkeleton } from '../Rate/CurrencyRate';
+import { useTranslation } from '@/localization';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useBuyTrade } from '@/states/deposit/hooks/useBuyTrade';
 import { useBuyCallback } from '@/states/deposit/hooks/useBuyCallback';
@@ -14,6 +15,7 @@ import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import styles from './BuyForm.module.scss';
 
 export function BuyForm() {
+    const { t } = useTranslation();
     const { address } = useAccount();
     const [typedValue, activeField, typeValue] = useDepositStore(state => [
         state.typedValue,
@@ -75,7 +77,7 @@ export function BuyForm() {
         return (
             <div className={styles.form}>
                 <div className={styles.error}>
-                    Deposit is temporarily unavailable.<br /> Try again a bit later
+                    {t('Deposit is temporarily unavailable.')}<br /> {t('Try again a bit later')}
                 </div>
             </div>
         );
@@ -87,7 +89,7 @@ export function BuyForm() {
                 <Input
                     numerical
                     value={formattedAmounts[Field.INPUT]}
-                    placeholder="Enter amount in RUB"
+                    placeholder={t('Enter %currency% amount', { currency: 'RUB' })}
                     leftAddon={<Ruble />}
                     onInput={handleAmountInType}
                     style={{ paddingLeft: '48px' }}
@@ -96,7 +98,7 @@ export function BuyForm() {
                 <Input
                     numerical
                     value={formattedAmounts[Field.OUTPUT]}
-                    placeholder="Enter amount in USDT"
+                    placeholder={t('Enter %currency% amount', { currency: 'USDT' })}
                     leftAddon={<Tether />}
                     onInput={handleAmountOutType}
                     style={{ paddingLeft: '48px' }}
@@ -119,16 +121,16 @@ export function BuyForm() {
                             disabled={!!inputError}
                             onClick={buyCallback}
                         >
-                            {inputError ?? 'Continue'}
+                            {inputError ?? t('Continue')}
                         </Button>
                         : <ConnectWalletButton />}
 
                     <div className={styles.terms}>
-                        By proceeding you agree with our <UnstyleLink
+                        {t('By continuing you agree with our')} <UnstyleLink
                             href={TERMS_URL}
                             rel='noreferrer noopener'
                             target='_blank'
-                        >Terms</UnstyleLink>
+                        >{t('Terms')}</UnstyleLink>
                     </div>
                 </div>
             </div>

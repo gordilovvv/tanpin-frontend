@@ -7,6 +7,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useWalletAuthenticator } from '@/states/user/hooks/useAuth';
 import { LoadingStatus } from '@/states/user/hooks/useWalletSignature';
+import { useTranslation } from '@/localization';
 import { TELEGRAM_BOT_URL } from '@/config';
 import { activeChainId } from '@/config/chain';
 import { telegramConnector } from '@/config/wagmi';
@@ -20,6 +21,7 @@ enum Stage {
 }
 
 export function TelegramAuthView() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { address, isConnected } = useAccount();
     const { connectAsync } = useConnect();
@@ -88,7 +90,7 @@ export function TelegramAuthView() {
             return (
                 <div className={styles.content}>
                     <div className={styles.title}>
-                        Ready to Go!
+                        {t('Ready to Go!')}
                     </div>
 
                     <div className={styles.button}>
@@ -96,7 +98,7 @@ export function TelegramAuthView() {
                             loading={isAuthenticateLoading}
                             onClick={handleAuthenticate}
                         >
-                            Explore Tanpin
+                            {t('Explore Tanpin')}
                         </Button>
                     </div>
                 </div>
@@ -107,11 +109,11 @@ export function TelegramAuthView() {
             return (
                 <div className={styles.content}>
                     <div className={styles.title}>
-                        Authorization failed
+                        {t('Authorization failed')}
                     </div>
 
                     <div className={styles.description}>
-                        Oops! Something went wrong.<br /> Give it another shot later!
+                        {t('Oops! Something went wrong.')}<br /> {t('Give it another shot later!')}
                     </div>
 
                     <div className={styles.button}>
@@ -120,14 +122,14 @@ export function TelegramAuthView() {
                             href={TELEGRAM_BOT_URL}
                             rel="noreferrer noopener"
                         >
-                            Try again
+                            {t('Try again')}
                         </Button>
 
                         <Button
                             view='secondary'
                             to='/'
                         >
-                            Go home
+                            {t('Go home')}
                         </Button>
                     </div>
                 </div>
@@ -137,11 +139,11 @@ export function TelegramAuthView() {
         return (
             <div className={styles.content}>
                 <div className={styles.title}>
-                    Connecting through Telegram
+                    {t('Connecting through Telegram')}
                 </div>
 
                 <div className={styles.description}>
-                    Please don’t refresh this page
+                    {t('Please don’t refresh this page')}
                 </div>
 
                 <Spin

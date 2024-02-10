@@ -3,6 +3,7 @@ import { Button, Input } from '@/uikit';
 import { NFTActionText } from '@/components/Nft';
 import { InsufficientFunds } from '@/components/Funds';
 import { LoadingContent } from '../../Loading/LoadingContent';
+import { useTranslation } from '@/localization';
 import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
 import { useBuyActions, useBuyDirectSaleInfo, useBuyState } from '@/states/buy/hooks';
 import styles from './BuyForm.module.scss';
@@ -14,6 +15,7 @@ type BuyFormProps = {
 }
 
 export function BuyForm({ tokenPrice, availableAmount, onPurchase }: BuyFormProps) {
+    const { t } = useTranslation();
     const metadata = useTokenMetadata();
     const { typedAmount } = useBuyState();
     const { handleAmountType, handleTotalPrice } = useBuyActions();
@@ -35,7 +37,7 @@ export function BuyForm({ tokenPrice, availableAmount, onPurchase }: BuyFormProp
     return (
         <div className={styles.form}>
             {metadata && <NFTActionText
-                text='You are going to buy'
+                text={t('You are going to buy')}
                 nftName={metadata.name}
                 collectionID={metadata.collection.ID}
                 collectionName={metadata.collection.name}
@@ -51,13 +53,13 @@ export function BuyForm({ tokenPrice, availableAmount, onPurchase }: BuyFormProp
                 rightAddon={`/ ${availableAmount}`}
             />
 
-            {balanceError && <InsufficientFunds text='Insufficient funds in USDT' />}
+            {balanceError && <InsufficientFunds text={t('Insufficient funds in USDT')} />}
 
             <Button
                 disabled={!!balanceError || !!amountError}
                 onClick={onPurchase}
             >
-                {!balanceError && amountError || 'Proceed to payment'}
+                {!balanceError && amountError || t('Proceed to payment')}
             </Button>
         </div>
     );

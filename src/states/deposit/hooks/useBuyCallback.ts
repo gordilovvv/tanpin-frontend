@@ -1,12 +1,14 @@
 import { useCallback, useState } from 'react';
 import { useToast } from '@/uikit';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useTranslation } from '@/localization';
 import { createPayment } from '../fetch/createPayment';
 
 export function useBuyCallback(
     amountIn?: string,
     inputError?: string
 ) {
+    const { t } = useTranslation();
     const { address } = useAccount();
     const { toastDanger } = useToast();
     const [isLoading, setIsLoading] = useState(false);
@@ -31,9 +33,9 @@ export function useBuyCallback(
             window.location.href = redirectURL;
         } catch (error) {
             setIsLoading(false);
-            toastDanger('Something went wrong!');
+            toastDanger(t('Something went wrong!'));
         }
-    }, [amountIn, address, inputError, setIsLoading, toastDanger]);
+    }, [amountIn, address, inputError, setIsLoading, toastDanger, t]);
 
     return {
         isLoadingBuy: isLoading,

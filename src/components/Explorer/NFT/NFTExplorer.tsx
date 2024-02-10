@@ -5,6 +5,7 @@ import { NFTGrid } from './Grid/NFTGrid';
 import { EmptyResult } from '../EmptyResult/EmptyResult';
 import { SearchInput } from '@/components/SearchInput';
 import { MobileFilter } from '@/components/Modals';
+import { useTranslation } from '@/localization';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useScrollEffect } from '@/hooks/useScrollEffect';
@@ -26,6 +27,7 @@ type NFTExplorerProps = {
 // useNFTFilterDefaultsFromURL();
 // useTokensFilterQueryParams();
 export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps) {
+    const { t } = useTranslation();
     const isPhone = useMediaQuery('(max-width: 1000px)');
     const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -53,15 +55,15 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
 
     const renderEmpty = useCallback(() => {
         return <EmptyResult
-            title="Nothing found"
-            text="We couldn't find anything with this criteria"
+            title={t('Nothing found')}
+            text={t('We couldn\'t find anything with this criteria')}
         />;
-    }, []);
+    }, [t]);
 
     const sortOptions: { value: NFTSort; label: string }[] = [
-        { value: NFTSort.RECENTLY_ADDED, label: 'Recently Added' },
-        { value: NFTSort.HIGH_PRICE_FIRST, label: 'High Price First' },
-        { value: NFTSort.LOW_PRICE_FIRST, label: 'Low Price First' },
+        { value: NFTSort.RECENTLY_ADDED, label: t('Recently Added') },
+        { value: NFTSort.HIGH_PRICE_FIRST, label: t('High Price First') },
+        { value: NFTSort.LOW_PRICE_FIRST, label: t('Low Price First') },
     ];
 
     const handleFilterToggle = useCallback(() => {
@@ -85,17 +87,17 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
                     view="secondary"
                     onClick={handleFilterToggle}
                 >
-                    Filters
+                    {t('Filters')}
                 </Button>
 
                 <SearchInput
                     value={filterState.search}
-                    placeholder="Search"
+                    placeholder={t('Search')}
                     onChange={handleSearch}
                 />
 
                 <Select
-                    placeholderText="Sort"
+                    placeholderText={t('Sort')}
                     onChange={handleSort}
                     selectedValue={filterState.sort}
                     options={sortOptions}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/localization';
 import styles from './NFTActionText.module.scss';
 
 type ActionTextProps = {
@@ -10,11 +11,12 @@ type ActionTextProps = {
 }
 
 export function NFTActionText({ text, gameID, nftName, collectionID, collectionName }: ActionTextProps) {
+    const { t } = useTranslation();
     const collectionURL = `/${gameID}/${collectionID}`;
 
     return (
         <div className={styles.text}>
-            {text} <span>{nftName}</span> from <Link to={collectionURL}>{collectionName}</Link> collection
+            {text} <span>{nftName}</span> {t('from')} <Link to={collectionURL}>{collectionName}</Link> {t('collection')}
         </div>
     );
 }

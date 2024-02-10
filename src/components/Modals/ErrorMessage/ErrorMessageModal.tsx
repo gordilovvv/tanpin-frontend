@@ -1,4 +1,5 @@
 import { Button, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
+import { useTranslation } from '@/localization';
 import styles from './ErrorMessageModal.module.scss';
 
 type ErrorMessageModalProps = {
@@ -6,9 +7,11 @@ type ErrorMessageModalProps = {
 }
 
 export function ErrorMessageModal({ isOpen, error, onClose }: ErrorMessageModalProps & ModalProps) {
+    const { t } = useTranslation();
+
     return (
         <Modal isOpen={isOpen}>
-            <ModalHead title='Error' />
+            <ModalHead title={t('Error')} />
 
             <ModalBody className={styles.wrap}>
                 <div className={styles.text}>
@@ -19,7 +22,7 @@ export function ErrorMessageModal({ isOpen, error, onClose }: ErrorMessageModalP
                     view='secondary'
                     onClick={onClose}
                 >
-                    Close
+                    {t('Close')}
                 </Button>
             </ModalBody>
         </Modal>

@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
+import { useTranslation } from '@/localization';
 import { useUpdateDirectSaleStore } from '../store';
 import { tryToParseAmount } from '@/utils/tryToParseAmount';
 
 export function useUpdateDirectSaleInfo(currentPrice: string) {
+    const { t } = useTranslation();
     const price = useUpdateDirectSaleStore(state => state.price);
     const parsedValue = useMemo(() => {
         return tryToParseAmount(price);
@@ -11,15 +13,15 @@ export function useUpdateDirectSaleInfo(currentPrice: string) {
     let priceError: string | undefined;
 
     if (!parsedValue) {
-        priceError = 'Enter amount';
+        priceError = t('Enter amount');
     }
 
     if (parsedValue && parsedValue.isLessThan(0.01)) {
-        priceError = 'Minimum is 0.01 USDT'; // TODO: dynamic currency
+        priceError = t('Minimum is %amount%', { amount: '0.01 USDT' }); // TODO: dynamic currency
     }
 
     if (parsedValue && parsedValue.isEqualTo(currentPrice)) {
-        priceError = 'This price is already set';
+        priceError = t('This price is already set');
     }
 
     return {

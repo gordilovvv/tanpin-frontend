@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react';
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { SignMessageBody } from './Body/SingMessageBody';
+import { useTranslation } from '@/localization';
 
 export function SignMessageModal({ isOpen }: ModalProps) {
+    const { t } = useTranslation();
     const [error, setError] = useState<string | undefined>();
 
     const handleRetry = useCallback(() => {
@@ -11,7 +13,7 @@ export function SignMessageModal({ isOpen }: ModalProps) {
 
     return (
         <Modal isOpen={isOpen}>
-            <ModalHead title={error ? 'Error' : 'Connecting Wallet'} />
+            <ModalHead title={t(error ? 'Error' : 'Connecting Wallet')} />
 
             <ModalBody>
                 <SignMessageBody

@@ -2,16 +2,19 @@ import { formatFiatCurrency } from '@/utils/fiat';
 import styles from './CurrencyRate.module.scss';
 import { fiatCurrencies } from '@/config/constants/fiatCurrencies';
 import { Skeleton } from '@/uikit';
+import { useTranslation } from '@/localization';
 
 type CurrencyRateProps = {
     rate: string
 }
 
 export function CurrencyRate({ rate }: CurrencyRateProps) {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.rate}>
             <div className={styles.text}>
-                You get <span>1 USDT</span> for <span>{formatFiatCurrency(rate, fiatCurrencies.rub.locale, fiatCurrencies.rub.code)}</span>
+                {t('You get')} <span>1 USDT</span> {t('for')} <span>{formatFiatCurrency(rate, fiatCurrencies.rub.locale, fiatCurrencies.rub.code)}</span>
             </div>
         </div>
     );

@@ -1,3 +1,5 @@
+import { daysSuffix, pluralize } from './pluralize';
+
 type DateFormat = 'full' | 'day' | 'time';
 
 const dateFormats: Record<DateFormat, (locale: string) => Intl.DateTimeFormat> = {
@@ -26,10 +28,11 @@ function getFormatter(locale: string, type: DateFormat) {
 
 export function formatDate(
     value: string | number,
+    locale: string,
     { type = 'full' }: { type?: DateFormat } = {}
 ) {
     const msValue = new Date(value).getTime();
-    const formatter = getFormatter('en', type);
+    const formatter = getFormatter(locale, type);
 
     return formatter.format(msValue);
 }
@@ -41,7 +44,7 @@ const twoNumbersFormatter = (num: number) => {
 const HOUR_IN_MS = 3600000;
 const HOURS_THRESHOLD_MS = 172800000;
 
-export function formatElapsedTime(timeMS: number) {
+export function formatElapsedTime(timeMS: number, locale: string) {
     if (timeMS < HOURS_THRESHOLD_MS) {
         const hours = Math.floor(timeMS / HOUR_IN_MS);
         const minutes = Math.floor((timeMS % HOUR_IN_MS) / 60000);
@@ -50,5 +53,8 @@ export function formatElapsedTime(timeMS: number) {
         return `${hours}:${twoNumbersFormatter(minutes)}:${twoNumbersFormatter(seconds)}`;
     }
 
-    return `${Math.floor(timeMS / 86400000)} days`;
+    const dayCount = Math.floor(timeMS / 86400000);
+    const suffix = pluralize(dayCount, locale, daysSuffix);
+
+    return `${dayCount} ${suffix}`;
 }

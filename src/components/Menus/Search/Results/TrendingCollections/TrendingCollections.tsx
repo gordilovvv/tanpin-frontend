@@ -1,10 +1,12 @@
 import { SearchItem } from '../Item/SearchItem';
 import { ResultsPlaceholder } from '../Placeholder/ResultsPlaceholder';
 import { ResultsEmpty } from '../Empty/ResultsEmpty';
+import { useTranslation } from '@/localization';
 import { usePopularCollections } from '@/states/search/hooks/usePopularCollections';
 import styles from './TrendingCollections.module.scss';
 
 export function TrendingCollections() {
+    const { t } = useTranslation();
     const { collections, isLoading } = usePopularCollections();
 
     const renderList = () => {
@@ -31,7 +33,7 @@ export function TrendingCollections() {
     return (
         <div className={styles.wrap}>
             <div className={styles.title}>
-                Popular collections
+                {t('Popular collections')}
             </div>
 
             <div className={styles.list}>

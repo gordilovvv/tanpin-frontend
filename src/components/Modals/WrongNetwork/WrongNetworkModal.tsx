@@ -3,8 +3,10 @@ import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { ErrorMessageModal } from '..';
 import { NetworkSwitch } from './Switch/NetworkSwitch';
 import { useOpenedState } from '@/hooks/useOpenedState';
+import { useTranslation } from '@/localization';
 
 export function WrongNetworkModal({ isOpen, onClose }: ModalProps) {
+    const { t } = useTranslation();
     const errorMessage = useOpenedState();
     const [error, setError] = useState<string | undefined>();
 
@@ -20,7 +22,7 @@ export function WrongNetworkModal({ isOpen, onClose }: ModalProps) {
                 isOpen={isOpen}
                 onClose={onClose}
             >
-                <ModalHead title='Wrong network' />
+                <ModalHead title={t('Wrong network')} />
 
                 <ModalBody>
                     <NetworkSwitch

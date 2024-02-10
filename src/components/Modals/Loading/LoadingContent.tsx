@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Spin } from '@/uikit';
 import { sample } from 'lodash';
+import { useTranslation } from '@/localization';
 import styles from './LoadingContent.module.scss';
 
 type LoadingContentProps = {
@@ -8,19 +9,21 @@ type LoadingContentProps = {
 }
 
 export function LoadingContent({ text }: LoadingContentProps) {
+    const { t } = useTranslation();
     const interval = useRef<NodeJS.Timer | null>(null);
     const [phrase, setPhrase] = useState<string | undefined>(text);
+
     const phrases = [
-        'Sending Crypto Waves',
-        'Building the Blockchain Bridge',
-        'Unleashing the Blockchain Power',
-        'Navigating the Transaction Frontier',
-        'Fueling the Blockchain Revolution',
-        'Unlocking the NFT Adventure',
-        'Buying, Selling, and Trading NFT',
-        'Sending NFTs to the Moon',
-        'Discovering the Joy of NFT Ownership',
-        'Minting Memories with NFT'
+        t('Sending Crypto Waves'),
+        t('Building the Blockchain Bridge'),
+        t('Unleashing the Blockchain Power'),
+        t('Navigating the Transaction Frontier'),
+        t('Fueling the Blockchain Revolution'),
+        t('Unlocking the NFT Adventure'),
+        t('Buying, Selling, and Trading NFT'),
+        t('Sending NFTs to the Moon'),
+        t('Discovering the Joy of NFT Ownership'),
+        t('Minting Memories with NFT')
     ];
 
     // Randomize phrases

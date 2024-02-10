@@ -5,6 +5,7 @@ import { CollectionsList } from './List/CollectionsList';
 import { TrendingCollections } from './TrendingCollections/TrendingCollections';
 import { SearchTask } from '@/states/search/hooks/useSearch';
 import { useSearchStore } from '@/states/search/store';
+import { useTranslation } from '@/localization';
 import styles from './SearchResults.module.scss';
 
 type SearchResultsProps = {
@@ -12,6 +13,7 @@ type SearchResultsProps = {
 }
 
 export function SearchResults({ searchQuery }: SearchResultsProps) {
+    const { t } = useTranslation();
     const [searchTask, setSearchTask] = useState<SearchTask>(SearchTask.NFT);
     const searchError = useSearchStore(state => state.searchError);
     const setSearchError = useSearchStore(state => state.setSearchError);
@@ -56,14 +58,14 @@ export function SearchResults({ searchQuery }: SearchResultsProps) {
                     active={searchTask === SearchTask.NFT}
                     onClick={() => setSearchTask(SearchTask.NFT)}
                 >
-                    NFT
+                    {t('NFT')}
                 </ToggleButton>
 
                 <ToggleButton
                     active={searchTask === SearchTask.COLLECTION}
                     onClick={() => setSearchTask(SearchTask.COLLECTION)}
                 >
-                    Collections
+                    {t('Collections')}
                 </ToggleButton>
             </ToggleGroup>
 

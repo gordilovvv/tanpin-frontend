@@ -1,5 +1,6 @@
 import { BaseError, UnknownRpcError } from 'viem';
 import { isUserRejected } from './isUserRejected';
+import { TranslateFunction } from '@/localization';
 
 /// only show corrected parsed viem error
 function parseViemError<TError>(err: TError): BaseError | null {
@@ -15,9 +16,9 @@ function parseViemError<TError>(err: TError): BaseError | null {
     return null;
 }
 
-export function walletErrorToUserReadableMessage(error: any) {
+export function walletErrorToUserReadableMessage(error: any, t: TranslateFunction) {
     if (isUserRejected(error)) {
-        return 'You rejected the transaction.';
+        return t('You rejected the transaction.');
     }
 
     if (error instanceof Error && 'message' in error) {

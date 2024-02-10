@@ -1,4 +1,5 @@
 import { Button, Warning } from '@/uikit';
+import { useTranslation } from '@/localization';
 import styles from './InsufficientFunds.module.scss';
 
 type InsufficientFundsProps = {
@@ -6,6 +7,8 @@ type InsufficientFundsProps = {
 }
 
 export function InsufficientFunds({ text }: InsufficientFundsProps) {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.wrap}>
             <div className={styles.info}>
@@ -22,7 +25,7 @@ export function InsufficientFunds({ text }: InsufficientFundsProps) {
                 to='/deposit'
                 view='primary'
             >
-                Add funds with card
+                {t('Add funds with card')}
             </Button>
         </div>
     );

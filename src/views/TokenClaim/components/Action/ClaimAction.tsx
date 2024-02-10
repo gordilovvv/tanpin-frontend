@@ -7,6 +7,7 @@ import { useClaimInfo } from './useClaimInfo';
 import { useClaimLoadingModal } from './useClaimLoadingModal';
 import { useClaimStore } from '@/states/claim/store';
 import { useLocksFetch } from '@/states/claim/hooks';
+import { useTranslation } from '@/localization';
 import { formatTokenAmountV2 } from '@/utils/formatTokenAmount';
 import { formatDate } from '@/utils/date';
 import { isTouchDevice } from '@/utils/isTouchDevice';
@@ -19,6 +20,7 @@ type ClaimActionProps = {
 }
 
 export function ClaimAction({ address }: ClaimActionProps) {
+    const { t, locale } = useTranslation();
     const locks = useClaimStore(state => state.locks);
     const { isLoading } = useLocksFetch(address);
     const { totalAmount, nextUnlock, availableUnlocks } = useClaimInfo(locks);
@@ -50,18 +52,18 @@ export function ClaimAction({ address }: ClaimActionProps) {
             <>
                 <div className={styles.values}>
                     {totalAmount && <TokenValue
-                        label='Total claimable amount:'
-                        value={formatTokenAmountV2(totalAmount, 'TANPIN')}
+                        label={t('Total claimable amount:')}
+                        value={formatTokenAmountV2(totalAmount, locale, 'TANPIN')}
                     />}
 
                     {nextUnlock && <TokenValue
-                        label='Next unlock:'
-                        value={formatDate(nextUnlock.timestamp)}
+                        label={t('Next unlock:')}
+                        value={formatDate(nextUnlock.timestamp, locale)}
                     />}
 
                     {totalAvailableAmount && <TokenValue
-                        label='Available now:'
-                        value={formatTokenAmountV2(totalAvailableAmount, 'TANPIN')}
+                        label={t('Available now:')}
+                        value={formatTokenAmountV2(totalAvailableAmount, locale, 'TANPIN')}
                     />}
                 </div>
 
@@ -74,7 +76,7 @@ export function ClaimAction({ address }: ClaimActionProps) {
                 </div>
             </>
         );
-    }, [isLoading, totalAmount, totalAvailableAmount, currentUnlock, nextUnlock, handleClaimSent]);
+    }, [isLoading, totalAmount, totalAvailableAmount, currentUnlock, nextUnlock, handleClaimSent, t]);
 
     return (
         <div className={styles.wrap}>
@@ -82,7 +84,7 @@ export function ClaimAction({ address }: ClaimActionProps) {
 
             <LoadingModal
                 isOpen={isClaimPending}
-                text={'Unlock request has been successfully submitted. Stay tuned for updates as soon as the transaction is confirmed.'}
+                text={t('Unlock request has been successfully submitted. Stay tuned for updates as soon as the transaction is confirmed.')}
             />
         </div>
     );

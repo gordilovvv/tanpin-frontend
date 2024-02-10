@@ -9,6 +9,7 @@ import { useTokenApprove } from '@/hooks/useTokenApprove';
 import { LoadingStatus, useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { activeChainId } from '@/config/chain';
+import { useTranslation } from '@/localization';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useBuyActions, useBuyState } from '@/states/buy/hooks';
 import { initialBuyStoreState } from '@/states/buy/store';
@@ -23,6 +24,7 @@ type BuyButtonProps = {
 }
 
 export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView }: BuyButtonProps) {
+    const { t } = useTranslation();
     const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
@@ -35,15 +37,15 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
     const texts = useMemo(() => {
         return {
             approve: {
-                title: 'Approve',
-                description: 'This transaction is conducted only once per asset type'
+                title: t('Approve'),
+                description: t('This transaction is conducted only once per asset type')
             },
             confirm: {
-                title: 'Purchase',
-                description: 'Send transaction to purchase asset'
+                title: t('Purchase'),
+                description: t('Send transaction to purchase asset')
             }
         };
-    }, []);
+    }, [t]);
 
     const { approve, checkApproved } = useTokenApprove({
         spender: CONTRACTS.market[activeChainId],
@@ -79,7 +81,7 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
             approveConfirmModal.close();
             pendingTransactionModal.open({
                 hash,
-                text: 'Purchase is successfully initiated. Updates will appear as soon as the transaction is confirmed.',
+                text: t('Purchase is successfully initiated. Updates will appear as soon as the transaction is confirmed.'),
                 onConfirm: refetchNFT
             });
         }
@@ -109,7 +111,7 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
                 iconSlot={buttonIcon}
                 onClick={handleOpenBuyModal}
             >
-                Buy now
+                {t('Buy now')}
             </ActionButton>
 
             <BuyModal

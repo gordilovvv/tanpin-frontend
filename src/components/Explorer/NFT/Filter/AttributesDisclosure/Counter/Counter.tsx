@@ -1,3 +1,4 @@
+import { useTranslation } from '@/localization';
 import styles from './Counter.module.scss';
 
 type CounterProps = {
@@ -6,9 +7,11 @@ type CounterProps = {
 }
 
 export function Counter({ attributesCount, selectedCount }: CounterProps) {
+    const { t } = useTranslation();
+
     if (selectedCount) {
         return <div className={styles.selected}>
-            {selectedCount} selected
+            {selectedCount} {t('selected')}
         </div>;
     }
 

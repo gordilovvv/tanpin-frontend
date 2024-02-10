@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Modal, ModalBody, ModalHead, ModalProps, ToggleButton, ToggleGroup } from '@/uikit';
+import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { NFTActionText } from '@/components/Nft';
 import { CreateDirectSale } from './DirectSale/CreateDirectSale';
 import { CreateAuction } from './Auction/CreateAuction';
+import { useTranslation } from '@/localization';
 import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
 import styles from './SellModal.module.scss';
 
@@ -17,7 +18,9 @@ type SellModalProps = {
 } & ModalProps;
 
 export function SellModal({ isOpen, availableEditions, onClose, onConfirm }: SellModalProps) {
+    const { t } = useTranslation();
     const metadata = useTokenMetadata();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [stage, setStage] = useState<ViewStage>(ViewStage.SALE);
 
     const renderStage = () => {
@@ -41,12 +44,12 @@ export function SellModal({ isOpen, availableEditions, onClose, onConfirm }: Sel
             isOpen={isOpen}
             onClose={onClose}
         >
-            <ModalHead title='List NFT' />
+            <ModalHead title={t('List NFT')} />
 
             <ModalBody>
                 <div className={styles.body}>
                     {metadata && <NFTActionText
-                        text='You are going to list'
+                        text={t('You are going to list')}
                         nftName={metadata.name}
                         collectionID={metadata.collection.ID}
                         collectionName={metadata.collection.name}
@@ -58,14 +61,14 @@ export function SellModal({ isOpen, availableEditions, onClose, onConfirm }: Sel
                             active={stage === ViewStage.SALE}
                             onClick={() => setStage(ViewStage.SALE)}
                         >
-                            Sale
+                            {t('Sale')}
                         </ToggleButton>
 
                         <ToggleButton
                             active={stage === ViewStage.AUCTION}
                             onClick={() => setStage(ViewStage.AUCTION)}
                         >
-                            Auction
+                            {t('Auction')}
                         </ToggleButton>
                     </ToggleGroup> */}
 

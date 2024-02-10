@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { EN, RU, defaultLanguage } from '@/localization';
 
 const SMALLEST = new BigNumber(1e-7);
 const NEGATIVE_ONE = new BigNumber(-1);
@@ -30,20 +31,20 @@ export function formatTokenAmount(value: string | number) {
     return integer.plus(diff.precision(2, roundDown)).times(multipliedBy).toFixed();
 }
 
-export function formatTokenAmountV2(value: string | number, currency?: string) {
-    const numberFormat = new Intl.NumberFormat('en', {
+export function formatTokenAmountV2(value: string | number, locale: string, currency?: string) {
+    const numberFormat = new Intl.NumberFormat(locale, {
         maximumFractionDigits: 20
     });
 
     return `${numberFormat.format(Number(value))} ${currency}`;
 }
 
-const shortFormatter = Intl.NumberFormat('en', {
+const shortFormatter = (locale: string) => Intl.NumberFormat(locale, {
     notation: 'compact'
 });
 
-export function formatTokenAmountShort(value: string | number) {
-    return shortFormatter.format(typeof value === 'string' ? parseFloat(value) : value);
+export function formatTokenAmountShort(value: string | number, locale: string) {
+    return shortFormatter(locale).format(typeof value === 'string' ? parseFloat(value) : value);
 }
 
 enum NumberFormat {
@@ -62,12 +63,12 @@ const numberFormats = {
 };
 
 const numberSuffixes = {
-    'en': ['K', 'M', 'B', 'T', 'Q'],
-    'ru': [' тыс', ' млн', ' млрд', ' трлн', ' квадр']
+    [EN.locale]: ['K', 'M', 'B', 'T', 'Q'],
+    [RU.locale]: [' тыс', ' млн', ' млрд', ' трлн', ' квадр']
 };
 
 function formatAmountWithSuffix(format: (amount: number) => string, value: number, locale: string, decimalPlaces = 1) {
-    const selectedSuffixes = numberSuffixes[locale] || numberSuffixes.en;
+    const selectedSuffixes = numberSuffixes[locale] || numberSuffixes[defaultLanguage.locale];
 
     for (let suffixIndex = selectedSuffixes.length - 1; suffixIndex >= 0; suffixIndex--) {
         const threshold = Math.pow(1e3, suffixIndex + 1);

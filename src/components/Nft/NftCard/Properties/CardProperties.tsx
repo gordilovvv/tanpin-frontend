@@ -2,6 +2,7 @@ import { NFTSaleStatus } from '@/states/types';
 import { AuctionTime } from '../AuctionTime/AuctionTime';
 import { Property } from './Property/Property';
 import { PropertiesList } from './List/PropertiesList';
+import { useTranslation } from '@/localization';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 
 type CardPropertiesProps = {
@@ -13,11 +14,13 @@ type CardPropertiesProps = {
 }
 
 export function CardProperties({ type, price, currency, auctionEndDate, status }: CardPropertiesProps) {
+    const { t } = useTranslation();
+
     if (price && status === NFTSaleStatus.FIXED_PRICE) {
         return (
             <PropertiesList>
                 <Property
-                    label={type === 'singleNFT' ? 'Price' : 'Price from'}
+                    label={type === 'singleNFT' ? t('Price') : t('Price from')}
                     value={<>{formatTokenAmount(price)} <span>{currency}</span></>}
                 />
             </PropertiesList>
@@ -28,12 +31,12 @@ export function CardProperties({ type, price, currency, auctionEndDate, status }
         return (
             <PropertiesList>
                 <Property
-                    label='Highest bid'
+                    label={t('Highest bid')}
                     value={<>{formatTokenAmount(price)} <span>{currency}</span></>}
                 />
 
                 <Property
-                    label='Time left'
+                    label={t('Time left')}
                     value={<AuctionTime endDate={auctionEndDate} />}
                 />
             </PropertiesList>
@@ -43,8 +46,8 @@ export function CardProperties({ type, price, currency, auctionEndDate, status }
     return (
         <PropertiesList>
             <Property
-                label='Price'
-                value='Not for sale'
+                label={t('Price')}
+                value={t('Not for sale')}
             />
         </PropertiesList>
     );

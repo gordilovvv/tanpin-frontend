@@ -1,5 +1,6 @@
 import { Button, Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { LoadingContent } from './LoadingContent';
+import { useTranslation } from '@/localization';
 import styles from './LoadingModal.module.scss';
 
 type LoadingModalProps = {
@@ -8,7 +9,8 @@ type LoadingModalProps = {
 }
 
 export function LoadingModal({ isOpen, text, onCancel }: LoadingModalProps & ModalProps) {
-    const title = <span className={styles.title}>Loading</span>;
+    const { t } = useTranslation();
+    const title = <span className={styles.title}>{t('Loading')}</span>;
 
     return (
         <Modal isOpen={isOpen}>
@@ -22,7 +24,7 @@ export function LoadingModal({ isOpen, text, onCancel }: LoadingModalProps & Mod
                         view='secondary'
                         onClick={onCancel}
                     >
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                 </div>}
             </ModalBody>

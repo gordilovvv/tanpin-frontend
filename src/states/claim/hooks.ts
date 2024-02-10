@@ -3,11 +3,13 @@ import useSWRImmutable from 'swr/immutable';
 import { mutate } from 'swr';
 import { fetchLocks } from './fetch';
 import { useClaimStore } from './store';
+import { useTranslation } from '@/localization';
 import { logError } from '@/utils/sentry';
 import { NORMAL_INTERVAL } from '@/config/constants';
 import { Address } from 'viem';
 
 export function useLocksFetch(address: Address) {
+    const { t } = useTranslation();
     const locks = useClaimStore(state => state.locks);
     const setLocks = useClaimStore(state => state.setLocks);
 
@@ -23,7 +25,7 @@ export function useLocksFetch(address: Address) {
     let formattedError: string | undefined;
 
     if (error) {
-        formattedError = 'Something went wrong while loading locks. Please try reloading the page';
+        formattedError = t('Something went wrong while loading locks. Please try reloading the page');
     }
 
     useEffect(() => {

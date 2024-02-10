@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { ConnectorNotFoundError, useAccount, useConnect, useDisconnect } from 'wagmi';
 import { SwitchChainError } from 'viem';
 import { useUserStore } from '../store';
+import { useTranslation } from '@/localization';
 import { useWalletSignature } from './useWalletSignature';
 import { loginWeb3 } from '../fetch/loginWeb3';
 import { POLICY_URL, TERMS_URL } from '@/config';
@@ -53,12 +54,16 @@ export function useAuth() {
 }
 
 export function useWalletAuthenticator() {
+    const { t } = useTranslation();
     const setUser = useUserStore(state => state.setUser);
     const { signMessage, reset, loading, error, status } = useWalletSignature();
 
     const authenticateWithServer = async () => {
         await signMessage({
-            text: `I accept the Tanpin Terms of Service ${TERMS_URL} and Privacy Policy ${POLICY_URL}.`,
+            text: t('I accept the Tanpin Terms of Service %termsUrl% and Privacy Policy %policyUrl%.', {
+                termsUrl: TERMS_URL,
+                policyUrl: POLICY_URL
+            }),
             onSignature: async ({ address, message, signature }) => {
                 const { accessToken, rulesAccept } = await loginWeb3({
                     address,

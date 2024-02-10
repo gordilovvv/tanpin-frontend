@@ -1,9 +1,12 @@
 import { Container, PageWrapper } from '@/components/Layout';
 import { Button } from '@/uikit';
 import { Sad } from './Sad';
+import { useTranslation } from '@/localization';
 import styles from './DepositRejectedView.module.scss';
 
 export function DepositRejectedView() {
+    const { t } = useTranslation();
+
     return (
         <PageWrapper>
             <Container
@@ -18,15 +21,15 @@ export function DepositRejectedView() {
                     <div className={styles.body}>
                         <div className={styles.titleWrap}>
                             <div className={styles.title}>
-                                Failed to finish your purchace
+                                {t('Failed to finish your purchase')}
                             </div>
 
                             <div className={styles.subtitle}>
-                                Try again a bit later
+                                {t('Try again a bit later')}
                             </div>
                         </div>
 
-                        <Button to="/">Go to homepage</Button>
+                        <Button to="/">{t('Go to homepage')}</Button>
                     </div>
                 </div>
             </Container>

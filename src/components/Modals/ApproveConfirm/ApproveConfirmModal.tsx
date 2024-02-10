@@ -1,5 +1,6 @@
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { ApproveConfirmBody } from './Body/ApproveConfirmBody';
+import { useTranslation } from '@/localization';
 import { ApproveConfirmState } from '@/hooks/useApproveConfirmCallbacks';
 
 type ApproveConfirmModal = {
@@ -14,12 +15,14 @@ type ApproveConfirmModal = {
 } & ModalProps;
 
 export function ApproveConfirmModal({ isOpen, state, isLoading, texts, onApprove, onConfirm, onClose }: ApproveConfirmModal) {
+    const { t } = useTranslation();
+
     return (
         <Modal
             isOpen={isOpen}
             onClose={onClose}
         >
-            <ModalHead title='Follow these steps' />
+            <ModalHead title={t('Follow these steps')} />
 
             <ModalBody>
                 <ApproveConfirmBody

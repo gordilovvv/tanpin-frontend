@@ -1,5 +1,6 @@
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import { UpdateSaleBody } from './Body/UpdateSaleBody';
+import { useTranslation } from '@/localization';
 
 type UpdateSaleModalProps = {
     currentPrice: string,
@@ -7,12 +8,14 @@ type UpdateSaleModalProps = {
 } & ModalProps;
 
 export function UpdateSaleModal({ isOpen, currentPrice, onClose, onConfirm }: UpdateSaleModalProps) {
+    const { t } = useTranslation();
+
     return (
         <Modal
             isOpen={isOpen}
             onClose={onClose}
         >
-            <ModalHead title='Change price' />
+            <ModalHead title={t('Change price')} />
 
             <ModalBody>
                 <UpdateSaleBody

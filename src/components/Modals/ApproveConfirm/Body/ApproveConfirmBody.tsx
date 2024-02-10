@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/uikit';
 import { TransactionStep } from '../Step/TransactionStep';
 import { LoadingContent } from '../../Loading/LoadingContent';
+import { useTranslation } from '@/localization';
 import { ApproveConfirmState, LoadingStatus } from '@/hooks/useApproveConfirmCallbacks';
 import styles from './ApproveConfirmBody.module.scss';
 
@@ -23,6 +24,7 @@ type ApproveConfirmBodyProps = {
 }
 
 export function ApproveConfirmBody({ state, isLoading, texts, onApprove, onConfirm, onClose }: ApproveConfirmBodyProps) {
+    const { t } = useTranslation();
     const steps = {
         [Step.APPROVE]: onApprove,
         [Step.CONFIRM]: onConfirm
@@ -78,14 +80,14 @@ export function ApproveConfirmBody({ state, isLoading, texts, onApprove, onConfi
                         view='primary'
                         onClick={retryTransaction}
                     >
-                        Try again
+                        {t('Try again')}
                     </Button>}
 
                     <Button
                         view='secondary'
                         onClick={onClose}
                     >
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                 </div>
             </div>

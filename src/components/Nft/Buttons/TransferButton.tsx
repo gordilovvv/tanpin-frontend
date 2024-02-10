@@ -12,6 +12,7 @@ import { NFTGTAAddress } from '@/config/constants/nftgta';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { ErrorMessageModal, LoadingModal } from '@/components/Modals';
 import { TransferModal } from '@/components/Modals/TransferToGame/TransferModal';
+import { useTranslation } from '@/localization';
 
 type TransferButtonProps = {
     nftID: string,
@@ -20,6 +21,7 @@ type TransferButtonProps = {
 }
 
 export function TransferButton({ nftID, tokenID, editionsAvailable }: TransferButtonProps) {
+    const { t } = useTranslation();
     const { refetchNFT } = useNFTRefetch(nftID);
     const { callContract } = useContractCall();
     const { address } = useAccount();
@@ -56,7 +58,7 @@ export function TransferButton({ nftID, tokenID, editionsAvailable }: TransferBu
             });
         } catch (error) {
             logError(error);
-            setTransactionError(walletErrorToUserReadableMessage(error));
+            setTransactionError(walletErrorToUserReadableMessage(error, t));
         } finally {
             setIsLoading(false);
         }

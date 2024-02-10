@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Address, useAccount, useSignMessage } from 'wagmi';
 import { times } from 'lodash';
+import { useTranslation } from '@/localization';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
@@ -18,6 +19,7 @@ function randomHex(size: number) {
 }
 
 export function useWalletSignature() {
+    const { t } = useTranslation();
     const { address, connector } = useAccount();
     const { signMessageAsync: signMessageWagmi, reset: resetWagmi } = useSignMessage();
     const [loading, setLoading] = useState<boolean>(false);
@@ -56,13 +58,13 @@ export function useWalletSignature() {
 
             setStatus(LoadingStatus.SUCCESS);
         } catch (error) {
-            setError(walletErrorToUserReadableMessage(error));
+            setError(walletErrorToUserReadableMessage(error, t));
             setStatus(LoadingStatus.FAIL);
             logError(error);
         } finally {
             setLoading(false);
         }
-    }, [address, connector, loading, signMessageWagmi, setStatus, setError, setLoading]);
+    }, [address, connector, loading, signMessageWagmi, setStatus, setError, setLoading, t]);
 
     const reset = useCallback(() => {
         resetWagmi();

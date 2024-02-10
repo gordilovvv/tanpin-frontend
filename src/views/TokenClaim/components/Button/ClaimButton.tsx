@@ -4,6 +4,7 @@ import { Button } from '@/uikit';
 import { ErrorMessageModal, LoadingModal } from '@/components/Modals';
 import { useContractCall, useLockerContract } from '@/hooks/useContract';
 import { useWrongNetworkModal } from '@/states/global/hooks';
+import { useTranslation } from '@/localization';
 import { activeChainId } from '@/config/chain';
 import { logError } from '@/utils/sentry';
 import { formatTokenAmountV2 } from '@/utils/formatTokenAmount';
@@ -17,6 +18,7 @@ type ClaimButtonProps = {
 }
 
 export function ClaimButton({ lockId, amount, onClaimSent }: ClaimButtonProps) {
+    const { t, locale } = useTranslation();
     const { callContract } = useContractCall();
     const lockerContract = useLockerContract();
     const [isLoading, setIsLoading] = useState(false);
@@ -47,11 +49,11 @@ export function ClaimButton({ lockId, amount, onClaimSent }: ClaimButtonProps) {
             onClaimSent(lockId);
         } catch (error) {
             logError(error);
-            setTransactionError(walletErrorToUserReadableMessage(error));
+            setTransactionError(walletErrorToUserReadableMessage(error, t));
         } finally {
             setIsLoading(false);
         }
-    }, [lockerContract, lockId, isWrongChain, setIsLoading, callContract, onClaimSent, wrongNetworkModal.open]);
+    }, [lockerContract, lockId, isWrongChain, setIsLoading, callContract, onClaimSent, wrongNetworkModal.open, t]);
 
     return (
         <>
@@ -60,7 +62,7 @@ export function ClaimButton({ lockId, amount, onClaimSent }: ClaimButtonProps) {
                 disabled={!lockId}
                 onClick={() => handleClaim()}
             >
-                {lockId && amount ? `Claim ${formatTokenAmountV2(amount, 'TANPIN')}` : 'No available unlocks'}
+                {lockId && amount ? `${t('Claim')} ${formatTokenAmountV2(amount, locale, 'TANPIN')}` : t('No available unlocks')}
             </Button>
 
             <ErrorMessageModal
@@ -71,7 +73,7 @@ export function ClaimButton({ lockId, amount, onClaimSent }: ClaimButtonProps) {
 
             <LoadingModal
                 isOpen={isLoading}
-                text={'Please confirm the transaction in your wallet to claim TANPIN tokens.'}
+                text={t('Please confirm the transaction in your wallet to claim TANPIN tokens.')}
             />
         </>
     );

@@ -9,6 +9,7 @@ import { NFT } from '@/states/types';
 import { ActivityType } from '@/states/activity/types';
 import { isSingleNFT } from '@/utils/nft';
 import { useActivityStore } from '@/states/activity/store';
+import { useTranslation } from '@/localization';
 import styles from './TokenDetails.module.scss';
 
 type TokenDetailsProps = {
@@ -16,6 +17,7 @@ type TokenDetailsProps = {
 }
 
 export function TokenDetails({ nft }: TokenDetailsProps) {
+    const { t } = useTranslation();
     const isSingle = isSingleNFT(nft);
     const historyTransactions = useActivityStore(state => state.activityList);
 
@@ -25,14 +27,14 @@ export function TokenDetails({ nft }: TokenDetailsProps) {
 
     return (
         <div className={styles.details}>
-            {isSingle && <DetailRow title='Owned by'>
+            {isSingle && <DetailRow title={t('Owned by')}>
                 <Owner
                     address={nft.owner}
                     size='s'
                 />
             </DetailRow>}
 
-            {mintTransaction && <DetailRow title='Token ID'>
+            {mintTransaction && <DetailRow title={t('Token ID')}>
                 <UnstyleLink
                     href={getTransactionExplorerURL(mintTransaction.transactionHash)}
                     rel='noreferrer noopener'
@@ -43,15 +45,15 @@ export function TokenDetails({ nft }: TokenDetailsProps) {
                 </UnstyleLink>
             </DetailRow>}
 
-            <DetailRow title='Network'>
+            <DetailRow title={t('Network')}>
                 {activeChain.name}
             </DetailRow>
 
-            <DetailRow title='Token Standard'>
+            <DetailRow title={t('Token Standard')}>
                 ERC-1155
             </DetailRow>
 
-            <DetailRow title='Contract Address'>
+            <DetailRow title={t('Contract Address')}>
                 <UnstyleLink
                     href={getAddressExplorerURL(nft.contractAddress)}
                     rel='noreferrer noopener'

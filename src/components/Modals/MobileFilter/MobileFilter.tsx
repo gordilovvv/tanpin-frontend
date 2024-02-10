@@ -3,6 +3,7 @@ import styles from './MobileFilter.module.scss';
 import { Filter } from '@/components/Explorer';
 import { Collection } from '@/states/collection/types';
 import { NFTExplorerCategory } from '@/states/explorer/types';
+import { useTranslation } from '@/localization';
 
 type MobileFilterProps = {
     explorer: `${NFTExplorerCategory}`
@@ -10,12 +11,14 @@ type MobileFilterProps = {
 } & ModalProps;
 
 export function MobileFilter({ isOpen, explorer, collection, onClose }: MobileFilterProps) {
+    const { t } = useTranslation();
+
     return (
         <Modal
             isOpen={isOpen}
             onClose={onClose}
         >
-            <ModalHead title='Filters' />
+            <ModalHead title={t('Filters')} />
 
             <ModalBody className={styles.body}>
                 <Filter

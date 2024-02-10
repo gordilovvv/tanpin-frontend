@@ -1,6 +1,7 @@
 import { CollectionLogo } from '@/components/Collections';
 import { Container } from '@/components/Layout';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/localization';
 import { Collection } from '@/states/collection/types';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import { Game } from '@/states/game/types';
@@ -12,6 +13,8 @@ type CollectionHeadProps = {
 }
 
 export function CollectionHead({ collection }: CollectionHeadProps) {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.background}>
@@ -60,7 +63,7 @@ export function CollectionHead({ collection }: CollectionHeadProps) {
                         <div className={styles.stats}>
                             <div className={styles.property}>
                                 <div className={styles.propertyLabel}>
-                                    Floor Price
+                                    {t('Floor Price')}
                                 </div>
 
                                 <div className={styles.propertyValue}>
@@ -70,7 +73,7 @@ export function CollectionHead({ collection }: CollectionHeadProps) {
 
                             <div className={styles.property}>
                                 <div className={styles.propertyLabel}>
-                                    Items
+                                    {t('Items')}
                                 </div>
 
                                 <div className={styles.propertyValue}>
@@ -81,7 +84,7 @@ export function CollectionHead({ collection }: CollectionHeadProps) {
 
                             <div className={styles.property}>
                                 <div className={styles.propertyLabel}>
-                                    Sales
+                                    {t('Sales')}
                                 </div>
 
                                 <div className={styles.propertyValue}>
@@ -92,7 +95,7 @@ export function CollectionHead({ collection }: CollectionHeadProps) {
 
                             <div className={styles.property}>
                                 <div className={styles.propertyLabel}>
-                                    Volume (7D)
+                                    {t('Volume (%days%D)', { days: 7 })}
                                 </div>
 
                                 <div className={styles.propertyValue}>

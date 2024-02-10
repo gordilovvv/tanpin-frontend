@@ -1,3 +1,4 @@
+import { useTranslation } from '@/localization';
 import { TransactionStatus as TransactionStatusEnum } from '@/hooks/useTransactionStatus';
 import classNames from 'classnames';
 import styles from './TransactionStatus.module.scss';
@@ -7,10 +8,11 @@ type TransactionStatusProps = {
 }
 
 export function TransactionStatus({ status }: TransactionStatusProps) {
+    const { t } = useTranslation();
     const statusNames: Record<TransactionStatusEnum, string> = {
-        [TransactionStatusEnum.PENDING]: 'Pending',
-        [TransactionStatusEnum.FAIL]: 'Fail',
-        [TransactionStatusEnum.SUCCESS]: 'Success'
+        [TransactionStatusEnum.PENDING]: t('Pending'),
+        [TransactionStatusEnum.FAIL]: t('Fail'),
+        [TransactionStatusEnum.SUCCESS]: t('Success')
     };
 
     return (

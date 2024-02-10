@@ -1,6 +1,7 @@
 import { Button, Reload } from '@/uikit';
 import { RefreshStatus, useMetadataRefresh } from '@/states/nft/hooks/useMetadataRefresh';
 import { ErrorMessageModal } from '@/components/Modals';
+import { useTranslation } from '@/localization';
 import classNames from 'classnames';
 import styles from './RefreshMetadataButton.module.scss';
 
@@ -9,10 +10,11 @@ type RefreshMetadataButtonProps = {
 }
 
 export function RefreshMetadataButton({ nftID }: RefreshMetadataButtonProps) {
+    const { t } = useTranslation();
     const { status, error, refreshTokenMetadata, resetState } = useMetadataRefresh(nftID);
 
     const loading = status === RefreshStatus.PENDING;
-    const text = loading ? 'Reloading...' : ' Reload metadata';
+    const text = loading ? t('Reloading...') : t('Reload metadata');
 
     return (<>
         <Button

@@ -3,9 +3,11 @@ import { Container, PageWrapper } from '@/components/Layout';
 import { UserAbout } from './components/UserAbout/UserAbout';
 import { Outlet } from 'react-router-dom';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useTranslation } from '@/localization';
 import styles from './AssetsView.module.scss';
 
 export function AssetsView() {
+    const { t } = useTranslation();
     const { address } = useAccount();
 
     return (
@@ -19,14 +21,14 @@ export function AssetsView() {
                             as='NavLink'
                             to="/assets/owned"
                         >
-                            Owned
+                            {t('Owned')}
                         </ToggleButton>
 
                         <ToggleButton
                             as='NavLink'
                             to="/assets/sale"
                         >
-                            On sale
+                            {t('On sale')}
                         </ToggleButton>
                     </ToggleGroup>
                 </div>

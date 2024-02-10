@@ -1,11 +1,13 @@
 import { ConnectWalletButton } from '@/components/Menus';
 import { ClaimAction } from './Action/ClaimAction';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useTranslation } from '@/localization';
 import claimImg from '@/app/assets/images/claim.png';
 import linesBg from '@/app/assets/images/lines-bg.svg';
 import styles from './ClaimForm.module.scss';
 
 export function ClaimForm() {
+    const { t } = useTranslation();
     const { address } = useAccount();
 
     return (
@@ -23,8 +25,8 @@ export function ClaimForm() {
                     </div>
 
                     <div className={styles.title}>
-                        TOKEN<br />
-                        CLAIM
+                        {t('TOKEN')}<br />
+                        {t('CLAIM')}
                     </div>
                 </div>
 
@@ -36,8 +38,8 @@ export function ClaimForm() {
                         </div>}
 
                     <div className={styles.note}>
-                        You will need to sign multiple blockchain transactions<br />
-                        if you have tokens available to claim in multiple vesting rounds.
+                        {t('You will need to sign multiple blockchain transactions')}<br />
+                        {t('if you have tokens available to claim in multiple vesting rounds.')}
                     </div>
                 </div>
             </div>

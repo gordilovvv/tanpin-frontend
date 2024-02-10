@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { useTranslation } from '@/localization';
 import styles from './CollectionsTable.module.scss';
 
 type CollectionsTableProps = {
@@ -6,13 +7,14 @@ type CollectionsTableProps = {
 }
 
 export function CollectionsTable({ list }: CollectionsTableProps) {
+    const { t } = useTranslation();
     const headColumns = [
         '#',
-        'Collections',
-        'Floor Price',
-        'Items',
-        'Sales',
-        'Volume (7D)',
+        t('Collections'),
+        t('Floor Price'),
+        t('Items'),
+        t('Sales'),
+        t('Volume (%days%D)', { days: 7 }),
         // '1D Change',
     ];
 

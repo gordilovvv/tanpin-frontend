@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
+import { useTranslation } from '@/localization';
 import { useCreateDirectSaleStore } from '../store';
+import { editionsSuffix, pluralize } from '@/utils/pluralize';
 import BigNumber from 'bignumber.js';
 
 export function useCreateDirectSaleActions() {
@@ -15,6 +17,7 @@ export function useCreateDirectSaleActions() {
 }
 
 export function useCreateDirectSaleInfo(editionsAvailable?: number) {
+    const { t, locale } = useTranslation();
     const [amount, price, currency] = useCreateDirectSaleStore(state => [
         state.amount,
         state.price,
@@ -33,28 +36,33 @@ export function useCreateDirectSaleInfo(editionsAvailable?: number) {
 
     if (editionsAvailable) {
         if (!parsedValues.amount) {
-            amountError = 'Enter amount';
+            amountError = t('Enter amount');
         }
 
         if (parsedValues.amount && parsedValues.amount.isLessThanOrEqualTo(0)) {
-            amountError = 'Enter amount';
+            amountError = t('Enter amount');
         }
 
         if (parsedValues.amount && parsedValues.amount.isGreaterThan(editionsAvailable)) {
-            amountError = `Available for sale are ${editionsAvailable} copies`;
+            amountError = t('Available for sale are %amount%', {
+                amount: `${editionsAvailable} ${pluralize(editionsAvailable, locale, editionsSuffix)}`
+            });
         }
 
         if (parsedValues.amount && !parsedValues.amount.isInteger()) {
-            amountError = 'Enter whole number';
+            amountError = t('Enter whole number');
         }
     }
 
     if (!parsedValues.price) {
-        priceError = 'Enter price';
+        priceError = t('Enter price');
     }
 
     if (parsedValues.price && parsedValues.price.isLessThan(0.01)) {
-        priceError = 'Price is less than 0.01 USDT'; // TODO: dynamic currency
+        priceError = t('Price is less than %num% %currency%', {
+            num: 0.01,
+            currency: 'USDT'
+        });
     }
 
     return {

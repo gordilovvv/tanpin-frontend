@@ -2,8 +2,11 @@ import { Button, FeaturedGame } from '@/uikit';
 import heroCards from '@/app/assets/images/hero-cards.png';
 import styles from './NFTGTA.module.scss';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/localization';
 
 export function NFTGTA() {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.wrap}>
             <div className={styles.label}>
@@ -12,7 +15,7 @@ export function NFTGTA() {
                 </div>
 
                 <div className={styles.labelText}>
-                    Featured Game
+                    {t('Featured Game')}
                 </div>
             </div>
 
@@ -34,7 +37,7 @@ export function NFTGTA() {
                 </div>
 
                 <Button to='/collections'>
-                    View collections
+                    {t('View collections')}
                 </Button>
             </div>
         </div>

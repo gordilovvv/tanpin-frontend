@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { CollectionLogo } from '..';
 import { Collection } from '@/states/collection/types';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
+import { useTranslation } from '@/localization';
 import styles from './CollectionPreview.module.scss';
 import classNames from 'classnames';
 
@@ -10,6 +11,8 @@ type CollectionPreviewProps = {
 };
 
 export const CollectionPreview = ({ collection }: CollectionPreviewProps) => {
+    const { t } = useTranslation();
+
     if (!collection) {
         return (
             <div className={classNames(styles.wrap, styles.loader)}></div>
@@ -17,6 +20,7 @@ export const CollectionPreview = ({ collection }: CollectionPreviewProps) => {
     }
 
     const { name, logoURL, stats } = collection;
+
     return (
         <Link
             to='/'
@@ -34,7 +38,7 @@ export const CollectionPreview = ({ collection }: CollectionPreviewProps) => {
                 <div className={styles.stats}>
                     <div className={styles.item}>
                         <div className={styles.itemLabel}>
-                            Floor price
+                            {t('Floor price')}
                         </div>
 
                         <div className={styles.itemValue}>
@@ -44,7 +48,7 @@ export const CollectionPreview = ({ collection }: CollectionPreviewProps) => {
 
                     <div className={styles.item}>
                         <div className={styles.itemLabel}>
-                            Volume (1D)
+                            {t('Floor price')}
                         </div>
 
                         <div className={styles.itemValue}>

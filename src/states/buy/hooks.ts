@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { useBuyStore } from './store';
+import { useTranslation } from '@/localization';
 import { useTokenBalance } from '@/hooks/useTokenBalance';
 import { activeChainId } from '@/config/chain';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { tryToParseAmount } from '@/utils/tryToParseAmount';
+import { editionsSuffix, pluralize } from '@/utils/pluralize';
 
 export function useBuyState() {
     const [typedAmount, totalPrice] = useBuyStore(state => [
@@ -38,6 +40,7 @@ export function useBuyDirectSaleInfo(
     typedAmount: string,
     availableAmount: number
 ) {
+    const { t, locale } = useTranslation();
     const { amount: tokenBalance, isLoading } = useTokenBalance(
         CONTRACTS.usdt[activeChainId].address,
         CONTRACTS.usdt[activeChainId].decimals
@@ -59,15 +62,17 @@ export function useBuyDirectSaleInfo(
     let balanceError: boolean | undefined;
 
     if (!parsedAmount) {
-        amountError = 'Enter amount';
+        amountError = t('Enter amount');
     }
 
     if (parsedAmount && parsedAmount <= 0) {
-        amountError = 'Enter amount';
+        amountError = t('Enter amount');
     }
 
     if (parsedAmount && parsedAmount > availableAmount) {
-        amountError = `Available for buy are ${availableAmount} copies`;
+        amountError = t('Available for buy are %amount%', {
+            amount: `${availableAmount} ${pluralize(availableAmount, locale, editionsSuffix)}`
+        });
     }
 
     if (!isOutOfStock) {

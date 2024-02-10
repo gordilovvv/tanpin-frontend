@@ -1,6 +1,7 @@
 import { Button, SvgProps, Title } from '@/uikit';
 import { Container } from '@/components/Layout';
 import { HeroCarousel } from './Carousel/HeroCarousel';
+import { useTranslation } from '@/localization';
 import styles from './HeroBlock.module.scss';
 
 const ArrowDown = (props: SvgProps) => {
@@ -23,6 +24,8 @@ const ArrowDown = (props: SvgProps) => {
 };
 
 export function HeroBlock() {
+    const { t } = useTranslation();
+
     return (
         <div className={styles.wrap}>
             <Container space>
@@ -43,13 +46,12 @@ export function HeroBlock() {
                     <div className={styles.main}>
                         <div className={styles.info}>
                             <Title className={styles.title}>
-                                Discover, Buy and Sell<br />
-                                <span>Unique Gaming NFTs</span>
+                                {t('Discover, Buy and Sell')}<br />
+                                <span>{t('Unique Gaming NFTs')}</span>
                             </Title>
 
                             <div className={styles.text}>
-                                Tanpin is the new generation marketplace,
-                                bridging off-chain games with Web 3.0
+                                {t('Tanpin is the new generation marketplace, bridging off-chain games with Web 3.0')}
                             </div>
                         </div>
 
@@ -58,7 +60,7 @@ export function HeroBlock() {
                             view="secondary"
                             iconSlot={<ArrowDown />}
                         >
-                            Start Exploring
+                            {t('Start Exploring')}
                         </Button>
                     </div>
 
