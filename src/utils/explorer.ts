@@ -4,6 +4,10 @@ export function getAddressExplorerURL(address: string): string {
     return EXPLORER_URL[activeChainId].address.replace('{ADDRESS}', address);
 }
 
+export function getTokenExplorerURL(address: string): string {
+    return EXPLORER_URL[activeChainId].token.replace('{ADDRESS}', address);
+}
+
 export function getTransactionExplorerURL(transactionHash: string): string {
     return EXPLORER_URL[activeChainId].transaction.replace('{TX_HASH}', transactionHash);
 }

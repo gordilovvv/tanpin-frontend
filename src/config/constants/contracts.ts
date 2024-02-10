@@ -12,6 +12,16 @@ export const CONTRACTS = {
             decimals: 6
         }
     },
+    tanpin: {
+        [polygon.id]: {
+            address: '0xd9D77B113e6Ef2696267E20C35f3AbD87cdaca2c' as Address,
+            decimals: 18
+        },
+        [polygonMumbai.id]: {
+            address: '0x' as Address, // Not deployed
+            decimals: 18
+        }
+    },
     market: {
         [polygon.id]: '0x6b4AD3bEB045a3ed412C47611c9C18AA6ae0405d' as Address,
         [polygonMumbai.id]: '0x5e687642685E3c221364C570e6c4a84A66907ECe' as Address
@@ -22,10 +32,6 @@ export const CONTRACTS = {
     },
     locker: {
         [polygon.id]: '0x76633f10d2BEA5684794a6c85A26C513069b9738' as Address,
-        [polygonMumbai.id]: '0x' as Address // Not deployed
-    },
-    tanpinToken: {
-        [polygon.id]: '0xd9D77B113e6Ef2696267E20C35f3AbD87cdaca2c' as Address,
         [polygonMumbai.id]: '0x' as Address // Not deployed
     }
 };

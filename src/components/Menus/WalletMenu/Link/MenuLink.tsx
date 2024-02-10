@@ -5,7 +5,7 @@ import styles from './MenuLink.module.scss';
 
 type MenuLinkProps = {
     to?: string,
-    text: string,
+    text: ReactNode | string,
     iconSlot: ReactNode,
     onClick?: () => void
 }

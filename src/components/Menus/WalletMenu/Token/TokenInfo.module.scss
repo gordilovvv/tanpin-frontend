@@ -7,8 +7,8 @@
 
 .img {
     display: flex;
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     background-size: cover;
     background-position: 50%;
     background-repeat: no-repeat;
@@ -33,11 +33,6 @@
 @include max767 {
     .token {
         gap: 8px;
-    }
-
-    .img {
-        width: 20px;
-        height: 20px;
     }
 
     .amount {

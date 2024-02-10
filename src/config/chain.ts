@@ -22,13 +22,16 @@ export const PUBLIC_NODES = {
 export const EXPLORER_URL = {
     [polygon.id]: {
         address: 'https://polygonscan.com/address/{ADDRESS}',
+        token: 'https://polygonscan.com/token/{ADDRESS}',
         transaction: 'https://polygonscan.com/tx/{TX_HASH}'
     },
     [polygonMumbai.id]: {
         address: 'https://mumbai.polygonscan.com/address/{ADDRESS}',
+        token: 'https://mumbai.polygonscan.com/token/{ADDRESS}',
         transaction: 'https://mumbai.polygonscan.com/tx/{TX_HASH}'
     },
 } as Record<number, {
     address: string
+    token: string
     transaction: string
 }>;

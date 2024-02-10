@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Button, Close, InjectedWallet, Logout, UnstyleButton } from '@/uikit';
+import { Button, Close, InjectedWallet, Logout, UnstyleButton, UnstyleLink } from '@/uikit';
 import { ErrorMessageModal } from '@/components/Modals';
 import { MenuLink } from './Link/MenuLink';
 import { TokenInfo } from './Token/TokenInfo';
@@ -12,8 +12,10 @@ import { Address } from 'wagmi';
 import { walletMenuLinks } from '../config';
 import { activeChain, activeChainId } from '@/config/chain';
 import { ellipseAddress } from '@/utils/addressHelper';
+import { getAddressExplorerURL } from '@/utils/explorer';
 import { CONTRACTS } from '@/config/constants/contracts';
 import { logError } from '@/utils/sentry';
+import tanpinCoinLogo from '@/app/assets/images/tanpin-coin.png';
 import maticLogo from '@/app/assets/images/matic.png';
 import usdtLogo from '@/app/assets/images/usdt.png';
 import styles from './WalletMenu.module.scss';
@@ -30,6 +32,10 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
     const [isDisconnecting, setIsDisconnecting] = useState(false);
     const [disconnectError, setDisconnectError] = useState<string | undefined>();
 
+    const tanpinBalance = useTokenBalance(
+        CONTRACTS.tanpin[activeChainId].address,
+        CONTRACTS.tanpin[activeChainId].decimals
+    );
     const usdtBalance = useTokenBalance(
         CONTRACTS.usdt[activeChainId].address,
         CONTRACTS.usdt[activeChainId].decimals
@@ -63,7 +69,13 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                     </div>
 
                     <div className={styles.headAddress}>
-                        {ellipseAddress(address)}
+                        <UnstyleLink
+                            href={getAddressExplorerURL(address)}
+                            target='_blank'
+                            rel='noreferrer noopener'
+                        >
+                            {ellipseAddress(address)}
+                        </UnstyleLink>
                     </div>
                 </div>
 
@@ -82,6 +94,13 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                         balance={maticBalance.amount}
                         loading={maticBalance.isLoading}
                         symbol='MATIC'
+                    />
+
+                    <TokenInfo
+                        image={tanpinCoinLogo}
+                        balance={tanpinBalance.amount}
+                        loading={tanpinBalance.isLoading}
+                        symbol='TANPIN'
                     />
 
                     <TokenInfo
