@@ -23,7 +23,6 @@
 
 .icon {
     display: flex;
-    margin-right: 12px;
 
     svg {
         width: 20px;
@@ -38,6 +37,7 @@
     line-height: 1.5;
     letter-spacing: -0.01em;
     white-space: nowrap;
+    margin-left: 12px;
 }
 
 @include max767 {
@@ -46,8 +46,6 @@
     }
 
     .icon {
-        margin-right: 8px;
-
         svg {
             width: 18px;
             height: 18px;
@@ -56,5 +54,6 @@
 
     .address {
         font-size: 14px;
+        margin-left: 8px;
     }
 }

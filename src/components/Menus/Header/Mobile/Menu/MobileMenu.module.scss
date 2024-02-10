@@ -30,6 +30,12 @@
     }
 }
 
+.bottom {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 8px;
+}
+
 .socials {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

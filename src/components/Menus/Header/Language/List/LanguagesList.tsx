@@ -14,16 +14,16 @@ export function LanguagesList({ onChange }: LanguagesListProps) {
                 className={styles.button}
                 onClick={() => onChange(locale)}
             >
-                <span className={styles.buttonIcon}>
+                <div className={styles.buttonIcon}>
                     <img
                         src={image}
                         alt={locale}
                     />
-                </span>
+                </div>
 
-                <span className={styles.buttonText}>
+                <div className={styles.buttonText}>
                     {language}
-                </span>
+                </div>
             </UnstyleButton>)}
         </div>
     );

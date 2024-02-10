@@ -1,55 +1,28 @@
-import { PopoverButton, PopoverState, SvgProps, UnstyleButton } from '@/uikit';
-import { useAccount } from '@/states/user/hooks/useAccount';
+import { InjectedWallet, PopoverButton, PopoverState, UnstyleButton } from '@/uikit';
 import { ellipseAddress } from '@/utils/addressHelper';
+import { Address } from 'viem';
 import classNames from 'classnames';
 import styles from './WalletButton.module.scss';
 
-const WalletIcon = (props: SvgProps) => {
-    return (
-        <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
-            <path
-                d="M8.66667 9.75001C8.96133 9.75001 9.244 9.86856 9.45233 10.0795C9.66075 10.2905 9.77775 10.5766 9.77775 10.875C9.77775 11.4718 10.0119 12.0441 10.4287 12.466C10.8454 12.8879 11.4107 13.125 12 13.125C12.5893 13.125 13.1546 12.8879 13.5713 12.466C13.9881 12.0441 14.2223 11.4718 14.2223 10.875C14.2223 10.5766 14.3392 10.2905 14.5477 10.0795C14.756 9.86856 15.0387 9.75001 15.3333 9.75001H19.5C19.8283 9.75001 20.1534 9.81549 20.4567 9.94272C20.76 10.0699 21.0356 10.2563 21.2677 10.4914C21.4999 10.7265 21.6841 11.0055 21.8097 11.3126C21.9353 11.6197 22 11.9488 22 12.2813V18.4687C22 18.8012 21.9353 19.1303 21.8097 19.4375C21.6841 19.7446 21.4999 20.0236 21.2677 20.2587C21.0356 20.4937 20.76 20.6801 20.4567 20.8074C20.1534 20.9345 19.8283 21 19.5 21H4.5C3.83696 21 3.20108 20.7334 2.73223 20.2587C2.26339 19.7839 2 19.1401 2 18.4687V12.2813C2 11.61 2.26339 10.9661 2.73223 10.4914C3.20108 10.0167 3.83696 9.75001 4.5 9.75001H8.66667Z"
-                fill="#3CE361"
-            />
-
-            <path
-                d="M4.5 4.6875C3.59823 4.68612 2.72059 4.98233 2 5.53125C2 4.85992 2.26339 4.21609 2.73223 3.74139C3.20108 3.26668 3.83696 3 4.5 3H19.5C19.8283 3 20.1534 3.06548 20.4567 3.19268C20.76 3.31989 21.0356 3.50634 21.2677 3.74139C21.4999 3.97644 21.6841 4.25548 21.8097 4.56259C21.9353 4.86969 22 5.19884 22 5.53125C21.3033 5.00138 20.4377 4.6875 19.5 4.6875H4.5Z"
-                fill="white"
-            />
-
-            <path
-                d="M4.5 8.06251C3.59823 8.06116 2.72059 8.35731 2 8.90626C2 8.23497 2.26339 7.5911 2.73223 7.11639C3.20108 6.64169 3.83696 6.37501 4.5 6.37501H19.5C19.8283 6.37501 20.1534 6.44048 20.4567 6.56768C20.76 6.6949 21.0356 6.88134 21.2677 7.11639C21.4999 7.35148 21.6841 7.63051 21.8097 7.93755C21.9353 8.24467 22 8.57382 22 8.90626C21.3033 8.37638 20.4377 8.06251 19.5 8.06251H4.5Z"
-                fill="white"
-            />
-        </svg>
-    );
-};
-
 type WalletButtonProps = {
+    address?: Address,
+    active?: boolean,
     popoverState?: PopoverState,
     onClick?: () => void
 }
 
-export function WalletButton({ popoverState, onClick }: WalletButtonProps) {
-    const { address } = useAccount();
+export function WalletButton({ address, active, popoverState, onClick }: WalletButtonProps) {
     const isPopoverOpened = popoverState?.useState('open');
 
     const content = (
         <>
             <div className={styles.icon}>
-                <WalletIcon />
+                <InjectedWallet />
             </div>
 
-            <div className={styles.address}>
-                {ellipseAddress(address!)}
-            </div>
+            {address && <div className={styles.address}>
+                {ellipseAddress(address)}
+            </div>}
         </>
     );
 
@@ -58,7 +31,7 @@ export function WalletButton({ popoverState, onClick }: WalletButtonProps) {
             <PopoverButton
                 state={popoverState}
                 className={classNames(styles.button, {
-                    [styles.active]: isPopoverOpened
+                    [styles.active]: isPopoverOpened || active
                 })}
             >
                 {content}
@@ -67,7 +40,9 @@ export function WalletButton({ popoverState, onClick }: WalletButtonProps) {
     } else {
         return (
             <UnstyleButton
-                className={styles.button}
+                className={classNames(styles.button, {
+                    [styles.active]: active
+                })}
                 onClick={onClick}
             >
                 {content}

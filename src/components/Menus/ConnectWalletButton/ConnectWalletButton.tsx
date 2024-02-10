@@ -9,9 +9,11 @@ import { useAuth } from '@/states/user/hooks/useAuth';
 import { useTranslation } from '@/localization';
 import { useOpenedState } from '@/hooks/useOpenedState';
 
-type ConnectWalletButtonProps = Omit<ButtonProps<'button'>, 'onClick'>;
+type ConnectWalletButtonProps = Omit<ButtonProps<'button'>, 'onClick'> & {
+    text?: string
+};
 
-export function ConnectWalletButton(props: ConnectWalletButtonProps) {
+export function ConnectWalletButton({ text, ...props }: ConnectWalletButtonProps) {
     const { t } = useTranslation();
     const { login } = useAuth();
     const { isConnected } = useAccount();
@@ -41,7 +43,7 @@ export function ConnectWalletButton(props: ConnectWalletButtonProps) {
                 {...props}
                 onClick={connectPopupState.open}
             >
-                {t('Connect wallet')}
+                {text ?? t('Connect wallet')}
             </Button>
 
             <ConnectWalletModal

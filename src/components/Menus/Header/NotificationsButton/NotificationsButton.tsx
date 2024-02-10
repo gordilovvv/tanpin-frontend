@@ -13,7 +13,7 @@ export function NotificationsButton({ className, ...props }: HTMLAttributes<HTML
             {...props}
         >
             <Link
-                to={'./activity'}
+                to='/activity'
                 className={styles.wrapper}
             >
                 <div className={styles.inner}>

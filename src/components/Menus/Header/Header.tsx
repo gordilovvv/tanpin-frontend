@@ -7,11 +7,13 @@ import { MobileButton } from './MobileButton/MobileButton';
 import { Burger } from './MobileButton/Svg/Burger';
 import { Close } from './MobileButton/Svg/Close';
 import { Search } from './MobileButton/Svg/Search';
+import { MobileWallet } from './Mobile/Wallet/MobileWallet';
 import { MobileSearch } from './Mobile/Search/MobileSearch';
 import { MobileDrawer } from './Mobile/MobileDrawer';
 import { HeaderWallet } from './Wallet/HeaderWallet';
 import { HeaderSearch } from './Search/HeaderSearch';
 import { NotificationsButton } from './NotificationsButton/NotificationsButton';
+import { MobileWalletButton } from '../WalletButton/MobileWalletButton';
 import { LanguageButton } from './Language/LanguageButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useOpenedState } from '@/hooks/useOpenedState';
@@ -22,6 +24,7 @@ export function Header() {
     const { isConnected, address } = useAccount();
     const mobileMenuState = useOpenedState();
     const mobileSearchState = useOpenedState();
+    const mobileWalletState = useOpenedState();
 
     return (
         <div className={styles.header}>
@@ -34,6 +37,14 @@ export function Header() {
                         >
                             <Logo />
                         </Link>
+
+                        <MobileButton
+                            active={mobileSearchState.isOpen}
+                            defaultIcon={<Search />}
+                            activeIcon={<Close />}
+                            className={styles.mobileButton}
+                            onClick={mobileSearchState.toggle}
+                        />
 
                         <HeaderSearch />
 
@@ -62,25 +73,20 @@ export function Header() {
                             isConnected={isConnected}
                         />
 
-                        <div className={styles.mobileStack}>
-                            <MobileButton
-                                active={mobileSearchState.isOpen}
-                                defaultIcon={<Search />}
-                                activeIcon={<Close />}
-                                className={styles.mobileButton}
-                                onClick={mobileSearchState.toggle}
-                            />
+                        <MobileWalletButton
+                            active={mobileWalletState.isOpen}
+                            isConnected={isConnected}
+                            onOpenWallet={mobileWalletState.toggle}
+                            className={styles.mobileButton}
+                        />
 
-                            {isConnected && <NotificationsButton className={styles.mobileNotification} />}
-
-                            <MobileButton
-                                active={mobileMenuState.isOpen}
-                                defaultIcon={<Burger />}
-                                activeIcon={<Close />}
-                                className={styles.mobileButton}
-                                onClick={mobileMenuState.toggle}
-                            />
-                        </div>
+                        <MobileButton
+                            active={mobileMenuState.isOpen}
+                            defaultIcon={<Burger />}
+                            activeIcon={<Close />}
+                            className={styles.mobileButton}
+                            onClick={mobileMenuState.toggle}
+                        />
                     </div>
                 </div>
 
@@ -91,16 +97,19 @@ export function Header() {
                     <MobileSearch />
                 </MobileDrawer>
 
-
                 <MobileDrawer
                     isOpen={mobileMenuState.isOpen}
                     close={mobileMenuState.close}
                 >
-                    <MobileMenu
-                        address={address}
-                        isConnected={isConnected}
-                    />
+                    <MobileMenu />
                 </MobileDrawer>
+
+                {address && <MobileDrawer
+                    isOpen={mobileWalletState.isOpen}
+                    close={mobileWalletState.close}
+                >
+                    <MobileWallet address={address} />
+                </MobileDrawer>}
             </Container>
         </div>
     );

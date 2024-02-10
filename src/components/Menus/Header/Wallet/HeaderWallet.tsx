@@ -47,7 +47,10 @@ export function HeaderWallet({ address, isConnected }: HeaderWalletProps) {
     return (
         <div className={styles.wallet}>
             {isConnected
-                ? <WalletButton popoverState={walletPopoverState} />
+                ? <WalletButton
+                    address={address}
+                    popoverState={walletPopoverState}
+                />
                 : <ConnectWalletButton />}
 
             {address && <PopoverMenu

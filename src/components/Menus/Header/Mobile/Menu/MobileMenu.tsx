@@ -1,57 +1,60 @@
-import { Address } from 'viem';
-import { Button } from '@/uikit';
-import { useOpenedState } from '@/hooks/useOpenedState';
-import { WalletMenu } from '@/components/Menus/WalletMenu/WalletMenu';
-import { WalletButton } from '@/components/Menus/WalletButton/WalletButton';
-import { ConnectWalletButton } from '@/components/Menus/ConnectWalletButton/ConnectWalletButton';
+import { useCallback, useMemo } from 'react';
+import { Button, Select } from '@/uikit';
 import { NavLink } from 'react-router-dom';
 import { headerAdditionalLinks, headerLinks } from '@/components/Menus/config';
 import { socialsList } from '@/config/constants/socials';
+import { languageList, savePreferredLanguage, useTranslation } from '@/localization';
 import classNames from 'classnames';
 import styles from './MobileMenu.module.scss';
 
-type MobileMenuProps = {
-    address?: Address,
-    isConnected: boolean
-}
+export function MobileMenu() {
+    const { t, i18n } = useTranslation();
 
-export function MobileMenu({ address, isConnected }: MobileMenuProps) {
-    const walletMenuState = useOpenedState();
+    const languages = useMemo(() => {
+        return languageList.map(({ language, locale }) => {
+            return {
+                value: locale,
+                label: language
+            };
+        });
+    }, []);
 
-    if (walletMenuState.isOpen && address) {
-        return (
-            <WalletMenu
-                address={address}
-                onClose={walletMenuState.close}
-            />
-        );
-    } else {
-        return (
-            <div className={styles.wrap}>
-                {isConnected
-                    ? <WalletButton onClick={walletMenuState.open} />
-                    : <ConnectWalletButton />}
+    const changeLanguage = useCallback((locale: string) => {
+        savePreferredLanguage(locale);
+        window.location.reload();
+    }, []);
 
-                <div className={styles.menu}>
-                    {headerLinks.map(link => <NavLink
-                        key={link.to}
-                        to={link.to}
-                        className={styles.menuLink}
-                    >
-                        {link.text}
-                    </NavLink>)}
+    return (
+        <div className={styles.wrap}>
+            <div className={styles.menu}>
+                {headerLinks.map(link => <NavLink
+                    key={link.to}
+                    to={link.to}
+                    className={styles.menuLink}
+                >
+                    {link.text}
+                </NavLink>)}
 
-                    {headerAdditionalLinks.map(link => <NavLink
-                        key={link.to}
-                        to={link.to}
-                        className={classNames(styles.menuLink, {
-                            [styles.menuLinkGradient]: link.gradient
-                        })}
-                    >
-                        {link.text}
-                    </NavLink>)}
-                </div>
+                {headerAdditionalLinks.map(link => <NavLink
+                    key={link.to}
+                    to={link.to}
+                    className={classNames(styles.menuLink, {
+                        [styles.menuLinkGradient]: link.gradient
+                    })}
+                >
+                    {link.text}
+                </NavLink>)}
 
+                <NavLink
+                    to='/activity'
+                    className={styles.menuLink}
+                >
+                    {t('Notifications')}
+                    {/* TODO: {notificationsCount > 0 && <div className={styles.circle} />} */}
+                </NavLink>
+            </div>
+
+            <div className={styles.bottom}>
                 <div className={styles.socials}>
                     {socialsList.map(social => <Button
                         key={social.name}
@@ -63,7 +66,13 @@ export function MobileMenu({ address, isConnected }: MobileMenuProps) {
                         iconSlot={<social.icon />}
                     />)}
                 </div>
+
+                <Select
+                    options={languages}
+                    selectedValue={i18n.language}
+                    onChange={changeLanguage}
+                />
             </div>
-        );
-    }
+        </div>
+    );
 }

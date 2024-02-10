@@ -14,6 +14,11 @@
 
     &Logo {
         display: flex;
+
+        svg {
+            width: 32px;
+            height: 32px;
+        }
     }
 
     &Content {
