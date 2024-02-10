@@ -12,6 +12,7 @@ import { MobileDrawer } from './Mobile/MobileDrawer';
 import { HeaderWallet } from './Wallet/HeaderWallet';
 import { HeaderSearch } from './Search/HeaderSearch';
 import { NotificationsButton } from './NotificationsButton/NotificationsButton';
+import { LanguageButton } from './Language/LanguageButton';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { headerAdditionalLinks, headerLinks } from '../config';
@@ -53,6 +54,8 @@ export function Header() {
                         </div>
 
                         {isConnected && <NotificationsButton className={styles.desktopNotification} />}
+
+                        <LanguageButton className={styles.desktopLanguage} />
 
                         <HeaderWallet
                             address={address}

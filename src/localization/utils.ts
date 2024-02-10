@@ -32,6 +32,10 @@ export function getPreferredLanguage() {
     }
 }
 
+export function savePreferredLanguage(locale: string) {
+    localStorage.setItem(LANGUAGE_LS_KEY, locale);
+}
+
 const includesVariableRegex = new RegExp(/%\S+?%/, 'gm');
 
 export const translatedTextIncludesVariable = memoize((translatedText: string): boolean => {

@@ -1,0 +1,53 @@
+.wrapper {
+    position: relative;
+}
+
+.button {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-typo-ghost);
+    transition: color 0.15s linear;
+
+    @include hover {
+        color: var(--color-typo-base);
+    }
+
+    &.active {
+        color: var(--color-typo-base);
+    }
+}
+
+.popover {
+    transform-origin: top right;
+
+    &:global(.appear) {
+        animation: popoverAppear 0.1s linear forwards;
+    }
+
+    &:global(.disappear) {
+        animation: popoverDisappear 0.1s linear forwards;
+    }
+}
+
+@keyframes popoverAppear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popoverDisappear {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

@@ -1,0 +1,44 @@
+.list {
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(0, auto);
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px;
+    user-select: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    &Icon {
+        display: flex;
+        margin-right: 10px;
+
+        img {
+            width: 16px;
+        }
+    }
+
+    &Text {
+        color: var(--color-typo-base);
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+    }
+
+    &+.button {
+        border-top: 1px solid var(--color-stroke);
+    }
+
+    @include hover {
+        background-color: var(--color-surface);
+    }
+
+    &:focus {
+        background-color: var(--color-surface);
+    }
+}

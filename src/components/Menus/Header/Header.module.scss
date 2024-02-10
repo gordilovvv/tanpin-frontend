@@ -47,14 +47,26 @@
     display: none;
 }
 
+.desktopNotification,
+.desktopLanguage {
+    padding: 0 3px;
+}
+
 @include max1000 {
     .stack {
         column-gap: 16px;
     }
+
+    .desktopNotification,
+    .desktopLanguage {
+        padding: 0;
+    }
 }
 
 @include max767 {
-    .desktopNotification {
+
+    .desktopNotification,
+    .desktopLanguage {
         display: none;
     }
 

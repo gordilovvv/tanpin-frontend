@@ -3,3 +3,5 @@ export * from './types';
 
 export { Trans } from './Trans';
 export { useTranslation } from './useTranslation';
+
+export { getPreferredLanguage, savePreferredLanguage } from './utils';

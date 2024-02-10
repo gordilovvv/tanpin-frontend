@@ -9,7 +9,8 @@ type PopoverProps = {
     width?: number
     gutter?: number,
     sameWidth?: boolean,
-    maxHeight?: number
+    maxHeight?: number,
+    overflow?: CSSProperties['overflow'],
     className?: string
     animate?: MotionProps['animate']
     transition?: MotionProps['transition']
@@ -20,13 +21,13 @@ type PopoverProps = {
 }
 
 export const PopoverMenu = forwardRef<HTMLDivElement, PropsWithChildren<PopoverProps>>(
-    ({ state, width, gutter, sameWidth, maxHeight, className, children, ...animProps }, ref) => {
+    ({ state, width, gutter, sameWidth, maxHeight, overflow, className, children, ...animProps }, ref) => {
         const mounted = state.useState('mounted');
 
         const style: CSSProperties = {
             width: width && `${width}px`,
             maxHeight: maxHeight && `${maxHeight}px`,
-            overflow: maxHeight ? 'auto' : undefined
+            overflow: overflow || maxHeight ? 'auto' : undefined
         };
 
         if (animProps.variants) {
