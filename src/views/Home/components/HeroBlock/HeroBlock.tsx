@@ -1,4 +1,4 @@
-import { Button, SvgProps, Title } from '@/uikit';
+import { Button, SvgProps } from '@/uikit';
 import { Container } from '@/components/Layout';
 import { HeroCarousel } from './Carousel/HeroCarousel';
 import { useTranslation } from '@/localization';
@@ -45,10 +45,10 @@ export function HeroBlock() {
 
                     <div className={styles.main}>
                         <div className={styles.info}>
-                            <Title className={styles.title}>
+                            <h1 className={styles.title}>
                                 {t('Discover, Buy and Sell')}<br />
                                 <span>{t('Unique Gaming NFTs')}</span>
-                            </Title>
+                            </h1>
 
                             <div className={styles.text}>
                                 {t('Tanpin is the new generation marketplace, bridging off-chain games with Web 3.0')}

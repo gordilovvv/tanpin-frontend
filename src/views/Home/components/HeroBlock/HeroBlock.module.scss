@@ -76,8 +76,33 @@
 }
 
 .title {
+    font-family: var(--font-title);
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+
     span {
         color: var(--color-primary);
+    }
+
+    @include max1400 {
+        font-size: 44px;
+    }
+
+    @include max1200 {
+        font-size: 40px;
+    }
+
+    @include max1000 {
+        font-size: 36px;
+    }
+
+    @include max767 {
+        font-size: 26px;
+        line-height: 1.4;
     }
 }
 
