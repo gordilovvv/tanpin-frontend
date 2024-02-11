@@ -3,9 +3,11 @@ import { router } from './app/routing';
 import { WagmiConfig } from 'wagmi';
 import { wagmiConfig } from './config/wagmi';
 import { ToastProvider } from './uikit';
-import { useResourceBundleLoader } from './localization/language';
+import { useYandexMetrika } from './app/useYandexMetrika';
+import { useResourceBundleLoader } from './localization';
 
 function App() {
+    useYandexMetrika();
     const { isLoading } = useResourceBundleLoader();
 
     return (
