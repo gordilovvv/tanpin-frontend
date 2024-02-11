@@ -2,6 +2,7 @@ import { Skeleton } from '@/uikit';
 import { CollectionLogo } from '@/components/Collections';
 import { Collection } from '@/states/collection/types';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '@/localization';
 import { isTouchDevice } from '@/utils/isTouchDevice';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import classNames from 'classnames';
@@ -13,6 +14,7 @@ type CollectionRowProps = {
 };
 
 export function CollectionRow({ collection, index }: CollectionRowProps) {
+    const { t } = useTranslation();
     // const isVolumeChangeNotZero = useMemo(() => {
     //     return collection.stats.volumeChange
     //         ? !new BigNumber(collection.stats.volumeChange).isEqualTo(0)
@@ -41,19 +43,19 @@ export function CollectionRow({ collection, index }: CollectionRowProps) {
                 </div>
 
                 <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Floor Price</span> <span>{formatTokenAmount(collection.stats.floor.amount)} {collection.stats.floor.currency}</span>
+                    <span className={styles.mobileLabel}>{t('Floor Price')}</span> <span>{formatTokenAmount(collection.stats.floor.amount)} {collection.stats.floor.currency}</span>
                 </div>
 
                 <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Items</span> <span>{collection.stats.items}</span>
+                    <span className={styles.mobileLabel}>{t('Items')}</span> <span>{collection.stats.items}</span>
                 </div>
 
                 <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Sales</span> <span>{collection.stats.sales}</span>
+                    <span className={styles.mobileLabel}>{t('Sales')}</span> <span>{collection.stats.sales}</span>
                 </div>
 
                 <div className={styles.col}>
-                    <span className={styles.mobileLabel}>Volume (7D)</span> <span>{formatTokenAmount(collection.stats.volume.amount)} {collection.stats.volume.currency}</span>
+                    <span className={styles.mobileLabel}>{t('Volume (%days%D)', { days: 7 })}</span> <span>{formatTokenAmount(collection.stats.volume.amount)} {collection.stats.volume.currency}</span>
                 </div>
 
                 {/* <div className={styles.col}>
