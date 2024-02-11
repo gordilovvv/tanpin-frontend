@@ -3,5 +3,6 @@ export * from './types';
 
 export { Trans } from './Trans';
 export { useTranslation } from './useTranslation';
+export { useResourceBundleLoader } from './language';
 
 export { getPreferredLanguage, savePreferredLanguage } from './utils';

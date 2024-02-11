@@ -8,13 +8,8 @@ type Social = {
 }
 
 export const socials: Record<string, Social> = {
-    twitter: {
-        url: 'https://twitter.com/tanpin_en',
-        name: 'Twitter',
-        icon: Twitter
-    },
     telegram: {
-        url: 'https://t.me/tanpin_io',
+        url: 'https://t.me/+oVC2jPvjbPZlMzAy',
         name: 'Telegram',
         icon: Telegram
     },
@@ -22,7 +17,12 @@ export const socials: Record<string, Social> = {
         url: 'https://ds.tanpin.io',
         name: 'Discord',
         icon: Discord
-    }
+    },
+    twitter: {
+        url: 'https://twitter.com/tanpin_en',
+        name: 'Twitter',
+        icon: Twitter
+    },
 };
 
 export const socialsList = Object.values(socials);
