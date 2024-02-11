@@ -48,7 +48,7 @@ export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectW
 
                         <div className={styles.group}>
                             <div className={styles.label}>
-                                Wallets
+                                {t('Wallets')}
                             </div>
                             <div className={styles.list}>
                                 {sortedWallets.map(wallet => <ConnectButton
