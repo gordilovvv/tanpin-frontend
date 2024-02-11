@@ -1,5 +1,6 @@
 import { Button, Input } from '@/uikit';
 import { NFTActionText } from '@/components/Nft';
+import { useTranslation } from '@/localization';
 import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
 import { useUpdateDirectSaleStore } from '@/states/sale/store';
 import { useUpdateDirectSaleInfo } from '@/states/sale/hooks/updateDirectSale';
@@ -11,6 +12,7 @@ type UpdateSaleBodyProps = {
 }
 
 export function UpdateSaleBody({ currentPrice, onConfirm }: UpdateSaleBodyProps) {
+    const { t } = useTranslation();
     const tokenMetadata = useTokenMetadata();
     const { price, priceError } = useUpdateDirectSaleInfo(currentPrice);
     const setPrice = useUpdateDirectSaleStore(state => state.setPrice);
@@ -18,7 +20,7 @@ export function UpdateSaleBody({ currentPrice, onConfirm }: UpdateSaleBodyProps)
     return (
         <div className={styles.wrap}>
             {tokenMetadata && <NFTActionText
-                text='You are going to update the price for'
+                text={t('You are going to update the price for')}
                 nftName={tokenMetadata.name}
                 collectionID={tokenMetadata.collection.ID}
                 collectionName={tokenMetadata.collection.name}
@@ -37,7 +39,7 @@ export function UpdateSaleBody({ currentPrice, onConfirm }: UpdateSaleBodyProps)
                 disabled={!!priceError}
                 onClick={onConfirm}
             >
-                {priceError ?? 'Confirm'}
+                {priceError ?? t('Confirm')}
             </Button>
         </div>
     );
