@@ -1,11 +1,28 @@
 import { Link } from 'react-router-dom';
-import { Button } from '@/uikit';
+import { Button, SvgProps } from '@/uikit';
 import { Container } from '@/components/Layout';
 import { Logo } from './Logo';
 import { footerLinks } from '../config';
 import { socialsList } from '@/config/constants/socials';
 import { useTranslation } from '@/localization';
 import styles from './Footer.module.scss';
+
+const HolderIcon = (props: SvgProps) => {
+    return (
+        <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <path
+                d="M7.5 7.88759H10.7828V11.4212L11.8388 11.4109L12.8891 11.3965L12.9052 8.02464L12.9157 2.5H16.1984V16.1814H12.9157L12.9052 14.4048L12.8891 12.6231L11.8388 12.6087L10.7828 12.5993V21.5H7.5V7.88759Z"
+                fill="currentColor"
+            />
+        </svg>
+    );
+};
 
 export function Footer() {
     const { t } = useTranslation();
@@ -45,6 +62,16 @@ export function Footer() {
                                     className={styles.socialsItem}
                                     iconSlot={<social.icon />}
                                 />)}
+
+                                <Button
+                                    as='a'
+                                    view='secondary'
+                                    href='https://holder.io/ru/coins/tanpin/'
+                                    rel='noreferrer noopener'
+                                    target='_blank'
+                                    className={styles.socialsItem}
+                                    iconSlot={<HolderIcon />}
+                                />
                             </div>
                         </div>
                     </div>
