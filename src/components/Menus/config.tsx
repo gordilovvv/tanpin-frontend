@@ -24,7 +24,7 @@ export const headerAdditionalLinks: NavLink[] = [
 ];
 
 if (BUY_USDT_AVAILABLE) {
-    headerAdditionalLinks.push({ to: '/deposit', text: <Trans values={{ currency: 'USDT' }}>Buy %currency%</Trans>, gradient: true });
+    headerAdditionalLinks.push({ to: '/deposit', text: <Trans values={{ currency: 'TANPIN' }}>Buy %currency%</Trans>, gradient: true });
 }
 
 export const footerLinks: NavLink[] = [
