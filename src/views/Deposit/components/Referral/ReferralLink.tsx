@@ -40,7 +40,7 @@ type ReferralLinkProps = {
 }
 
 export function ReferralLink({ referralId, loading }: ReferralLinkProps) {
-    const link = `${APP_URL}/deposit?u=${referralId}`;
+    const link = `${APP_URL}/deposit?p=${referralId}`;
 
     // TODO: toast
     const copyHandler = () => {
