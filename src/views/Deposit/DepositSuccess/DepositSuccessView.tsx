@@ -62,7 +62,7 @@ export function DepositSuccessView() {
                     <div className={styles.body}>
                         <div className={styles.successTitle}>
                             {t('You’ve')} <span>{t('successfully')}</span> <br />
-                            {t('bought %currency%', { currency: 'USDT' })}
+                            {t('bought %currency%', { currency: 'TANPIN' })}
                         </div>
 
                         <Button to='/'>
