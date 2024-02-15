@@ -35,8 +35,11 @@ export function formatTokenAmountV2(value: string | number, locale: string, curr
     const numberFormat = new Intl.NumberFormat(locale, {
         maximumFractionDigits: 20
     });
+    const formattedValue = numberFormat.format(Number(value));
 
-    return `${numberFormat.format(Number(value))} ${currency}`;
+    return currency
+        ? `${formattedValue} ${currency}`
+        : formattedValue;
 }
 
 const shortFormatter = (locale: string) => Intl.NumberFormat(locale, {

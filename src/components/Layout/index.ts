@@ -5,3 +5,4 @@ export { PageWrapper } from './Page/PageWrapper';
 export { PageLoader } from './Page/PageLoader';
 export { PageError } from './Page/PageError';
 export { CatalogHead } from './Catalog/CatalogHead';
+export { BackgroundGradient } from './Gradient/BackgroundGradient';

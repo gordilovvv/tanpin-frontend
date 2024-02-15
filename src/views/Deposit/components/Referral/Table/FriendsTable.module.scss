@@ -1,0 +1,47 @@
+.table {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.head {
+    color: var(--color-typo-ghost);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: -0.216px;
+}
+
+.body {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+}
+
+.nothing {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.216px;
+}
+
+@include max767 {
+    .head {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .body {
+        gap: 14px;
+    }
+
+    .nothing {
+        font-size: 18px;
+    }
+}

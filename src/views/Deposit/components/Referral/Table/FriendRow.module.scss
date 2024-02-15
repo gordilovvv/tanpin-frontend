@@ -1,0 +1,57 @@
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user,
+.income {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.address {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.16px;
+    margin-left: 12px;
+}
+
+.amount {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    margin-right: 8px;
+}
+
+.token {
+    width: 18px;
+    height: 18px;
+
+    img {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+@include max767 {
+
+    .address,
+    .amount {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .amount {
+        margin-left: 6px;
+    }
+
+    .token {
+        width: 16px;
+        height: 16px;
+    }
+}

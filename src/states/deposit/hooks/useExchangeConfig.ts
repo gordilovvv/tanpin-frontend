@@ -5,11 +5,12 @@ export function useExchangeConfig() {
     const { data, error, isLoading } = useSWRImmutable(
         ['exchangeConfig'],
         async () => {
-            const { limits, maticDistribution } = await fetchExchangeConfig();
+            const { limits, maticDistribution, affiliateReward } = await fetchExchangeConfig();
 
             return {
                 paymentLimits: limits,
-                maticDistribution
+                maticDistribution,
+                affiliateReward
             };
         },
         { revalidateOnFocus: true }
@@ -20,5 +21,6 @@ export function useExchangeConfig() {
         isLoading,
         paymentLimits: data?.paymentLimits,
         maticDistribution: data?.maticDistribution,
+        affiliateReward: data?.affiliateReward
     };
 }

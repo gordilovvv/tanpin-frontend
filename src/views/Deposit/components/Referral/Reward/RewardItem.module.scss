@@ -1,0 +1,55 @@
+.reward {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 12px;
+    background-color: var(--color-essential);
+    border: 2px solid var(--color-stroke);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+    color: var(--color-typo-ghost);
+
+    span {
+        color: var(--color-typo-base);
+    }
+}
+
+.value {
+    color: var(--color-primary);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: -0.54px;
+}
+
+.rewardSkeleton {
+    height: 100px;
+}
+
+@include max767 {
+    .reward {
+        gap: 8px;
+        padding: 14px;
+    }
+
+    .label {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .value {
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: -0.384px;
+    }
+
+    .rewardSkeleton {
+        height: 84px;
+    }
+}

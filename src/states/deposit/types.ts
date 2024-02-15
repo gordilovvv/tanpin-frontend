@@ -8,3 +8,16 @@ export type MaticDistribution = {
     threshold: number,
     amount: string
 }[];
+
+/** Награда за покупки друзей */
+export type AffiliateReward = {
+    threshold: number;
+    amount: string;
+}[]
+
+export type ReferralFriend = {
+    userId: number;
+    currencyOut: string;
+    address: string;
+    totalReward: string;
+};

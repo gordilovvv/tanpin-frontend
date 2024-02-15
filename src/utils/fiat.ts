@@ -20,11 +20,12 @@ function getFormatter(locale: string, currencyCode: string, type: NumberFormat =
     return numberFormats[type](locale, currencyCode);
 }
 
-export function formatFiatCurrency(value: string | number, locale: string, currencyCode: string): string {
+export function formatFiatCurrency(value: string | number, locale: string, currencyCode: string, options: { int?: boolean } = {}): string {
     const parsedValue = typeof value === 'string' ? parseFloat(value) : value;
     const formatter = getFormatter(
         locale,
-        currencyCode
+        currencyCode,
+        options.int ? NumberFormat.INT : NumberFormat.FRACTION
     );
 
     return formatter.format(parsedValue);

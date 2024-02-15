@@ -1,20 +1,27 @@
 import { useCallback, useMemo } from 'react';
-import { Button, Input, Ruble, Tether, UnstyleLink } from '@/uikit';
+import { Button, Ruble, Tanpin, UnstyleLink } from '@/uikit';
 import { ConnectWalletButton } from '@/components/Menus';
+import { CurrencyInput } from './CurrencyInput';
 import { MaticBonus } from '../MaticBonus/MaticBonus';
 import { CurrencyRate, CurrencyRateSkeleton } from '../Rate/CurrencyRate';
-import { useTranslation } from '@/localization';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useTranslation } from '@/localization';
 import { useBuyTrade } from '@/states/deposit/hooks/useBuyTrade';
 import { useBuyCallback } from '@/states/deposit/hooks/useBuyCallback';
 import { Field, useDepositStore } from '@/states/deposit/store';
-import { useExchangeConfig } from '@/states/deposit/hooks/useExchangeConfig';
+import { MaticDistribution, PaymentLimits } from '@/states/deposit/types';
 import { useFetchPairRate } from '@/states/deposit/hooks/useFetchPairRate';
-import { TERMS_URL } from '@/config';
+import { TELEGRAM_SUPPORT_URL } from '@/config';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import styles from './BuyForm.module.scss';
 
-export function BuyForm() {
+type BuyFormProps = {
+    paymentLimits?: PaymentLimits,
+    maticDistribution?: MaticDistribution,
+    configLoadFailed?: boolean
+}
+
+export function BuyForm({ paymentLimits, maticDistribution, configLoadFailed }: BuyFormProps) {
     const { t } = useTranslation();
     const { address } = useAccount();
     const [typedValue, activeField, typeValue] = useDepositStore(state => [
@@ -28,7 +35,6 @@ export function BuyForm() {
         : Field.INPUT;
 
     const pairRate = useFetchPairRate();
-    const { paymentLimits, maticDistribution, error } = useExchangeConfig();
 
     const { inputAmount, outputAmount, inputError, maticBonus } = useBuyTrade(
         activeField,
@@ -73,7 +79,7 @@ export function BuyForm() {
         inputError
     );
 
-    if (error || pairRate === undefined) {
+    if (configLoadFailed || pairRate === undefined) {
         return (
             <div className={styles.form}>
                 <div className={styles.error}>
@@ -85,53 +91,53 @@ export function BuyForm() {
 
     return (
         <div className={styles.form}>
-            <div className={styles.fields}>
-                <Input
-                    numerical
-                    value={formattedAmounts[Field.INPUT]}
-                    placeholder={t('Enter %currency% amount', { currency: 'RUB' })}
-                    leftAddon={<Ruble />}
-                    onInput={handleAmountInType}
-                    style={{ paddingLeft: '48px' }}
-                />
+            <div className={styles.top}>
+                <div className={styles.fields}>
+                    <CurrencyInput
+                        value={formattedAmounts[Field.INPUT]}
+                        placeholder='0'
+                        currencyIcon={<Ruble />}
+                        currencySymbol='RUB'
+                        onType={handleAmountInType}
+                    />
 
-                <Input
-                    numerical
-                    value={formattedAmounts[Field.OUTPUT]}
-                    placeholder={t('Enter %currency% amount', { currency: 'USDT' })}
-                    leftAddon={<Tether />}
-                    onInput={handleAmountOutType}
-                    style={{ paddingLeft: '48px' }}
-                />
+                    <CurrencyInput
+                        value={formattedAmounts[Field.OUTPUT]}
+                        placeholder='0'
+                        currencyIcon={<Tanpin />}
+                        currencySymbol='TANPIN'
+                        onType={handleAmountOutType}
+                    />
+                </div>
 
-                <MaticBonus amount={maticBonus} />
-            </div>
-
-            <div className={styles.bottom}>
                 {pairRate
                     ? <CurrencyRate rate={pairRate} />
                     : <CurrencyRateSkeleton />
                 }
+            </div>
 
-                <div className={styles.button}>
-                    {address ?
-                        <Button
-                            view='primary'
-                            loading={isLoadingBuy}
-                            disabled={!!inputError}
-                            onClick={buyCallback}
-                        >
-                            {inputError ?? t('Continue')}
-                        </Button>
-                        : <ConnectWalletButton />}
+            <div className={styles.bottom}>
+                {address ?
+                    <Button
+                        view='primary'
+                        loading={isLoadingBuy}
+                        disabled={!!inputError}
+                        onClick={buyCallback}
+                    >
+                        {inputError ?? t('Continue')}
+                    </Button>
+                    : <ConnectWalletButton />}
 
-                    <div className={styles.terms}>
-                        {t('By continuing you agree with our')} <UnstyleLink
-                            href={TERMS_URL}
-                            rel='noreferrer noopener'
-                            target='_blank'
-                        >{t('Terms')}</UnstyleLink>
-                    </div>
+                <MaticBonus amount={maticBonus} />
+            </div>
+
+            <div className={styles.support}>
+                <div className={styles.supportText}>
+                    {t('Got issues or need help? Our')} <UnstyleLink
+                        href={TELEGRAM_SUPPORT_URL}
+                        rel='noreferrer noopener'
+                        target='_blank'
+                    >{t('Support Team')}</UnstyleLink> {t('is ready to assist you at any moment')}
                 </div>
             </div>
         </div>

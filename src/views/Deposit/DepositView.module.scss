@@ -1,36 +1,154 @@
 .container {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
+    position: relative;
+
+    @include min1001 {
+        --page-padding: 48px;
+    }
 }
 
 .wrap {
     display: grid;
-    grid-template-columns: minmax(0, auto);
-    gap: 48px;
-    width: 360px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 97px;
+}
+
+.buy {
+    position: relative;
+
+    &Wrap {
+        position: sticky;
+        top: 116px;
+        display: grid;
+        grid-template-columns: minmax(0, auto);
+        gap: 40px;
+    }
 }
 
 .title {
-    font-size: 36px;
-    font-weight: 800;
-    line-height: 42px;
-    letter-spacing: -0.648px;
-    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+
+    &Text {
+        font-size: 36px;
+        font-weight: 800;
+        line-height: 42px;
+        letter-spacing: -0.648px;
+
+        span {
+            color: var(--color-primary);
+        }
+    }
 }
 
-@include max767 {
-    .wrap {
+.coin {
+    width: 40px;
+    height: 40px;
+    margin-left: 9px;
+    margin-right: 16px;
+    filter: drop-shadow(0px 0px 32px rgba(60, 227, 97, 0.35));
+
+    img {
+        display: block;
+        height: 100%;
         width: 100%;
+    }
+}
+
+.description {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: -0.216px;
+}
+
+.referral {
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -48px;
+        width: 1px;
+        bottom: 0;
+        background-color: var(--color-stroke);
+
+        @include min1001 {
+            top: 0;
+            left: -48px;
+            width: 1px;
+            bottom: 0;
+        }
+
+        @include max1000 {
+            top: -48px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+        }
+    }
+
+    &Wrap {
+        display: grid;
+        grid-template-columns: minmax(0, auto);
         gap: 24px;
     }
 
+    &Main {
+        display: grid;
+        grid-template-columns: minmax(0, auto);
+        gap: 14px;
+    }
+}
+
+@include max1000 {
+    .wrap {
+        grid-template-columns: minmax(0, auto);
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .buy {
+        .title {
+            justify-content: center;
+        }
+    }
+
+    .coin {
+        margin-left: 0;
+    }
+}
+
+@include max767 {
+    .buy {
+        &Wrap {
+            gap: 24px;
+        }
+    }
+
     .title {
-        font-size: 24px;
-        font-weight: 800;
-        line-height: 32px;
-        letter-spacing: -0.384px;
+        &Text {
+            font-size: 24px;
+            line-height: 32px;
+            letter-spacing: -0.384px;
+        }
+    }
+
+    .coin {
+        width: 24px;
+        height: 24px;
+        filter: drop-shadow(0px 0px 19.2px rgba(60, 227, 97, 0.35));
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .referral {
+        &Main {
+            gap: 10px;
+        }
     }
 }

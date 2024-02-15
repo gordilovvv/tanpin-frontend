@@ -14,7 +14,7 @@ export function CurrencyRate({ rate }: CurrencyRateProps) {
     return (
         <div className={styles.rate}>
             <div className={styles.text}>
-                {t('You get')} <span>1 USDT</span> {t('for')} <span>{formatFiatCurrency(rate, fiatCurrencies.rub.locale, fiatCurrencies.rub.code)}</span>
+                {t('You get')} <span>1 TANPIN</span> {t('for')} <span>{formatFiatCurrency(rate, fiatCurrencies.rub.locale, fiatCurrencies.rub.code)}</span>
             </div>
         </div>
     );

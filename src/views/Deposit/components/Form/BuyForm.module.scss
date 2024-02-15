@@ -1,40 +1,25 @@
 .form {
     display: grid;
     grid-template-columns: minmax(0, auto);
-    gap: 48px;
+    gap: 40px;
+}
+
+.top {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 16px;
 }
 
 .fields {
     display: grid;
     grid-template-columns: minmax(0, auto);
-    gap: 16px;
+    gap: 12px;
 }
 
 .bottom {
     display: grid;
     grid-template-columns: minmax(0, auto);
     gap: 24px;
-}
-
-.button {
-    display: grid;
-    grid-template-columns: minmax(0, auto);
-    gap: 16px;
-}
-
-.terms {
-    color: var(--color-typo-base);
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px;
-    letter-spacing: -0.12px;
-    text-align: center;
-
-    a {
-        color: var(--color-primary);
-        font-weight: 600;
-        text-decoration-line: underline;
-    }
 }
 
 .error {
@@ -45,8 +30,31 @@
     text-align: center;
 }
 
+.support {
+    display: flex;
+    justify-content: center;
+
+    &Text {
+        max-width: 355px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: -0.14px;
+        text-align: center;
+
+        a {
+            color: var(--color-primary);
+            text-decoration-line: underline;
+        }
+    }
+}
+
 @include max767 {
     .form {
+        gap: 24px;
+    }
+
+    .top {
         gap: 24px;
     }
 
@@ -57,5 +65,16 @@
     .terms {
         font-size: 12px;
         line-height: 16px;
+    }
+
+    .support {
+        justify-content: flex-start;
+
+        &Text {
+            max-width: 100%;
+            font-size: 14px;
+            line-height: 20px;
+            text-align: left;
+        }
     }
 }

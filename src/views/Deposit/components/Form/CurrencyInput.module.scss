@@ -1,0 +1,79 @@
+.input {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+    align-items: center;
+    padding: 16px 24px;
+    background-color: var(--color-essential);
+    border: 2px solid var(--color-stroke);
+    border-radius: 12px;
+    transition: border-color 0.15s linear;
+
+    &.focused {
+        border: 2px solid var(--color-base);
+    }
+}
+
+.stack {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    gap: 10px;
+}
+
+.nativeInput {
+    width: 100%;
+    color: var(--color-typo-base);
+    background-color: transparent;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.384px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    outline: none;
+
+    &::placeholder {
+        color: var(--color-typo-base);
+    }
+}
+
+.currency {
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+.icon {
+    display: flex;
+    color: var(--color-typo-ghost)
+}
+
+@include max767 {
+    .input {
+        padding: 16px 24px;
+    }
+
+    .stack {
+        gap: 6px;
+    }
+
+    .currency {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .nativeInput {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .icon {
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+}
