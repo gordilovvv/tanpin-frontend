@@ -6,14 +6,15 @@ type CreatePaymentResponse = {
     redirectURL: string
 }
 
-export async function createPayment(amountIn: string, buyerAddress: Address): Promise<CreatePaymentResponse> {
+export async function createPayment(amountIn: string, buyerAddress: Address, referralCode?: number): Promise<CreatePaymentResponse> {
     if (MOCK_API_CALLS) {
         return { redirectURL: 'https://tanpin.io' };
     }
 
     const { data } = await gateApi.post<CreatePaymentResponse>('/payment/create', {
         amountIn,
-        buyerAddress
+        buyerAddress,
+        r: referralCode
     });
 
     return data;

@@ -35,7 +35,7 @@ export async function fetchReferralInfo(address: Address): Promise<ReferralRespo
         };
     }
 
-    const { data } = await gateApi.get<ReferralResponse>(`/referral&address=${address.trim()}`);
+    const { data } = await gateApi.get<ReferralResponse>(`/referral?address=${address.trim()}`);
 
     return data;
 }

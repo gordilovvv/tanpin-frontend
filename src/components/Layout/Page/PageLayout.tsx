@@ -5,11 +5,13 @@ import { Modals } from './Modals';
 import { LockScreen } from '../LockScreen/LockScreen';
 import { ScrollTopOnMount } from '@/app/routing/ScrollTopOnMount';
 import { useAccountEventListener } from '@/hooks/useAccountEventListener';
+import { useReferralCodeDetector } from '@/states/deposit/hooks/useReferralCode';
 import { LOCK_MARKET } from '@/config';
 import styles from './PageLayout.module.scss';
 
 export function PageLayout() {
     useAccountEventListener();
+    useReferralCodeDetector();
 
     if (LOCK_MARKET) {
         return (<LockScreen />);

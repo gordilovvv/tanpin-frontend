@@ -3,6 +3,7 @@ import { useToast } from '@/uikit';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useTranslation } from '@/localization';
 import { createPayment } from '../fetch/createPayment';
+import { getReferralCode } from './useReferralCode';
 
 export function useBuyCallback(
     amountIn?: string,
@@ -21,9 +22,11 @@ export function useBuyCallback(
 
             setIsLoading(true);
 
+            const referralCode = getReferralCode();
             const { redirectURL } = await createPayment(
                 amountIn,
-                address
+                address,
+                referralCode
             );
 
             if (!redirectURL) {
