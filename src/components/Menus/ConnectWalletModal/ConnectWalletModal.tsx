@@ -7,6 +7,7 @@ import { useTranslation } from '@/localization';
 import { TELEGRAM_BOT_URL } from '@/config';
 import { ConnectorNames, WalletConfig } from '@/config/wallet';
 import { HOW_TO_CREATE_WALLET_INSTRUCTION_URL } from '@/config/constants';
+import { getReferralCode } from '@/states/deposit/hooks/useReferralCode';
 import tgLogo from '@/app/assets/images/tg.png';
 import styles from './ConnectWalletModal.module.scss';
 
@@ -18,6 +19,8 @@ type ConnectWalletModalProps = {
 export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectWalletModalProps & ModalProps) {
     const { t } = useTranslation();
     const sortedWallets = useMemo(() => sortWallets(wallets), [wallets]);
+    const referralCode = getReferralCode();
+    const telegramAuthUrl = referralCode ? `${TELEGRAM_BOT_URL}?start=r_${referralCode}` : TELEGRAM_BOT_URL;
 
     return (
         <Modal
@@ -36,7 +39,7 @@ export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectW
                             <div className={styles.list}>
                                 <WalletButton
                                     as='link'
-                                    href={TELEGRAM_BOT_URL}
+                                    href={telegramAuthUrl}
                                     icon={<img
                                         src={tgLogo}
                                         alt='tg'
