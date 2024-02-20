@@ -68,10 +68,10 @@ export function useBuyTrade(
             return;
         }
 
-        const outputAmount = new BigNumber(exactTrade.outputAmount);
+        const inputAmount = new BigNumber(exactTrade.inputAmount);
 
         for (const distribution of maticDistribution) {
-            if (outputAmount.gte(distribution.threshold)) {
+            if (inputAmount.gte(distribution.threshold)) {
                 return distribution.amount;
             }
         }
