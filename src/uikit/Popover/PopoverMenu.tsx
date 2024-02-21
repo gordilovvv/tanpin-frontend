@@ -7,10 +7,11 @@ import styles from './PopoverMenu.module.scss';
 type PopoverProps = {
     state: MenuStore
     width?: number
-    gutter?: number,
-    sameWidth?: boolean,
-    maxHeight?: number,
-    overflow?: CSSProperties['overflow'],
+    gutter?: number
+    sameWidth?: boolean
+    maxHeight?: number
+    overflow?: CSSProperties['overflow']
+    fitViewport?: boolean
     className?: string
     animate?: MotionProps['animate']
     transition?: MotionProps['transition']
@@ -21,7 +22,7 @@ type PopoverProps = {
 }
 
 export const PopoverMenu = forwardRef<HTMLDivElement, PropsWithChildren<PopoverProps>>(
-    ({ state, width, gutter, sameWidth, maxHeight, overflow, className, children, ...animProps }, ref) => {
+    ({ state, width, gutter, sameWidth, maxHeight, overflow, fitViewport, className, children, ...animProps }, ref) => {
         const mounted = state.useState('mounted');
 
         const style: CSSProperties = {
@@ -40,6 +41,7 @@ export const PopoverMenu = forwardRef<HTMLDivElement, PropsWithChildren<PopoverP
                             store={state}
                             hidden={false}
                             gutter={gutter}
+                            fitViewport={fitViewport}
                             sameWidth={sameWidth}
                             className={classNames(styles.box, className)}
                             style={style}

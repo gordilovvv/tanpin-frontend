@@ -18,6 +18,26 @@
     }
 }
 
+.wrap {
+    display: flex;
+    flex-flow: column;
+    max-height: var(--popover-available-height);
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--color-primary-35);
+        border-radius: 2px;
+    }
+}
+
 @keyframes popoverAppear {
     from {
         opacity: 0;

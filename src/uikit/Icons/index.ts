@@ -38,3 +38,4 @@ export { Reload } from './components/Reload';
 export { World } from './components/World';
 export { Tanpin } from './components/Tanpin';
 export { Transfer } from './components/Transfer';
+export { Copy } from './components/Copy';

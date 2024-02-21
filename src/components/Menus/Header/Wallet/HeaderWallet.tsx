@@ -1,10 +1,11 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { PopoverMenu, usePopoverState } from '@/uikit';
 import { TransferModalContainer } from '@/components/Modals';
 import { WalletMenu } from '../../WalletMenu/WalletMenu';
 import { WalletButton } from '../../WalletButton/WalletButton';
 import { ConnectWalletButton } from '../../ConnectWalletButton/ConnectWalletButton';
 import { useOpenedState } from '@/hooks/useOpenedState';
+import { useLocation } from 'react-router-dom';
 import { Address } from 'wagmi';
 import { Variants } from 'framer-motion';
 import { TRANSFER_TOKEN_AVAILABLE } from '@/config';
@@ -42,11 +43,16 @@ type HeaderWalletProps = {
 }
 
 export function HeaderWallet({ address, isConnected }: HeaderWalletProps) {
-    const animationRef = useRef<HTMLDivElement>(null);
+    const location = useLocation();
     const transferModal = useOpenedState();
+    const animationRef = useRef<HTMLDivElement>(null);
     const walletPopoverState = usePopoverState({
         placement: 'bottom-end'
     });
+
+    useEffect(() => {
+        walletPopoverState.hide();
+    }, [location]);
 
     const handleTransfer = useCallback(() => {
         walletPopoverState.hide();
@@ -67,16 +73,19 @@ export function HeaderWallet({ address, isConnected }: HeaderWalletProps) {
                 state={walletPopoverState}
                 width={320}
                 gutter={8}
+                fitViewport
                 className={styles.popover}
                 {...animationMap}
                 variants={animationVariants}
                 transition={{ duration: 0.2, ease: [0.35, 0.05, 0.26, 1] }}
                 onAnimationStart={() => animationHandler(animationRef.current)}
             >
-                <WalletMenu
-                    address={address}
-                    onTransfer={handleTransfer}
-                />
+                <div className={styles.wrap}>
+                    <WalletMenu
+                        address={address}
+                        onTransfer={handleTransfer}
+                    />
+                </div>
             </PopoverMenu>}
 
             {TRANSFER_TOKEN_AVAILABLE && address && <TransferModalContainer
