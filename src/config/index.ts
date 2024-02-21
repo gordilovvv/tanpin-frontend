@@ -17,5 +17,6 @@ export const WHITEPAPER_URL = 'https://whitepaper.tanpin.io/';
 export const TELEGRAM_SUPPORT_URL = 'https://t.me/tanpin_support';
 
 export const BUY_USDT_AVAILABLE = true;
+export const TRANSFER_TOKEN_AVAILABLE = false;
 export const MOCK_API_CALLS = false;
 export const LOCK_MARKET = false;

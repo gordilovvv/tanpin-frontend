@@ -43,21 +43,6 @@
         letter-spacing: -0.01em;
         white-space: nowrap;
     }
-
-    &Close {
-        position: absolute;
-        top: 50%;
-        right: 13px;
-        width: 24px;
-        height: 24px;
-        color: var(--color-typo-ghost);
-        transform: translate(0, -50%);
-
-        svg {
-            width: 18px;
-            height: 18px;
-        }
-    }
 }
 
 .balancesWrap {

@@ -41,6 +41,7 @@ export function useBuyDirectSaleInfo(
     availableAmount: number
 ) {
     const { t, locale } = useTranslation();
+    // TODO: разная валюта
     const { amount: tokenBalance, isLoading } = useTokenBalance(
         CONTRACTS.usdt[activeChainId].address,
         CONTRACTS.usdt[activeChainId].decimals

@@ -1,0 +1,84 @@
+.form {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: var(--color-typo-ghost);
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    margin-right: 12px;
+}
+
+.balance {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: -0.216px;
+
+    span {
+        color: var(--color-typo-base);
+        font-weight: 700;
+    }
+}
+
+.body {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.allButton {
+    color: var(--color-primary);
+    padding: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    pointer-events: all;
+}
+
+.action {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+}
+
+@include max767 {
+    .form {
+        gap: 24px;
+    }
+
+    .head {
+        justify-content: flex-start;
+    }
+
+    .label {
+        font-size: 14px;
+        line-height: 22px;
+        margin-right: 8px;
+    }
+
+    .balance {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .body {
+        gap: 8px;
+    }
+
+    .allButton {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}

@@ -37,3 +37,4 @@ export { Logo } from './components/Logo';
 export { Reload } from './components/Reload';
 export { World } from './components/World';
 export { Tanpin } from './components/Tanpin';
+export { Transfer } from './components/Transfer';

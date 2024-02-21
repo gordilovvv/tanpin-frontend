@@ -9,3 +9,5 @@ export { BuyModal } from './Buy/BuyModal';
 export { SellModal } from './Sell/SellModal';
 export { UpdateSaleModal } from './UpdateSale/UpdateSaleModal';
 export { PendingTransactionModal } from './PendingTransaction/PendingTransactionModal';
+export { TransferModal } from './Transfer/TransferModal';
+export { TransferModalContainer } from './Transfer/TransferModalContainer';

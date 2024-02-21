@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Button, Close, InjectedWallet, Logout, UnstyleButton, UnstyleLink } from '@/uikit';
+import { Button, InjectedWallet, Logout, Transfer, UnstyleLink } from '@/uikit';
 import { ErrorMessageModal } from '@/components/Modals';
 import { MenuLink } from './Link/MenuLink';
 import { TokenInfo } from './Token/TokenInfo';
@@ -14,6 +14,7 @@ import { activeChain, activeChainId } from '@/config/chain';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import { CONTRACTS } from '@/config/constants/contracts';
+import { TRANSFER_TOKEN_AVAILABLE } from '@/config';
 import { logError } from '@/utils/sentry';
 import tanpinCoinLogo from '@/app/assets/images/tanpin-coin.png';
 import maticLogo from '@/app/assets/images/matic.png';
@@ -22,10 +23,10 @@ import styles from './WalletMenu.module.scss';
 
 type WalletMenuProps = {
     address: Address,
-    onClose?: () => void
+    onTransfer: () => void
 }
 
-export function WalletMenu({ address, onClose }: WalletMenuProps) {
+export function WalletMenu({ address, onTransfer }: WalletMenuProps) {
     const { t } = useTranslation();
     const { logout } = useAuth();
     const { connector } = useAccount();
@@ -78,13 +79,6 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                         </UnstyleLink>
                     </div>
                 </div>
-
-                {onClose && <UnstyleButton
-                    className={styles.headClose}
-                    onClick={onClose}
-                >
-                    {<Close />}
-                </UnstyleButton>}
             </div>
 
             <div className={styles.balancesWrap}>
@@ -121,6 +115,12 @@ export function WalletMenu({ address, onClose }: WalletMenuProps) {
                         iconSlot={<Icon />}
                     />
                 )}
+
+                {TRANSFER_TOKEN_AVAILABLE && <MenuLink
+                    text={t('Transfer %currency%', { currency: 'TANPIN' })}
+                    iconSlot={<Transfer />}
+                    onClick={onTransfer}
+                />}
             </div>
 
             <div className={styles.footer}>
