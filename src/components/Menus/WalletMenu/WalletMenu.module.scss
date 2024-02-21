@@ -58,6 +58,16 @@
     padding: 12px;
 }
 
+.referral {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+    padding: 0 12px 12px 12px;
+
+    @include max767 {
+        padding: 12px;
+    }
+}
+
 .menu {
     display: grid;
     gap: 0;

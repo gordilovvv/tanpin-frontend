@@ -106,6 +106,15 @@ export function WalletMenu({ address, onTransfer }: WalletMenuProps) {
                 </div>
             </div>
 
+            <div className={styles.referral}>
+                <Button
+                    view='secondary'
+                    to='/deposit#friends'
+                >
+                    {t('Invite friends')}
+                </Button>
+            </div>
+
             <div className={styles.menu}>
                 {walletMenuLinks.map(({ to, text, icon: Icon }) =>
                     <MenuLink

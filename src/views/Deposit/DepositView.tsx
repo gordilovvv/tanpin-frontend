@@ -1,9 +1,11 @@
+import { useEffect, useRef } from 'react';
 import { BackgroundGradient, Container, PageWrapper, } from '@/components/Layout';
 import { BuyForm } from './components/Form/BuyForm';
 import { RewardList } from './components/Referral/Reward/RewardList';
 import { ReferralLink } from './components/Referral/ReferralLink';
 import { FriendsTable } from './components/Referral/Table/FriendsTable';
 import { useAccount } from '@/states/user/hooks/useAccount';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/localization';
 import { useExchangeConfig } from '@/states/deposit/hooks/useExchangeConfig';
 import { useReferralInfo } from '@/states/deposit/hooks/useReferralInfo';
@@ -12,12 +14,24 @@ import styles from './DepositView.module.scss';
 
 export function DepositView() {
     const { t } = useTranslation();
+    const location = useLocation();
     const { isConnected } = useAccount();
     const { referral, isLoading: isLoadingReferral } = useReferralInfo();
     const { paymentLimits, maticDistribution, affiliateReward, isLoading: isLoadingExchange, error } = useExchangeConfig();
+    const referralEl = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const hash = location.hash;
+
+        if (hash) {
+            setTimeout(() => {
+                referralEl.current?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+    }, [location]);
 
     return (
-        <PageWrapper>
+        <PageWrapper hasPaddingTop={false}>
             <Container
                 className={styles.container}
                 maxWidth={993}
@@ -49,7 +63,11 @@ export function DepositView() {
                         </div>
                     </div>
 
-                    <div className={styles.referral}>
+                    <div
+                        id='friends'
+                        ref={referralEl}
+                        className={styles.referral}
+                    >
                         <div className={styles.referralWrap}>
                             <div className={styles.title}>
                                 <div className={styles.titleText}>
