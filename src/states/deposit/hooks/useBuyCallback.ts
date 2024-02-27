@@ -4,6 +4,7 @@ import { useAccount } from '@/states/user/hooks/useAccount';
 import { useTranslation } from '@/localization';
 import { createPayment } from '../fetch/createPayment';
 import { getReferralCode } from './useReferralCode';
+import { AxiosError } from 'axios';
 
 export function useBuyCallback(
     amountIn?: string,
@@ -35,8 +36,18 @@ export function useBuyCallback(
 
             window.location.href = redirectURL;
         } catch (error) {
+            let errorMessage = t('Something went wrong!');
+
+            if (error instanceof AxiosError) {
+                const response = error.response?.data;
+
+                if (response && response.error) {
+                    errorMessage = `${t('Error')}: ${response.error}`;
+                }
+            }
+
             setIsLoading(false);
-            toastDanger(t('Something went wrong!'));
+            toastDanger(errorMessage);
         }
     }, [amountIn, address, inputError, setIsLoading, toastDanger, t]);
 
