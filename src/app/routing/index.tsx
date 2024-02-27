@@ -18,7 +18,7 @@ import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
 import { GameAuthView } from '@/views/GameAuth/GameAuthView';
 import { TokenClaimView } from '@/views/TokenClaim/TokenClaimView';
 import { TelegramAuthView } from '@/views/TelegramAuth/TelegramAuthView';
-import { BUY_USDT_AVAILABLE } from '@/config';
+import { PAYMENT_PAGE_AVAILABLE } from '@/config';
 
 // TODO: LazyLoad Routes
 // https://loadable-components.com/docs/getting-started/
@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
                 path: '/:gameID',
                 element: <SingleGameView />
             },
-            ...(BUY_USDT_AVAILABLE ? [{
+            ...(PAYMENT_PAGE_AVAILABLE ? [{
                 path: '/deposit',
                 element: <DepositView />,
             }] : []),
@@ -99,7 +99,7 @@ export const router = createBrowserRouter([
                 element: <GameAuthView />
             },
             ...(
-                BUY_USDT_AVAILABLE
+                PAYMENT_PAGE_AVAILABLE
                     ? [{
                         path: '/deposit/success',
                         element: <DepositSuccessView />

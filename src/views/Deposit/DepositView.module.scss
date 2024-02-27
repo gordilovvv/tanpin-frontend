@@ -67,6 +67,20 @@
     letter-spacing: -0.216px;
 }
 
+.form {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+
+    &.blur {
+        opacity: 0.25;
+        filter: blur(5px);
+        -ms-filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+    }
+}
+
 .referral {
     position: relative;
 

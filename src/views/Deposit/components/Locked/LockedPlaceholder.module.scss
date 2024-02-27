@@ -1,0 +1,47 @@
+.placeholder {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translate(0, -50%);
+    display: grid;
+    gap: 36px;
+    grid-template-columns: minmax(0, auto);
+    justify-items: center;
+}
+
+.icon {
+    display: flex;
+    color: var(--color-primary);
+}
+
+.text {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 26px;
+    letter-spacing: -0.216px;
+    text-align: center;
+
+    a {
+        color: var(--color-primary);
+        text-decoration: underline;
+    }
+}
+
+@include max767 {
+    .placeholder {
+        gap: 24px;
+    }
+
+    .icon {
+        svg {
+            width: 104px;
+            height: 120px;
+        }
+    }
+
+    .text {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}

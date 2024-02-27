@@ -4,12 +4,15 @@ import { BuyForm } from './components/Form/BuyForm';
 import { RewardList } from './components/Referral/Reward/RewardList';
 import { ReferralLink } from './components/Referral/ReferralLink';
 import { FriendsTable } from './components/Referral/Table/FriendsTable';
+import { LockedPlaceholder } from './components/Locked/LockedPlaceholder';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from '@/localization';
 import { useExchangeConfig } from '@/states/deposit/hooks/useExchangeConfig';
 import { useReferralInfo } from '@/states/deposit/hooks/useReferralInfo';
+import { PAYMENT_FORM_AVAILABLE } from '@/config';
 import tanpinCoin from '@/app/assets/images/tanpin-coin-large.png';
+import classNames from 'classnames';
 import styles from './DepositView.module.scss';
 
 export function DepositView() {
@@ -19,6 +22,7 @@ export function DepositView() {
     const { referral, isLoading: isLoadingReferral } = useReferralInfo();
     const { paymentLimits, maticDistribution, affiliateReward, isLoading: isLoadingExchange, error } = useExchangeConfig();
     const referralEl = useRef<HTMLDivElement>(null);
+    const isFormLocked = !PAYMENT_FORM_AVAILABLE;
 
     useEffect(() => {
         const hash = location.hash;
@@ -55,11 +59,19 @@ export function DepositView() {
                                 </div>
                             </div>
 
-                            <BuyForm
-                                paymentLimits={paymentLimits}
-                                maticDistribution={maticDistribution}
-                                configLoadFailed={!!error}
-                            />
+                            <div
+                                className={classNames(styles.form, {
+                                    [styles.blur]: isFormLocked
+                                })}
+                            >
+                                <BuyForm
+                                    paymentLimits={paymentLimits}
+                                    maticDistribution={maticDistribution}
+                                    configLoadFailed={!!error}
+                                />
+                            </div>
+
+                            {isFormLocked && <LockedPlaceholder />}
                         </div>
                     </div>
 

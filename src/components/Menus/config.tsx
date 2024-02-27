@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { BUY_USDT_AVAILABLE, POLICY_URL, TERMS_URL, WHITEPAPER_URL } from '@/config';
+import { PAYMENT_PAGE_AVAILABLE, POLICY_URL, TERMS_URL, WHITEPAPER_URL } from '@/config';
 import { Trans } from '@/localization';
 import { Activity, Assets } from '@/uikit';
 import { NavLink, NavLinkProps } from 'react-router-dom';
@@ -23,7 +23,7 @@ export const headerAdditionalLinks: NavLink[] = [
     // { to: FAQ_URL, text: 'FAQ', rel: 'noreferrer noopener', target: '_blank' },
 ];
 
-if (BUY_USDT_AVAILABLE) {
+if (PAYMENT_PAGE_AVAILABLE) {
     headerAdditionalLinks.push({ to: '/deposit', text: <Trans values={{ currency: 'TANPIN' }}>Buy %currency%</Trans>, gradient: true });
 }
 

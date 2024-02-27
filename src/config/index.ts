@@ -16,7 +16,9 @@ export const POLICY_URL = 'https://tanpin.io/policy.pdf';
 export const WHITEPAPER_URL = 'https://whitepaper.tanpin.io/';
 export const TELEGRAM_SUPPORT_URL = 'https://t.me/tanpin_support';
 
-export const BUY_USDT_AVAILABLE = true;
-export const TRANSFER_TOKEN_AVAILABLE = false;
+export const PAYMENT_PAGE_AVAILABLE = import.meta.env.VITE_PAYMENT_PAGE_AVAILABLE === 'true';
+export const PAYMENT_FORM_AVAILABLE = import.meta.env.VITE_PAYMENT_FORM_AVAILABLE === 'true';
+export const TRANSFER_TOKEN_AVAILABLE = import.meta.env.VITE_TRANSFER_TOKEN_AVAILABLE === 'true';
+
 export const MOCK_API_CALLS = false;
 export const LOCK_MARKET = false;

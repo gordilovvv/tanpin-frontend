@@ -83,7 +83,7 @@ export function BuyForm({ paymentLimits, maticDistribution, configLoadFailed }: 
         return (
             <div className={styles.form}>
                 <div className={styles.error}>
-                    {t('Deposit is temporarily unavailable.')}<br /> {t('Try again a bit later')}
+                    {t('Buy is temporarily unavailable.')}<br /> {t('Try again a bit later')}
                 </div>
             </div>
         );
