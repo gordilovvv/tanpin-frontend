@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { PAYMENT_PAGE_AVAILABLE, POLICY_URL, TERMS_URL, WHITEPAPER_URL } from '@/config';
+import { PAYMENT_PAGE_AVAILABLE, POLICY_URL, TELEGRAM_SUPPORT_URL, TERMS_URL, WHITEPAPER_URL } from '@/config';
 import { Trans } from '@/localization';
 import { Activity, Assets } from '@/uikit';
 import { NavLink, NavLinkProps } from 'react-router-dom';
@@ -28,9 +28,10 @@ if (PAYMENT_PAGE_AVAILABLE) {
 }
 
 export const footerLinks: NavLink[] = [
-    { to: WHITEPAPER_URL, text: <Trans>Whitepaper</Trans>, target: '_blank' },
-    { to: POLICY_URL, text: <Trans>Privacy Policy</Trans>, target: '_blank' },
-    { to: TERMS_URL, text: <Trans>Terms</Trans>, target: '_blank' }
+    { to: WHITEPAPER_URL, text: <Trans>Whitepaper</Trans>, target: '_blank', rel: 'noreferrer noopener' },
+    { to: POLICY_URL, text: <Trans>Privacy Policy</Trans>, target: '_blank', rel: 'noreferrer noopener' },
+    { to: TERMS_URL, text: <Trans>Terms</Trans>, target: '_blank', rel: 'noreferrer noopener' },
+    { to: TELEGRAM_SUPPORT_URL, text: <Trans>Support Team</Trans>, target: '_blank', rel: 'noreferrer noopener' }
 ];
 
 export const walletMenuLinks: (NavLink & { icon: (...args: any) => JSX.Element })[] = [
