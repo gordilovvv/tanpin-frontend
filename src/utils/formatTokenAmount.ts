@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { EN, RU, defaultLanguage } from '@/localization';
 
-const SMALLEST = new BigNumber(1e-7);
+const SMALLEST = new BigNumber(0.0000001);
 const NEGATIVE_ONE = new BigNumber(-1);
 const ONE = new BigNumber(1);
 const ZERO = new BigNumber(0);

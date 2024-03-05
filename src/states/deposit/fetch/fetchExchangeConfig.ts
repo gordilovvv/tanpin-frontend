@@ -1,9 +1,10 @@
 import { gateApi } from '@/app/api';
 import { MOCK_API_CALLS } from '@/config';
-import { AffiliateReward, MaticDistribution, PaymentLimits } from '../types';
+import { AffiliateReward, InputCurrency, MaticDistribution, OutputCurrency } from '../types';
 
 type ExchangeInfoResponse = {
-    limits: PaymentLimits,
+    inputCurrencies: InputCurrency[],
+    outputCurrencies: OutputCurrency[],
     maticDistribution: MaticDistribution,
     affiliateReward: AffiliateReward
 };
@@ -11,7 +12,8 @@ type ExchangeInfoResponse = {
 export async function fetchExchangeConfig(): Promise<ExchangeInfoResponse> {
     if (MOCK_API_CALLS) {
         return {
-            limits: { min: '10', max: '75000' },
+            inputCurrencies: [],
+            outputCurrencies: [],
             maticDistribution: [
                 { threshold: 100, amount: '1' },
                 { threshold: 50, amount: '0.2' },

@@ -2,10 +2,11 @@ import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import { Field } from '../store';
 import { useTranslation } from '@/localization';
-import { fiatCurrencies } from '@/config/constants/fiatCurrencies';
 import { formatFiatCurrency } from '@/utils/fiat';
 import { tryToParseAmount } from '@/utils/tryToParseAmount';
-import { MaticDistribution, PaymentLimits } from '../types';
+import { isTokenCurrency } from '@/views/Deposit/utils/isToken';
+import { formatTokenAmountV2 } from '@/utils/formatTokenAmount';
+import { InputCurrency, MaticDistribution } from '../types';
 
 type TradeResult = {
     inputAmount: BigNumber,
@@ -49,11 +50,10 @@ export function useBuyTrade(
     activeField: Field,
     typedValue: string,
     currencyRate: string | null | undefined,
-    paymentLimits: PaymentLimits | undefined,
+    inputCurrency: InputCurrency | undefined,
     maticDistribution: MaticDistribution | undefined
 ) {
-    const { t } = useTranslation();
-    const fiatCurrency = fiatCurrencies.rub;
+    const { t, locale } = useTranslation();
     const parsedAmount = useMemo(() => {
         return tryToParseAmount(typedValue);
     }, [typedValue]);
@@ -61,8 +61,11 @@ export function useBuyTrade(
     const tradeIn = useTradeIn(parsedAmount, currencyRate);
     const tradeOut = useTradeOut(parsedAmount, currencyRate);
 
-    const exactTrade = activeField === Field.INPUT ? tradeIn : tradeOut;
+    const exactTrade = activeField === Field.INPUT
+        ? tradeIn
+        : tradeOut;
 
+    const isCurrencyToken = !!inputCurrency && isTokenCurrency(inputCurrency);
     const maticBonus = useMemo(() => {
         if (!maticDistribution || !exactTrade) {
             return;
@@ -82,19 +85,23 @@ export function useBuyTrade(
     let inputError: string | undefined;
 
     if (!parsedAmount) {
-        inputError = t('Enter %currency% amount', { currency: 'RUB ' });
+        inputError = t('Enter %currency% amount', { currency: inputCurrency?.symbol });
     }
 
-    if (paymentLimits && exactTrade?.inputAmount.isLessThan(paymentLimits.min)) {
-        inputError = t('Minimum is %amount%', {
-            amount: formatFiatCurrency(paymentLimits.min, fiatCurrency.locale, fiatCurrency.code)
-        });
+    if (inputCurrency?.limits && exactTrade?.inputAmount.isLessThan(inputCurrency.limits.min)) {
+        const amount = isCurrencyToken
+            ? formatTokenAmountV2(inputCurrency.limits.min, locale, inputCurrency.symbol)
+            : formatFiatCurrency(inputCurrency.limits.min, locale, inputCurrency.id);
+
+        inputError = t('Minimum is %amount%', { amount });
     }
 
-    if (paymentLimits && exactTrade?.inputAmount?.isGreaterThan(paymentLimits.max)) {
-        inputError = t('Maximum is %amount%', {
-            amount: formatFiatCurrency(paymentLimits.max, fiatCurrency.locale, fiatCurrency.code)
-        });
+    if (inputCurrency?.limits && exactTrade?.inputAmount?.isGreaterThan(inputCurrency.limits.max)) {
+        const amount = isCurrencyToken
+            ? formatTokenAmountV2(inputCurrency.limits.max, locale, inputCurrency.symbol)
+            : formatFiatCurrency(inputCurrency.limits.max, locale, inputCurrency.id);
+
+        inputError = t('Maximum is %amount%', { amount });
     }
 
     return {

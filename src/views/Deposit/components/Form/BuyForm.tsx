@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { Button, Ruble, Tanpin, UnstyleLink } from '@/uikit';
+import { Button, UnstyleLink } from '@/uikit';
 import { ConnectWalletButton } from '@/components/Menus';
 import { CurrencyInput } from './CurrencyInput';
 import { MaticBonus } from '../MaticBonus/MaticBonus';
@@ -8,39 +8,47 @@ import { useAccount } from '@/states/user/hooks/useAccount';
 import { useTranslation } from '@/localization';
 import { useBuyTrade } from '@/states/deposit/hooks/useBuyTrade';
 import { useBuyCallback } from '@/states/deposit/hooks/useBuyCallback';
-import { Field, useDepositStore } from '@/states/deposit/store';
-import { MaticDistribution, PaymentLimits } from '@/states/deposit/types';
 import { useFetchPairRate } from '@/states/deposit/hooks/useFetchPairRate';
+import { useCurrency, useCurrencyIdToCurrency } from '@/states/deposit/hooks/useCurrency';
+import { Field, useDepositActions, useDepositState } from '@/states/deposit/store';
+import { InputCurrency, MaticDistribution, OutputCurrency } from '@/states/deposit/types';
 import { TELEGRAM_SUPPORT_URL } from '@/config';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import styles from './BuyForm.module.scss';
 
 type BuyFormProps = {
-    paymentLimits?: PaymentLimits,
+    inputCurrencies?: InputCurrency[],
+    outputCurrencies?: OutputCurrency[],
     maticDistribution?: MaticDistribution,
     configLoadFailed?: boolean
 }
 
-export function BuyForm({ paymentLimits, maticDistribution, configLoadFailed }: BuyFormProps) {
+export function BuyForm({ inputCurrencies, outputCurrencies, maticDistribution, configLoadFailed }: BuyFormProps) {
     const { t } = useTranslation();
     const { address } = useAccount();
-    const [typedValue, activeField, typeValue] = useDepositStore(state => [
-        state.typedValue,
-        state.activeField,
-        state.typeValue
-    ]);
+    const {
+        typedValue,
+        activeField,
+        inputCurrency: inputCurrencyId,
+        outputCurrency: outputCurrencyId
+    } = useDepositState();
 
     const dependentField = activeField === Field.INPUT
         ? Field.OUTPUT
         : Field.INPUT;
 
-    const pairRate = useFetchPairRate();
+    const inputCurrenciesMap = useCurrencyIdToCurrency(inputCurrencies);
+    const outputCurrenciesMap = useCurrencyIdToCurrency(outputCurrencies);
 
+    const inputCurrency = useCurrency(inputCurrencyId, inputCurrenciesMap);
+    const outputCurrency = useCurrency(outputCurrencyId, outputCurrenciesMap);
+
+    const pairRate = useFetchPairRate(inputCurrency?.id);
     const { inputAmount, outputAmount, inputError, maticBonus } = useBuyTrade(
         activeField,
         typedValue,
         pairRate,
-        paymentLimits,
+        inputCurrency,
         maticDistribution
     );
 
@@ -60,26 +68,50 @@ export function BuyForm({ paymentLimits, maticDistribution, configLoadFailed }: 
         };
     }, [parsedAmounts, typedValue, activeField, dependentField]);
 
-    const handleAmountInType = useCallback((value: string) => {
+    const {
+        typeValue,
+        selectCurrency
+    } = useDepositActions();
+
+    const handleInputAmountType = useCallback((value: string) => {
         typeValue({
             value,
             field: Field.INPUT
         });
     }, [typeValue]);
 
-    const handleAmountOutType = useCallback((value: string) => {
+    const handleOutputAmountType = useCallback((value: string) => {
         typeValue({
             value,
             field: Field.OUTPUT
         });
     }, [typeValue]);
 
+    const handleInputCurrencySelect = useCallback((newCurrencyId: string) => {
+        selectCurrency({
+            currencyId: newCurrencyId,
+            field: Field.INPUT
+        });
+    }, [selectCurrency]);
+
+    const handleOutputCurrencySelect = useCallback((newCurrencyId: string) => {
+        selectCurrency({
+            currencyId: newCurrencyId,
+            field: Field.OUTPUT
+        });
+    }, [selectCurrency]);
+
+    const inputLoading = !inputCurrency;
+    const outputLoading = !outputCurrency;
+
+    const isBuyDisabled = !!inputError || inputLoading || outputLoading;
     const { isLoadingBuy, buyCallback } = useBuyCallback(
         parsedAmounts[Field.INPUT],
+        inputCurrency,
         inputError
     );
 
-    if (configLoadFailed || pairRate === undefined) {
+    if (configLoadFailed) {
         return (
             <div className={styles.form}>
                 <div className={styles.error}>
@@ -94,24 +126,33 @@ export function BuyForm({ paymentLimits, maticDistribution, configLoadFailed }: 
             <div className={styles.top}>
                 <div className={styles.fields}>
                     <CurrencyInput
+                        label={t('You’ll pay:')}
                         value={formattedAmounts[Field.INPUT]}
                         placeholder='0'
-                        currencyIcon={<Ruble />}
-                        currencySymbol='RUB'
-                        onType={handleAmountInType}
+                        currency={inputCurrency}
+                        currencies={inputCurrencies}
+                        loading={inputLoading}
+                        onType={handleInputAmountType}
+                        onCurrencySelect={handleInputCurrencySelect}
                     />
 
                     <CurrencyInput
+                        label={t('You’ll receive:')}
                         value={formattedAmounts[Field.OUTPUT]}
                         placeholder='0'
-                        currencyIcon={<Tanpin />}
-                        currencySymbol='TANPIN'
-                        onType={handleAmountOutType}
+                        currency={outputCurrency}
+                        currencies={outputCurrencies}
+                        loading={outputLoading}
+                        onType={handleOutputAmountType}
+                        onCurrencySelect={handleOutputCurrencySelect}
                     />
                 </div>
 
-                {pairRate
-                    ? <CurrencyRate rate={pairRate} />
+                {pairRate && inputCurrency
+                    ? <CurrencyRate
+                        rate={pairRate}
+                        currency={inputCurrency}
+                    />
                     : <CurrencyRateSkeleton />
                 }
             </div>
@@ -121,7 +162,7 @@ export function BuyForm({ paymentLimits, maticDistribution, configLoadFailed }: 
                     <Button
                         view='primary'
                         loading={isLoadingBuy}
-                        disabled={!!inputError}
+                        disabled={!!isBuyDisabled}
                         onClick={buyCallback}
                     >
                         {inputError ?? t('Continue')}

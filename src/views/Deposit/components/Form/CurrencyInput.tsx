@@ -1,17 +1,22 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { NumericalInput } from '@/uikit';
+import { CurrencySelect, CurrencySelectSkeleton } from './CurrencySelect';
+import { InputCurrency, OutputCurrency } from '@/states/deposit/types';
 import classNames from 'classnames';
 import styles from './CurrencyInput.module.scss';
 
 type CurrencyInputProps = {
     value: string,
+    label: string,
     placeholder?: string,
-    currencySymbol: string,
-    currencyIcon: ReactNode,
-    onType: (value: string) => void
+    currency?: InputCurrency | OutputCurrency,
+    currencies?: (InputCurrency | OutputCurrency)[],
+    loading?: boolean,
+    onType: (value: string) => void,
+    onCurrencySelect: (currencyId: string) => void
 }
 
-export function CurrencyInput({ value, placeholder, currencyIcon, currencySymbol, onType }: CurrencyInputProps) {
+export function CurrencyInput({ value, label, placeholder, currency, currencies, loading, onType, onCurrencySelect }: CurrencyInputProps) {
     const [isFocused, setIsFocused] = useState(false);
 
     return (
@@ -21,8 +26,8 @@ export function CurrencyInput({ value, placeholder, currencyIcon, currencySymbol
             })}
         >
             <div className={styles.stack}>
-                <div className={styles.currency}>
-                    {currencySymbol}
+                <div className={styles.label}>
+                    {label}
                 </div>
 
                 <div className={styles.nativeInput}>
@@ -37,8 +42,14 @@ export function CurrencyInput({ value, placeholder, currencyIcon, currencySymbol
                 </div>
             </div>
 
-            <div className={styles.icon}>
-                {currencyIcon}
+            <div className={styles.right}>
+                {loading || !currency || !currencies
+                    ? <CurrencySelectSkeleton />
+                    : <CurrencySelect
+                        selectedCurrency={currency}
+                        allCurrencies={currencies}
+                        onSelect={onCurrencySelect}
+                    />}
             </div>
         </div>
     );

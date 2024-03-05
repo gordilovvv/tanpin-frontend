@@ -200,6 +200,8 @@
     "to pay for gas": "to pay for gas",
     "for gas!": "for gas!",
     "You get": "You get",
+    "You’ll pay:": "You’ll pay:",
+    "You’ll receive:": "You’ll receive:",
     "You’ve": "You’ve",
     "successfully": "successfully",
     "bought %currency%": "bought {{currency}}",

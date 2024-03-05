@@ -213,6 +213,8 @@
     "to pay for gas": "для оплаты газа",
     "for gas!": "для оплаты газа!",
     "You get": "Вы получаете",
+    "You’ll pay:": "Вы платите:",
+    "You’ll receive:": "Вы получаете:",
     "You’ve": "Вы",
     "successfully": "успешно",
     "bought %currency%": "купили {{currency}}",

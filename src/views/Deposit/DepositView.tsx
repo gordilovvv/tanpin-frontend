@@ -19,10 +19,19 @@ export function DepositView() {
     const { t } = useTranslation();
     const location = useLocation();
     const { isConnected } = useAccount();
-    const { referral, isLoading: isLoadingReferral } = useReferralInfo();
-    const { paymentLimits, maticDistribution, affiliateReward, isLoading: isLoadingExchange, error } = useExchangeConfig();
-    const referralEl = useRef<HTMLDivElement>(null);
     const isFormLocked = !PAYMENT_FORM_AVAILABLE;
+
+    const {
+        inputCurrencies,
+        outputCurrencies,
+        maticDistribution,
+        affiliateReward,
+        isLoading: isLoadingExchange,
+        error
+    } = useExchangeConfig();
+
+    const { referral, isLoading: isLoadingReferral } = useReferralInfo();
+    const referralEl = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const hash = location.hash;
@@ -65,7 +74,8 @@ export function DepositView() {
                                 })}
                             >
                                 <BuyForm
-                                    paymentLimits={paymentLimits}
+                                    inputCurrencies={inputCurrencies}
+                                    outputCurrencies={outputCurrencies}
                                     maticDistribution={maticDistribution}
                                     configLoadFailed={!!error}
                                 />

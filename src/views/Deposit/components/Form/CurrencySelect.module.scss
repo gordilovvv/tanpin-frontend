@@ -1,0 +1,105 @@
+.select {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 12px;
+    align-items: center;
+    justify-content: initial;
+    padding: 4px 0;
+}
+
+.name {
+    transition: color 0.1s linear;
+}
+
+.arrow {
+    width: 24px;
+    height: 24px;
+    color: var(--color-typo-ghost);
+    transition: color 0.1s, transform 0.1s linear;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.select {
+    @include hover {
+
+        .currency,
+        .arrow {
+            color: var(--color-typo-base);
+        }
+    }
+
+    &.opened {
+
+        .currency,
+        .arrow {
+            color: var(--color-typo-base);
+        }
+
+        .arrow {
+            transform: scaleY(-1);
+        }
+    }
+}
+
+.list {
+    display: grid;
+    grid-template-columns: minmax(0, auto);
+}
+
+.popover {
+    transform-origin: top right;
+
+    &:global(.appear) {
+        animation: popoverAppear 0.1s linear forwards;
+    }
+
+    &:global(.disappear) {
+        animation: popoverDisappear 0.1s linear forwards;
+    }
+}
+
+.selectSkeleton {
+    width: 100px;
+    height: 18px;
+}
+
+@keyframes popoverAppear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popoverDisappear {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@include max767 {
+    .select {
+        gap: 8px;
+    }
+
+    .arrow {
+        width: 20px;
+        height: 20px;
+    }
+
+    .selectSkeleton {
+        width: 80px;
+        height: 18px;
+    }
+}

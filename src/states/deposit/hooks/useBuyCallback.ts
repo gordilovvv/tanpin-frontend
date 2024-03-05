@@ -4,10 +4,12 @@ import { useAccount } from '@/states/user/hooks/useAccount';
 import { useTranslation } from '@/localization';
 import { createPayment } from '../fetch/createPayment';
 import { getReferralCode } from './useReferralCode';
+import { InputCurrency } from '../types';
 import { AxiosError } from 'axios';
 
 export function useBuyCallback(
     amountIn?: string,
+    currencyIn?: InputCurrency,
     inputError?: string
 ) {
     const { t } = useTranslation();
@@ -17,7 +19,7 @@ export function useBuyCallback(
 
     const buyCallback = useCallback(async () => {
         try {
-            if (!amountIn || !address || inputError) {
+            if (!amountIn || !currencyIn || !address || inputError) {
                 throw new Error('BuyCallback called unnecessary!');
             }
 
@@ -26,6 +28,7 @@ export function useBuyCallback(
             const referralCode = getReferralCode();
             const { redirectURL } = await createPayment(
                 amountIn,
+                currencyIn.id,
                 address,
                 referralCode
             );

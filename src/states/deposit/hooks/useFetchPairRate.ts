@@ -5,11 +5,13 @@ import { fetchPairPrice } from '../fetch/fetchPairPrice';
  * `null` - loading
  * `undefined` - error
  */
-export function useFetchPairRate() {
+export function useFetchPairRate(inputCurrencyId?: string) {
     const { data, error, isLoading } = useSWRImmutable(
-        ['deliveredPairRate'],
+        inputCurrencyId
+            ? [`deliveredPairRate:${inputCurrencyId}`]
+            : null,
         async () => {
-            const pairPrice = await fetchPairPrice();
+            const pairPrice = await fetchPairPrice(inputCurrencyId!);
 
             return pairPrice;
         },
