@@ -1,0 +1,105 @@
+.box {
+    position: relative;
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(0, auto);
+    align-items: center;
+    justify-content: initial;
+    border-radius: 12px;
+    border: 2px solid var(--color-stroke);
+    background: var(--color-essential);
+    padding: 32px;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 24px;
+    align-items: center;
+}
+
+.content {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.stack {
+    display: grid;
+    gap: 4px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.label {
+    color: var(--color-typo-ghost);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+}
+
+.address {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 14px;
+    align-items: center;
+    justify-content: initial;
+    color: var(--color-typo-base);
+
+    &Value {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: -0.16px;
+        word-break: break-all;
+    }
+}
+
+.address {
+    .addressCopy {
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+.network {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+@include max767 {
+    .box {
+        padding: 20px;
+    }
+
+    .grid {
+        gap: 0;
+        grid-template-columns: minmax(0, auto);
+    }
+
+    .qr {
+        display: none;
+    }
+
+    .content {
+        gap: 14px;
+    }
+
+    .label {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .network {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 24px;
+    }
+}

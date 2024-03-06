@@ -1,0 +1,18 @@
+.progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 6px;
+}
+
+.line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-primary);
+    transform-origin: center left;
+    transition: transform 0.1s linear;
+}

@@ -5,8 +5,9 @@ import usdtEthereumLogo from '@/app/assets/images/usdt-ethereum.png';
 import usdtBscLogo from '@/app/assets/images/usdt-bsc.png';
 import usdtTronLogo from '@/app/assets/images/usdt-tron.png';
 import styles from './CurrencyIcon.module.scss';
+import classNames from 'classnames';
 
-const currencyIdToIcon = {
+const currencyByCode = {
     'tanpin': tanpinLogo,
     'rub': rubLogo,
     'usdt-polygon': usdtPolygonLogo,
@@ -16,15 +17,16 @@ const currencyIdToIcon = {
 };
 
 type CurrencyIconProps = {
-    currencyId: string
+    code: string,
+    size?: 's' | 'm' // s - 18px, m - 24px
 }
 
-export function CurrencyIcon({ currencyId }: CurrencyIconProps) {
+export function CurrencyIcon({ code, size = 's' }: CurrencyIconProps) {
     return (
-        <div className={styles.icon}>
+        <div className={classNames(styles.icon, styles[size])}>
             <img
-                src={currencyIdToIcon[currencyId]}
-                alt={currencyId}
+                src={currencyByCode[code]}
+                alt={code}
             />
         </div>
     );

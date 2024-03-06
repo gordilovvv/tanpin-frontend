@@ -1,0 +1,34 @@
+.copy {
+    display: flex;
+    padding: 4px 0;
+    color: var(--color-typo-ghost);
+    transition: color 0.1s linear;
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    @include hover {
+        color: var(--color-typo-base);
+    }
+
+
+    &:active {
+        color: var(--color-typo-ghost);
+        transition: none;
+    }
+}
+
+@include max767 {
+    .copy {
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        &:active {
+            color: var(--color-typo-base);
+        }
+    }
+}

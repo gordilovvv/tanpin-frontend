@@ -10,6 +10,7 @@ export function ToastProvider({ children }: PropsWithChildren<unknown>) {
 
     const components: Record<ToastVariant, React.JSXElementConstructor<any>> = useMemo(() => {
         return {
+            [ToastVariant.SUCCESS]: Toast,
             [ToastVariant.LOADING]: Toast,
             [ToastVariant.DANGER]: Toast,
             [ToastVariant.WARNING]: Toast

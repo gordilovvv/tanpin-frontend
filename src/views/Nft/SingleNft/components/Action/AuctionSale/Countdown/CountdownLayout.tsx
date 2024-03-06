@@ -1,5 +1,5 @@
-import { CountdownLetter } from '../CountdownLetter';
-import { CountDownData } from '../types';
+
+import { CountDownData, CountdownLetter } from '@/components/Countdown';
 import styles from './CountdownLayout.module.scss';
 
 type CountdownLayoutProps = {

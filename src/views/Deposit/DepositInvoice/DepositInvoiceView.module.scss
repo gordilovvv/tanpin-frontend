@@ -1,0 +1,50 @@
+.container {
+    position: relative;
+    padding-top: 180px;
+    padding-bottom: 150px;
+
+    @include min1001 {
+        --page-padding: 48px;
+    }
+}
+
+.wrap {
+    display: grid;
+    gap: 36px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 42px;
+    letter-spacing: -0.648px;
+    text-align: center;
+}
+
+.stack {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(0, auto);
+}
+
+@include max767 {
+    .container {
+        padding-top: 124px;
+        padding-bottom: 48px;
+    }
+
+    .wrap {
+        gap: 24px;
+    }
+
+    .title {
+        font-size: 24px;
+        line-height: 32px;
+        text-align: left;
+    }
+
+    .stack {
+        gap: 14px;
+    }
+}

@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { ArrowDropdown, PopoverButton, PopoverMenu, Skeleton, usePopoverState } from '@/uikit';
-import { CurrencyIcon } from './CurrencyIcon';
+import { CurrencyIcon } from '@/components/CurrencyIcon';
 import { CurrencyName } from './CurrencyName';
 import { CurrencySelectItem } from './CurrencySelectItem';
 import { InputCurrency, OutputCurrency } from '@/states/deposit/types';
@@ -59,7 +59,7 @@ export function CurrencySelect({ selectedCurrency, allCurrencies, onSelect }: Cu
                     [styles.opened]: isPopoverOpened
                 })}
             >
-                <CurrencyIcon currencyId={selectedCurrency.id} />
+                <CurrencyIcon code={selectedCurrency.id} />
                 <CurrencyName currency={selectedCurrency} />
             </div>
         );
@@ -73,8 +73,7 @@ export function CurrencySelect({ selectedCurrency, allCurrencies, onSelect }: Cu
                     [styles.opened]: isPopoverOpened
                 })}
             >
-                <CurrencyIcon currencyId={selectedCurrency.id} />
-
+                <CurrencyIcon code={selectedCurrency.id} />
                 <CurrencyName currency={selectedCurrency} />
 
                 <div className={styles.arrow}>

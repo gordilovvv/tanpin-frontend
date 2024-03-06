@@ -1,0 +1,35 @@
+.countdown {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+.letter {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+@include max767 {
+    .countdown {
+        justify-content: space-between;
+    }
+
+    .label,
+    .letter {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

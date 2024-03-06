@@ -38,3 +38,4 @@ export { World } from './components/World';
 export { Transfer } from './components/Transfer';
 export { Copy } from './components/Copy';
 export { Friends } from './components/Friends';
+export { Attention } from './components/Attention';

@@ -1,6 +1,6 @@
 type CountdownLetterProps = {
     count: number
-    label: string,
+    label?: string,
     end?: boolean,
     className?: string
 }

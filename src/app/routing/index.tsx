@@ -12,6 +12,7 @@ import { OwnedView } from '@/views/Assets/Owned/OwnedView';
 import { SaleView } from '@/views/Assets/Sale/SaleView';
 import { RequireConnectedWallet } from './requireConnectedWallet';
 import { DepositView } from '@/views/Deposit/DepositView';
+import { DepositInvoiceView } from '@/views/Deposit/DepositInvoice/DepositInvoiceView';
 import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSuccessView';
 import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositRejectedView';
 import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
@@ -51,10 +52,6 @@ export const router = createBrowserRouter([
                 path: '/:gameID',
                 element: <SingleGameView />
             },
-            ...(PAYMENT_PAGE_AVAILABLE ? [{
-                path: '/deposit',
-                element: <DepositView />,
-            }] : []),
             {
                 path: '/:gameID/:collectionID',
                 element: <SingleCollectionView />
@@ -62,6 +59,14 @@ export const router = createBrowserRouter([
             {
                 path: '/:gameID/:collectionID/:tokenID',
                 element: <SingleNftView />
+            },
+            ...(PAYMENT_PAGE_AVAILABLE ? [{
+                path: '/deposit',
+                element: <DepositView />,
+            }] : []),
+            {
+                path: '/deposit/invoice/:invoiceID',
+                element: <DepositInvoiceView />,
             },
             {
                 element: (

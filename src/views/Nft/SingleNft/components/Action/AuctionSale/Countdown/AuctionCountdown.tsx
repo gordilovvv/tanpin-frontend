@@ -1,5 +1,5 @@
-import { CountdownCalculation } from './Calculation';
-import { CountdownLayout } from './Layout/CountdownLayout';
+import { CountdownCalculation } from '@/components/Countdown';
+import { CountdownLayout } from './CountdownLayout';
 import { Auction, AuctionStatus } from '@/states/types';
 import styles from './AuctionCountdown.module.scss';
 

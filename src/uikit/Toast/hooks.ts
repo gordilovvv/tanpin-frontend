@@ -17,6 +17,13 @@ export function useToast() {
         return closeSnackbar();
     }, [closeSnackbar]);
 
+    const toastSuccess = useCallback((text: string) => {
+        enqueueSnackbar(text, {
+            variant: ToastVariant.SUCCESS,
+            autoHideDuration: 3_000
+        });
+    }, [enqueueSnackbar]);
+
     const toastLoading = useCallback(<
         TMessage extends string,
         TPromise extends Promise<any>
@@ -46,6 +53,7 @@ export function useToast() {
     }, [enqueueSnackbar]);
 
     return {
+        toastSuccess,
         toastLoading,
         toastDanger,
         toastWarning,

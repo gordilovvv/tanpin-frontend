@@ -47,6 +47,14 @@
     text-overflow: ellipsis;
 }
 
+.toast.success {
+    border-color: var(--color-primary);
+
+    .icon {
+        color: var(--color-primary);
+    }
+}
+
 .toast.danger {
     border-color: var(--color-danger);
 

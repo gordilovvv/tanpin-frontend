@@ -1,8 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
-import { CountDownData } from './types';
+
+export type CountDownData = {
+    days: number,
+    hours: number,
+    minutes: number,
+    seconds: number,
+    isPast: boolean
+}
 
 type CountDownCalculationProps = {
-    date: string,
+    date: string | number,
     children: (data: CountDownData) => JSX.Element,
     onExpire?: () => void
 }

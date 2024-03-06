@@ -1,5 +1,5 @@
 import { Mark, UnstyleButton } from '@/uikit';
-import { CurrencyIcon } from './CurrencyIcon';
+import { CurrencyIcon } from '@/components/CurrencyIcon';
 import { CurrencyName } from './CurrencyName';
 import { InputCurrency, OutputCurrency } from '@/states/deposit/types';
 import classNames from 'classnames';
@@ -24,7 +24,7 @@ export function CurrencySelectItem({ currency, active, onClick }: CurrencySelect
                     <Mark />
                 </div>}
 
-                <CurrencyIcon currencyId={currency.id} />
+                <CurrencyIcon code={currency.id} />
 
                 <CurrencyName currency={currency} />
             </div>
