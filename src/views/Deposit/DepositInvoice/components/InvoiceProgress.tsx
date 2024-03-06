@@ -8,7 +8,7 @@ type InvoiceProgressProps = {
     onExpire?: () => void
 }
 
-const orderTTL = 15 * 60_000;
+const orderTTL = 30 * 60_000;
 
 export function InvoiceProgress({ expiresTimestamp, className, onExpire }: InvoiceProgressProps) {
     const [now, setNow] = useState(Date.now());
