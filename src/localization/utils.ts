@@ -1,8 +1,8 @@
 import { memoize } from 'lodash';
-import { defaultLanguage, supportedLanguages } from './config';
+import { defaultLanguage, supportedLanguages, version } from './config';
 
 export async function fetchTranslations(languageCode: string) {
-    const response = await fetch(`/locales/${languageCode}.json?v=1`);
+    const response = await fetch(`/locales/${languageCode}.json?v=${version}`);
     const resource = await response.json();
 
     return {
