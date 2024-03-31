@@ -6,17 +6,13 @@ export function useCollectionsFilterState(params?: {
     popular?: boolean
 }) {
     const { gameID, popular } = params ?? {};
-    const [search, sort] = useCollectionsFilterStore(state => [
-        state.search,
-        state.sort,
-    ]);
+    const sort = useCollectionsFilterStore(state => state.sort);
 
     return useMemo(() => {
         return {
-            search,
             sort,
             gameID,
             popular
         };
-    }, [search, sort, gameID, popular]);
+    }, [sort, gameID, popular]);
 }

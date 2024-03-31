@@ -3,6 +3,7 @@ import { InfiniteLoader, InfiniteLoaderProps, InfiniteLoaderChildProps } from 'r
 import { ScrollChildProps, Scroller } from './Scroller';
 import { ErrorResult } from '@/components/Explorer';
 import { GridPagination, GridState } from './hooks';
+import { useTranslation } from '@/localization';
 
 export type LoaderChildProps = ScrollChildProps & {
     onRowsRendered: InfiniteLoaderChildProps['onRowsRendered'],
@@ -34,6 +35,7 @@ export function Loader({
     empty,
     rejected
 }: LoaderProps) {
+    const { t } = useTranslation();
     const infinityLoader = useRef<InfiniteLoader>(null);
 
     useEffect(() => {
@@ -55,8 +57,8 @@ export function Loader({
             return <>{rejected()}</>;
         } else {
             return (<ErrorResult
-                title='Something went wrong'
-                text='Some error occurred while list fetching'
+                title={t('An error occurred')}
+                text={t('There was an error while fetching')}
                 onRetry={pagination.reloadAfterError}
             />);
         }

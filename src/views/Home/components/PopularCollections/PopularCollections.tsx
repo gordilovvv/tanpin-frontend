@@ -1,5 +1,5 @@
 import { Title } from '@/uikit';
-import { CollectionsExplorer } from '@/components/Explorer';
+import { CollectionsGrid } from '@/components/Collections';
 import { useTranslation } from '@/localization';
 import styles from './PopularCollections.module.scss';
 
@@ -12,7 +12,7 @@ export function PopularCollections() {
                 {t('Trending Collections')}
             </Title>
 
-            <CollectionsExplorer popularCollections />
+            <CollectionsGrid />
         </div>
     );
 }

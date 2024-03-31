@@ -2,9 +2,8 @@ import { useCallback } from 'react';
 import { useCollectionsFilterStore } from '../CollectionsFilterStore';
 
 export function useCollectionsFilterActions() {
-    const [setSort, setSearch, replaceFilterState] = useCollectionsFilterStore(state => [
+    const [setSort, replaceFilterState] = useCollectionsFilterStore(state => [
         state.setSort,
-        state.setSearch,
         state.replaceFilterState,
     ]);
 
@@ -16,17 +15,8 @@ export function useCollectionsFilterActions() {
         }
     }, [setSort]);
 
-    const handleSearch: typeof setSearch = useCallback((search) => {
-        const state = useCollectionsFilterStore.getState();
-
-        if (state.search !== search) {
-            setSearch(search);
-        }
-    }, [setSearch]);
-
     return {
         handleSort,
-        handleSearch,
         handleReplaceFilterState: replaceFilterState
     };
 }

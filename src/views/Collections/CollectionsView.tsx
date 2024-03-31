@@ -1,7 +1,7 @@
 import { Select } from '@/uikit';
 import { CatalogHead, Container, PageWrapper } from '@/components/Layout';
+import { CollectionsGrid } from '@/components/Collections';
 import { CollectionsSort } from '@/states/collection/types';
-import { CollectionsExplorer } from '@/components/Explorer';
 import { useTranslation } from '@/localization';
 import { useCollectionsFilterState } from '@/states/explorer/hooks/useCollectionsFilterState';
 import { useCollectionsFilterActions } from '@/states/explorer/hooks/useCollectionsFilterActions';
@@ -9,12 +9,12 @@ import styles from './CollectionsView.module.scss';
 
 export function CollectionsView() {
     const { t } = useTranslation();
-    const { sort } = useCollectionsFilterState();
+    const filter = useCollectionsFilterState();
     const { handleSort } = useCollectionsFilterActions();
 
     const options: { value: CollectionsSort; label: string }[] = [
-        { value: CollectionsSort.TRENDING, label: t('Trending') },
-        { value: CollectionsSort.RECENTLY_ADDED, label: t('Recently Added') },
+        { value: CollectionsSort.NEWEST, label: t('Newest') },
+        { value: CollectionsSort.OLDEST, label: t('Oldest') },
     ];
 
     return (
@@ -28,14 +28,14 @@ export function CollectionsView() {
                             <div className={styles.select}>
                                 <Select
                                     options={options}
-                                    selectedValue={sort}
+                                    selectedValue={filter.sort}
                                     onChange={handleSort}
                                 />
                             </div>
                         }
                     />
 
-                    <CollectionsExplorer />
+                    <CollectionsGrid filter={filter} />
                 </div>
             </Container>
         </PageWrapper>

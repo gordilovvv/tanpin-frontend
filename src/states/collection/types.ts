@@ -1,45 +1,23 @@
-import { Game } from '../game/types';
-
-export enum CollectionsSort {
-    TRENDING = 'TRENDING',
-    RECENTLY_ADDED = 'RECENTLY_ADDED'
-}
-
 export type Collection = {
-    ID: string
-    name: string
-    symbol: string
-    description: string
-    logoURL: string
-    coverURL: string
-    stats: {
-        items: number
-        sales: number
-        volume: {
-            amount: string
-            currency: string
-        }
-        volumeChange?: string,
-        floor: {
-            amount: string
-            currency: string
-        }
-    },
-    attributes: {
-        traitType: string
-        values: string[]
-    }[],
-    game: {
-        ID: Game['ID']
-        name: Game['name']
-    }
+    ID: string;
+    chain: string;
+    address: string;
+    gameID: string;
+    gameName: string;
+    name: string;
+    description?: string;
+    logoUrl: string;
+    coverUrl: string;
+    createdAt: Date;
 };
 
-export type CollectionsFilter = {
-    gameID?: string,
-    userAddress?: string,
-    search?: string,
-    sort?: CollectionsSort,
-    popular?: boolean
-}
+/** Response from server */
+export type CollectionRes = Omit<Collection, 'ID' | 'gameID'> & {
+    id: string,
+    gameId: string
+};
 
+export enum CollectionsSort {
+    NEWEST = 'newest',
+    OLDEST = 'oldest'
+}
