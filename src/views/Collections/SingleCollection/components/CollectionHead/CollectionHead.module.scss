@@ -60,20 +60,13 @@
 }
 
 .collection {
-    display: flex;
-
-    &Link {
-        display: grid;
-        gap: 24px;
-        grid-template-columns: auto 1fr;
-        align-items: center;
-        color: var(--color-typo-base);
-        cursor: pointer;
-        text-decoration: none;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
+    display: grid;
+    gap: 24px;
+    grid-template-columns: auto 1fr;
+    align-items: center;
 
     &Name {
+        color: var(--color-typo-base);
         font-weight: 800;
         font-size: 48px;
         line-height: 1.1;
@@ -148,6 +141,8 @@
     }
 
     .collection {
+        gap: 16px;
+
         &Name {
             font-size: 24px;
         }

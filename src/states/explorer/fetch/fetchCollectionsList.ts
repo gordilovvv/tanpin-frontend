@@ -31,7 +31,7 @@ export async function fetchCollectionsList(params: {
         offset
     });
 
-    const { data } = await api.get<Response>(`/collections/get.list?${searchParams}`);
+    const { data } = await api.get<Response>(`/collections?${searchParams}`);
     const collections: Collection[] = [];
 
     for (const { id, gameId, ...collection } of data.collections) {

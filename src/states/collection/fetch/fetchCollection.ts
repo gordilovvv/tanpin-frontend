@@ -22,7 +22,7 @@ export async function fetchCollection(collectionID: string) {
         };
     }
 
-    const { data } = await api.get<CollectionWithAttributes>(`/collections/get/${collectionID}`);
+    const { data } = await api.get<CollectionWithAttributes>(`/collection/${collectionID}`);
 
     return data;
 }

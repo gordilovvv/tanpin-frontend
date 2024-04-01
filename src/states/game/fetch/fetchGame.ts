@@ -13,7 +13,7 @@ export async function fetchGame(id: string): Promise<Game> {
         };
     }
 
-    const { data } = await api.get<Game>(`/games/get/${id}`);
+    const { data } = await api.get<Game>(`/game/${id}`);
 
     return data;
 }
