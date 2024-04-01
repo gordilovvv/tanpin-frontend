@@ -11,14 +11,14 @@ import { useOpenedState } from '@/hooks/useOpenedState';
 import { useScrollEffect } from '@/hooks/useScrollEffect';
 import { useTokensFilterState } from '@/states/explorer/hooks/useTokensFilterState';
 import { useTokensFilterActions } from '@/states/explorer/hooks/useTokensFilterActions';
-import { Collection } from '@/states/collection/types';
+import { CollectionWithAttributes } from '@/states/collection/types';
 import { NFTExplorerCategory } from '@/states/explorer/types';
 import { NFTSort, initialTokensFilterState } from '@/states/explorer/TokensFilterStore';
 import styles from './NFTExplorer.module.scss';
 
 type NFTExplorerProps = {
     type: `${NFTExplorerCategory}`,
-    collection?: Collection
+    collection?: CollectionWithAttributes
     ownerAddress?: string
 }
 

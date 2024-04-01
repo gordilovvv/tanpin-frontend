@@ -2,8 +2,8 @@ import { NFTExplorer } from '@/components/Explorer';
 import { Container, PageError, PageLoader } from '@/components/Layout';
 import { CollectionHead } from './components/CollectionHead/CollectionHead';
 import { useParams } from 'react-router-dom';
-import { useGameQuery } from '@/states/game/hooks/useGameQuery';
-import { useCollectionQuery } from '@/states/collection/hooks/useCollectionQuery';
+import { useGameFetcher } from '@/states/game/hooks/useGameFetcher';
+import { useCollectionFetcher } from '@/states/collection/hooks/useCollectionFetcher';
 import styles from './SingleCollectionView.module.scss';
 
 export function SingleCollectionView() {
@@ -13,13 +13,13 @@ export function SingleCollectionView() {
         game,
         isLoading: isGameLoading,
         error: gameError
-    } = useGameQuery(gameID);
+    } = useGameFetcher(gameID);
 
     const {
         collection,
         isLoading: isCollectionLoading,
         error: collectionError
-    } = useCollectionQuery(collectionID);
+    } = useCollectionFetcher(collectionID);
 
     if (gameError || collectionError)
         return (<PageError />);

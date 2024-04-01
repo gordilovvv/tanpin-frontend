@@ -9,7 +9,7 @@ import { useTokensFilterActions } from '@/states/explorer/hooks/useTokensFilterA
 import { TokensFilterState } from '@/states/explorer/TokensFilterStore';
 import { convertToHashmap } from '@/utils/convertToHashmap';
 import { ActiveAttributesHashMap } from './types';
-import { Collection } from '@/states/collection/types';
+import { CollectionWithAttributes } from '@/states/collection/types';
 import { NFTExplorerCategory } from '@/states/explorer/types';
 import classNames from 'classnames';
 import styles from './Filter.module.scss';
@@ -17,7 +17,7 @@ import styles from './Filter.module.scss';
 type FilterProps = {
     explorer: `${NFTExplorerCategory}`,
     filterOnButton?: boolean,
-    collection?: Collection,
+    collection?: CollectionWithAttributes,
     sticky?: boolean,
     onFilterApply?: () => void,
     onFilterReset?: () => void

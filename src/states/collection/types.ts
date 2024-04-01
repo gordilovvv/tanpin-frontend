@@ -8,8 +8,15 @@ export type Collection = {
     description?: string;
     logoUrl: string;
     coverUrl: string;
-    createdAt: Date;
+    createdAt: string;
 };
+
+export type CollectionWithAttributes = Collection & {
+    attributes: {
+        traitType: string,
+        values: string[]
+    }[]
+}
 
 /** Response from server */
 export type CollectionRes = Omit<Collection, 'ID' | 'gameID'> & {

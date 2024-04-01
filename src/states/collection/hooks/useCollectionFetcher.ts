@@ -1,11 +1,11 @@
 import useSWRImmutable from 'swr/immutable';
 import { fetchCollection } from '../fetch/fetchCollection';
-import { Collection } from '../types';
 
-export function useCollectionQuery(collectionID: string) {
-    const { data: collection, isLoading, error } = useSWRImmutable<Collection>(
+export function useCollectionFetcher(collectionID: string) {
+    const { data: collection, isLoading, error } = useSWRImmutable(
         ['collection', collectionID],
-        () => fetchCollection(collectionID)
+        () => fetchCollection(collectionID),
+        { revalidateOnFocus: true }
     );
 
     return {
