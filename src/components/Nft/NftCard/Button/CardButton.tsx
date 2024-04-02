@@ -13,12 +13,11 @@ type CardButtonProps = {
     className?: string
 }
 
-// TODO: КОГДА ПОЙДЕТ ЛОГИКА ПОКУПКИ ИЛИ СТАВКИ РАЗДЕЛИТЬ НА 2 КОМПОНЕНТА
 export const CardButton = ({ contractAddress, tokenID, status, className }: CardButtonProps) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/${contractAddress}:${tokenID}`);
+        navigate(`/${contractAddress}/${tokenID}`);
     };
 
     return (

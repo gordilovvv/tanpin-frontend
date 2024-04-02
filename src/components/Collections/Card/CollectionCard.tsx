@@ -12,7 +12,7 @@ type CollectionCardProps = {
 export function CollectionCard({ collection }: CollectionCardProps) {
     return (
         <Link
-            to={`/${collection.gameID}/${collection.ID}`}
+            to={`/collection/${collection.ID}`}
             className={styles.card}
         >
             <div className={styles.coverWrap}>

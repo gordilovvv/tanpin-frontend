@@ -20,7 +20,7 @@ export function NftCard({ nft, userAddress }: NftCardProps) {
     return (
         <div className={styles.card}>
             <Link
-                to={`/${nft.ID}`}
+                to={`/${nft.contractAddress}/${nft.tokenID}`}
                 className={styles.cardLink}
             >
                 <div className={styles.imageWrap}>
