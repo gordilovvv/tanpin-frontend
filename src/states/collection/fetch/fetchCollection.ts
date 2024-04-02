@@ -1,8 +1,8 @@
 import { api } from '@/app/api';
 import { MOCK_API_CALLS } from '@/config';
-import { CollectionWithAttributes } from '../types';
+import { CollectionResWithAttributes, CollectionWithAttributes } from '../types';
 
-export async function fetchCollection(collectionID: string) {
+export async function fetchCollection(collectionID: string): Promise<CollectionWithAttributes> {
     if (MOCK_API_CALLS) {
         return {
             ID: '1',
@@ -22,7 +22,14 @@ export async function fetchCollection(collectionID: string) {
         };
     }
 
-    const { data } = await api.get<CollectionWithAttributes>(`/collection/${collectionID}`);
+    const response = await api.get<CollectionResWithAttributes>(`/collection/${collectionID}`);
 
-    return data;
+    const { id, gameId, ...data } = response.data;
+    const collection: CollectionWithAttributes = {
+        ID: id,
+        gameID: gameId,
+        ...data
+    };
+
+    return collection;
 }

@@ -24,6 +24,13 @@ export type CollectionRes = Omit<Collection, 'ID' | 'gameID'> & {
     gameId: string
 };
 
+export type CollectionResWithAttributes = CollectionRes & {
+    attributes: {
+        traitType: string,
+        values: string[]
+    }[]
+}
+
 export enum CollectionsSort {
     NEWEST = 'newest',
     OLDEST = 'oldest'

@@ -7,19 +7,19 @@ import { useCollectionFetcher } from '@/states/collection/hooks/useCollectionFet
 import styles from './SingleCollectionView.module.scss';
 
 export function SingleCollectionView() {
-    const { gameID, collectionID } = useParams() as { gameID: string, collectionID: string };
-
-    const {
-        game,
-        isLoading: isGameLoading,
-        error: gameError
-    } = useGameFetcher(gameID);
+    const { collectionID } = useParams() as { collectionID: string };
 
     const {
         collection,
         isLoading: isCollectionLoading,
         error: collectionError
     } = useCollectionFetcher(collectionID);
+
+    const {
+        game,
+        isLoading: isGameLoading,
+        error: gameError
+    } = useGameFetcher(collection?.gameID);
 
     if (gameError || collectionError)
         return (<PageError />);
