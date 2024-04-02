@@ -20,11 +20,10 @@ export function useOwners() {
             auction?: Auction
         })[] = [];
 
-        for (const { id, sales, auctions, ...owner } of nftOwners) {
+        for (const { sales, auctions, ...owner } of nftOwners) {
             if (sales.length) {
                 for (const sale of sales) {
                     ownersList.push({
-                        id: `${id}-${sale.saleID}`,
                         sale,
                         ...owner
                     });
@@ -32,16 +31,12 @@ export function useOwners() {
             } else if (auctions.length) {
                 for (const auction of auctions) {
                     ownersList.push({
-                        id: `${id}-${auction.ID}`,
                         auction,
                         ...owner
                     });
                 }
             } else {
-                ownersList.push({
-                    id,
-                    ...owner
-                });
+                ownersList.push(owner);
             }
         }
 

@@ -3,12 +3,11 @@ import { v4 as uuid } from 'uuid';
 import { NFTAttribute, NFTSaleStatus } from '../types';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
 
-export type TokensFilterStatus = `${NFTSaleStatus}` | 'ALL';
+export type TokensFilterStatus = `${NFTSaleStatus}` | 'all';
 
 export enum NFTSort {
-    RECENTLY_ADDED = 'RECENTLY_ADDED',
-    HIGH_PRICE_FIRST = 'HIGH_PRICE_FIRST',
-    LOW_PRICE_FIRST = 'LOW_PRICE_FIRST'
+    NEWEST = 'newest',
+    OLDEST = 'oldest'
 }
 
 export type TokensFilterState = {
@@ -39,8 +38,8 @@ type Actions = {
 
 export const initialTokensFilterState: Omit<TokensFilterState, 'hash'> = {
     search: '',
-    sort: NFTSort.RECENTLY_ADDED,
-    status: 'ALL',
+    sort: NFTSort.NEWEST,
+    status: 'all',
     minPrice: '',
     maxPrice: '',
     attributes: [],

@@ -2,24 +2,23 @@ import { Button } from '@/uikit';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from '@/localization';
 import { NFTSaleStatus } from '@/states/types';
+import { Address } from 'viem';
 import classNames from 'classnames';
 import styles from './CardButton.module.scss';
 
 type CardButtonProps = {
-    nftID: string
-    gameID: string
-    collectionID: string
+    contractAddress: Address,
+    tokenID: string,
     status: NFTSaleStatus.FIXED_PRICE | NFTSaleStatus.AUCTION
     className?: string
 }
 
 // TODO: КОГДА ПОЙДЕТ ЛОГИКА ПОКУПКИ ИЛИ СТАВКИ РАЗДЕЛИТЬ НА 2 КОМПОНЕНТА
-export const CardButton = ({ nftID, gameID, collectionID, status, className }: CardButtonProps) => {
+export const CardButton = ({ contractAddress, tokenID, status, className }: CardButtonProps) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const handleClick = () => {
-        // TODO: logic
-        navigate(`/${gameID}/${collectionID}/${nftID}`);
+        navigate(`/${contractAddress}:${tokenID}`);
     };
 
     return (

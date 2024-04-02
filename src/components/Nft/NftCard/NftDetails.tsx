@@ -2,19 +2,19 @@ import { useMemo } from 'react';
 import { CardButton } from './Button/CardButton';
 import { CardProperties } from './Properties/CardProperties';
 import { findBestNFTOffer, findOwnerOffer } from '@/utils/nft';
-import { MultipleNFT, NFTSaleStatus } from '@/states/types';
+import { NFT, NFTSaleStatus } from '@/states/types';
 import { isAddressOwner } from '@/utils/addressHelper';
 import { Address } from 'viem';
 import { NFTBestOffer } from '@/states/nft/types';
 
-type NftMultipleProps = {
-    nft: MultipleNFT,
+type NftDetailsProps = {
+    nft: NFT,
+    unique: boolean,
     userAddress?: Address,
     buttonClass?: string
 }
 
-export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps) {
-    const isSingleOwner = nft.owners.length === 1;
+export function NftDetails({ nft, unique, userAddress, buttonClass }: NftDetailsProps) {
     const isOwner = useMemo(() => {
         if (userAddress) {
             const addresses = nft.owners.map(
@@ -47,7 +47,7 @@ export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps)
     }, [nft.owners, isOwner, userAddress]);
 
     const properties = useMemo(() => {
-        const propertiesType = isSingleOwner ? 'singleNFT' : 'multipleNFT';
+        const propertiesType = unique ? 'unique' : 'multiple';
 
         if (offer.status === NFTSaleStatus.FIXED_PRICE && offer.offer.sale) {
             const sale = offer.offer.sale;
@@ -82,7 +82,7 @@ export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps)
                 status={offer.status}
             />
         );
-    }, [offer, isSingleOwner]);
+    }, [offer, unique]);
 
     return (
         <>
@@ -90,9 +90,8 @@ export function NftMultiple({ nft, userAddress, buttonClass }: NftMultipleProps)
 
             {offer.status !== NFTSaleStatus.NOT_FOR_SALE && !isOwner && <CardButton
                 status={offer.status}
-                nftID={nft.ID}
-                collectionID={nft.collection.ID}
-                gameID={nft.collection.game.ID}
+                contractAddress={nft.contractAddress}
+                tokenID={nft.tokenID}
                 className={buttonClass}
             />}
         </>

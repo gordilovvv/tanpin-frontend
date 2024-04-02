@@ -44,8 +44,8 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
 
     // Reset filter state on unmount
     useEffect(() => {
-        if (type === 'ownershipSale' && filterState.status === 'ALL') {
-            handleReplaceFilterState({ status: 'FIXED_PRICE' }); // Special status for ownershipSale category
+        if (type === 'ownershipSale' && filterState.status === 'all') {
+            handleReplaceFilterState({ status: 'fixed_price' }); // Special status for ownershipSale category
         }
 
         return () => {
@@ -61,9 +61,8 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
     }, [t]);
 
     const sortOptions: { value: NFTSort; label: string }[] = [
-        { value: NFTSort.RECENTLY_ADDED, label: t('Recently Added') },
-        { value: NFTSort.HIGH_PRICE_FIRST, label: t('High Price First') },
-        { value: NFTSort.LOW_PRICE_FIRST, label: t('Low Price First') },
+        { value: NFTSort.NEWEST, label: t('Newest') },
+        { value: NFTSort.OLDEST, label: t('Oldest') }
     ];
 
     const handleFilterToggle = useCallback(() => {
@@ -92,7 +91,7 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
 
                 <SearchInput
                     value={filterState.search}
-                    placeholder={t('Search')}
+                    placeholder={t('Search by name')}
                     onChange={handleSearch}
                 />
 

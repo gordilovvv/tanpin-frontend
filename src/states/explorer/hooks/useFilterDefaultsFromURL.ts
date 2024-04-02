@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { NFTSort } from '@/states/nft/types';
 import { NFTSaleStatus } from '@/states/types';
-import { TokensFilterState, useTokensFilterStore } from '../TokensFilterStore';
+import { NFTSort, TokensFilterState, useTokensFilterStore } from '../TokensFilterStore';
 
 function parseSort(urlParam: string) {
-    return [NFTSort.RECENTLY_ADDED, NFTSort.LOW_PRICE_FIRST, NFTSort.HIGH_PRICE_FIRST].includes(urlParam as any) ? urlParam : '';
+    return [NFTSort.NEWEST, NFTSort.OLDEST].includes(urlParam as any) ? urlParam : '';
 }
 
 function parseStatus(urlParam: string) {
@@ -59,7 +58,7 @@ export function useNFTFilterDefaultsFromURL() {
         const paramsObject = paramsToObject(params);
         const newNFTFilterState = queryParamsToNFTFilterState(
             paramsObject,
-            NFTSort.RECENTLY_ADDED,
+            NFTSort.NEWEST,
             NFTSaleStatus.FIXED_PRICE
         );
 

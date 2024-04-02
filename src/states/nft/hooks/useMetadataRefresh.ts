@@ -12,10 +12,10 @@ export enum RefreshStatus {
     FULFILLED = 'fulfilled'
 }
 
-export function useMetadataRefresh(nftID: string) {
+export function useMetadataRefresh(contractAddress: `0x${string}`, tokenID: string) {
     const { t } = useTranslation();
     const { toastLoading } = useToast();
-    const { refetchNFT } = useNFTRefetch(nftID);
+    const { refetchNFT } = useNFTRefetch(contractAddress, tokenID);
     const [error, setError] = useState<string | undefined>();
     const [status, setStatus] = useState<RefreshStatus>(RefreshStatus.IDLE);
 
@@ -27,7 +27,7 @@ export function useMetadataRefresh(nftID: string) {
         // Добавляем задержку 1 сек, чтобы не прыгал тост
         const request = new Promise((resolve, reject) => {
             setTimeout(() => {
-                refreshMetadata(nftID)
+                refreshMetadata(contractAddress, tokenID)
                     .then(resolve)
                     .catch(reject);
             }, 1_000);
@@ -48,7 +48,7 @@ export function useMetadataRefresh(nftID: string) {
 
         setStatus(RefreshStatus.PENDING);
         toastLoading(t('Reloading Metadata...'), request);
-    }, [status, nftID, setStatus, setError, toastLoading, t]);
+    }, [status, contractAddress, tokenID, setStatus, setError, toastLoading, t]);
 
     const resetState = useCallback(() => {
         setError(undefined);

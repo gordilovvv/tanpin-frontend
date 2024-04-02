@@ -1,18 +1,18 @@
 import BigNumber from 'bignumber.js';
 import { NFTBestOffer } from '@/states/nft/types';
-import { Auction, MultipleNFT, NFT, NFTSaleStatus, Sale, SingleNFT } from '@/states/types';
+import { Auction, NFT, NFTSaleStatus, Sale } from '@/states/types';
 import { Address } from 'viem';
 import { isAddressEqual, isAddressOwner } from './addressHelper';
 
-export function isSingleNFT(nft: NFT): nft is SingleNFT {
-    return 'owner' in nft;
+export function isUniqueNFT(nft: NFT) {
+    return nft.maxSupply === 1;
 }
 
-export function isMultipleNFT(nft: NFT): nft is MultipleNFT {
-    return 'owners' in nft;
+export function isMultipleNFT(nft: NFT) {
+    return nft.maxSupply > 1;
 }
 
-export function findBestNFTOffer(owners: MultipleNFT['owners']): NFTBestOffer {
+export function findBestNFTOffer(owners: NFT['owners']): NFTBestOffer {
     let status: NFTSaleStatus = NFTSaleStatus.NOT_FOR_SALE;
     let bestOffer: {
         maker: Address,
@@ -72,7 +72,7 @@ export function findBestNFTOffer(owners: MultipleNFT['owners']): NFTBestOffer {
     }
 }
 
-export function findOwnerOffer(owners: MultipleNFT['owners'], userAddress: Address): {
+export function findOwnerOffer(owners: NFT['owners'], userAddress: Address): {
     sale?: Sale,
     auction?: Auction,
     status?: NFTSaleStatus
@@ -98,7 +98,7 @@ export function findOwnerOffer(owners: MultipleNFT['owners'], userAddress: Addre
     };
 }
 
-export function isOwnerOfMultipleNFT(address: Address | undefined, owners: MultipleNFT['owners']) {
+export function isOwnerOfMultipleNFT(address: Address | undefined, owners: NFT['owners']) {
     if (!address || !owners.length) {
         return undefined;
     }

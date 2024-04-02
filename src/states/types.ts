@@ -1,80 +1,41 @@
-import { Address } from 'viem';
-
-export type NFT = SingleNFT | MultipleNFT;
-
-export type SingleNFT = {
+export type NFT = {
     ID: string
     name: string
     description: string
-    attributes: {
-        traitType: string
-        value: string
-    }[]
+    attributes: NFTAttribute[]
     imageURL: string
-    contractAddress: Address
-    tokenID: string
-    owner: Address
-    sale?: Sale
-    auction?: Auction
-    status: NFTSaleStatus
-    collection: {
-        ID: string
-        name: string
-        logoURL: string
-        game: {
-            ID: string
-            name: string
-            logoURL: string
-        }
-    }
-}
-
-export type MultipleNFT = {
-    ID: string
-    name: string
-    description: string
-    attributes: {
-        traitType: string
-        value: string
-    }[]
-    imageURL: string
-    contractAddress: Address
+    contractAddress: `0x${string}`
     tokenID: string
     sold: number
     stock: number
-    supply: number
-    owners: NFTOwner[]
+    totalSupply: number
+    maxSupply: number
+    owners: NFTOwner[],
     collection: {
         ID: string
         name: string
         logoURL: string
-        game: {
-            ID: string
-            name: string
-            logoURL: string
-        }
     }
-}
-
-export type NFTOwner = {
-    id: string
-    owner: Address
-    value: number
-    sales: Sale[]
-    auctions: Auction[]
-    date: string
-    status: NFTSaleStatus
-}
-
-export enum NFTSaleStatus {
-    FIXED_PRICE = 'FIXED_PRICE',
-    AUCTION = 'AUCTION',
-    NOT_FOR_SALE = 'NOT_FOR_SALE'
+    metaDataURL: string
 }
 
 export type NFTAttribute = {
     traitType: string
     value: string
+}
+
+export type NFTOwner = {
+    owner: `0x${string}`
+    value: number
+    sales: Sale[]
+    auctions: Auction[]
+    status: NFTSaleStatus
+}
+
+export enum NFTSaleStatus {
+    FIXED_PRICE = 'fixed_price',
+    AUCTION = 'auction',
+    NOT_FOR_SALE = 'not_for_sale'
 }
 
 export type Sale = {

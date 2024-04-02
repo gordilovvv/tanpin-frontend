@@ -1,28 +1,26 @@
 import { Image, ImageSkeleton, Stock } from '@/uikit';
-import { NftSingle } from './NftSingle';
-import { NftMultiple } from './NftMultiple';
+import { NftDetails } from './NftDetails';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from '@/localization';
-import { isSingleNFT } from '@/utils/nft';
-import { formatTokenAmountShort } from '@/utils/formatTokenAmount';
 import { NFT } from '@/states/types';
-import { Address } from 'viem';
+import { useTranslation } from '@/localization';
+import { isUniqueNFT } from '@/utils/nft';
+import { formatTokenAmountShort } from '@/utils/formatTokenAmount';
 import styles from './NftCard.module.scss';
 
 type NftCardProps = {
     nft: NFT,
-    userAddress?: Address
+    userAddress?: `0x${string}`
 }
 
 export function NftCard({ nft, userAddress }: NftCardProps) {
     const { locale } = useTranslation();
-    const isSingle = isSingleNFT(nft);
+    const isUnique = isUniqueNFT(nft);
     const navigate = useNavigate();
 
     return (
         <div className={styles.card}>
             <Link
-                to={`/${nft.collection.game.ID}/${nft.collection.ID}/${nft.ID}`}
+                to={`/${nft.ID}`}
                 className={styles.cardLink}
             >
                 <div className={styles.imageWrap}>
@@ -34,13 +32,13 @@ export function NftCard({ nft, userAddress }: NftCardProps) {
                         pending={<ImageSkeleton className={styles.imageSkeleton} />}
                     />
 
-                    {!isSingle && nft.supply > 1 && <div className={styles.stock}>
+                    {!isUnique && <div className={styles.stock}>
                         <div className={styles.stockIcon}>
                             <Stock />
                         </div>
 
                         <div className={styles.stockCount}>
-                            {formatTokenAmountShort(nft.supply, locale)}
+                            {formatTokenAmountShort(nft.totalSupply, locale)}
                         </div>
                     </div>}
                 </div>
@@ -53,7 +51,7 @@ export function NftCard({ nft, userAddress }: NftCardProps) {
                                 event.preventDefault();
                                 event.stopPropagation();
 
-                                navigate(`/${nft.collection.game.ID}/${nft.collection.ID}`);
+                                navigate(`/collection/${nft.collection.ID}`);
                             }}
                         >
                             {nft.collection.name}
@@ -62,17 +60,12 @@ export function NftCard({ nft, userAddress }: NftCardProps) {
                         <div className={styles.title}>{nft.name}</div>
                     </div>
 
-                    {isSingle
-                        ? <NftSingle
-                            nft={nft}
-                            userAddress={userAddress}
-                            buttonClass={styles.action}
-                        />
-                        : <NftMultiple
-                            nft={nft}
-                            userAddress={userAddress}
-                            buttonClass={styles.action}
-                        />}
+                    <NftDetails
+                        nft={nft}
+                        unique={isUnique}
+                        userAddress={userAddress}
+                        buttonClass={styles.action}
+                    />
                 </div>
             </Link>
         </div>

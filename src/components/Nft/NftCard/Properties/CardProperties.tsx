@@ -1,12 +1,13 @@
-import { NFTSaleStatus } from '@/states/types';
+import { Currency } from '@/components/Currency';
 import { AuctionTime } from '../AuctionTime/AuctionTime';
 import { Property } from './Property/Property';
 import { PropertiesList } from './List/PropertiesList';
+import { NFTSaleStatus } from '@/states/types';
 import { useTranslation } from '@/localization';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 
 type CardPropertiesProps = {
-    type: 'singleNFT' | 'multipleNFT'
+    type: 'unique' | 'multiple'
     price?: string
     currency?: string
     auctionEndDate?: string
@@ -20,8 +21,8 @@ export function CardProperties({ type, price, currency, auctionEndDate, status }
         return (
             <PropertiesList>
                 <Property
-                    label={type === 'singleNFT' ? t('Price') : t('Price from')}
-                    value={<>{formatTokenAmount(price)} <span>{currency}</span></>}
+                    label={type === 'unique' ? t('Price') : t('Price from')}
+                    value={<>{formatTokenAmount(price)} <Currency>{currency}</Currency></>}
                 />
             </PropertiesList>
         );
