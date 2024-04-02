@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 import { Container, PageError, PageLoader, PageWrapper } from '@/components/Layout';
-import { BlockWrap } from './components/BlockWrap/BlockWrap';
 import { TokenAttributes, TokenImage } from '@/components/Nft';
+import { BlockWrap } from './components/BlockWrap/BlockWrap';
 import { TokenDetails } from './components/Details/TokenDetails';
 import { TokenHead } from './components/Head/TokenHead';
 import { TokenTabs } from './components/Tabs/TokenTabs';
-import { OwnerAction } from './components/Action/Owner/OwnerAction';
-import { SaleAction } from './components/Action/SaleAction';
-import { BestOfferAction } from './components/Action/BestOfferAction';
+import { OwnerAction } from './components/Action/OwnerAction';
+import { BestOffer } from './components/Action/BestOffer';
 import { useParams } from 'react-router-dom';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useNFTStore } from '@/states/nft/store';
@@ -15,19 +14,15 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useNFTFetch } from '@/states/nft/hooks/useNFTFetch';
 import { useTokenHistory } from '@/states/nft/hooks/useTokenHistory';
 import { useTranslation } from '@/localization';
-import { isAddressOwner } from '@/utils/addressHelper';
-import { isMultipleNFT, isOwnerOfMultipleNFT, isSingleNFT } from '@/utils/nft';
-import { moneyTokensIds } from '@/config/constants/nftgta';
-import { GameDeposit } from './components/Action/GameDeposit/GameDeposit';
+import { isUniqueNFT } from '@/utils/nft';
+import { isAddressEqual } from '@/utils/addressHelper';
 import styles from './SingleNftView.module.scss';
 
-// TODO: Доделать кнопку share
 export function SingleNftView() {
     const { t } = useTranslation();
-    const { address } = useAccount();
-    const { tokenID } = useParams() as {
-        gameID: string,
-        collectionID: string,
+    const { address: userAddress } = useAccount();
+    const { contractAddress, tokenID } = useParams() as {
+        contractAddress: `0x${string}`,
         tokenID: string
     };
 
@@ -35,77 +30,33 @@ export function SingleNftView() {
 
     const nft = useNFTStore(state => state.nft);
     const isMobile = useMediaQuery('(max-width: 1000px)');
-    const isSingle = nft && isSingleNFT(nft);
-    const isMultiple = nft && isMultipleNFT(nft);
-    const { isLoading, error } = useNFTFetch(tokenID);
+    const isUnique = !!nft && isUniqueNFT(nft);
+    const { isLoading, error } = useNFTFetch(contractAddress, tokenID);
 
     const tokenAction = useMemo(() => {
         if (!nft) {
             return null;
         }
 
-        // Unique token
-        if (isSingle) {
-            const isUserOwner = isAddressOwner(address, nft.owner);
+        const userOwner = userAddress
+            ? nft.owners.find(({ owner }) => isAddressEqual(userAddress, owner))!
+            : undefined;
 
-            if (isUserOwner) {
-                return (<OwnerAction
-                    nftID={nft.ID}
+        if (userOwner) {
+            return (
+                <OwnerAction
+                    contractAddress={nft.contractAddress}
                     tokenID={nft.tokenID}
-                    sale={nft.sale}
-                    auction={nft.auction}
-                    status={nft.status}
-                />);
-            } else {
-                return (<SaleAction
-                    nftID={nft.ID}
-                    sale={nft.sale}
-                    auction={nft.auction}
-                    status={nft.status}
-                />);
-            }
-        }
-
-        // Multiple token (Copies)
-        if (isMultiple) {
-            const ownerOfCopy = isOwnerOfMultipleNFT(
-                address,
-                nft.owners
+                    amount={userOwner.value}
+                    sales={userOwner.sales}
+                    auctions={userOwner.auctions}
+                    status={userOwner.status}
+                />
             );
-
-            if (ownerOfCopy) {
-                let availableEditions = ownerOfCopy.value;
-
-                for (const sale of ownerOfCopy.sales) {
-                    availableEditions -= sale.stock;
-                }
-
-                for (const auction of ownerOfCopy.auctions) {
-                    availableEditions -= auction.amount;
-                }
-
-                return (<>
-                    {moneyTokensIds.includes(nft.tokenID) && availableEditions > 0 && <GameDeposit
-                        nftID={nft.ID}
-                        tokenID={nft.tokenID}
-                        editionsAvailable={availableEditions}
-                    />}
-                    <OwnerAction
-                        nftID={nft.ID}
-                        tokenID={nft.tokenID}
-                        availableEditions={availableEditions}
-                        sale={ownerOfCopy.sales[0]}
-                        auction={ownerOfCopy.auctions[0]}
-                        status={ownerOfCopy.status}
-                    />
-                </>);
-            } else {
-                return (<BestOfferAction nft={nft} />);
-            }
+        } else {
+            return (<BestOffer nft={nft} />);
         }
-
-        return null;
-    }, [nft, address, isSingle, isMultiple]);
+    }, [nft, userAddress]);
 
     if (isLoading) {
         return (<PageLoader />);
@@ -121,40 +72,45 @@ export function SingleNftView() {
                 <div className={styles.wrapper}>
                     <div className={styles.leftColumn}>
                         <TokenImage
-                            nftID={nft.ID}
+                            contractAddress={nft.contractAddress}
+                            tokenID={nft.tokenID}
                             image={nft.imageURL}
                         />
                     </div>
 
                     <div className={styles.content}>
                         <TokenImage
-                            nftID={nft.ID}
+                            contractAddress={nft.contractAddress}
+                            tokenID={nft.tokenID}
                             image={nft.imageURL}
                             className={styles.image}
                         />
 
                         <TokenHead
                             nft={nft}
+                            unique={isUnique}
                             className={styles.head}
                         />
 
                         {isMobile && <>
                             {tokenAction}
-                            {/* <TokenShareLinks nft={nft} /> */}
                         </>}
 
                         {!!nft.attributes.length && <BlockWrap title={t('Properties')}>
                             <TokenAttributes attributes={nft.attributes} />
                         </BlockWrap>}
 
-                        <BlockWrap title={t('Description')}>
+                        {nft.description && <BlockWrap title={t('Description')}>
                             <div className={styles.description}>
                                 {nft.description}
                             </div>
-                        </BlockWrap>
+                        </BlockWrap>}
 
                         {isMobile && <BlockWrap title={t('Details')}>
-                            <TokenDetails nft={nft} />
+                            <TokenDetails
+                                nft={nft}
+                                unique={isUnique}
+                            />
                         </BlockWrap >}
 
                         <TokenTabs nft={nft} />
@@ -164,14 +120,17 @@ export function SingleNftView() {
                         <div className={styles.rightColumn}>
                             <TokenHead
                                 nft={nft}
+                                unique={isUnique}
                                 className={styles.head}
                             />
 
                             {tokenAction}
-                            {/* <TokenShareLinks nft={nft} /> */}
 
                             <BlockWrap title={t('Details')}>
-                                <TokenDetails nft={nft} />
+                                <TokenDetails
+                                    nft={nft}
+                                    unique={isUnique}
+                                />
                             </BlockWrap>
                         </div>
                     }

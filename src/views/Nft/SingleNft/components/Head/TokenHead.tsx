@@ -1,24 +1,22 @@
 import { Link } from 'react-router-dom';
 import { CollectionLogo } from '@/components/Collections';
 import { TokenStock } from './TokenStock';
-import { isMultipleNFT } from '@/utils/nft';
 import { NFT } from '@/states/types';
-import styles from './TokenHead.module.scss';
 import classNames from 'classnames';
+import styles from './TokenHead.module.scss';
 
 type TokenHeadProps = {
     nft: NFT
+    unique: boolean,
     className?: string
 }
 
-export function TokenHead({ nft, className }: TokenHeadProps) {
-    const isMultiple = isMultipleNFT(nft);
-
+export function TokenHead({ nft, unique, className }: TokenHeadProps) {
     return (
         <div className={classNames(styles.head, className)}>
             <div className={styles.collectionWrap}>
                 <Link
-                    to={`/${nft.collection.game.ID}/${nft.collection.ID}`}
+                    to={`/collection/${nft.collection.ID}`}
                     className={styles.collection}
                 >
                     <CollectionLogo
@@ -36,9 +34,9 @@ export function TokenHead({ nft, className }: TokenHeadProps) {
                 {nft.name}
             </div>
 
-            {isMultiple && <div className={styles.stock}>
+            {!unique && <div className={styles.stock}>
                 <TokenStock
-                    supply={nft.supply}
+                    supply={nft.totalSupply}
                     available={nft.stock}
                 />
             </div>}

@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
+import { api } from '@/app/api';
 import BigNumber from 'bignumber.js';
 import useSWRImmutable from 'swr/immutable';
-import { api } from '@/app/api';
-import { CONTRACTS } from '@/config/constants/contracts';
 
 /**
  * Get token amount price in USD
@@ -17,15 +16,8 @@ export function useTokenAmountPrice(
     tokenSymbol: string
 ) {
     const { data: priceFromLlama, isLoading } = useSWRImmutable<number | undefined>(
-        ['fiat-price-ethereum', tokenSymbol],
+        ['fiat-price', tokenSymbol],
         async () => {
-            // Testnet Contract
-            if (tokenAddress === CONTRACTS['usdt']['80001'].address) {
-                await new Promise<void>(r => setTimeout(r, 300));
-
-                return 1;
-            }
-
             const { data } = await api.get<{
                 coins: {
                     [id: string]: {

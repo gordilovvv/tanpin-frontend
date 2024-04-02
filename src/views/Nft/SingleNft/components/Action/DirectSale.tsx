@@ -1,20 +1,20 @@
 import { Cart } from '@/uikit';
-import { ActionBox } from '../Box/ActionBox';
-import { ActionTitle } from '../Title/ActionTitle';
-import { USDPrice } from '../USDPrice/USDPrice';
+import { Currency } from '@/components/Currency';
 import { BuyButton, DelistButton, UpdateSaleButton } from '@/components/Nft';
+import { ActionBox, ActionTitle, USDPrice } from './Common';
 import { useTranslation } from '@/localization';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import { Sale } from '@/states/types';
 import styles from './DirectSale.module.scss';
 
 type DirectSaleProps = {
-    nftID: string,
+    contractAddress: `0x${string}`
+    tokenID: string,
     sale: Sale,
     isOwner?: boolean
 }
 
-export function DirectSale({ nftID, sale, isOwner }: DirectSaleProps) {
+export function DirectSale({ contractAddress, tokenID, sale, isOwner }: DirectSaleProps) {
     const { t } = useTranslation();
 
     return (
@@ -22,23 +22,25 @@ export function DirectSale({ nftID, sale, isOwner }: DirectSaleProps) {
             <ActionBox>
                 <div className={styles.top}>
                     <ActionTitle>
-                        {formatTokenAmount(sale.price.amount)} {sale.price.currency}
+                        {formatTokenAmount(sale.price.amount)} {<Currency>{sale.price.currency}</Currency>}
                     </ActionTitle>
 
                     <USDPrice
-                        tokenAmount={sale.price.amount}
-                        tokenSymbol={sale.price.currency}
+                        amount={sale.price.amount}
+                        currency={sale.price.currency}
                     />
                 </div>
 
                 {isOwner
                     ? <UpdateSaleButton
-                        nftID={nftID}
+                        contractAddress={contractAddress}
+                        tokenID={tokenID}
                         saleID={sale.saleID}
                         currentPrice={sale.price.amount}
                     />
                     : <BuyButton
-                        nftID={nftID}
+                        contractAddress={contractAddress}
+                        tokenID={tokenID}
                         saleID={sale.saleID}
                         price={sale.price.amount}
                         stock={sale.stock}
@@ -48,7 +50,8 @@ export function DirectSale({ nftID, sale, isOwner }: DirectSaleProps) {
             </ActionBox>
 
             {isOwner && <DelistButton
-                nftID={nftID}
+                contractAddress={contractAddress}
+                tokenID={tokenID}
                 saleID={sale.saleID}
                 text={t('Delist from Sale')}
             />}

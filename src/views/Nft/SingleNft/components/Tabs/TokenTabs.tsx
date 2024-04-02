@@ -4,7 +4,7 @@ import { BlockWrap } from '../BlockWrap/BlockWrap';
 import { TokenOwners } from '../Owners/TokenOwners';
 import { TransactionsHistory } from '../History/Transactions/TransactionsHistory';
 import { useTranslation } from '@/localization';
-import { isMultipleNFT, isSingleNFT } from '@/utils/nft';
+import { isUniqueNFT, isMultipleNFT } from '@/utils/nft';
 import { NFT } from '@/states/types';
 import styles from './TokenTabs.module.scss';
 
@@ -18,14 +18,19 @@ type TokenTabsProps = {
     nft: NFT
 }
 
-// TODO: Добавить аукцион
 export function TokenTabs({ nft }: TokenTabsProps) {
     const { t } = useTranslation();
-    const isSingle = isSingleNFT(nft);
+    const isUnique = isUniqueNFT(nft);
     const isMultiple = isMultipleNFT(nft);
     const [activeTab, setActiveTab] = useState<Tab>(Tab.OWNERS);
+    const hasAuctions = nft.owners.some(owner => !!owner.auctions.length);
 
+    // TODO: Добавить аукцион
     const renderContent = useCallback(() => {
+        if (activeTab === Tab.BIDS) {
+            return (<>Auction Bids</>);
+        }
+
         if (activeTab === Tab.HISTORY) {
             return (<TransactionsHistory />);
         }
@@ -35,7 +40,7 @@ export function TokenTabs({ nft }: TokenTabsProps) {
         }
     }, [activeTab, nft.ID]);
 
-    if (isSingle && !nft.auction) {
+    if (isUnique && !hasAuctions) {
         return (<BlockWrap title={t('History')}>
             <TransactionsHistory />
         </BlockWrap>);
@@ -44,12 +49,12 @@ export function TokenTabs({ nft }: TokenTabsProps) {
     return (
         <div className={styles.wrap}>
             <ToggleGroup>
-                {/* <ToggleButton
+                {hasAuctions && <ToggleButton
                     active={activeTab === Tab.BIDS}
                     onClick={() => setActiveTab(Tab.BIDS)}
                 >
                     Bids
-                </ToggleButton> */}
+                </ToggleButton>}
 
                 {isMultiple && <ToggleButton
                     view='outline'

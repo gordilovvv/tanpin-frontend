@@ -11,7 +11,8 @@ import classNames from 'classnames';
 import styles from './OwnerRow.module.scss';
 
 type OwnerRowProps = {
-    nftID: string,
+    contractAddress: `0x${string}`
+    tokenID: string
     owner: Omit<NFTOwner, 'sales' | 'auctions'> & {
         sale?: Sale
         auction?: Auction
@@ -21,7 +22,7 @@ type OwnerRowProps = {
 
 // TODO:
 // 1. ДОБАВИТЬ АУКЦИОН
-export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
+export function OwnerRow({ contractAddress, tokenID, owner, isUserOwner }: OwnerRowProps) {
     const { t } = useTranslation();
     const saleDescription = useMemo(() => {
         if (owner.status === NFTSaleStatus.NOT_FOR_SALE) {
@@ -45,20 +46,23 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
             if (isUserOwner) {
                 return (<>
                     <UpdateSaleButton
-                        nftID={nftID}
+                        contractAddress={contractAddress}
+                        tokenID={tokenID}
                         saleID={owner.sale.saleID}
                         currentPrice={owner.sale.price.amount}
                     />
 
                     <DelistButton
-                        nftID={nftID}
+                        contractAddress={contractAddress}
+                        tokenID={tokenID}
                         saleID={owner.sale.saleID}
                         text={t('Delist')}
                     />
                 </>);
             } else {
                 return (<BuyButton
-                    nftID={nftID}
+                    contractAddress={contractAddress}
+                    tokenID={tokenID}
                     saleID={owner.sale.saleID}
                     price={owner.sale.price.amount}
                     stock={owner.sale.stock}
@@ -68,7 +72,7 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
         }
 
         return null;
-    }, [nftID, owner.status, isUserOwner]);
+    }, [contractAddress, tokenID, owner, isUserOwner]);
 
     return (
         <div
@@ -78,6 +82,7 @@ export function OwnerRow({ nftID, owner, isUserOwner }: OwnerRowProps) {
         >
             <div className={styles.content}>
                 <UserAvatar
+                    as='link'
                     address={owner.owner}
                     size='l'
                 />

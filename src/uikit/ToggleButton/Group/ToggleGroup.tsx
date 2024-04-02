@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 export const ToggleGroup = forwardRef<HTMLDivElement, PropsWithChildren<HTMLAttributes<HTMLDivElement>>>(
     ({ className, children, style, ...props }, ref) => {
-        const cols = Array.isArray(children) ? children.length : 1;
+        const cols = Array.isArray(children) ? children.filter(child => !!child).length : 1;
 
         return (
             <div

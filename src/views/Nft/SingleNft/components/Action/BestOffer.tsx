@@ -1,21 +1,20 @@
 import { useMemo } from 'react';
-import { SaleAction } from './SaleAction';
+import { DirectSale } from './DirectSale';
+import { NotForSale } from './NotForSale';
 import { findBestNFTOffer } from '@/utils/nft';
-import { Address } from 'viem';
 import { Auction, NFT, NFTSaleStatus, Sale } from '@/states/types';
 
 type BestOfferActionProps = {
     nft: NFT
 }
 
-export function BestOfferAction({ nft }: BestOfferActionProps) {
+export function BestOffer({ nft }: BestOfferActionProps) {
     const action = useMemo<{
         status: NFTSaleStatus,
         sale?: Sale,
         auction?: Auction,
-        maker?: Address
+        maker?: `0x${string}`
     }>(() => {
-        // Try to find bestOffer
         if (nft.owners.length) {
             const bestOfferLocal = findBestNFTOffer(nft.owners);
 
@@ -34,10 +33,18 @@ export function BestOfferAction({ nft }: BestOfferActionProps) {
         return { status: NFTSaleStatus.NOT_FOR_SALE };
     }, [nft.owners]);
 
-    return (<SaleAction
-        nftID={nft.ID}
-        sale={action.sale}
-        auction={action.auction}
-        status={action.status}
-    />);
+    if (action.sale && action.status === NFTSaleStatus.FIXED_PRICE) {
+        return (<DirectSale
+            contractAddress={nft.contractAddress}
+            tokenID={nft.tokenID}
+            sale={action.sale}
+        />);
+    }
+
+    // TODO: ДОБАВИТЬ АУКЦИОН
+    if (action.auction && action.status === NFTSaleStatus.AUCTION) {
+        return (<div>Auction</div>);
+    }
+
+    return (<NotForSale />);
 }

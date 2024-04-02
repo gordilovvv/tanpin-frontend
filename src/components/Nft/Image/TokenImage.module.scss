@@ -14,7 +14,24 @@
     margin: 0 auto;
 }
 
+.blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    opacity: 0.35;
+    filter: blur(64px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .image {
+    position: relative;
     max-height: 100%;
     max-width: 100%;
     object-fit: contain;
@@ -46,9 +63,27 @@
     grid-auto-columns: minmax(min-content, max-content);
     gap: 12px;
     align-items: initial;
-    justify-content: initial;
-    position: absolute;
-    left: 50%;
-    bottom: 24px;
-    transform: translate(-50%, 0);
+    justify-content: center;
+
+    @include min768 {
+        margin-top: 24px;
+    }
+}
+
+@include max767 {
+    .blur {
+        filter: blur(42px);
+    }
+
+    .buttons {
+        position: absolute;
+        left: 50%;
+        bottom: 16px;
+        transform: translate(-50%, 0);
+
+        &>button {
+            background-color: var(--color-essential-75) !important;
+            border: none !important;
+        }
+    }
 }

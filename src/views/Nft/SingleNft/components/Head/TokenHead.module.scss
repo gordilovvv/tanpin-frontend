@@ -64,15 +64,11 @@
 
 @include max1000 {
     .head {
-        justify-content: center;
+        text-align: center;
     }
 
     .collectionWrap {
         justify-content: center;
-    }
-
-    .stock {
-        text-align: center;
     }
 }
 

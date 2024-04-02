@@ -14,9 +14,8 @@ export enum RefreshStatus {
 
 export function useMetadataRefresh(contractAddress: `0x${string}`, tokenID: string) {
     const { t } = useTranslation();
-    const { toastLoading } = useToast();
+    const { toastLoading, toastDanger } = useToast();
     const { refetchNFT } = useNFTRefetch(contractAddress, tokenID);
-    const [error, setError] = useState<string | undefined>();
     const [status, setStatus] = useState<RefreshStatus>(RefreshStatus.IDLE);
 
     const refreshTokenMetadata = useCallback(async () => {
@@ -40,24 +39,22 @@ export function useMetadataRefresh(contractAddress: `0x${string}`, tokenID: stri
                 setStatus(RefreshStatus.REJECTED);
 
                 if (error instanceof AxiosError && error.response?.status === 429) {
-                    setError(t('Metadata refresh too frequently. Please try again later.'));
+                    toastDanger(t('Metadata refresh too frequently. Please try again later.'));
                 } else {
-                    setError(t('Something went wrong!'));
+                    toastDanger(t('Something went wrong!'));
                 }
             });
 
         setStatus(RefreshStatus.PENDING);
         toastLoading(t('Reloading Metadata...'), request);
-    }, [status, contractAddress, tokenID, setStatus, setError, toastLoading, t]);
+    }, [status, contractAddress, tokenID, setStatus, toastLoading, toastDanger, t]);
 
     const resetState = useCallback(() => {
-        setError(undefined);
         setStatus(RefreshStatus.IDLE);
-    }, [setError, setStatus]);
+    }, [setStatus]);
 
     return {
         status,
-        error,
         resetState,
         refreshTokenMetadata
     };

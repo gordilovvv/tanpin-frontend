@@ -1,22 +1,27 @@
 import { useState } from 'react';
-import { NFT } from '@/states/types';
 import { Image, Spin } from '@/uikit';
 import { RefreshMetadataButton } from './RefreshMetadataButton';
 import classNames from 'classnames';
 import styles from './TokenImage.module.scss';
 
 type TokenImageProps = {
-    nftID: string,
-    image: NFT['imageURL']
+    contractAddress: `0x${string}`,
+    tokenID: string,
+    image: string
     className?: string
 }
 
-export function TokenImage({ nftID, image, className }: TokenImageProps) {
+export function TokenImage({ contractAddress, tokenID, image, className }: TokenImageProps) {
     const [loaded, setLoaded] = useState(false);
 
     return (
         <div className={classNames(styles.wrap, className)}>
             <div className={styles.content}>
+                <div
+                    className={styles.blur}
+                    style={{ backgroundImage: `url(${image})` }}
+                ></div>
+
                 <Image
                     src={image}
                     alt=''
@@ -27,23 +32,14 @@ export function TokenImage({ nftID, image, className }: TokenImageProps) {
                     </div>}
                     onFulfilled={() => setLoaded(true)}
                 />
-
-                {loaded && <div className={styles.buttons}>
-                    {/* <Button
-                        as='a'
-                        href={image}
-                        rel='noreferrer noopener'
-                        target='_blank'
-                        view="secondary"
-                        className={styles.button}
-                        iconSlot={<Link />}
-                    >
-                        View original
-                    </Button> */}
-
-                    <RefreshMetadataButton nftID={nftID} />
-                </div>}
             </div>
+
+            {loaded && <div className={styles.buttons}>
+                <RefreshMetadataButton
+                    contractAddress={contractAddress}
+                    tokenID={tokenID}
+                />
+            </div>}
         </div>
     );
 }

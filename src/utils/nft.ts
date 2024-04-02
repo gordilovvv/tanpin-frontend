@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { NFTBestOffer } from '@/states/nft/types';
 import { Auction, NFT, NFTSaleStatus, Sale } from '@/states/types';
 import { Address } from 'viem';
-import { isAddressEqual, isAddressOwner } from './addressHelper';
+import { isAddressEqual } from './addressHelper';
 
 export function isUniqueNFT(nft: NFT) {
     return nft.maxSupply === 1;
@@ -96,20 +96,4 @@ export function findOwnerOffer(owners: NFT['owners'], userAddress: Address): {
         auction,
         status
     };
-}
-
-export function isOwnerOfMultipleNFT(address: Address | undefined, owners: NFT['owners']) {
-    if (!address || !owners.length) {
-        return undefined;
-    }
-
-    try {
-        for (const owner of owners) {
-            if (isAddressOwner(owner.owner as Address, address)) {
-                return owner;
-            }
-        }
-    } catch (error) {
-        return undefined;
-    }
 }

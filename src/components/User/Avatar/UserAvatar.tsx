@@ -1,14 +1,8 @@
-import styles from './UserAvatar.module.scss';
+import { memo } from 'react';
+import { UnstyleLink } from '@/uikit';
+import { getAddressExplorerURL } from '@/utils/explorer';
 import classNames from 'classnames';
-
-type UserAvatarProps = {
-    address: string,
-    // s - 20px
-    // m - 32px
-    // l - 48px
-    // xl - 72px
-    size: 'xs' | 's' | 'm' | 'l' | 'xl'
-}
+import styles from './UserAvatar.module.scss';
 
 const createGradient = (address: string) => {
     const seedArr = address.match(/.{1,7}/g)?.splice(0, 5);
@@ -35,8 +29,30 @@ const createGradient = (address: string) => {
     return `linear-gradient(120deg, ${colors[0]}, ${colors[1]})`;
 };
 
-export function UserAvatar({ address, size }: UserAvatarProps) {
+type UserAvatarProps = {
+    as?: 'link',
+    address: string,
+    // s - 20px
+    // m - 32px
+    // l - 48px
+    // xl - 72px
+    size: 'xs' | 's' | 'm' | 'l' | 'xl'
+}
+
+export const UserAvatar = memo(({ as: Tag, address, size }: UserAvatarProps) => {
     const gradient = createGradient(address);
+
+    if (Tag === 'link') {
+        return (
+            <UnstyleLink
+                href={getAddressExplorerURL(address)}
+                rel='noreferrer noopener'
+                target='_blank'
+                className={classNames(styles.avatar, styles[size])}
+                style={{ background: gradient }}
+            />
+        );
+    }
 
     return (
         <div
@@ -44,4 +60,6 @@ export function UserAvatar({ address, size }: UserAvatarProps) {
             style={{ background: gradient }}
         />
     );
-}
+});
+
+UserAvatar.displayName = 'UserAvatar';

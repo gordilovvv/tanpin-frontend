@@ -6,15 +6,19 @@ import { isAddressOwner } from '@/utils/addressHelper';
 import styles from './TokenOwners.module.scss';
 
 export function TokenOwners() {
-    const nftID = useNFTStore(state => state.nft!.ID);
     const owners = useOwners();
     const { address } = useAccount();
+    const [contractAddress, tokenID] = useNFTStore(state => [
+        state.nft!.contractAddress,
+        state.nft!.tokenID
+    ]);
 
     return (
         <div className={styles.list}>
             {owners.map(owner => <OwnerRow
-                key={owner.id}
-                nftID={nftID}
+                key={owner.owner}
+                contractAddress={contractAddress}
+                tokenID={tokenID}
                 owner={owner}
                 isUserOwner={isAddressOwner(address, owner.owner)}
             />)}

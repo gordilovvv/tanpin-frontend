@@ -1,5 +1,4 @@
-import { ActionBox } from '../Box/ActionBox';
-import { ActionTitle } from '../Title/ActionTitle';
+import { ActionBox, ActionTitle } from './Common';
 import { useTranslation } from '@/localization';
 import styles from './NotForSale.module.scss';
 

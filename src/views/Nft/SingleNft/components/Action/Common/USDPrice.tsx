@@ -7,23 +7,27 @@ import { fiatCurrencies } from '@/config/constants/fiatCurrencies';
 import styles from './USDPrice.module.scss';
 
 type USDPriceProps = {
-    tokenAmount: string,
-    tokenSymbol: string
+    amount: string,
+    currency: string
 }
 
-export function USDPrice({ tokenAmount, tokenSymbol }: USDPriceProps) {
-    const price = useTokenAmountPrice(tokenAmount, CONTRACTS['usdt'][activeChainId].address, tokenSymbol);
+export function USDPrice({ amount, currency }: USDPriceProps) {
+    const currencyContract = CONTRACTS[currency][activeChainId].address;
+    const price = useTokenAmountPrice(amount, currencyContract, currency);
 
-    if (!price) {
+    if (price === null) {
         return (<div className={styles.wrap}>
             <Skeleton className={styles.loader} />
         </div>);
     }
 
+    if (!price) {
+        return null;
+    }
+
     return (
         <div className={styles.wrap}>
             <div className={styles.price}>
-                {/* TODO: locale */}
                 {formatFiatCurrency(price, fiatCurrencies.rub.locale, fiatCurrencies.usd.code)}
             </div>
         </div>

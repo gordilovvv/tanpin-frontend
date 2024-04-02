@@ -15,17 +15,17 @@ import { activeChainId } from '@/config/chain';
 import { formatValueToRaw } from '@/utils/formatRawAmount';
 
 type ListButtonProps = {
-    nftID: string,
+    contractAddress: `0x${string}`
     tokenID: string,
-    availableEditions?: number
+    availableCopies?: number
 }
 
 // TODO:
 // 1. ДОБАВИТЬ АУКЦИОН
-export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProps) {
+export function ListButton({ contractAddress, tokenID, availableCopies }: ListButtonProps) {
     const { t } = useTranslation();
     const { address } = useAccount();
-    const { refetchNFT } = useNFTRefetch(nftID);
+    const { refetchNFT } = useNFTRefetch(contractAddress, tokenID);
     const { callContract } = useContractCall();
     const saleModal = useOpenedState();
     const approveConfirmModal = useOpenedState();
@@ -139,7 +139,7 @@ export function ListButton({ nftID, tokenID, availableEditions }: ListButtonProp
 
             <SellModal
                 isOpen={saleModal.isOpen}
-                availableEditions={availableEditions}
+                availableEditions={availableCopies}
                 onClose={saleModal.close}
                 onConfirm={handleCreateSale}
             />

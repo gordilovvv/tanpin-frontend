@@ -14,3 +14,13 @@
         margin-right: 8px;
     }
 }
+
+@include max767 {
+    .link {
+        svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+    }
+}

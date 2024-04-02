@@ -1,35 +1,35 @@
-import { Link as LinkIcon, UnstyleLink } from '@/uikit';
-import { ellipseAddress } from '@/utils/addressHelper';
-import { Owner } from '@/components/User';
-import { getAddressExplorerURL, getTransactionExplorerURL } from '@/utils/explorer';
-import { DetailRow } from './Row/DetailRow';
 import { useMemo } from 'react';
+import { Link as LinkIcon, UnstyleLink } from '@/uikit';
+import { Owner } from '@/components/User';
+import { DetailRow } from './Row/DetailRow';
 import { activeChain } from '@/config/chain';
-import { NFT } from '@/states/types';
-import { ActivityType } from '@/states/activity/types';
-import { isSingleNFT } from '@/utils/nft';
-import { useActivityStore } from '@/states/activity/store';
 import { useTranslation } from '@/localization';
+import { useActivityStore } from '@/states/activity/store';
+import { getAddressExplorerURL, getTransactionExplorerURL } from '@/utils/explorer';
+import { ellipseAddress } from '@/utils/addressHelper';
+import { ActivityType } from '@/states/activity/types';
+import { NFT } from '@/states/types';
 import styles from './TokenDetails.module.scss';
 
 type TokenDetailsProps = {
-    nft: NFT
+    nft: NFT,
+    unique: boolean
 }
 
-export function TokenDetails({ nft }: TokenDetailsProps) {
+export function TokenDetails({ nft, unique }: TokenDetailsProps) {
     const { t } = useTranslation();
-    const isSingle = isSingleNFT(nft);
     const historyTransactions = useActivityStore(state => state.activityList);
 
+    const ownerAddress = unique ? nft.owners[0].owner : undefined;
     const mintTransaction = useMemo(() => {
         return historyTransactions?.find(tx => tx.type === ActivityType.MINT);
     }, [historyTransactions]);
 
     return (
         <div className={styles.details}>
-            {isSingle && <DetailRow title={t('Owned by')}>
+            {ownerAddress && <DetailRow title={t('Owned by')}>
                 <Owner
-                    address={nft.owner}
+                    address={ownerAddress}
                     size='s'
                 />
             </DetailRow>}
