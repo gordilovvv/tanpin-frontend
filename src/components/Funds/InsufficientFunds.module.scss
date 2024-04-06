@@ -14,10 +14,11 @@
 
     &Icon {
         display: flex;
-        color: var(--color-typo-base);
+        color: var(--color-danger);
     }
 
     &Text {
+        color: var(--color-danger);
         font-size: 14px;
         font-weight: 500;
         line-height: 20px;

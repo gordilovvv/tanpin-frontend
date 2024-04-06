@@ -1,6 +1,11 @@
 .button {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 12px;
+    -webkit-box-align: center;
     align-items: center;
+    -webkit-box-pack: justify;
     justify-content: space-between;
     background: var(--color-essential);
     width: 100%;
@@ -11,22 +16,15 @@
     outline: none;
     transition: border-color 0.15s linear;
 
-    &Text {
-        color: var(--color-typo-base);
-        font-family: var(--font-primary);
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 20px;
-        letter-spacing: -0.01em;
-        white-space: nowrap;
-        margin-right: 12px;
-    }
-
-    svg {
-        color: var(--color-typo-base);
-        width: 24px;
-        height: 24px;
-        transition: transform 0.1s linear;
+    &Content {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(min-content, max-content);
+        gap: 12px;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: initial;
+        justify-content: initial;
     }
 
     @include hover {
@@ -35,7 +33,36 @@
 
     &.opened {
         border-color: var(--color-base);
+    }
+}
 
+.addon {
+    display: flex;
+}
+
+.text {
+    color: var(--color-typo-base);
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.arrow {
+    display: flex;
+
+    svg {
+        color: var(--color-typo-base);
+        width: 24px;
+        height: 24px;
+        transition: transform 0.1s linear;
+    }
+}
+
+.button.opened {
+    .arrow {
         svg {
             transform: scaleY(-1);
         }
@@ -85,12 +112,19 @@
 @include max767 {
     .button {
         height: 44px;
+        padding: 0 12px;
 
-        &Text {
-            font-size: 14px;
-            line-height: 16px;
+        &Content {
+            gap: 8px;
         }
+    }
 
+    .text {
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    .arrow {
         svg {
             width: 20px;
             height: 20px;
@@ -99,6 +133,7 @@
 
     .option {
         height: 44px;
+        padding: 0 12px;
 
         &Icon {
             svg {

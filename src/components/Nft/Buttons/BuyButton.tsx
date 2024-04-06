@@ -15,17 +15,19 @@ import { useBuyActions, useBuyState } from '@/states/buy/hooks';
 import { initialBuyStoreState } from '@/states/buy/store';
 
 type BuyButtonProps = {
-    nftID: string,
+    contractAddress: `0x${string}`
+    tokenID: string,
     saleID: string,
-    price: string,
     stock: number,
+    price: string,
+    currency: string,
     buttonIcon?: ButtonProps<'button'>['iconSlot'],
     buttonView?: ButtonProps<'button'>['view']
 }
 
-export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView }: BuyButtonProps) {
+export function BuyButton({ contractAddress, tokenID, saleID, price, currency, stock, buttonIcon, buttonView }: BuyButtonProps) {
     const { t } = useTranslation();
-    const { refetchNFT } = useNFTRefetch(nftID);
+    const { refetchNFT } = useNFTRefetch(contractAddress, tokenID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
     const { typedAmount, totalPrice } = useBuyState();
@@ -95,9 +97,14 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
     }, [totalPrice]);
 
     const handleOpenBuyModal = useCallback(() => {
-        handleReplaceBuyState(initialBuyStoreState);
+        const initialAmount = stock === 1 ? '1' : '';
+
+        handleReplaceBuyState({
+            ...initialBuyStoreState,
+            typedAmount: initialAmount
+        });
         buyModal.open();
-    }, [buyModal.open, handleReplaceBuyState]);
+    }, [buyModal.open, stock, handleReplaceBuyState]);
 
     const handlePurchase = useCallback(() => {
         buyModal.close();
@@ -116,7 +123,9 @@ export function BuyButton({ nftID, saleID, price, stock, buttonIcon, buttonView 
 
             <BuyModal
                 isOpen={buyModal.isOpen}
-                tokenPrice={price}
+                saleID={saleID}
+                price={price}
+                currency={currency}
                 availableAmount={stock}
                 onClose={buyModal.close}
                 onPurchase={handlePurchase}

@@ -1,12 +1,15 @@
 import { Button, Warning } from '@/uikit';
+import { Currency } from '../Currency';
 import { useTranslation } from '@/localization';
+import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import styles from './InsufficientFunds.module.scss';
 
 type InsufficientFundsProps = {
-    text: string
+    amount?: string,
+    currency: string
 }
 
-export function InsufficientFunds({ text }: InsufficientFundsProps) {
+export function InsufficientFunds({ amount, currency }: InsufficientFundsProps) {
     const { t } = useTranslation();
 
     return (
@@ -17,7 +20,7 @@ export function InsufficientFunds({ text }: InsufficientFundsProps) {
                 </div>
 
                 <div className={styles.infoText}>
-                    {text}
+                    {t('You are short of')} {amount ? formatTokenAmount(amount) : ''} <Currency>{currency}</Currency>
                 </div>
             </div>
 

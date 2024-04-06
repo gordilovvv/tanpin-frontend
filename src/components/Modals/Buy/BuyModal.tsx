@@ -3,12 +3,14 @@ import { BuyForm } from './Form/BuyForm';
 import { useTranslation } from '@/localization';
 
 type BuyModalProps = {
-    tokenPrice: string,
+    saleID: string,
+    price: string,
+    currency: string,
     availableAmount: number,
     onPurchase: () => void
 } & ModalProps;
 
-export function BuyModal({ isOpen, tokenPrice, availableAmount, onPurchase, onClose }: BuyModalProps) {
+export function BuyModal({ isOpen, saleID, price, currency, availableAmount, onPurchase, onClose }: BuyModalProps) {
     const { t } = useTranslation();
 
     return (
@@ -20,9 +22,12 @@ export function BuyModal({ isOpen, tokenPrice, availableAmount, onPurchase, onCl
 
             <ModalBody>
                 <BuyForm
-                    tokenPrice={tokenPrice}
+                    saleID={saleID}
+                    price={price}
+                    currency={currency}
                     availableAmount={availableAmount}
                     onPurchase={onPurchase}
+                    onClose={onClose}
                 />
             </ModalBody>
         </Modal>

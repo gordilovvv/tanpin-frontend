@@ -1,66 +1,142 @@
-import { useEffect } from 'react';
-import { Button, Input } from '@/uikit';
-import { NFTActionText } from '@/components/Nft';
+import { useCallback, useEffect, useMemo } from 'react';
+import { Button, Input, Select, UnstyleButton, useToast } from '@/uikit';
+import { NFTPreview } from '@/components/Nft';
 import { InsufficientFunds } from '@/components/Funds';
+import { BuyReceipt } from './BuyReceipt';
+import { BlackRussiaLogo } from './BlackRussiaLogo';
 import { LoadingContent } from '../../Loading/LoadingContent';
 import { useTranslation } from '@/localization';
-import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
-import { useBuyActions, useBuyDirectSaleInfo, useBuyState } from '@/states/buy/hooks';
+import { useNFT } from '@/states/nft/hooks/useNFT';
+import { useAccount } from '@/states/user/hooks/useAccount';
+import { useBlackRussiaCharacterSelect, useBlackRussiaCharacters, useBuyActions, useBuyDirectSaleInfo, useBuyState } from '@/states/buy/hooks';
+import { isUniqueNFT } from '@/utils/nft';
 import styles from './BuyForm.module.scss';
 
 type BuyFormProps = {
-    tokenPrice: string,
+    saleID: string,
+    price: string,
+    currency: string,
     availableAmount: number,
-    onPurchase: () => void
+    onPurchase: () => void,
+    onClose?: () => void
 }
 
-export function BuyForm({ tokenPrice, availableAmount, onPurchase }: BuyFormProps) {
+export function BuyForm({ saleID, price, currency, availableAmount, onPurchase, onClose }: BuyFormProps) {
     const { t } = useTranslation();
-    const metadata = useTokenMetadata();
+    const { toastDanger } = useToast();
+    const nft = useNFT()!;
+    const isUnique = isUniqueNFT(nft);
+    const { address } = useAccount();
     const { typedAmount } = useBuyState();
     const { handleAmountType, handleTotalPrice } = useBuyActions();
 
-    const { parsedAmount, totalPrice, isLoading, amountError, balanceError } = useBuyDirectSaleInfo(
-        tokenPrice,
+    // Персонажи игрока в Black Russia
+    const { characters, isLoading: isLoadingCharacters, isBlackRussiaNFT } = useBlackRussiaCharacters(
+        nft.tokenID,
+        address!
+    );
+
+    // Выбор персонажа Black Russia
+    const { selectedCharacterID, onSelectCharacter, isLoading: isLoadingCharacterSelect } = useBlackRussiaCharacterSelect(
+        nft.contractAddress,
+        nft.tokenID,
+        saleID
+    );
+
+    const selectOptions = useMemo(() => {
+        return characters?.map(({ id, name, server }) => ({
+            label: `${name} (#${server.id} ${server.name})`,
+            value: id
+        }));
+    }, [characters]);
+
+    // Количество nft и выбор персонажа
+    const hasFields = selectOptions || !isUnique;
+    const maxInputLength = `${availableAmount}`.length;
+
+    const { parsedAmount, totalPrice, isLoading, amountError, balanceError, insufficientBalance, characterError } = useBuyDirectSaleInfo(
+        price,
+        currency,
         typedAmount,
-        availableAmount
+        availableAmount,
+        selectedCharacterID,
+        isBlackRussiaNFT
     );
 
     useEffect(() => {
         handleTotalPrice(totalPrice);
     }, [totalPrice]);
 
-    if (isLoading) {
+    const handleSelectCharacter = useCallback((characterID: number) => {
+        const character = characters?.find(character => character.id === characterID);
+
+        if (!character) {
+            return toastDanger(t('An error occurred'));
+        }
+
+        onSelectCharacter(characterID, character.server.id);
+    }, [characters, onSelectCharacter, t, toastDanger]);
+
+    const handleMax = useCallback(() => {
+        handleAmountType(`${availableAmount}`);
+    }, [handleAmountType, availableAmount]);
+
+    if (isLoading || isLoadingCharacters) {
         return (<LoadingContent />);
     }
 
     return (
         <div className={styles.form}>
-            {metadata && <NFTActionText
-                text={t('You are going to buy')}
-                nftName={metadata.name}
-                collectionID={metadata.collection.ID}
-                collectionName={metadata.collection.name}
-                gameID={metadata.collection.game.ID}
-            />}
-
-            <Input
-                numerical
-                value={typedAmount}
-                onInput={handleAmountType}
-                style={{ paddingRight: '120px' }}
-                danger={parsedAmount !== undefined && !!amountError}
-                rightAddon={`/ ${availableAmount}`}
+            <NFTPreview
+                nft={nft}
+                onClick={onClose}
             />
 
-            {balanceError && <InsufficientFunds text={t('Insufficient funds in USDT')} />}
+            {hasFields && <div className={styles.fields}>
+                {selectOptions && <Select
+                    options={selectOptions}
+                    selectedValue={selectedCharacterID}
+                    placeholder={t('Select your character')}
+                    addon={<BlackRussiaLogo className={styles.blackRussiaLogo} />}
+                    onChange={handleSelectCharacter}
+                />}
 
-            <Button
-                disabled={!!balanceError || !!amountError}
+                {!isUnique && <Input
+                    numerical
+                    value={typedAmount}
+                    onInput={handleAmountType}
+                    placeholder='0'
+                    max={availableAmount}
+                    maxLength={maxInputLength}
+                    danger={parsedAmount !== undefined && !!amountError}
+                    rightAddon={<UnstyleButton
+                        className={styles.maxButton}
+                        onClick={handleMax}
+                    >
+                        {t('out of %number%', { number: availableAmount })}
+                    </UnstyleButton>}
+                    style={{ paddingRight: '156px' }}
+                />}
+            </div>}
+
+            <BuyReceipt
+                amount={parsedAmount}
+                price={price}
+                currency={currency}
+                detailed={!isUnique}
+            />
+
+            {balanceError && <InsufficientFunds
+                amount={insufficientBalance}
+                currency={currency}
+            />}
+            {!balanceError && <Button
+                loading={isLoadingCharacterSelect}
+                disabled={!!amountError || !!characterError}
                 onClick={onPurchase}
             >
-                {!balanceError && amountError || t('Proceed to payment')}
-            </Button>
+                {characterError || amountError || t('Proceed to payment')}
+            </Button>}
         </div>
     );
 }

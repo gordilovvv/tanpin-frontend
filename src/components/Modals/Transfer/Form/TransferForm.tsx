@@ -102,7 +102,7 @@ export function TransferForm({ onResult }: TransferFormProps) {
 
             <div className={styles.action}>
                 {isZeroBalance
-                    ? <InsufficientFunds text={t('Insufficient funds in %currency%', { currency: 'TANPIN' })} />
+                    ? <InsufficientFunds currency='TANPIN' />
                     : <Button
                         loading={isLoadingTransfer}
                         disabled={!!addressError || !!amountError}

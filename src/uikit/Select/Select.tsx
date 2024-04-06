@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { Mark } from '@/uikit';
 import { PopoverButton, PopoverItem, PopoverMenu, usePopoverState } from '../Popover';
 import { Arrow } from './Arrow';
@@ -9,7 +9,8 @@ import styles from './Select.module.scss';
 type SelectProps<T> = {
     options: { value: T, label: string }[]
     selectedValue?: T
-    placeholderText?: string
+    addon?: ReactNode,
+    placeholder?: string
     onChange: (value: T) => void
 }
 
@@ -25,13 +26,12 @@ const animationVariants = {
     exit: { transform: 'translate(0, 20px)', opacity: 0 },
 } as Variants;
 
-export function Select<T extends string>({ options, selectedValue, placeholderText = '', onChange }: SelectProps<T>) {
+export function Select<T extends string | number>({ options, selectedValue, addon, placeholder = '', onChange }: SelectProps<T>) {
     const state = usePopoverState({
         placement: 'bottom-start'
     });
 
     const isOpen = state.useState('open');
-
     const selectedOption = useMemo(() => {
         if (!selectedValue) {
             return undefined;
@@ -42,7 +42,6 @@ export function Select<T extends string>({ options, selectedValue, placeholderTe
 
     const handleOptionClick = (value: T) => {
         onChange(value);
-
         state.setOpen(false);
     };
 
@@ -54,11 +53,19 @@ export function Select<T extends string>({ options, selectedValue, placeholderTe
                     [styles.opened]: isOpen
                 })}
             >
-                <span className={styles.buttonText}>
-                    {selectedOption?.label || <span className={styles.placeholder}>{placeholderText}</span>}
-                </span>
+                <div className={styles.buttonContent}>
+                    {addon && <div className={styles.addon}>
+                        {addon}
+                    </div>}
 
-                <Arrow />
+                    <div className={styles.text}>
+                        {selectedOption?.label || <span className={styles.placeholder}>{placeholder}</span>}
+                    </div>
+                </div>
+
+                <div className={styles.arrow}>
+                    <Arrow />
+                </div>
             </PopoverButton>
 
             <PopoverMenu

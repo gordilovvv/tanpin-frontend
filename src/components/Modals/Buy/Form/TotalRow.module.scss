@@ -1,0 +1,26 @@
+.row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 12px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+    padding: 0 12px;
+    white-space: nowrap;
+}
+
+.label {
+    color: var(--color-typo-ghost);
+    font-weight: 500;
+}
+
+.value {
+    color: var(--color-typo-base);
+    font-weight: 600;
+}

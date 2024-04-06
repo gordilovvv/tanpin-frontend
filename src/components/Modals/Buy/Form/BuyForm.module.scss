@@ -3,3 +3,42 @@
     gap: 24px;
     grid-template-columns: minmax(0, auto);
 }
+
+.fields {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.maxButton {
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    transition: color 0.1s linear;
+
+    @include hover {
+        color: var(--color-primary);
+    }
+}
+
+@include max767 {
+    .form {
+        gap: 16px;
+    }
+
+    .fields {
+        gap: 8px;
+    }
+
+    .maxButton {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .blackRussiaLogo {
+        width: auto;
+        height: 20px;
+    }
+}

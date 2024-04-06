@@ -1,0 +1,50 @@
+.wrap {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.stack {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: minmax(0, auto);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-stroke);
+}
+
+.total {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 12px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+.label {
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+.value {
+    color: var(--color-typo-base);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+}
+
+@include max767 {
+
+    .label,
+    .value {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
