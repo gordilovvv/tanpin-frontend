@@ -4,7 +4,6 @@ import { SwitchChainError } from 'viem';
 import { useUserStore } from '../store';
 import { useTranslation } from '@/localization';
 import { useWalletSignature } from './useWalletSignature';
-import { loginWeb3 } from '../fetch/loginWeb3';
 import { POLICY_URL, TERMS_URL } from '@/config';
 import { ConnectorNames } from '@/config/wallet';
 import { activeChainId } from '@/config/chain';
@@ -55,39 +54,37 @@ export function useAuth() {
 
 export function useWalletAuthenticator() {
     const { t } = useTranslation();
-    const setUser = useUserStore(state => state.setUser);
     const { signMessage, reset, loading, error, status } = useWalletSignature();
 
-    const authenticateWithServer = async () => {
+    const setUser = useUserStore(state => state.setUser);
+    const authenticateWallet = async () => {
         await signMessage({
             text: t('I accept the Tanpin Terms of Service %termsUrl% and Privacy Policy %policyUrl%.', {
                 termsUrl: TERMS_URL,
                 policyUrl: POLICY_URL
             }),
-            onSignature: async ({ address, message, signature }) => {
-                const { accessToken, rulesAccept } = await loginWeb3({
-                    address,
-                    message,
-                    signature
-                });
-
-                setUser(accessToken, rulesAccept);
+            onSignature: async () => {
+                setUser({ loginSigned: true });
             }
         });
     };
 
+    const authenticateTelegramWallet = async () => {
+        await authenticateWallet();
+    };
+
     return {
-        authenticateWithServer,
-        reset,
         loading,
         error,
-        status
+        status,
+        authenticateWallet,
+        authenticateTelegramWallet,
+        reset
     };
 }
 
 export enum AuthModal {
-    SIGN = 'sign',
-    AGREE = 'agree'
+    SIGN = 'sign'
 }
 
 /**
@@ -98,21 +95,14 @@ export enum AuthModal {
  */
 export function useAuthOpenedModal() {
     const { isConnected } = useAccount();
-    const { accessToken, acceptedRules } = useUserStore(state => ({
-        accessToken: state.accessToken,
-        acceptedRules: state.acceptedRules
-    }));
+    const loginSigned = useUserStore(state => state.loginSigned);
 
     if (!isConnected) {
         return undefined;
     }
 
-    if (!accessToken) {
+    if (!loginSigned) {
         return AuthModal.SIGN;
-    }
-
-    if (!acceptedRules) {
-        return AuthModal.AGREE;
     }
 
     return undefined;

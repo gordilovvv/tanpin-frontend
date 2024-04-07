@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { PendingTransactionModal, SignMessageModal, WelcomeModal, WrongNetworkModal } from '@/components/Modals';
+import { PendingTransactionModal, SignMessageModal, WrongNetworkModal } from '@/components/Modals';
 import { usePendingTransactionModal, useWrongNetworkModal } from '@/states/global/hooks';
 import { AuthModal, useAuthOpenedModal } from '@/states/user/hooks/useAuth';
 
@@ -12,7 +12,6 @@ export function Modals({ children }: PropsWithChildren<unknown>) {
         <>
             {children}
             <SignMessageModal isOpen={authOpenedModal === AuthModal.SIGN} />
-            <WelcomeModal isOpen={authOpenedModal === AuthModal.AGREE} />
 
             <PendingTransactionModal
                 isOpen={pendingTransactionModal.isOpen}

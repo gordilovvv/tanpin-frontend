@@ -1,5 +1,5 @@
 
-import { CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import { Spin, Logo, Button } from '@/uikit';
 import { AuthContainer } from '@/components/Layout';
 import { useConnect } from 'wagmi';
@@ -11,6 +11,7 @@ import { useTranslation } from '@/localization';
 import { TELEGRAM_BOT_URL } from '@/config';
 import { activeChainId } from '@/config/chain';
 import { telegramConnector } from '@/config/wagmi';
+import { delayExecution } from '@/utils/delayExecution';
 import { logError } from '@/utils/sentry';
 import styles from './TelegramAuthView.module.scss';
 
@@ -28,7 +29,7 @@ export function TelegramAuthView() {
     const [searchParams] = useSearchParams();
     const connecting = useRef(false);
     const [stage, setStage] = useState(address ? Stage.CONNECTED : Stage.LOADING);
-    const { authenticateWithServer, status } = useWalletAuthenticator();
+    const { authenticateTelegramWallet, status } = useWalletAuthenticator();
     const [isAuthenticateLoading, setIsAuthenticateLoading] = useState(false);
 
     const handleLogin = async () => {
@@ -40,12 +41,9 @@ export function TelegramAuthView() {
             const queryParams = searchParams.toString();
 
             // TODO: После миграций на wagmi 2.0 проверить
-            await telegramConnector.loginWithTelegram({
+            await delayExecution(() => telegramConnector.loginWithTelegram({
                 authQuery: queryParams
-            });
-
-            // Таймаут чтобы резко не прыгало ничего
-            await new Promise<void>(r => setTimeout(r, 600));
+            }), 600);
 
             await connectAsync({
                 chainId: activeChainId,
@@ -61,19 +59,16 @@ export function TelegramAuthView() {
         }
     };
 
-    // TODO: Убрать после обновления авторизации на беке, скорее всего просто уберем accessToken
-    // Это быстрый фикс под авторизацию, чтобы не показывать модалку подписи после входа по Телеге
-    const handleAuthenticate = useCallback(async () => {
+    // Вместо авторизации обычного кошельке - вызываем авторизацию Telegram
+    const handleAuthenticate = async () => {
         if (status === LoadingStatus.IDLE && !isConnected) {
             setIsAuthenticateLoading(true);
-
-            await authenticateWithServer();
-
+            await delayExecution(() => authenticateTelegramWallet(), 200);
             setIsAuthenticateLoading(false);
         }
 
         navigate('/');
-    }, [navigate, authenticateWithServer, setIsAuthenticateLoading, status, isConnected]);
+    };
 
     // Auto-connect
     useEffect(() => {
@@ -85,7 +80,7 @@ export function TelegramAuthView() {
         handleLogin();
     }, []);
 
-    const renderContent = useCallback(() => {
+    const renderContent = () => {
         if (stage === Stage.CONNECTED) {
             return (
                 <div className={styles.content}>
@@ -156,7 +151,7 @@ export function TelegramAuthView() {
                 />
             </div>
         );
-    }, [stage, isAuthenticateLoading, handleAuthenticate]);
+    };
 
     return (
         <AuthContainer>

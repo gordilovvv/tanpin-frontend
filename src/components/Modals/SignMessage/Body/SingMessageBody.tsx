@@ -16,11 +16,11 @@ export function SignMessageBody({ onError, onRetry }: SignMessageBodyProps) {
     const { t } = useTranslation();
     const { logout } = useAuth();
     const { connector } = useAccount();
-    const { authenticateWithServer, reset, status, error } = useWalletAuthenticator();
+    const { authenticateWallet, reset, status, error } = useWalletAuthenticator();
 
     useEffect(() => {
         if (status === LoadingStatus.IDLE && connector) {
-            authenticateWithServer();
+            authenticateWallet();
         }
     }, [status, connector]);
 

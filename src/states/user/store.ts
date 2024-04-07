@@ -1,48 +1,29 @@
 import { mountStoreDevtool } from 'simple-zustand-devtools';
 import { create } from 'zustand';
 
-export enum LoginStage {
-    SIGN = 'sign',
-    AGREE = 'agree'
-}
-
 type State = {
-    stage: LoginStage | undefined,
-    accessToken?: string
-    connectError?: string,
-    acceptedRules: boolean
+    loginSigned: boolean
 }
 
 type Actions = {
-    setUser: (accessToken: string, acceptedRules: boolean) => void,
+    setUser: (data: { loginSigned: boolean }) => void,
     resetUser: () => void
 }
 
-const ACCESS_TOKEN_KEY = 'accessToken';
-const ACCEPTED_RULES_KEY = 'acceptedRules';
+const LOGIN_SIGNED_KEY = 'tanpin.login.signed';
 
 export const useUserStore = create<State & Actions>()((set) => ({
-    stage: undefined,
-    accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || undefined,
-    acceptedRules: JSON.parse(localStorage.getItem(ACCEPTED_RULES_KEY) ?? 'false'),
+    loginSigned: JSON.parse(localStorage.getItem(LOGIN_SIGNED_KEY) ?? 'false'),
 
-    setUser: (accessToken: string, acceptedRules: boolean) => {
-        localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-        localStorage.setItem(ACCEPTED_RULES_KEY, `${acceptedRules}`);
+    setUser: ({ loginSigned }) => {
+        localStorage.setItem(LOGIN_SIGNED_KEY, `${loginSigned}`);
 
-        set({
-            accessToken,
-            acceptedRules
-        });
+        set({ loginSigned });
     },
     resetUser: () => {
-        localStorage.removeItem(ACCESS_TOKEN_KEY);
-        localStorage.removeItem(ACCEPTED_RULES_KEY);
+        localStorage.removeItem(LOGIN_SIGNED_KEY);
 
-        set({
-            accessToken: undefined,
-            acceptedRules: false
-        });
+        set({ loginSigned: false });
     }
 }));
 

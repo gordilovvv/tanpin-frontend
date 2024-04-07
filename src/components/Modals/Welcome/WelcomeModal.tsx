@@ -1,26 +1,19 @@
 import { useState } from 'react';
-import { Button, Cat, Modal, ModalBody, ModalProps, UnstyleLink } from '@/uikit';
+import { Cat, Modal, ModalBody, ModalProps, UnstyleLink } from '@/uikit';
 import { ErrorMessageModal } from '..';
 import { useTranslation } from '@/localization';
-import { useRulesAccept } from '@/states/user/hooks/useRulesAccept';
+// import { useRulesAccept } from '@/states/user/hooks/useRulesAccept';
 import { POLICY_URL, TERMS_URL } from '@/config';
-import { logError } from '@/utils/sentry';
 import backgroundImage from '@/app/assets/images/background.png';
 import styles from './WelcomeModal.module.scss';
 
+/**
+ * @deprecated
+ */
 export function WelcomeModal({ isOpen }: ModalProps) {
     const { t } = useTranslation();
     const [acceptError, setAcceptError] = useState<string | undefined>();
-    const { acceptRules, isLoading } = useRulesAccept();
-
-    const handleAcceptRules = async () => {
-        try {
-            await acceptRules();
-        } catch (error) {
-            logError(error);
-            setAcceptError((error as Error).message);
-        }
-    };
+    // const { acceptRules } = useRulesAccept();
 
     return (
         <>
@@ -51,13 +44,12 @@ export function WelcomeModal({ isOpen }: ModalProps) {
                             >{t('Privacy Policy')}</UnstyleLink>
                         </div>
 
-                        <Button
+                        {/* <Button
                             view='secondary'
-                            loading={isLoading}
-                            onClick={handleAcceptRules}
+                            onClick={acceptRules}
                         >
                             {t('Start Exploring')}
-                        </Button>
+                        </Button> */}
                     </div>
                 </ModalBody>
             </Modal>
