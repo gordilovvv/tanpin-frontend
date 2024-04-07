@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { Currency, CurrencyID, NativeCurrency, currencies, nativeCurrency } from '@/config/constants/currency';
+import { Currency, currencies } from '@/config/constants/currency';
 
-export function useCurrency(id: CurrencyID): Currency {
+export function useCurrency(id: string): Currency {
     return useMemo(() => {
         const currency = currencies[id];
 
@@ -11,8 +11,4 @@ export function useCurrency(id: CurrencyID): Currency {
 
         return currency;
     }, [id]);
-}
-
-export function useNativeCurrency(): NativeCurrency {
-    return nativeCurrency;
 }

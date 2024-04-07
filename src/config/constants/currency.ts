@@ -1,8 +1,6 @@
 import { CONTRACTS } from './contracts';
 import { activeChainId } from '../chain';
 
-export type CurrencyID = 'tanpin' | 'usdt';
-
 export type Currency = {
     id: string,
     name: string,
@@ -12,7 +10,7 @@ export type Currency = {
     image: string
 }
 
-export const currencies: Record<CurrencyID, Currency> = {
+export const currencies: Record<'tanpin' | 'usdt', Currency> = {
     tanpin: {
         id: 'tanpin',
         name: 'Tanpin',

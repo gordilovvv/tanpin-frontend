@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ListButton } from '@/components/Nft';
+import { SellButton } from '@/components/Nft';
 import { ActionBox } from './Common';
 import { DirectSale } from './DirectSale';
 import { useTranslation } from '@/localization';
@@ -35,7 +35,7 @@ export function OwnerAction({ contractAddress, tokenID, amount, sales, status }:
                     {t('This NFT is in your wallet')}
                 </div>
 
-                <ListButton
+                <SellButton
                     contractAddress={contractAddress}
                     tokenID={tokenID}
                     availableCopies={availableCopies}

@@ -1,0 +1,19 @@
+.maxButton {
+    color: var(--color-typo-ghost);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    transition: color 0.1s linear;
+
+    @include hover {
+        color: var(--color-primary);
+    }
+}
+
+@include max767 {
+    .maxButton {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

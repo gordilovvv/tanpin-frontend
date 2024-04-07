@@ -1,16 +1,10 @@
 import { create } from 'zustand';
-import { Address } from 'viem';
-import { activeChainId } from '@/config/chain';
-import { CONTRACTS } from '@/config/constants/contracts';
 
 // TODO: ДОБАВИТЬ АУКЦИОН
 type CreateDirectSaleState = {
-    amount: string, // For unique tokens always should be 1!
+    amount: string,
     price: string,
-    currency: {
-        symbol: string,
-        address: Address
-    }
+    currencyId: string
 }
 
 type CreateDirectSaleActions = {
@@ -23,10 +17,7 @@ export const useCreateDirectSaleStore = create<CreateDirectSaleState & CreateDir
     (set) => ({
         amount: '',
         price: '',
-        currency: {
-            symbol: 'USDT',
-            address: CONTRACTS.usdt[activeChainId].address
-        },
+        currencyId: 'tanpin',
 
         setAmount: (amount) => {
             set({ amount });

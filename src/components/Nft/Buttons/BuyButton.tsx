@@ -10,6 +10,7 @@ import { LoadingStatus, useApproveConfirmCallbacks } from '@/hooks/useApproveCon
 import { CONTRACTS } from '@/config/constants/contracts';
 import { activeChainId } from '@/config/chain';
 import { useTranslation } from '@/localization';
+import { useCurrency } from '@/hooks/useCurrency';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useBuyActions, useBuyState } from '@/states/buy/hooks';
 import { initialBuyStoreState } from '@/states/buy/store';
@@ -49,11 +50,12 @@ export function BuyButton({ contractAddress, tokenID, saleID, price, currency, s
         };
     }, [t]);
 
+    const buyCurrency = useCurrency(currency);
     const { approve, checkApproved } = useTokenApprove({
         spender: CONTRACTS.market[activeChainId],
         amountToApprove: totalPrice,
-        tokenAddress: CONTRACTS.usdt[activeChainId].address,
-        tokenDecimals: CONTRACTS.usdt[activeChainId].decimals
+        tokenAddress: buyCurrency.address,
+        tokenDecimals: buyCurrency.decimals
     });
 
     const { state, handleApprove, handleConfirm, handleApproveConfirmReset } = useApproveConfirmCallbacks({

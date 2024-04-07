@@ -8,9 +8,9 @@ import { useTokenBalance } from '@/hooks/useTokenBalance';
 import { useNativeBalance } from '@/hooks/useNativeBalance';
 import { useTranslation } from '@/localization';
 import { useAccount } from '@/states/user/hooks/useAccount';
-import { useCurrency, useNativeCurrency } from '@/hooks/useCurrency';
 import { walletMenuLinks } from '../config';
 import { activeChain } from '@/config/chain';
+import { currencies, nativeCurrency } from '@/config/constants/currency';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import { TRANSFER_TOKEN_AVAILABLE } from '@/config';
@@ -29,12 +29,8 @@ export function WalletMenu({ address, onTransfer }: WalletMenuProps) {
     const [isDisconnecting, setIsDisconnecting] = useState(false);
     const [disconnectError, setDisconnectError] = useState<string | undefined>();
 
-    const matic = useNativeCurrency();
-    const tanpin = useCurrency('tanpin');
-    const usdt = useCurrency('usdt');
-
-    const tanpinBalance = useTokenBalance(tanpin.address, tanpin.decimals);
-    const usdtBalance = useTokenBalance(usdt.address, usdt.decimals);
+    const tanpinBalance = useTokenBalance(currencies.tanpin.address, currencies.tanpin.decimals);
+    const usdtBalance = useTokenBalance(currencies.usdt.address, currencies.usdt.decimals);
     const maticBalance = useNativeBalance(address);
 
     const handleLogout = useCallback(() => {
@@ -78,24 +74,24 @@ export function WalletMenu({ address, onTransfer }: WalletMenuProps) {
             <div className={styles.balancesWrap}>
                 <div className={styles.balances}>
                     <TokenInfo
-                        image={matic.image}
+                        image={nativeCurrency.image}
                         balance={maticBalance.amount}
                         loading={maticBalance.isLoading}
-                        symbol={matic.symbol}
+                        symbol={nativeCurrency.symbol}
                     />
 
                     <TokenInfo
-                        image={tanpin.image}
+                        image={currencies.tanpin.image}
                         balance={tanpinBalance.amount}
                         loading={tanpinBalance.isLoading}
-                        symbol={tanpin.symbol}
+                        symbol={currencies.tanpin.symbol}
                     />
 
                     <TokenInfo
-                        image={usdt.image}
+                        image={currencies.usdt.image}
                         balance={usdtBalance.amount}
                         loading={usdtBalance.isLoading}
-                        symbol={usdt.symbol}
+                        symbol={currencies.usdt.symbol}
                     />
                 </div>
             </div>

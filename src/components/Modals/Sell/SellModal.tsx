@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
-import { NFTActionText } from '@/components/Nft';
+import { NFTPreview } from '@/components/Nft';
 import { CreateDirectSale } from './DirectSale/CreateDirectSale';
 import { CreateAuction } from './Auction/CreateAuction';
 import { useTranslation } from '@/localization';
-import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
+import { useNFT } from '@/states/nft/hooks/useNFT';
+import { isUniqueNFT } from '@/utils/nft';
 import styles from './SellModal.module.scss';
 
 enum ViewStage {
@@ -13,25 +14,27 @@ enum ViewStage {
 }
 
 type SellModalProps = {
-    availableEditions?: number,
+    availableAmount: number,
     onConfirm: () => void
 } & ModalProps;
 
-export function SellModal({ isOpen, availableEditions, onClose, onConfirm }: SellModalProps) {
+// TODO: Добавить аукцион
+export function SellModal({ isOpen, availableAmount, onClose, onConfirm }: SellModalProps) {
     const { t } = useTranslation();
-    const metadata = useTokenMetadata();
+    const nft = useNFT()!;
+    const isUnique = isUniqueNFT(nft);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [stage, setStage] = useState<ViewStage>(ViewStage.SALE);
 
     const renderStage = () => {
         if (stage === ViewStage.SALE) {
             return (<CreateDirectSale
-                editionsAvailable={availableEditions}
+                availableAmount={availableAmount}
+                uniqueNFT={isUnique}
                 onConfirm={onConfirm}
             />);
         }
 
-        // TODO: ДОБАВИТЬ АУКЦИОН
         if (stage === ViewStage.AUCTION) {
             return (<CreateAuction />);
         }
@@ -48,13 +51,10 @@ export function SellModal({ isOpen, availableEditions, onClose, onConfirm }: Sel
 
             <ModalBody>
                 <div className={styles.body}>
-                    {metadata && <NFTActionText
-                        text={t('You are going to list')}
-                        nftName={metadata.name}
-                        collectionID={metadata.collection.ID}
-                        collectionName={metadata.collection.name}
-                        gameID={metadata.collection.game.ID}
-                    />}
+                    <NFTPreview
+                        nft={nft}
+                        onClick={onClose}
+                    />
 
                     {/* <ToggleGroup>
                         <ToggleButton

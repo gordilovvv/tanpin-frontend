@@ -2,10 +2,12 @@ import { useCallback, useMemo } from 'react';
 import { ApproveConfirmModal, SellModal } from '@/components/Modals';
 import { ActionButton } from './ActionButton';
 import { useTranslation } from '@/localization';
+import { useCurrency } from '@/hooks/useCurrency';
 import { useAccount } from '@/states/user/hooks/useAccount';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useOpenedState } from '@/hooks/useOpenedState';
 import { useCreateDirectSaleStore } from '@/states/sale/store';
+import { useCreateDirectSaleState } from '@/states/sale/hooks/createDirectSale';
 import { useApproveConfirmCallbacks } from '@/hooks/useApproveConfirmCallbacks';
 import { usePendingTransactionModal } from '@/states/global/hooks';
 import { useContractCall, useERC1155, useMarketContract } from '@/hooks/useContract';
@@ -17,12 +19,12 @@ import { formatValueToRaw } from '@/utils/formatRawAmount';
 type ListButtonProps = {
     contractAddress: `0x${string}`
     tokenID: string,
-    availableCopies?: number
+    availableCopies: number
 }
 
 // TODO:
 // 1. ДОБАВИТЬ АУКЦИОН
-export function ListButton({ contractAddress, tokenID, availableCopies }: ListButtonProps) {
+export function SellButton({ contractAddress, tokenID, availableCopies }: ListButtonProps) {
     const { t } = useTranslation();
     const { address } = useAccount();
     const { refetchNFT } = useNFTRefetch(contractAddress, tokenID);
@@ -33,11 +35,9 @@ export function ListButton({ contractAddress, tokenID, availableCopies }: ListBu
     const nftContract = useERC1155(CONTRACTS.ERC1155[activeChainId]);
     const marketContract = useMarketContract();
 
-    const [amount, price, replaceSaleState] = useCreateDirectSaleStore(state => [
-        state.amount,
-        state.price,
-        state.replaceSaleState
-    ]);
+    const { amount, price, currency } = useCreateDirectSaleState();
+    const saleCurrency = useCurrency(currency);
+    const handleReplaceSaleState = useCreateDirectSaleStore(state => state.replaceSaleState);
 
     const texts = useMemo(() => {
         return {
@@ -89,11 +89,7 @@ export function ListButton({ contractAddress, tokenID, availableCopies }: ListBu
                 throw new Error('Market contract have not loaded!');
             }
 
-            const rawPrice = formatValueToRaw(
-                price,
-                CONTRACTS.usdt[activeChainId].decimals
-            );
-
+            const rawPrice = formatValueToRaw(price, saleCurrency.decimals);
             const sendRes = await callContract({
                 contract: marketContract,
                 method: 'createDirectSale',
@@ -101,7 +97,7 @@ export function ListButton({ contractAddress, tokenID, availableCopies }: ListBu
                     CONTRACTS.ERC1155[activeChainId],
                     BigInt(tokenID),
                     BigInt(amount),
-                    CONTRACTS.usdt[activeChainId].address,
+                    saleCurrency.address,
                     rawPrice
                 ]
             });
@@ -119,8 +115,8 @@ export function ListButton({ contractAddress, tokenID, availableCopies }: ListBu
     });
 
     const handleOpenBuyModal = () => {
-        replaceSaleState({
-            amount: '',
+        handleReplaceSaleState({
+            amount: availableCopies === 1 ? '1' : '',
             price: ''
         });
         saleModal.open();
@@ -139,7 +135,7 @@ export function ListButton({ contractAddress, tokenID, availableCopies }: ListBu
 
             <SellModal
                 isOpen={saleModal.isOpen}
-                availableEditions={availableCopies}
+                availableAmount={availableCopies}
                 onClose={saleModal.close}
                 onConfirm={handleCreateSale}
             />

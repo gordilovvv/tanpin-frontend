@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { Button, Input, Select, UnstyleButton, useToast } from '@/uikit';
-import { NFTPreview } from '@/components/Nft';
+import { Button, Select, useToast } from '@/uikit';
+import { CopiesInput, NFTPreview } from '@/components/Nft';
 import { InsufficientFunds } from '@/components/Funds';
 import { BuyReceipt } from './BuyReceipt';
 import { BlackRussiaLogo } from './BlackRussiaLogo';
@@ -52,7 +52,6 @@ export function BuyForm({ saleID, price, currency, availableAmount, onPurchase, 
 
     // Количество nft и выбор персонажа
     const hasFields = selectOptions || !isUnique;
-    const maxInputLength = `${availableAmount}`.length;
 
     const { parsedAmount, totalPrice, isLoading, amountError, balanceError, insufficientBalance, characterError } = useBuyDirectSaleInfo(
         price,
@@ -77,10 +76,6 @@ export function BuyForm({ saleID, price, currency, availableAmount, onPurchase, 
         onSelectCharacter(characterID, character.server.id);
     }, [characters, onSelectCharacter, t, toastDanger]);
 
-    const handleMax = useCallback(() => {
-        handleAmountType(`${availableAmount}`);
-    }, [handleAmountType, availableAmount]);
-
     if (isLoading || isLoadingCharacters) {
         return (<LoadingContent />);
     }
@@ -101,21 +96,11 @@ export function BuyForm({ saleID, price, currency, availableAmount, onPurchase, 
                     onChange={handleSelectCharacter}
                 />}
 
-                {!isUnique && <Input
-                    numerical
+                {!isUnique && <CopiesInput
                     value={typedAmount}
-                    onInput={handleAmountType}
-                    placeholder='0'
-                    max={availableAmount}
-                    maxLength={maxInputLength}
+                    maxValue={availableAmount}
                     danger={parsedAmount !== undefined && !!amountError}
-                    rightAddon={<UnstyleButton
-                        className={styles.maxButton}
-                        onClick={handleMax}
-                    >
-                        {t('out of %number%', { number: availableAmount })}
-                    </UnstyleButton>}
-                    style={{ paddingRight: '156px' }}
+                    onInput={handleAmountType}
                 />}
             </div>}
 
