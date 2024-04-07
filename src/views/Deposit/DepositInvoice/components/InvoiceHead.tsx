@@ -1,6 +1,6 @@
 import { Attention, UnstyleButton } from '@/uikit';
 import { CopyButton } from './CopyButton';
-import { CurrencyIcon } from '@/components/CurrencyIcon';
+import { CurrencyIcon } from '@/components/Currency';
 import { CurrencyChain } from '../../components/CurrencyChain';
 import { useTranslation } from '@/localization';
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';

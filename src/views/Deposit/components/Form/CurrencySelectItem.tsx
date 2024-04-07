@@ -1,5 +1,5 @@
 import { Mark, UnstyleButton } from '@/uikit';
-import { CurrencyIcon } from '@/components/CurrencyIcon';
+import { CurrencyIcon } from '@/components/Currency';
 import { CurrencyName } from './CurrencyName';
 import { InputCurrency, OutputCurrency } from '@/states/deposit/types';
 import classNames from 'classnames';

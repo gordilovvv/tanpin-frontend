@@ -8,21 +8,17 @@ import { useTokenBalance } from '@/hooks/useTokenBalance';
 import { useNativeBalance } from '@/hooks/useNativeBalance';
 import { useTranslation } from '@/localization';
 import { useAccount } from '@/states/user/hooks/useAccount';
-import { Address } from 'wagmi';
+import { useCurrency, useNativeCurrency } from '@/hooks/useCurrency';
 import { walletMenuLinks } from '../config';
-import { activeChain, activeChainId } from '@/config/chain';
+import { activeChain } from '@/config/chain';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { getAddressExplorerURL } from '@/utils/explorer';
-import { CONTRACTS } from '@/config/constants/contracts';
 import { TRANSFER_TOKEN_AVAILABLE } from '@/config';
 import { logError } from '@/utils/sentry';
-import tanpinCoinLogo from '@/app/assets/images/tanpin-coin.png';
-import maticLogo from '@/app/assets/images/matic.png';
-import usdtLogo from '@/app/assets/images/usdt.png';
 import styles from './WalletMenu.module.scss';
 
 type WalletMenuProps = {
-    address: Address,
+    address: `0x${string}`
     onTransfer: () => void
 }
 
@@ -33,14 +29,12 @@ export function WalletMenu({ address, onTransfer }: WalletMenuProps) {
     const [isDisconnecting, setIsDisconnecting] = useState(false);
     const [disconnectError, setDisconnectError] = useState<string | undefined>();
 
-    const tanpinBalance = useTokenBalance(
-        CONTRACTS.tanpin[activeChainId].address,
-        CONTRACTS.tanpin[activeChainId].decimals
-    );
-    const usdtBalance = useTokenBalance(
-        CONTRACTS.usdt[activeChainId].address,
-        CONTRACTS.usdt[activeChainId].decimals
-    );
+    const matic = useNativeCurrency();
+    const tanpin = useCurrency('tanpin');
+    const usdt = useCurrency('usdt');
+
+    const tanpinBalance = useTokenBalance(tanpin.address, tanpin.decimals);
+    const usdtBalance = useTokenBalance(usdt.address, usdt.decimals);
     const maticBalance = useNativeBalance(address);
 
     const handleLogout = useCallback(() => {
@@ -84,24 +78,24 @@ export function WalletMenu({ address, onTransfer }: WalletMenuProps) {
             <div className={styles.balancesWrap}>
                 <div className={styles.balances}>
                     <TokenInfo
-                        image={maticLogo}
+                        image={matic.image}
                         balance={maticBalance.amount}
                         loading={maticBalance.isLoading}
-                        symbol='MATIC'
+                        symbol={matic.symbol}
                     />
 
                     <TokenInfo
-                        image={tanpinCoinLogo}
+                        image={tanpin.image}
                         balance={tanpinBalance.amount}
                         loading={tanpinBalance.isLoading}
-                        symbol='TANPIN'
+                        symbol={tanpin.symbol}
                     />
 
                     <TokenInfo
-                        image={usdtLogo}
+                        image={usdt.image}
                         balance={usdtBalance.amount}
                         loading={usdtBalance.isLoading}
-                        symbol='USDT'
+                        symbol={usdt.symbol}
                     />
                 </div>
             </div>

@@ -1,40 +1,48 @@
-import tanpinLogo from '@/app/assets/images/tanpin-coin.png';
-import usdtLogo from '@/app/assets/images/usdt.png';
-import rubLogo from '@/app/assets/images/rub.png';
-import usdtPolygonLogo from '@/app/assets/images/usdt-polygon.png';
-import usdtEthereumLogo from '@/app/assets/images/usdt-ethereum.png';
-import usdtBscLogo from '@/app/assets/images/usdt-bsc.png';
-import usdtTronLogo from '@/app/assets/images/usdt-tron.png';
+import { CONTRACTS } from './contracts';
+import { activeChainId } from '../chain';
 
-export const currencies: {
-    [currency: string]: {
-        name: string,
-        symbol: string,
-        decimals: number,
-        image: string
-    }
-} = {
+export type CurrencyID = 'tanpin' | 'usdt';
+
+export type Currency = {
+    id: string,
+    name: string,
+    symbol: string,
+    address: `0x${string}`,
+    decimals: number,
+    image: string
+}
+
+export const currencies: Record<CurrencyID, Currency> = {
     tanpin: {
+        id: 'tanpin',
         name: 'Tanpin',
         symbol: 'TANPIN',
-        decimals: 18,
-        image: tanpinLogo
+        address: CONTRACTS.tanpin[activeChainId].address,
+        decimals: CONTRACTS.tanpin[activeChainId].decimals,
+        image: 'https://cdn.tanpin.io/currency/tanpin.png'
     },
     usdt: {
+        id: 'usdt',
         name: 'Tether USD',
         symbol: 'USDT',
-        decimals: 18,
-        image: usdtLogo
+        address: CONTRACTS.usdt[activeChainId].address,
+        decimals: CONTRACTS.usdt[activeChainId].decimals,
+        image: 'https://cdn.tanpin.io/currency/usdt.png'
     }
 };
 
-export const currencyToLogo: {
-    [currency: string]: string
-} = {
-    'tanpin': tanpinLogo,
-    'rub': rubLogo,
-    'usdt-polygon': usdtPolygonLogo,
-    'usdt-ethereum': usdtEthereumLogo,
-    'usdt-bsc': usdtBscLogo,
-    'usdt-tron': usdtTronLogo
+export type NativeCurrency = {
+    id: string,
+    name: string,
+    symbol: string,
+    decimals: number,
+    image: string
+}
+
+export const nativeCurrency: NativeCurrency = {
+    id: 'matic',
+    name: 'Polygon',
+    symbol: 'MATIC',
+    decimals: 18,
+    image: 'https://cdn.tanpin.io/currency/matic.png'
 };

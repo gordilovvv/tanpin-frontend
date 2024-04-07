@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { ArrowDropdown, PopoverButton, PopoverMenu, Skeleton, usePopoverState } from '@/uikit';
-import { CurrencyIcon } from '@/components/CurrencyIcon';
+import { CurrencyIcon } from '@/components/Currency';
 import { CurrencyName } from './CurrencyName';
 import { CurrencySelectItem } from './CurrencySelectItem';
 import { InputCurrency, OutputCurrency } from '@/states/deposit/types';

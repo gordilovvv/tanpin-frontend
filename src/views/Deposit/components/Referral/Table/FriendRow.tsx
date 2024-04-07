@@ -2,11 +2,11 @@ import { memo } from 'react';
 import { UnstyleLink } from '@/uikit';
 import { UserAvatar } from '@/components/User';
 import { ReferralFriend } from '@/states/deposit/types';
+import { useCurrency } from '@/hooks/useCurrency';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import BigNumber from 'bignumber.js';
-import tanpinCoin from '@/app/assets/images/tanpin-coin.png';
 import styles from './FriendRow.module.scss';
 
 type FriendRowProps = {
@@ -15,6 +15,7 @@ type FriendRowProps = {
 
 export const FriendRow = memo(({ friend }: FriendRowProps) => {
     const amountSign = new BigNumber(friend.totalReward).isGreaterThan(0) ? '+' : '';
+    const currency = useCurrency('tanpin');
 
     return (
         <div className={styles.row}>
@@ -41,7 +42,7 @@ export const FriendRow = memo(({ friend }: FriendRowProps) => {
 
                 <div className={styles.token}>
                     <img
-                        src={tanpinCoin}
+                        src={currency.image}
                         alt={'TANPIN'}
                     />
                 </div>
