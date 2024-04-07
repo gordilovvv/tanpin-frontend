@@ -1,32 +1,34 @@
 import { useCallback, useState } from 'react';
-import { ActionButton } from './ActionButton';
 import { ErrorMessageModal, LoadingModal, UpdateSaleModal } from '@/components/Modals';
+import { ActionButton } from './ActionButton';
 import { useTranslation } from '@/localization';
 import { useOpenedState } from '@/hooks/useOpenedState';
+import { useCurrency } from '@/hooks/useCurrency';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
 import { useUpdateDirectSaleStore } from '@/states/sale/store';
 import { usePendingTransactionModal } from '@/states/global/hooks';
-import { CONTRACTS } from '@/config/constants/contracts';
 import { formatValueToRaw } from '@/utils/formatRawAmount';
-import { activeChainId } from '@/config/chain';
 import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
 type UpdateSaleButtonProps = {
-    nftID: string,
-    saleID: string,
+    contractAddress: `0x${string}`
+    tokenID: string
+    saleID: string
     currentPrice: string
+    currency: string
 }
 
-export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButtonProps) {
+export function UpdateSaleButton({ contractAddress, tokenID, saleID, currentPrice, currency }: UpdateSaleButtonProps) {
     const { t } = useTranslation();
-    const { refetchNFT } = useNFTRefetch(nftID);
+    const { refetchNFT } = useNFTRefetch(contractAddress, tokenID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
     const updateSaleModal = useOpenedState();
     const pendingTransactionModal = usePendingTransactionModal();
 
+    const saleCurrency = useCurrency(currency);
     const [price, setPrice] = useUpdateDirectSaleStore(state => [
         state.price,
         state.setPrice
@@ -41,10 +43,7 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
                 throw new Error('Update sale is not ready!');
             }
 
-            const rawPrice = formatValueToRaw(
-                price,
-                CONTRACTS.usdt[activeChainId].decimals
-            );
+            const rawPrice = formatValueToRaw(price, saleCurrency.decimals);
 
             if (rawPrice <= 0) {
                 throw new Error('The new price of the NFT must be greater than 0!');
@@ -69,7 +68,7 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
         } finally {
             setIsLoading(false);
         }
-    }, [marketContract, saleID, price, setIsLoading, callContract, refetchNFT, pendingTransactionModal.open, setPrice, setError, t]);
+    }, [marketContract, saleID, price, saleCurrency, setIsLoading, callContract, refetchNFT, pendingTransactionModal.open, setPrice, setError, t]);
 
     const handleOpenModal = () => {
         setPrice('');
@@ -93,6 +92,7 @@ export function UpdateSaleButton({ nftID, saleID, currentPrice }: UpdateSaleButt
             <UpdateSaleModal
                 isOpen={updateSaleModal.isOpen}
                 currentPrice={currentPrice}
+                currency={currency}
                 onClose={updateSaleModal.close}
                 onConfirm={handleConfirmSale}
             />

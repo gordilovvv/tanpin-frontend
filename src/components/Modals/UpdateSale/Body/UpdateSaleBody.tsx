@@ -1,38 +1,44 @@
 import { Button, Input } from '@/uikit';
-import { NFTActionText } from '@/components/Nft';
+import { NFTPreview } from '@/components/Nft';
 import { useTranslation } from '@/localization';
-import { useTokenMetadata } from '@/states/nft/hooks/useTokenMetadata';
+import { useNFT } from '@/states/nft/hooks/useNFT';
+import { useCurrency } from '@/hooks/useCurrency';
 import { useUpdateDirectSaleStore } from '@/states/sale/store';
 import { useUpdateDirectSaleInfo } from '@/states/sale/hooks/updateDirectSale';
 import styles from './UpdateSaleBody.module.scss';
 
 type UpdateSaleBodyProps = {
     currentPrice: string,
-    onConfirm: () => void
+    currency: string,
+    onConfirm: () => void,
+    onClose?: () => void
 }
 
-export function UpdateSaleBody({ currentPrice, onConfirm }: UpdateSaleBodyProps) {
+export function UpdateSaleBody({ currentPrice, currency, onConfirm, onClose }: UpdateSaleBodyProps) {
     const { t } = useTranslation();
-    const tokenMetadata = useTokenMetadata();
-    const { price, priceError } = useUpdateDirectSaleInfo(currentPrice);
+    const nft = useNFT()!;
+    const saleCurrency = useCurrency(currency);
+
+    const { price, priceError } = useUpdateDirectSaleInfo(
+        currentPrice,
+        saleCurrency
+    );
+
     const setPrice = useUpdateDirectSaleStore(state => state.setPrice);
 
     return (
         <div className={styles.wrap}>
-            {tokenMetadata && <NFTActionText
-                text={t('You are going to update the price for')}
-                nftName={tokenMetadata.name}
-                collectionID={tokenMetadata.collection.ID}
-                collectionName={tokenMetadata.collection.name}
-                gameID={tokenMetadata.collection.game.ID}
-            />}
+            <NFTPreview
+                nft={nft}
+                onClick={onClose}
+            />
 
             <Input
                 value={price}
                 numerical
                 onInput={setPrice}
-                rightAddon='USDT'
-                style={{ paddingRight: '72px' }}
+                rightAddon={saleCurrency.symbol}
+                style={{ paddingRight: '100px' }}
             />
 
             <Button

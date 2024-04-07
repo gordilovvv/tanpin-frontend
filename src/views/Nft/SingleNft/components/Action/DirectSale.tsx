@@ -37,12 +37,14 @@ export function DirectSale({ contractAddress, tokenID, sale, isOwner }: DirectSa
                         tokenID={tokenID}
                         saleID={sale.saleID}
                         currentPrice={sale.price.amount}
+                        currency={sale.price.currency}
                     />
                     : <BuyButton
                         contractAddress={contractAddress}
                         tokenID={tokenID}
                         saleID={sale.saleID}
                         price={sale.price.amount}
+                        currency={sale.price.currency}
                         stock={sale.stock}
                         buttonIcon={<Cart />}
                         buttonView='primary'

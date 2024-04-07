@@ -4,10 +4,11 @@ import { useTranslation } from '@/localization';
 
 type UpdateSaleModalProps = {
     currentPrice: string,
+    currency: string,
     onConfirm: () => void
 } & ModalProps;
 
-export function UpdateSaleModal({ isOpen, currentPrice, onClose, onConfirm }: UpdateSaleModalProps) {
+export function UpdateSaleModal({ isOpen, currentPrice, currency, onClose, onConfirm }: UpdateSaleModalProps) {
     const { t } = useTranslation();
 
     return (
@@ -20,7 +21,9 @@ export function UpdateSaleModal({ isOpen, currentPrice, onClose, onConfirm }: Up
             <ModalBody>
                 <UpdateSaleBody
                     currentPrice={currentPrice}
+                    currency={currency}
                     onConfirm={onConfirm}
+                    onClose={onClose}
                 />
             </ModalBody>
         </Modal>
