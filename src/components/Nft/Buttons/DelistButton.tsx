@@ -1,7 +1,6 @@
 import { useState } from 'react';
+import { ErrorMessageModal, LoadingModal } from '@/components/Modals';
 import { ActionButton } from './ActionButton';
-import { ErrorMessageModal } from '@/components/Modals';
-import { LoadingModal } from '@/components/Modals';
 import { useTranslation } from '@/localization';
 import { useNFTRefetch } from '@/states/nft/hooks/useNFTFetch';
 import { useContractCall, useMarketContract } from '@/hooks/useContract';
@@ -10,14 +9,15 @@ import { logError } from '@/utils/sentry';
 import { walletErrorToUserReadableMessage } from '@/utils/walletErrorToUserReadableMessage';
 
 type DelistButtonProps = {
-    nftID: string
+    contractAddress: `0x${string}`
+    tokenID: string
     saleID: string
     text: string
 }
 
-export function DelistButton({ nftID, saleID, text }: DelistButtonProps) {
+export function DelistButton({ contractAddress, tokenID, saleID, text }: DelistButtonProps) {
     const { t } = useTranslation();
-    const { refetchNFT } = useNFTRefetch(nftID);
+    const { refetchNFT } = useNFTRefetch(contractAddress, tokenID);
     const { callContract } = useContractCall();
     const marketContract = useMarketContract();
     const pendingTransactionModal = usePendingTransactionModal();
