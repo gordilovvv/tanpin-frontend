@@ -1,4 +1,9 @@
 import { Currency, currencies, nativeCurrency } from '@/config/constants/currency';
+import rub from '@/app/assets/images/rub.png';
+import usdtPolygon from '@/app/assets/images/usdt-polygon.png';
+import usdtEthereum from '@/app/assets/images/usdt-ethereum.png';
+import usdtBsc from '@/app/assets/images/usdt-bsc.png';
+import usdtTron from '@/app/assets/images/usdt-tron.png';
 import classNames from 'classnames';
 import styles from './CurrencyIcon.module.scss';
 
@@ -8,12 +13,12 @@ type CurrencyIconProps = {
 }
 
 const images: { [code: string]: string } = {
-    'rub': 'https://cdn.tanpin.io/currency/rub.png',
+    'rub': rub,
     'matic': nativeCurrency.image,
-    'usdt-polygon': 'https://cdn.tanpin.io/currency/usdt-polygon.png',
-    'usdt-ethereum': 'https://cdn.tanpin.io/currency/usdt-ethereum.png',
-    'usdt-bsc': 'https://cdn.tanpin.io/currency/usdt-bsc.png',
-    'usdt-tron': 'https://cdn.tanpin.io/currency/usdt-tron.png'
+    'usdt-polygon': usdtPolygon,
+    'usdt-ethereum': usdtEthereum,
+    'usdt-bsc': usdtBsc,
+    'usdt-tron': usdtTron
 };
 
 export function CurrencyIcon({ code, size = 's' }: CurrencyIconProps) {

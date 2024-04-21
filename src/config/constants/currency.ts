@@ -1,5 +1,8 @@
 import { CONTRACTS } from './contracts';
 import { activeChainId } from '../chain';
+import tanpinLogo from '@/app/assets/images/tanpin-coin.png';
+import usdtLogo from '@/app/assets/images/usdt.png';
+import maticLogo from '@/app/assets/images/matic.png';
 
 export type Currency = {
     id: string,
@@ -17,7 +20,7 @@ export const currencies: Record<'tanpin' | 'usdt', Currency> = {
         symbol: 'TANPIN',
         address: CONTRACTS.tanpin[activeChainId].address,
         decimals: CONTRACTS.tanpin[activeChainId].decimals,
-        image: 'https://cdn.tanpin.io/currency/tanpin.png'
+        image: tanpinLogo
     },
     usdt: {
         id: 'usdt',
@@ -25,7 +28,7 @@ export const currencies: Record<'tanpin' | 'usdt', Currency> = {
         symbol: 'USDT',
         address: CONTRACTS.usdt[activeChainId].address,
         decimals: CONTRACTS.usdt[activeChainId].decimals,
-        image: 'https://cdn.tanpin.io/currency/usdt.png'
+        image: usdtLogo
     }
 };
 
@@ -42,5 +45,5 @@ export const nativeCurrency: NativeCurrency = {
     name: 'Polygon',
     symbol: 'MATIC',
     decimals: 18,
-    image: 'https://cdn.tanpin.io/currency/matic.png'
+    image: maticLogo
 };
