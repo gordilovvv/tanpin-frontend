@@ -17,6 +17,7 @@ export function ActivityTransfer({ recipient }: ActivityTransferProps) {
             address={recipient}
             size='xs'
             isUser={address && isAddressOwner(address, recipient)}
+            onClick={event => event.stopPropagation()}
         />
     </>);
 }

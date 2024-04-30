@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react';
 import { UserAvatar } from '..';
 import { Link, UnstyleLink } from '@/uikit';
 import { useTranslation } from '@/localization';
@@ -11,9 +12,10 @@ type OwnerProps = {
     size: 'xs' | 's' | 'xl',
     isUser?: boolean
     showLink?: boolean
+    onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
-export function Owner({ address, size, isUser, showLink }: OwnerProps) {
+export function Owner({ address, size, isUser, showLink, onClick }: OwnerProps) {
     const { t } = useTranslation();
 
     return (
@@ -21,6 +23,7 @@ export function Owner({ address, size, isUser, showLink }: OwnerProps) {
             href={getAddressExplorerURL(address)}
             rel='noreferrer noopener'
             target='_blank'
+            onClick={onClick}
         >
             <div className={classNames(styles.wrapper, styles[size])}>
                 <UserAvatar

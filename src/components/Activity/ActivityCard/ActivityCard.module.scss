@@ -50,7 +50,7 @@
 
 .info {
     display: grid;
-    gap: 12px;
+    gap: 8px;
     grid-template-columns: minmax(0, auto);
 }
 
@@ -131,6 +131,10 @@
 }
 
 @include max767 {
+    .content {
+        gap: 16px;
+    }
+
     .imageWrap {
         width: 72px;
     }
@@ -140,9 +144,20 @@
     }
 
     .title {
-        font-size: 16px;
-        line-height: 24px;
+        font-size: 14px;
+        line-height: 20px;
         letter-spacing: -0.16px;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: -0.16px;
+    }
+
+    .date {
+        font-size: 12px;
+        line-height: 18px;
     }
 
     .details {

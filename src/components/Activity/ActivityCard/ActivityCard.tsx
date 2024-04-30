@@ -1,6 +1,6 @@
 import { memo } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { Image, ImageSkeleton, Link, Skeleton, UnstyleLink } from '@/uikit';
-import { AuctionAction } from './Auction/AuctionAction';
 import { ActivityDescription } from './Description/ActivityDescription';
 import { ActivityTransaction } from '@/states/activity/types';
 import { useTranslation } from '@/localization';
@@ -17,12 +17,15 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
     const { locale } = useTranslation();
 
     return (
-        <div className={styles.card}>
+        <RouterLink
+            className={styles.card}
+            to={`/${activity.contractAddress}/${activity.tokenId}`}
+        >
             <div className={styles.content}>
                 <div className={styles.imageWrap}>
                     <Image
                         className={styles.image}
-                        src={activity.nftImage}
+                        src={activity.tokenImageUrl}
                         alt=''
                         loading='lazy'
                         pending={<ImageSkeleton className={styles.imageSkeleton} />}
@@ -30,7 +33,7 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
                 </div>
 
                 <div className={styles.info}>
-                    <div className={styles.title}>{activity.nftName}</div>
+                    <div className={styles.title}>{activity.tokenName}</div>
 
                     <div className={styles.details}>
                         <div className={styles.description}>
@@ -39,27 +42,20 @@ export const ActivityCard = memo(({ activity }: ActivityCardProps) => {
 
                         <div className={styles.dateWrap}>
                             <UnstyleLink
-                                href={getTransactionExplorerURL(activity.transactionHash)}
+                                href={getTransactionExplorerURL(activity.hash)}
                                 rel='noreferrer noopener'
                                 target='_blank'
                                 className={styles.date}
+                                onClick={event => event.stopPropagation()}
                             >
-                                {formatDate(activity.date, locale)}
+                                {formatDate(activity.createdAt, locale)}
                                 <Link />
                             </UnstyleLink>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {activity.auctionID && !activity.doneAuctionAction && <div className={styles.buttonWrap}>
-                <AuctionAction
-                    auctionID={activity.auctionID}
-                    activityID={activity.ID}
-                    activityType={activity.type}
-                />
-            </div>}
-        </div>
+        </RouterLink>
     );
 });
 

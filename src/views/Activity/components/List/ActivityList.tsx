@@ -16,8 +16,8 @@ export function ActivityList() {
         state.userActivityFilter
     ]);
 
-    const { isLoading } = useActivity('user.activity', {
-        userAddress: address,
+    const { isLoading } = useActivity('user', {
+        address: address!,
         types: filter
     });
 
@@ -40,7 +40,7 @@ export function ActivityList() {
     return (
         <div className={styles.wrap}>
             {activity.map((activity) => <ActivityCard
-                key={activity.ID}
+                key={`${activity.hash}:${activity.chain}`}
                 activity={activity}
             />)}
         </div>

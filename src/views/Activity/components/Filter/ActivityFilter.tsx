@@ -18,27 +18,17 @@ export function ActivityFilter({ className }: ActivityFilterProps) {
     ]);
 
     const options = [
-        { value: ActivityType.SALE, label: t('Sales') },
+        { value: ActivityType.BUY_DIRECT_SALE, label: t('Purchases') },
+        { value: ActivityType.SELL_DIRECT_SALE, label: t('Sales') },
+        { value: ActivityType.TRANSFER, label: t('Transfers') },
         {
             value: [
-                ActivityType.LISTED,
-                ActivityType.UNLISTED
+                ActivityType.CREATE_DIRECT_SALE,
+                ActivityType.UPDATE_DIRECT_SALE,
+                ActivityType.CLOSE_DIRECT_SALE
             ],
             label: t('Listings')
-        },
-        {
-            value: [
-                ActivityType.BID,
-                ActivityType.CREATE_AUCTION,
-                ActivityType.CLOSE_AUCTION,
-                ActivityType.LOST_AUCTION,
-                ActivityType.WON_AUCTION
-            ],
-            label: t('Auctions')
-        },
-        { value: ActivityType.TRANSFER, label: t('Transfers') },
-        { value: ActivityType.BUY, label: t('Purchases') },
-        { value: ActivityType.MINT, label: t('Mints') },
+        }
     ];
 
     const handleChange = useCallback((value: ActivityType | ActivityType[], isActive: boolean) => {

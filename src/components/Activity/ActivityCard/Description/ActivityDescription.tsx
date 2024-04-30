@@ -1,4 +1,4 @@
-import { ActivityMint } from './ActivityMint';
+import { Currency } from '@/components/Currency';
 import { ActivityTransfer } from './ActivityTransfer';
 import { useTranslation } from '@/localization';
 import { formatTokenAmount } from '@/utils/formatTokenAmount';
@@ -11,56 +11,37 @@ type ActivityDescriptionProps = {
 
 export function ActivityDescription({ activity }: ActivityDescriptionProps) {
     const { t } = useTranslation();
-    const renderTokenAmount = (amount: string, currency: string) => {
-        return <span>{formatTokenAmount(amount)} {currency}</span>;
+
+    const renderPrice = (amount: number, price: string, currency: string) => {
+        const totalPrice = amount * parseFloat(price);
+
+        return <span>{formatTokenAmount(totalPrice)} <Currency>{currency}</Currency></span>;
     };
 
-    if (activity.type === ActivityType.MINT) {
+    if (activity.type === ActivityType.TRANSFER) {
         return (<div className={styles.wrap}>
-            <ActivityMint transactionOwner={activity.owner} />
+            <ActivityTransfer recipient={activity.data.to} />
         </div>);
     }
 
-    if (activity.type === ActivityType.TRANSFER && activity.transferedTo) {
-        return (<div className={styles.wrap}>
-            <ActivityTransfer recipient={activity.transferedTo} />
-        </div>);
+    if (activity.type === ActivityType.CREATE_DIRECT_SALE) {
+        return (<>{t('Listed for sale for')} {renderPrice(1, activity.data.price, activity.data.currency)}</>);
     }
 
-    if (activity.type === ActivityType.LISTED && activity.price) {
-        return (<>{t('Listed for sale for')} {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
-    }
-
-    if (activity.type === ActivityType.UNLISTED) {
+    if (activity.type === ActivityType.CLOSE_DIRECT_SALE) {
         return (<>{t('Unlisted from sale')}</>);
     }
 
-    if (activity.type === ActivityType.BUY && activity.price) {
-        return (<>{t('Purchased for')} {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
+    if (activity.type === ActivityType.BUY_DIRECT_SALE) {
+        return (<>{t('Purchased for')} {renderPrice(activity.data.amount, activity.data.price, activity.data.currency)}</>);
     }
 
-    if (activity.type === ActivityType.SALE && activity.price) {
-        return (<>{t('Sold for')} {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
+    if (activity.type === ActivityType.SELL_DIRECT_SALE) {
+        return (<>{t('Sold for')} {renderPrice(activity.data.amount, activity.data.price, activity.data.currency)}</>);
     }
 
-    if (activity.type === ActivityType.CREATE_AUCTION) {
-        return (<>{t('Auction started')}</>);
-    }
-
-    if (activity.type === ActivityType.BID && activity.price) {
-        return (<>{t('You’ve bid')} {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
-    }
-
-    if (activity.type === ActivityType.WON_AUCTION && activity.price) {
-        return (<>{t('Auction won for')} {renderTokenAmount(activity.price.amount, activity.price.currency)}</>);
-    }
-
-    if (activity.type === ActivityType.LOST_AUCTION) {
-        return (<>{t('Auction lost')}</>);
-    }
-
-    if (activity.type === ActivityType.CLOSE_AUCTION && activity.price) {
-        return (<>{t('Received')} {renderTokenAmount(activity.price.amount, activity.price.currency)} for finished auction</>);
+    if (activity.type === ActivityType.UPDATE_DIRECT_SALE) {
+        return (<>{t('Price changed for')} {renderPrice(1, activity.data.price, activity.data.currency)}</>);
     }
 
     return <>{t('Unknown transaction:')} <span>{activity.type}</span></>;

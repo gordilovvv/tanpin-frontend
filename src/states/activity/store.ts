@@ -19,7 +19,6 @@ export enum ActivitySection {
 }
 
 const defaultTypesFilter = [
-    ActivityType.MINT,
     ActivityType.TRANSFER,
     ActivityType.BUY_DIRECT_SALE,
     ActivityType.SELL_DIRECT_SALE,
