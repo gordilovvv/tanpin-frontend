@@ -32,7 +32,7 @@ export function TokenTabs({ nft }: TokenTabsProps) {
         }
 
         if (activeTab === Tab.HISTORY) {
-            return (<TransactionsHistory />);
+            return (<TransactionsHistory uniqueToken={isUnique} />);
         }
 
         if (activeTab === Tab.OWNERS) {
@@ -42,7 +42,7 @@ export function TokenTabs({ nft }: TokenTabsProps) {
 
     if (isUnique && !hasAuctions) {
         return (<BlockWrap title={t('History')}>
-            <TransactionsHistory />
+            <TransactionsHistory uniqueToken={isUnique} />
         </BlockWrap>);
     }
 

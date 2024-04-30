@@ -18,25 +18,21 @@ export enum ActivitySection {
     TOKEN = 'token',
 }
 
-const allUserActivityFilters = [
+const defaultTypesFilter = [
     ActivityType.MINT,
     ActivityType.TRANSFER,
-    ActivityType.BUY,
-    ActivityType.LISTED,
-    ActivityType.UNLISTED,
-    ActivityType.SALE,
-    ActivityType.BID,
-    ActivityType.CREATE_AUCTION,
-    ActivityType.CLOSE_AUCTION,
-    ActivityType.LOST_AUCTION,
-    ActivityType.WON_AUCTION
+    ActivityType.BUY_DIRECT_SALE,
+    ActivityType.SELL_DIRECT_SALE,
+    ActivityType.CREATE_DIRECT_SALE,
+    ActivityType.UPDATE_DIRECT_SALE,
+    ActivityType.CLOSE_DIRECT_SALE
 ];
 
 export const useActivityStore = create<State & Actions>()(
     (set, get) => ({
         activityList: [],
         notificationsCount: 0,
-        userActivityFilter: allUserActivityFilters,
+        userActivityFilter: defaultTypesFilter,
 
         setActivityList: (list) => {
             set({ activityList: list });
@@ -44,7 +40,7 @@ export const useActivityStore = create<State & Actions>()(
         selectUserActivityOption: (value) => {
             let activeFilters = get().userActivityFilter;
 
-            if (allUserActivityFilters.length === activeFilters.length) {
+            if (defaultTypesFilter.length === activeFilters.length) {
                 activeFilters = [];
             }
 
@@ -81,7 +77,7 @@ export const useActivityStore = create<State & Actions>()(
                 if (newActiveFilters.length) {
                     return set({ userActivityFilter: newActiveFilters });
                 } else {
-                    return set({ userActivityFilter: allUserActivityFilters });
+                    return set({ userActivityFilter: defaultTypesFilter });
                 }
             }
 
@@ -99,7 +95,7 @@ export const useActivityStore = create<State & Actions>()(
                 if (newActiveFilters.length) {
                     return set({ userActivityFilter: newActiveFilters });
                 } else {
-                    return set({ userActivityFilter: allUserActivityFilters });
+                    return set({ userActivityFilter: defaultTypesFilter });
                 }
             }
         }

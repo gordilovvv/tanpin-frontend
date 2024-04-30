@@ -36,8 +36,10 @@
     align-items: center;
     transition: color .1s linear;
 
-    @include hover {
-        color: var(--color-typo-base);
+    &Link {
+        @include hover {
+            color: var(--color-typo-base);
+        }
     }
 
     svg {
@@ -69,11 +71,13 @@
     }
 
     .title {
-        font-size: 14px;
+        font-size: 12px;
+        line-height: 1.4;
     }
 
     .meta {
-        font-size: 12px;
+        font-size: 10px;
+        line-height: 1.2;
     }
 
     .avatarLoader {
@@ -83,12 +87,12 @@
 
     .titleLoader {
         width: 230px;
-        height: 18px;
+        height: 16px;
         margin-bottom: 4px;
     }
 
     .metaLoader {
         width: 120px;
-        height: 14px;
+        height: 12px;
     }
 }

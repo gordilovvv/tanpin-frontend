@@ -7,7 +7,12 @@ import styles from './TransactionsHistory.module.scss';
 
 const SKELETONS_COUNT = 5;
 
-export function TransactionsHistory() {
+type TransactionsHistoryProps = {
+    uniqueToken: boolean
+}
+
+// MEMO ???
+export function TransactionsHistory({ uniqueToken }: TransactionsHistoryProps) {
     const tokenActivity = useActivityStore(state => state.activityList);
     const isLoading = useNFTStore(state => state.isLoadingActivity);
 
@@ -24,8 +29,9 @@ export function TransactionsHistory() {
     return (
         <div className={styles.wrapper}>
             {tokenActivity.map(tx => <HistoryTransaction
-                key={tx.ID}
+                key={`${tx.hash}:${tx.chain}`}
                 transaction={tx}
+                uniqueToken={uniqueToken}
             />)}
         </div>
     );

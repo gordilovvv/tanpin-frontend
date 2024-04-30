@@ -5,7 +5,7 @@ import { DetailRow } from './Row/DetailRow';
 import { activeChain } from '@/config/chain';
 import { useTranslation } from '@/localization';
 import { useActivityStore } from '@/states/activity/store';
-import { getAddressExplorerURL, getTransactionExplorerURL } from '@/utils/explorer';
+import { getAddressExplorerURL } from '@/utils/explorer';
 import { ellipseAddress } from '@/utils/addressHelper';
 import { ActivityType } from '@/states/activity/types';
 import { NFT } from '@/states/types';
@@ -35,14 +35,7 @@ export function TokenDetails({ nft, unique }: TokenDetailsProps) {
             </DetailRow>}
 
             {mintTransaction && <DetailRow title={t('Token ID')}>
-                <UnstyleLink
-                    href={getTransactionExplorerURL(mintTransaction.transactionHash)}
-                    rel='noreferrer noopener'
-                    target='_blank'
-                    className={styles.link}
-                >
-                    <LinkIcon /> {nft.tokenID}
-                </UnstyleLink>
+                {nft.tokenID}
             </DetailRow>}
 
             <DetailRow title={t('Network')}>

@@ -26,7 +26,7 @@ export function SingleNftView() {
         tokenID: string
     };
 
-    useTokenHistory(tokenID);
+    useTokenHistory(contractAddress, tokenID);
 
     const nft = useNFTStore(state => state.nft);
     const isMobile = useMediaQuery('(max-width: 1000px)');

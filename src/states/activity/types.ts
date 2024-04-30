@@ -1,42 +1,106 @@
 import { Address, Hash } from 'viem';
 
+export type ActivityCategory = 'nft' | 'user';
+
 export enum ActivityType {
     MINT = 'mint',
     TRANSFER = 'transfer',
-    BUY = 'buy',
-    SALE = 'sale',
-    LISTED = 'listed',
-    UNLISTED = 'unlisted',
-    BID = 'bid',
-    CREATE_AUCTION = 'createAuction',
-    WON_AUCTION = 'wonAuction',
-    CLOSE_AUCTION = 'closeAuction',
-    LOST_AUCTION = 'lostAuction'
+    BUY_DIRECT_SALE = 'buyDirectSale',
+    SELL_DIRECT_SALE = 'sellDirectSale',
+    CREATE_DIRECT_SALE = 'createDirectSale',
+    UPDATE_DIRECT_SALE = 'updateDirectSale',
+    CLOSE_DIRECT_SALE = 'closeDirectSale',
 }
 
-export type ActivityTransaction = {
-    ID: string
-    type: ActivityType
-    owner: Address,
-    nftID: string,
-    nftName: string,
-    nftImage: string,
-    transferedTo?: Address
-    amount?: number
-    price?: {
-        amount: string
-        currency: string
-    },
-    /** ID аукциона. Только для типов `wonAuction`, `closeAuction`, `loseAuction` */
-    auctionID?: string,
-    /** Закрыт ли аукцион для юзера. Только для типов `wonAuction`, `closeAuction`, `loseAuction` */
-    doneAuctionAction?: boolean,
-    date: string
-    transactionHash: Hash
+interface BaseActivityTransaction {
+    hash: Hash,
+    chain: string,
+    type: ActivityType,
+    fromAddress: `0x${string}`,
+    contractAddress: `0x${string}`,
+    tokenId: number,
+    tokenName: string,
+    tokenImageUrl: string,
+    createdAt: string
 }
+
+interface MintTransaction extends BaseActivityTransaction {
+    type: ActivityType.MINT,
+    data: {
+        to: `0x${string}`;
+        amount: number;
+        gameName: string;
+        gameLogoUrl: string;
+    }
+}
+
+interface TransferTransaction extends BaseActivityTransaction {
+    type: ActivityType.TRANSFER,
+    data: {
+        from: `0x${string}`;
+        to: `0x${string}`;
+        amount: number;
+    }
+}
+
+interface DirectSaleData {
+    saleId: number;
+    buyer: `0x${string}`;
+    seller: `0x${string}`;
+    amount: number;
+    price: string;
+    currency: string;
+}
+
+interface BuyDirectSaleTransaction extends BaseActivityTransaction {
+    type: ActivityType.BUY_DIRECT_SALE,
+    data: DirectSaleData
+}
+
+interface SellDirectSaleTransaction extends BaseActivityTransaction {
+    type: ActivityType.SELL_DIRECT_SALE,
+    data: DirectSaleData
+}
+
+interface CreateDirectSaleTransaction extends BaseActivityTransaction {
+    type: ActivityType.CREATE_DIRECT_SALE,
+    data: {
+        saleId: number;
+        amount: number;
+        price: string;
+        currency: string;
+    }
+}
+
+interface UpdateDirectSaleTransaction extends BaseActivityTransaction {
+    type: ActivityType.UPDATE_DIRECT_SALE,
+    data: {
+        saleId: number;
+        amount: number;
+        price: string;
+        currency: string;
+    }
+}
+
+interface CloseDirectSaleTransaction extends BaseActivityTransaction {
+    type: ActivityType.CLOSE_DIRECT_SALE,
+    data: {
+        saleId: number;
+        amount: number
+    }
+}
+
+export type ActivityTransaction =
+    | MintTransaction
+    | TransferTransaction
+    | BuyDirectSaleTransaction
+    | SellDirectSaleTransaction
+    | CreateDirectSaleTransaction
+    | UpdateDirectSaleTransaction
+    | CloseDirectSaleTransaction
 
 export type ActivityFilter = {
-    userAddress?: Address
-    tokenID?: string
+    address: Address // contract address of collection || user address
+    tokenID?: string // only if contract address
     types: ActivityType[]
 }
