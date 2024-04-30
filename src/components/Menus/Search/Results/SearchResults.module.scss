@@ -4,28 +4,3 @@
     grid-template-columns: minmax(0, auto);
     padding: 12px;
 }
-
-.list {
-    display: grid;
-    gap: 8px;
-    grid-template-columns: minmax(0, auto);
-}
-
-.error {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-danger);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.5;
-    min-height: 68px;
-    padding: 12px 0;
-}
-
-@include max767 {
-    .error {
-        font-size: 14px;
-        line-height: 1.4;
-    }
-}

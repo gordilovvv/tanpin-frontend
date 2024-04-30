@@ -10,11 +10,12 @@ type SearchInputProps = {
     onChange: (value: string) => void
 } & Omit<HTMLAttributes<HTMLInputElement>, 'onChange'>;
 
+// Доработать
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     ({ value = '', onChange, placeholder, className, ...props }, ref) => {
         const [inputValue, setInputValue] = useState(value);
 
-        const debounceTimeout = 300;
+        const debounceTimeout = 500;
         const debouncedValue = useDebounce(
             inputValue,
             debounceTimeout

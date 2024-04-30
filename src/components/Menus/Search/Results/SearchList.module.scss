@@ -1,0 +1,44 @@
+.placeholder {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 108px;
+    padding: 12px 0;
+}
+
+.list {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-danger);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    height: 108px;
+    padding: 12px 0;
+}
+
+.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    height: 108px;
+    padding: 12px 0;
+}
+
+@include max767 {
+    .error {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+}

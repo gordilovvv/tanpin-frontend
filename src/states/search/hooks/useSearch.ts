@@ -1,50 +1,41 @@
 import { useEffect, useState } from 'react';
-import { useSearchStore } from '../store';
+import { useDebounce } from '@/hooks/useDebounce';
+import useSWRImmutable from 'swr/immutable';
+import { SearchCategory, fetchSearchResults } from '../fetch/fetchSearchResults';
 
-export enum SearchTask {
-    NFT = 'NFT',
-    GAME = 'GAME',
-    COLLECTION = 'COLLECTION'
-}
-
-export function useSearch<Res>({
-    searchQuery,
-    fetchCallback
+export function useSearch({
+    category,
+    query
 }: {
-    searchQuery: string,
-    fetchCallback: (searchQuery: string, signal?: AbortSignal) => Promise<Res[] | undefined>
+    category: SearchCategory,
+    query: string
 }) {
-    const [items, setItems] = useState<Res[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const sanitizedSearchQuery = encodeURIComponent(searchQuery) ?? '';
-    const onError = useSearchStore(state => state.setSearchError);
+    const sanitizedQuery = encodeURIComponent(query) ?? '';
+    const debouncedQuery = useDebounce(sanitizedQuery, 400);
+
+    const fetcher = async ([category, query]: [category: SearchCategory, query: string]) => {
+        await new Promise(r => setTimeout(r, 100));
+
+        const items = await fetchSearchResults(category, query);
+        const slicedItems = items?.slice(0, 4);
+
+        return slicedItems ?? [];
+    };
+
+    const { data, error, isLoading } = useSWRImmutable([category, debouncedQuery], fetcher);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (isLoading || !sanitizedSearchQuery) {
-            return;
+        if (sanitizedQuery && sanitizedQuery !== debouncedQuery) {
+            setLoading(true);
+        } else {
+            setLoading(false);
         }
-
-        const load = async () => {
-            try {
-                setIsLoading(true);
-
-                const items = await fetchCallback(sanitizedSearchQuery);
-
-                if (items?.length) {
-                    setItems(items.slice(0, 4));
-                }
-            } catch (error) {
-                onError((error as Error).message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        load();
-    }, [sanitizedSearchQuery]);
+    }, [sanitizedQuery, debouncedQuery]);
 
     return {
-        items,
-        isLoading
+        data,
+        error,
+        isLoading: isLoading || loading
     };
 }

@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SearchInput } from '@/components/Menus/Search/Input/SearchInput';
 import { SearchResults } from '@/components/Menus/Search/Results/SearchResults';
 import { ComboboxList, useComboboxStore as useComboboxState } from '@ariakit/react';
-import { useDebounce } from '@/hooks/useDebounce';
-import { SEARCH_DEBOUNCE_TIMEOUT } from '@/config/constants';
+import { SearchCategory } from '@/states/search/fetch/fetchSearchResults';
 import styles from './MobileSearch.module.scss';
 
 export function MobileSearch() {
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const debouncedSearchQuery = useDebounce(searchQuery, SEARCH_DEBOUNCE_TIMEOUT);
+    const [searchCategory, setSearchCategory] = useState<SearchCategory>(SearchCategory.NFTS);
 
     const comboboxState = useComboboxState({
         value: searchQuery,
         setValue: setSearchQuery
     });
+
+    const resetSearch = useCallback(() => {
+        setSearchQuery('');
+        setSearchCategory(SearchCategory.NFTS);
+    }, [setSearchQuery, setSearchCategory]);
 
     // Show ComboboxList on mount
     useEffect(() => {
@@ -32,7 +36,12 @@ export function MobileSearch() {
                 store={comboboxState}
                 className={styles.results}
             >
-                <SearchResults searchQuery={debouncedSearchQuery} />
+                <SearchResults
+                    searchQuery={searchQuery}
+                    searchCategory={searchCategory}
+                    onSearchCategory={setSearchCategory}
+                    onSearchReset={resetSearch}
+                />
             </ComboboxList>
         </div>
     );

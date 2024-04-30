@@ -1,11 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, LazyMotion, Variants, domMax, motion } from 'framer-motion';
 import { ComboboxPopover, useComboboxStore as useComboboxState } from '@ariakit/react';
 import { SearchInput } from '../../Search/Input/SearchInput';
 import { SearchResults } from '../../Search/Results/SearchResults';
-import { useDebounce } from '@/hooks/useDebounce';
-import { useSearchStore } from '@/states/search/store';
-import { SEARCH_DEBOUNCE_TIMEOUT } from '@/config/constants';
+import { SearchCategory } from '@/states/search/fetch/fetchSearchResults';
 import styles from './HeaderSearch.module.scss';
 
 const animationMap = {
@@ -24,27 +22,51 @@ export function HeaderSearch() {
     const inputRef = useRef<HTMLInputElement>(null);
     const animationRef = useRef<HTMLDivElement>(null);
 
-    const [searchQuery, setSearchQuery] = useSearchStore(state => [
-        state.searchQuery,
-        state.setSearchQuery
-    ]);
-    const debouncedSearchQuery = useDebounce(searchQuery, SEARCH_DEBOUNCE_TIMEOUT);
+    const [isOpen, setIsOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [searchCategory, setSearchCategory] = useState<SearchCategory>(SearchCategory.NFTS);
+
+    const resetSearch = useCallback(() => {
+        setSearchQuery('');
+        setSearchCategory(SearchCategory.NFTS);
+    }, [setSearchQuery, setSearchCategory]);
 
     const comboboxState = useComboboxState({
+        open: isOpen,
         value: searchQuery,
-        setValue: setSearchQuery
+        setValue: setSearchQuery,
+        setOpen: (opened) => {
+            if (opened && !searchQuery.length) {
+                return;
+            }
+
+            return setIsOpen(opened);
+        }
     });
 
     const isComboboxOpened = comboboxState.useState('open');
     const isComboboxMounted = comboboxState.useState('mounted');
+
+    useEffect(() => {
+        if (searchQuery.length) {
+            setIsOpen(true);
+        } else {
+            setIsOpen(false);
+        }
+    }, [searchQuery]);
+
+    useEffect(() => {
+        if (!isOpen) {
+            inputRef.current?.blur();
+        }
+    }, [isOpen]);
 
     // Blur input and reset searchQuery on ESC
     useEffect(() => {
         if (isComboboxOpened) {
             const handleKeydown = (event: KeyboardEvent) => {
                 if (event.key === 'Escape') {
-                    inputRef.current?.blur();
-                    setSearchQuery('');
+                    resetSearch();
                 }
             };
 
@@ -76,7 +98,12 @@ export function HeaderSearch() {
                         variants={animationVariants}
                         transition={{ duration: 0.25, ease: [0.38, 0, 0.22, 1] }}
                     >
-                        <SearchResults searchQuery={debouncedSearchQuery} />
+                        <SearchResults
+                            searchQuery={searchQuery}
+                            searchCategory={searchCategory}
+                            onSearchCategory={setSearchCategory}
+                            onSearchReset={resetSearch}
+                        />
                     </ComboboxPopover>}
                 </AnimatePresence>
             </LazyMotion>
