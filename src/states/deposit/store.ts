@@ -9,13 +9,16 @@ type State = {
     activeField: Field,
     typedValue: string,
     [Field.INPUT]: { currencyId: string | undefined }
-    [Field.OUTPUT]: { currencyId: 'tanpin' }
+    [Field.OUTPUT]: { currencyId: string }
 }
 
 type Action = {
     typeValue: (params: { value: string, field: Field }) => void,
-    selectCurrency: (params: { currencyId: string, field: Field }) => void
+    selectCurrency: (params: { currencyId: string, field: Field }) => void,
+    replaceState: (state: Partial<State>) => void
 }
+
+export const DEFAULT_OUTPUT_CURRENCY = 'tanpin';
 
 export const useDepositStore = create<State & Action>(set => ({
     activeField: Field.INPUT,
@@ -24,7 +27,7 @@ export const useDepositStore = create<State & Action>(set => ({
         currencyId: '',
     },
     [Field.OUTPUT]: {
-        currencyId: 'tanpin'
+        currencyId: DEFAULT_OUTPUT_CURRENCY
     },
 
     typeValue: ({ value, field }) => {
@@ -33,8 +36,11 @@ export const useDepositStore = create<State & Action>(set => ({
             typedValue: value
         });
     },
-    selectCurrency: ({ currencyId, field }: { field: Field, currencyId: string }) => {
+    selectCurrency: ({ currencyId, field }) => {
         set({ [field]: { currencyId } });
+    },
+    replaceState: (state) => {
+        set({ ...state });
     }
 }));
 

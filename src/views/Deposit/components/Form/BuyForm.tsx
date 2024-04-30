@@ -10,6 +10,7 @@ import { useBuyTrade } from '@/states/deposit/hooks/useBuyTrade';
 import { useBuyCallback } from '@/states/deposit/hooks/useBuyCallback';
 import { useFetchPairRate } from '@/states/deposit/hooks/useFetchPairRate';
 import { useCurrency, useCurrencyIdToCurrency } from '@/states/deposit/hooks/useCurrency';
+import { useDefaultsFromURLSearch } from '@/states/deposit/hooks/useDefaultsFromURLSearch';
 import { Field, useDepositActions, useDepositState } from '@/states/deposit/store';
 import { InputCurrency, MaticDistribution, OutputCurrency } from '@/states/deposit/types';
 import { TELEGRAM_SUPPORT_URL } from '@/config';
@@ -33,6 +34,7 @@ export function BuyForm({ inputCurrencies, outputCurrencies, maticDistribution, 
         outputCurrency: outputCurrencyId
     } = useDepositState();
 
+    useDefaultsFromURLSearch();
     const dependentField = activeField === Field.INPUT
         ? Field.OUTPUT
         : Field.INPUT;
