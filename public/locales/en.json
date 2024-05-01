@@ -6,6 +6,7 @@
     "gaming economy": "gaming economy",
     "Join our community:": "Join our community:",
     "All rights reserved": "All rights reserved",
+    "Home": "Home",
     "NFT": "NFT",
     "Collections": "Collections",
     "Trending Collections": "Trending Collections",
@@ -266,5 +267,7 @@
     "Discovering the Joy of NFT Ownership": "Discovering the Joy of NFT Ownership",
     "Minting Memories with NFT": "Minting Memories with NFT",
     "We are cleaning our gallery": "We are cleaning our gallery",
-    "Just optimized database and collect new blocks": "Just optimized database and collect new blocks"
+    "Just optimized database and collect new blocks": "Just optimized database and collect new blocks",
+    "This page does not exist.": "This page does not exist.",
+    "We cannot find this page.": "We cannot find this page."
 }

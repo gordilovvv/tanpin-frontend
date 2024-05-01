@@ -1,0 +1,61 @@
+.wrap {
+    min-height: 100vh;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    display: grid;
+    gap: 48px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.info {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 42px;
+    letter-spacing: -0.648px;
+    text-align: center;
+}
+
+.description {
+    color: var(--color-typo-ghost);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: -0.216px;
+    text-align: center;
+}
+
+.buttons {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 12px;
+    align-items: initial;
+    justify-content: center;
+}
+
+@include max767 {
+    .content {
+        gap: 32px;
+    }
+
+    .title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .description {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
