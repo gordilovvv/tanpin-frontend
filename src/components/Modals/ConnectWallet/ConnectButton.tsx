@@ -25,7 +25,7 @@ export function ConnectButton({ wallet, onConnect }: ConnectButtonProps) {
         return (
             <WalletButton
                 as='link'
-                href={deepLink}
+                href={deepLink()}
                 target='_blank'
                 title={title}
                 icon={<Icon />}

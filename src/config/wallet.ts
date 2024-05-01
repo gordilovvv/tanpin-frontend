@@ -1,4 +1,3 @@
-import { APP_URL } from './index';
 import { Coinbase, InjectedWallet, Metamask, SafePal, TrustWallet, WalletConnect } from '@/uikit';
 import { getTrustWalletProvider } from '@/utils/trustWalletConnector';
 import type { ExtendEthereum } from 'global';
@@ -33,7 +32,7 @@ export type WalletConfig = {
     icon: (...args: any) => JSX.Element,
     connectorId: ConnectorNames
     recommended?: boolean,
-    deepLink?: string
+    deepLink?: () => string,
     installed?: boolean
     guide?: string
     downloadLink?: string
@@ -51,7 +50,7 @@ const walletsConfig = (): WalletConfig[] => {
                 return isMetamaskInstalled();
             },
             connectorId: ConnectorNames.MetaMask,
-            deepLink: 'https://metamask.app.link/dapp/tanpin.io'
+            deepLink: () => `https://metamask.app.link/dapp/${window.location.href.replace(/^(https?:)?\/\//, '')}`
         },
         {
             id: 'coinbase',
@@ -68,7 +67,10 @@ const walletsConfig = (): WalletConfig[] => {
             get installed() {
                 return !!getTrustWalletProvider();
             },
-            deepLink: `https://link.trustwallet.com/open_url?coin_id=20000714&url=${APP_URL}`,
+            deepLink: () => {
+                const matic = 966; // slip-0044 index of Matic (Polygon)
+                return `https://link.trustwallet.com/open_url?coin_id=${matic}&url=${encodeURIComponent(window.location.href)}`;
+            }
         },
         {
             id: 'walletconnect',

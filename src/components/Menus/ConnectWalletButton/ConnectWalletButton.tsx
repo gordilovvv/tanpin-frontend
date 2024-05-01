@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, ButtonProps } from '@/uikit';
-import { ErrorMessageModal } from '@/components/Modals';
-import { ConnectWalletModal } from '../ConnectWalletModal/ConnectWalletModal';
+import { ConnectWalletModal, ErrorMessageModal } from '@/components/Modals';
 import { ConnectorNames, createWallets } from '@/config/wallet';
 import { useAccount } from 'wagmi';
-import { useUserStore } from '@/states/user/store';
 import { useAuth } from '@/states/user/hooks/useAuth';
 import { useTranslation } from '@/localization';
 import { useOpenedState } from '@/hooks/useOpenedState';
@@ -20,14 +18,13 @@ export function ConnectWalletButton({ text, ...props }: ConnectWalletButtonProps
     const [connectError, setConnectError] = useState<string | undefined>();
 
     const wallets = useMemo(() => createWallets(), []);
-    const logged = useUserStore(state => !!state.accessToken);
     const connectPopupState = useOpenedState();
 
     useEffect(() => {
-        if (connectPopupState.isOpen && logged && isConnected) {
+        if (connectPopupState.isOpen && isConnected) {
             connectPopupState.close();
         }
-    }, [connectPopupState.isOpen, connectPopupState.close, logged, isConnected]);
+    }, [connectPopupState.isOpen, connectPopupState.close, isConnected]);
 
     const handleLogin = useCallback(async (id: ConnectorNames) => {
         try {
