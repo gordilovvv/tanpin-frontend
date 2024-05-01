@@ -67,7 +67,12 @@ export function TelegramAuthView() {
             setIsAuthenticateLoading(false);
         }
 
-        navigate('/');
+        const redirectUrl = searchParams.get('u');
+        const decodedUrl = redirectUrl
+            ? decodeURIComponent(redirectUrl)
+            : '/';
+
+        navigate(decodedUrl);
     };
 
     // Auto-connect
