@@ -1,28 +1,29 @@
-import { PageError, PageLayout } from '@/components/Layout';
-import { HomeView } from '@/views/Home/HomeView';
-import { SingleGameView } from '@/views/Games/SingleGame/SingleGameView';
-import { SingleCollectionView } from '@/views/Collections/SingleCollection/SingleCollectionView';
+import { lazy } from 'react';
+import { LazyComponent } from '@/components/LazyComponent';
+import { PageError, PageLayout, PageNotFound } from '@/components/Layout';
+import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
 import { createBrowserRouter } from 'react-router-dom';
-import { SingleNftView } from '@/views/Nft/SingleNft/SingleNftView';
-import { NFTView } from '@/views/Nft/NFTView';
-import { ActivityView } from '@/views/Activity/ActivityView';
-import { AssetsView } from '@/views/Assets/AssetsView';
-import { CollectionsView } from '@/views/Collections/CollectionsView';
-import { OwnedView } from '@/views/Assets/Owned/OwnedView';
-import { SaleView } from '@/views/Assets/Sale/SaleView';
 import { RequireConnectedWallet } from './requireConnectedWallet';
+import { PAYMENT_PAGE_AVAILABLE } from '@/config';
+
+import { HomeView } from '@/views/Home/HomeView';
+import { NFTView } from '@/views/Nft/NFTView';
+import { CollectionsView } from '@/views/Collections/CollectionsView';
+import { SingleCollectionView } from '@/views/Collections/SingleCollection/SingleCollectionView';
 import { DepositView } from '@/views/Deposit/DepositView';
 import { DepositInvoiceView } from '@/views/Deposit/DepositInvoice/DepositInvoiceView';
 import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSuccessView';
 import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositRejectedView';
-import { EmptyLayout } from '@/components/Layout/Empty/EmptyLayout';
-import { GameAuthView } from '@/views/GameAuth/GameAuthView';
-import { TokenClaimView } from '@/views/TokenClaim/TokenClaimView';
 import { TelegramAuthView } from '@/views/TelegramAuth/TelegramAuthView';
-import { PAYMENT_PAGE_AVAILABLE } from '@/config';
 
-// TODO: LazyLoad Routes
-// https://loadable-components.com/docs/getting-started/
+// Lazy components
+const SingleNftView = lazy(() => import('@/views/Nft/SingleNft/SingleNftView').then(module => ({ default: module.SingleNftView })));
+const GameAuthView = lazy(() => import('@/views/GameAuth/GameAuthView').then(module => ({ default: module.GameAuthView })));
+const AssetsView = lazy(() => import('@/views/Assets/AssetsView').then(module => ({ default: module.AssetsView })));
+const OwnedView = lazy(() => import('@/views/Assets/Owned/OwnedView').then(module => ({ default: module.OwnedView })));
+const ActivityView = lazy(() => import('@/views/Activity/ActivityView').then(module => ({ default: module.ActivityView })));
+const TokenClaimView = lazy(() => import('@/views/TokenClaim/TokenClaimView').then(module => ({ default: module.TokenClaimView })));
+
 export const router = createBrowserRouter([
     {
         element: <PageLayout />,
@@ -32,10 +33,6 @@ export const router = createBrowserRouter([
                 path: '/',
                 element: <HomeView />
             },
-            // {
-            //     path: '/games',
-            //     element: <GamesView />
-            // },
             {
                 path: '/collections',
                 element: <CollectionsView />
@@ -46,19 +43,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/claim',
-                element: <TokenClaimView />
+                element: <LazyComponent element={TokenClaimView} />
             },
             {
-                path: '/:gameID',
-                element: <SingleGameView />
-            },
-            {
-                path: '/:gameID/:collectionID',
+                path: '/collection/:collectionID',
                 element: <SingleCollectionView />
             },
             {
-                path: '/:gameID/:collectionID/:tokenID',
-                element: <SingleNftView />
+                path: '/:contractAddress/:tokenID',
+                element: <LazyComponent element={SingleNftView} />
             },
             ...(PAYMENT_PAGE_AVAILABLE ? [{
                 path: '/deposit',
@@ -71,17 +64,17 @@ export const router = createBrowserRouter([
             {
                 element: (
                     <RequireConnectedWallet>
-                        <AssetsView />
+                        <LazyComponent element={AssetsView} />
                     </RequireConnectedWallet>
                 ),
                 children: [
-                    {
-                        path: '/assets/sale',
-                        element: <SaleView />
-                    },
+                    // {
+                    //     path: '/assets/sale',
+                    //     element: <SaleView />
+                    // },
                     {
                         path: '/assets/owned',
-                        element: <OwnedView />
+                        element: <LazyComponent element={OwnedView} />
                     },
                 ]
             },
@@ -89,7 +82,7 @@ export const router = createBrowserRouter([
                 path: '/activity',
                 element: (
                     <RequireConnectedWallet>
-                        <ActivityView />
+                        <LazyComponent element={ActivityView} />
                     </RequireConnectedWallet>
                 ),
             }
@@ -100,8 +93,8 @@ export const router = createBrowserRouter([
         errorElement: <PageError />,
         children: [
             {
-                path: '/game/auth',
-                element: <GameAuthView />
+                path: '/:gameID/auth',
+                element: <LazyComponent element={GameAuthView} />
             },
             ...(
                 PAYMENT_PAGE_AVAILABLE
@@ -120,5 +113,9 @@ export const router = createBrowserRouter([
                 element: <TelegramAuthView />
             },
         ]
+    },
+    {
+        path: '*',
+        element: <PageNotFound />
     }
 ]);
