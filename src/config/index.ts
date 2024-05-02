@@ -15,6 +15,7 @@ export const TERMS_URL = 'https://tanpin.io/terms.pdf';
 export const POLICY_URL = 'https://tanpin.io/policy.pdf';
 export const WHITEPAPER_URL = 'https://whitepaper.tanpin.io/';
 export const TELEGRAM_SUPPORT_URL = 'https://t.me/tanpin_help';
+export const TELEGRAM_PARTNERSHIP_URL = 'https://t.me/tanpin_dev';
 
 export const PAYMENT_PAGE_AVAILABLE = import.meta.env.VITE_PAYMENT_PAGE_AVAILABLE === 'true';
 export const PAYMENT_FORM_AVAILABLE = import.meta.env.VITE_PAYMENT_FORM_AVAILABLE === 'true';

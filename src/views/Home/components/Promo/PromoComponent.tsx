@@ -1,9 +1,10 @@
 import { HTMLAttributes } from 'react';
-import { Title, Cat } from '@/uikit';
-import classNames from 'classnames';
+import { Title, Cat, Button } from '@/uikit';
 import { useTranslation } from '@/localization';
-import styles from './PromoComponent.module.scss';
+import { TELEGRAM_PARTNERSHIP_URL } from '@/config';
 import promoImg from '@/app/assets/bg/promo.png';
+import classNames from 'classnames';
+import styles from './PromoComponent.module.scss';
 
 export function PromoComponent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     const { t } = useTranslation();
@@ -25,15 +26,16 @@ export function PromoComponent({ className, ...props }: HTMLAttributes<HTMLDivEl
                     </div>
                 </div>
 
-                {/* <div className={styles.wrapperBtn}>
-                    <Button>
-                        Become a partner
+                <div className={styles.wrapperBtn}>
+                    <Button
+                        as='a'
+                        href={TELEGRAM_PARTNERSHIP_URL}
+                        rel='noreferrer noopener'
+                        target='_blank'
+                    >
+                        {t('Integrate game')}
                     </Button>
-
-                    <Button view='secondary'>
-                        Learn more
-                    </Button>
-                </div> */}
+                </div>
             </div>
 
             <div className={styles.cat}>
