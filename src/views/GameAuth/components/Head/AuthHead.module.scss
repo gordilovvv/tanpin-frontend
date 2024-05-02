@@ -1,0 +1,95 @@
+.wrap {
+    display: grid;
+    gap: 36px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.game {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min-content, max-content);
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+}
+
+.clip {
+    color: var(--color-typo-ghost);
+}
+
+.tanpinLogo,
+.gameLogo {
+    width: auto;
+    height: 64px;
+}
+
+.gameLogoSkeleton {
+    width: 171px;
+    height: 64px;
+    border-radius: 8px;
+}
+
+.content {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, auto);
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 42px;
+    letter-spacing: -0.648px;
+    text-align: center;
+}
+
+.description {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    text-align: center;
+
+    span {
+        color: var(--color-primary);
+    }
+}
+
+@include max767 {
+    .wrap {
+        gap: 24px;
+    }
+
+    .game {
+        gap: 16px;
+    }
+
+    .tanpinLogo,
+    .gameLogo {
+        height: 48px;
+    }
+
+    .gameLogoSkeleton {
+        width: 128px;
+        height: 48px;
+    }
+
+    .clip {
+        width: 24px;
+        height: 24px;
+    }
+
+    .content {
+        gap: 16px;
+    }
+
+    .title {
+        font-size: 22px;
+        line-height: 30px;
+    }
+
+    .description {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

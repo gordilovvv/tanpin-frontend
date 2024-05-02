@@ -1,14 +1,17 @@
 import { PropsWithChildren } from 'react';
 import { Container } from './Container';
-import crystalImg from '@/app/assets/images/crystal.png';
 import styles from './AuthContainer.module.scss';
 
-export function AuthContainer({ children }: PropsWithChildren) {
+type AuthContainerProps = {
+    background: string
+}
+
+export function AuthContainer({ background, children }: PropsWithChildren<AuthContainerProps>) {
     return (
         <div className={styles.wrap}>
             <div
                 className={styles.background}
-                style={{ backgroundImage: `url(${crystalImg})` }}
+                style={{ backgroundImage: `url(${background})` }}
             ></div>
 
             <Container>

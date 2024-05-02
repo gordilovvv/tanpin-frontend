@@ -1,53 +1,57 @@
 import { useCallback, useState } from 'react';
-import { Logo } from '@/uikit';
-import { AuthContainer } from '@/components/Layout';
-import { LoginStage } from './components/Login/LoginStage';
-import { SuccessStage } from './components/Success/SuccessStage';
-import { useSearchParams } from 'react-router-dom';
+import { AuthContainer, PageNotFound } from '@/components/Layout';
+import { AuthHead } from './components/Head/AuthHead';
+import { AuthWallets } from './components/Stage/AuthWallets';
+import { AuthConnect } from './components/Stage/AuthConnect';
+import { AuthSuccess } from './components/Stage/AuthSuccess';
+import { useAccount } from '@/states/user/hooks/useAccount';
+import { useParams } from 'react-router-dom';
+import { games } from '@/config/game';
 import styles from './GameAuthView.module.scss';
 
-enum Stage {
-    LOGIN = 'login',
-    SUCCESS = 'success'
-}
-
 export function GameAuthView() {
-    const [searchParams] = useSearchParams();
-    const [stage, setStage] = useState<Stage>(Stage.LOGIN);
+    const { gameID } = useParams() as { gameID: string };
+    const { isConnected } = useAccount();
+    const [walletLinked, setWalletLinked] = useState(false);
 
-    const gameHash = searchParams.get('hash');
-    const gameValue = searchParams.get('key');
+    const game = games[gameID];
+    const handleWalletLinked = useCallback(() => {
+        setWalletLinked(true);
+    }, [setWalletLinked]);
 
-    const handleSuccessAuth = useCallback(() => {
-        setStage(Stage.SUCCESS);
-    }, [setStage]);
-
-    const renderContent = () => {
-        if (!gameHash || !gameValue) {
-            return (<div className={styles.error}>
-                No query params!
-            </div>);
+    const renderStage = useCallback(() => {
+        if (!isConnected) {
+            return (<AuthWallets />);
         }
 
-        if (stage === Stage.LOGIN) {
-            return <LoginStage
-                gameHash={gameHash}
-                gameValue={gameValue}
-                onSuccess={handleSuccessAuth}
-            />;
+        if (!walletLinked) {
+            return (
+                <AuthConnect
+                    gameID={gameID}
+                    gameName={game.name}
+                    onWalletLinked={handleWalletLinked}
+                />
+            );
         }
 
-        if (stage === Stage.SUCCESS) {
-            return <SuccessStage />;
-        }
+        return (<AuthSuccess />);
+    }, [gameID, game, isConnected, walletLinked, handleWalletLinked]);
 
-        return null;
-    };
+    if (!game) {
+        return (<PageNotFound />);
+    }
 
     return (
-        <AuthContainer>
-            <Logo className={styles.logo} />
-            {renderContent()}
+        <AuthContainer background={game.background}>
+            <AuthHead
+                gameName={game.name}
+                gameLogo={game.logo}
+                walletLinked={walletLinked}
+            />
+
+            <div className={styles.content}>
+                {renderStage()}
+            </div>
         </AuthContainer>
     );
 }

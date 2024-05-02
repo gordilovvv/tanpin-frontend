@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
-import { ConnectTelegramButton } from '@/components/Wallet';
-import { ConnectButton } from './ConnectButton';
+import { ConnectButton, ConnectTelegramButton, WalletsGroup } from '@/components/Wallet';
 import { sortWallets } from '@/utils/sortWallets';
 import { useTranslation } from '@/localization';
 import { ConnectorNames, WalletConfig } from '@/config/wallet';
@@ -26,27 +25,17 @@ export function ConnectWalletModal({ wallets, isOpen, login, onClose }: ConnectW
             <ModalBody>
                 <div className={styles.wrap}>
                     <div className={styles.groups}>
-                        <div className={styles.group}>
-                            <div className={styles.label}>
-                                {t('Messengers')}
-                            </div>
-                            <div className={styles.list}>
-                                <ConnectTelegramButton />
-                            </div>
-                        </div>
+                        <WalletsGroup label={t('Messengers')}>
+                            <ConnectTelegramButton />
+                        </WalletsGroup>
 
-                        <div className={styles.group}>
-                            <div className={styles.label}>
-                                {t('Wallets')}
-                            </div>
-                            <div className={styles.list}>
-                                {sortedWallets.map(wallet => <ConnectButton
-                                    key={wallet.id}
-                                    wallet={wallet}
-                                    onConnect={() => login(wallet.connectorId)}
-                                />)}
-                            </div>
-                        </div>
+                        <WalletsGroup label={t('Wallets')}>
+                            {sortedWallets.map(wallet => <ConnectButton
+                                key={wallet.id}
+                                wallet={wallet}
+                                onConnect={() => login(wallet.connectorId)}
+                            />)}
+                        </WalletsGroup>
                     </div>
                 </div>
             </ModalBody>

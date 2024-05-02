@@ -13,6 +13,7 @@ import { activeChainId } from '@/config/chain';
 import { telegramConnector } from '@/config/wagmi';
 import { delayExecution } from '@/utils/delayExecution';
 import { logError } from '@/utils/sentry';
+import crystalBg from '@/app/assets/images/crystal-bg.png';
 import styles from './TelegramAuthView.module.scss';
 
 enum Stage {
@@ -159,7 +160,7 @@ export function TelegramAuthView() {
     };
 
     return (
-        <AuthContainer>
+        <AuthContainer background={crystalBg}>
             <Logo className={styles.logo} />
 
             {renderContent()}

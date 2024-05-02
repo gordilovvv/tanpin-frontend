@@ -1,3 +1,4 @@
+export { ConnectWalletModal } from './ConnectWallet/ConnectWalletModal';
 export { SignMessageModal } from './SignMessage/SignMessageModal';
 export { MobileFilter } from './MobileFilter/MobileFilter';
 export { LoadingModal } from './Loading/LoadingModal';
