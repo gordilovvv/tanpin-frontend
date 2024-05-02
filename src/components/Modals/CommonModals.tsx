@@ -3,7 +3,7 @@ import { PendingTransactionModal, SignMessageModal, WrongNetworkModal } from '@/
 import { usePendingTransactionModal, useWrongNetworkModal } from '@/states/global/hooks';
 import { AuthModal, useAuthOpenedModal } from '@/states/user/hooks/useAuth';
 
-export function Modals({ children }: PropsWithChildren<unknown>) {
+export function CommonModals({ children }: PropsWithChildren<unknown>) {
     const authOpenedModal = useAuthOpenedModal();
     const wrongNetworkModal = useWrongNetworkModal();
     const pendingTransactionModal = usePendingTransactionModal();

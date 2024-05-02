@@ -4,5 +4,7 @@ export { PageLayout } from './Page/PageLayout';
 export { PageWrapper } from './Page/PageWrapper';
 export { PageLoader } from './Page/PageLoader';
 export { PageError } from './Page/PageError';
+export { PageNotFound } from './Page/PageNotFound';
 export { CatalogHead } from './Catalog/CatalogHead';
 export { BackgroundGradient } from './Gradient/BackgroundGradient';
+export { LockScreen } from './LockScreen/LockScreen';

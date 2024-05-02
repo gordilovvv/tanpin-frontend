@@ -1,39 +1,25 @@
 import { Outlet } from 'react-router-dom';
 import { Footer, Header } from '@/components/Menus';
+import LayoutContainer from '../LayoutContainer';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import { Modals } from './Modals';
-import { LockScreen } from '../LockScreen/LockScreen';
-import { ScrollTopOnMount } from '@/app/routing/ScrollTopOnMount';
-import { useAccountEventListener } from '@/hooks/useAccountEventListener';
-import { useReferralCodeDetector } from '@/states/deposit/hooks/useReferralCode';
-import { LOCK_MARKET } from '@/config';
 import styles from './PageLayout.module.scss';
 
 export function PageLayout() {
-    useAccountEventListener();
-    useReferralCodeDetector();
-
-    if (LOCK_MARKET) {
-        return (<LockScreen />);
-    }
-
     return (
-        <ScrollTopOnMount>
-            <Modals>
-                <div className={styles.page}>
-                    <div className={styles.content}>
-                        <Header />
+        <LayoutContainer>
+            <div className={styles.page}>
+                <div className={styles.content}>
+                    <Header />
 
-                        <div className={styles.main}>
-                            <ErrorBoundary>
-                                <Outlet />
-                            </ErrorBoundary>
-                        </div>
-
-                        <Footer />
+                    <div className={styles.main}>
+                        <ErrorBoundary>
+                            <Outlet />
+                        </ErrorBoundary>
                     </div>
+
+                    <Footer />
                 </div>
-            </Modals>
-        </ScrollTopOnMount>
+            </div>
+        </LayoutContainer>
     );
 }
