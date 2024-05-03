@@ -16,7 +16,7 @@ export function TokenOwners() {
     return (
         <div className={styles.list}>
             {owners.map(owner => <OwnerRow
-                key={owner.owner}
+                key={`${owner.owner}#${owner.status}#${owner.sale?.saleID}#${owner.auction?.ID}`}
                 contractAddress={contractAddress}
                 tokenID={tokenID}
                 owner={owner}

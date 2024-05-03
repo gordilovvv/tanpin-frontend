@@ -5,6 +5,7 @@ import { BuyButton, DelistButton, UpdateSaleButton } from '@/components/Nft';
 import { Offer } from './Offer';
 import { Auction, NFTOwner, NFTSaleStatus, Sale } from '@/states/types';
 import { useTranslation } from '@/localization';
+import { useAccount } from '@/states/user/hooks/useAccount';
 import { getAddressExplorerURL } from '@/utils/explorer';
 import { ellipseAddress } from '@/utils/addressHelper';
 import classNames from 'classnames';
@@ -24,6 +25,8 @@ type OwnerRowProps = {
 // 1. ДОБАВИТЬ АУКЦИОН
 export function OwnerRow({ contractAddress, tokenID, owner, isUserOwner }: OwnerRowProps) {
     const { t } = useTranslation();
+    const { isConnected } = useAccount();
+
     const saleDescription = useMemo(() => {
         if (owner.status === NFTSaleStatus.NOT_FOR_SALE) {
             return (<Offer total={owner.value} />);
@@ -42,6 +45,10 @@ export function OwnerRow({ contractAddress, tokenID, owner, isUserOwner }: Owner
     }, [owner]);
 
     const tokenAction = useMemo(() => {
+        if (!isConnected) {
+            return null;
+        }
+
         if (owner.sale && owner.status === NFTSaleStatus.FIXED_PRICE) {
             if (isUserOwner) {
                 return (<>
@@ -50,6 +57,7 @@ export function OwnerRow({ contractAddress, tokenID, owner, isUserOwner }: Owner
                         tokenID={tokenID}
                         saleID={owner.sale.saleID}
                         currentPrice={owner.sale.price.amount}
+                        currency={owner.sale.price.currency}
                     />
 
                     <DelistButton
@@ -65,6 +73,7 @@ export function OwnerRow({ contractAddress, tokenID, owner, isUserOwner }: Owner
                     tokenID={tokenID}
                     saleID={owner.sale.saleID}
                     price={owner.sale.price.amount}
+                    currency={owner.sale.price.currency}
                     stock={owner.sale.stock}
                     buttonView='secondary'
                 />);
@@ -72,7 +81,7 @@ export function OwnerRow({ contractAddress, tokenID, owner, isUserOwner }: Owner
         }
 
         return null;
-    }, [contractAddress, tokenID, owner, isUserOwner]);
+    }, [contractAddress, tokenID, owner, isUserOwner, isConnected]);
 
     return (
         <div
