@@ -1,13 +1,13 @@
 import { Modal, ModalBody, ModalHead, ModalProps } from '@/uikit';
 import styles from './MobileFilter.module.scss';
 import { Filter } from '@/components/Explorer';
-import { Collection } from '@/states/collection/types';
+import { CollectionWithAttributes } from '@/states/collection/types';
 import { NFTExplorerCategory } from '@/states/explorer/types';
 import { useTranslation } from '@/localization';
 
 type MobileFilterProps = {
     explorer: `${NFTExplorerCategory}`
-    collection?: Collection
+    collection?: CollectionWithAttributes
 } & ModalProps;
 
 export function MobileFilter({ isOpen, explorer, collection, onClose }: MobileFilterProps) {

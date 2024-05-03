@@ -96,7 +96,7 @@ export function NFTExplorer({ type, collection, ownerAddress }: NFTExplorerProps
                 />
 
                 <Select
-                    placeholderText={t('Sort')}
+                    placeholder={t('Sort')}
                     onChange={handleSort}
                     selectedValue={filterState.sort}
                     options={sortOptions}
