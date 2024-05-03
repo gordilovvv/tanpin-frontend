@@ -1,4 +1,26 @@
-import { polygon, polygonMumbai } from 'wagmi/chains';
+import { Chain, polygon } from 'wagmi/chains';
+
+export const polygonAmoy: Chain = {
+    id: 80_002,
+    name: 'Polygon Amoy',
+    network: 'matic',
+    nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+    rpcUrls: {
+        default: {
+            http: ['https://rpc-amoy.polygon.technology'],
+        },
+        public: {
+            http: ['https://rpc-amoy.polygon.technology']
+        }
+    },
+    blockExplorers: {
+        default: {
+            name: 'OK LINK',
+            url: 'https://www.oklink.com/amoy',
+        },
+    },
+    testnet: true,
+};
 
 /**
  * Change this const to switch network mode
@@ -6,7 +28,7 @@ import { polygon, polygonMumbai } from 'wagmi/chains';
 export const network: 'mainnet' | 'testnet' = 'mainnet';
 
 // @ts-ignore
-export const activeChain = network === 'mainnet' ? polygon : polygonMumbai;
+export const activeChain = network === 'mainnet' ? polygon : polygonAmoy;
 export const activeChainId = activeChain.id;
 
 export const PUBLIC_NODES = {
@@ -14,7 +36,7 @@ export const PUBLIC_NODES = {
         import.meta.env.VITE_PUBLIC_NODE_MAINNET,
         'https://polygon-rpc.com',
     ],
-    [polygonMumbai.id]: [
+    [polygonAmoy.id]: [
         import.meta.env.VITE_PUBLIC_NODE_TESTNET,
     ]
 } as Record<number, string[]>;
@@ -25,10 +47,10 @@ export const EXPLORER_URL = {
         token: 'https://polygonscan.com/token/{ADDRESS}',
         transaction: 'https://polygonscan.com/tx/{TX_HASH}'
     },
-    [polygonMumbai.id]: {
-        address: 'https://mumbai.polygonscan.com/address/{ADDRESS}',
-        token: 'https://mumbai.polygonscan.com/token/{ADDRESS}',
-        transaction: 'https://mumbai.polygonscan.com/tx/{TX_HASH}'
+    [polygonAmoy.id]: {
+        address: 'https://www.oklink.com/ru/amoy/address/{ADDRESS}',
+        token: 'https://www.oklink.com/ru/amoy/address/{ADDRESS}',
+        transaction: 'https://www.oklink.com/ru/amoy/tx/{TX_HASH}'
     },
 } as Record<number, {
     address: string
