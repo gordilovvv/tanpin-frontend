@@ -59,7 +59,7 @@
         }
 
         @include max767 {
-            animation: boxInMobile 350ms cubic-bezier(0.18, 0.42, 0.60, 1.04) forwards, opacityIn 200ms linear forwards;
+            animation: boxInMobile 280ms cubic-bezier(0.43, 0.18, 0.6, 1.04) forwards;
         }
     }
 }
@@ -73,7 +73,7 @@
         }
 
         @include max767 {
-            animation: boxOut 250ms ease-in-out forwards, opacityOut 200ms linear forwards;
+            animation: boxOut 250ms ease-in-out forwards;
         }
     }
 }
