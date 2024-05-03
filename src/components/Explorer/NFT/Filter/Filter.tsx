@@ -1,7 +1,7 @@
 import { HTMLAttributes, memo, useMemo } from 'react';
 import { Button, Select } from '@/uikit';
 import { FilterItem } from './FilterItem/FilterItem';
-import { PriceFilter } from './PriceFilter/PriceFilter';
+// import { PriceFilter } from './PriceFilter/PriceFilter';
 import { AttributesFilter } from './AttributesFilter/AttributesFilter';
 import { useTranslation } from '@/localization';
 import { useTokensFilterState } from '@/states/explorer/hooks/useTokensFilterState';
@@ -28,16 +28,16 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
     const {
         applyFilters,
         resetFilters,
-        handleMinPrice,
-        handleMaxPrice,
+        // handleMinPrice,
+        // handleMaxPrice,
         handleStatus,
         handleAddAttribute,
         handleRemoveAttribute
     } = useTokensFilterActions({ filterImmediately: !filterOnButton });
 
     const {
-        minPrice,
-        maxPrice,
+        // minPrice,
+        // maxPrice,
         status,
         attributes: activeAttributes
     } = useTokensFilterState();
@@ -50,25 +50,20 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
     const statuses = useMemo<{ value: TokensFilterState['status'], label: string }[]>(() => {
         const options = [
             {
-                value: 'ALL',
+                value: 'all',
                 label: t('All')
             },
             {
-                value: 'FIXED_PRICE',
-                label: t('Buy now')
+                value: 'fixed_price',
+                label: explorer === 'ownership'
+                    ? t('On sale')
+                    : t('Buy now')
             },
             {
-                value: 'AUCTION',
+                value: 'auction',
                 label: t('Auction')
             }
         ] as { value: TokensFilterState['status'], label: string }[];
-
-        if (explorer === 'ownership') {
-            options.unshift({
-                value: 'NOT_FOR_SALE',
-                label: t('Not for sale')
-            });
-        }
 
         return options;
     }, [explorer, t]);
@@ -93,7 +88,7 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
             <div className={styles.content}>
                 {explorer !== 'ownershipSale' && <FilterItem title={t('Status')}>
                     <Select
-                        placeholderText={t('Status')}
+                        placeholder={t('Status')}
                         selectedValue={status}
                         options={statuses}
                         onChange={handleStatus}
@@ -101,7 +96,7 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
                 </FilterItem>}
 
                 {/* TODO: Replace USDT with dynamic variable */}
-                <FilterItem
+                {/* <FilterItem
                     title={t('Price')}
                     addon='USDT'
                 >
@@ -111,7 +106,7 @@ export const Filter = memo(({ explorer, collection, filterOnButton = false, stic
                         onMinPriceChange={handleMinPrice}
                         onMaxPriceChange={handleMaxPrice}
                     />
-                </FilterItem>
+                </FilterItem> */}
 
                 {collection?.attributes.length ? <FilterItem title={t('Properties')}>
                     <div className={styles.inner}>
