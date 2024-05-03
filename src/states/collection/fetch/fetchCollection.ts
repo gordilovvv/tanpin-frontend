@@ -22,7 +22,7 @@ export async function fetchCollection(collectionID: string): Promise<CollectionW
         };
     }
 
-    const response = await api.get<CollectionResWithAttributes>(`/collection/${collectionID}`);
+    const response = await api.get<CollectionResWithAttributes>(`/collections/${collectionID}`);
 
     const { id, gameId, ...data } = response.data;
     const collection: CollectionWithAttributes = {

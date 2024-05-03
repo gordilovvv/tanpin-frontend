@@ -6,5 +6,5 @@ export async function refreshMetadata(contractAddress: `0x${string}`, tokenID: s
         return;
     }
 
-    await api.get(`/token/refresh/${contractAddress}:${tokenID}`);
+    await api.get(`/tokens/${contractAddress}:${tokenID}/refresh`);
 }

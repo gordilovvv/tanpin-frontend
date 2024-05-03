@@ -21,7 +21,7 @@ export function useTransactionStatus(hash: Hash) {
     const [retryCount, setRetryCount] = useState(0);
     const { data } = useSWRImmutable(['transaction.status', hash], async () => {
         try {
-            const res = await api.get<{ status: TransactionBackendStatus }>(`/transaction/check.tx/status/${hash}`);
+            const res = await api.get<{ status: TransactionBackendStatus }>(`/common/tx-status/${hash}`);
 
             if (res.data.status === TransactionBackendStatus.UNKNOWN) {
                 setRetryCount(count => count + 1);

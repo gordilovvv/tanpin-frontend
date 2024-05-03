@@ -19,7 +19,7 @@ export async function fetchTokensList(params: {
     const searchParams = urlSearchParams({
         ...baseParams,
         sort: filter?.sort,
-        search: filter?.search
+        search: filter?.search ? filter.search : undefined
     });
 
     const { status, attributes } = filter ?? {};
