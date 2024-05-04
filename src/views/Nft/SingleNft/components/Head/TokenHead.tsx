@@ -36,7 +36,7 @@ export function TokenHead({ nft, unique, className }: TokenHeadProps) {
 
             {!unique && <div className={styles.stock}>
                 <TokenStock
-                    supply={nft.totalSupply}
+                    supply={nft.maxSupply}
                     available={nft.stock}
                 />
             </div>}
