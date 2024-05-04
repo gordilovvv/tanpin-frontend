@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Link, Skeleton, UnstyleLink } from '@/uikit';
+import { CollectionLogo } from '@/components/Collections';
 import { UserAvatar } from '@/components/User';
 import { useTranslation } from '@/localization';
 import { ActivityTransaction, ActivityType } from '@/states/activity/types';
@@ -18,7 +19,7 @@ export function TransactionRow({ children, transaction }: PropsWithChildren<Tran
 
     return (
         <div className={styles.row}>
-            {/* {transaction.type === ActivityType.MINT
+            {transaction.type === ActivityType.MINT
                 ? <CollectionLogo
                     image={transaction.data.gameLogoUrl}
                     size='s'
@@ -27,12 +28,7 @@ export function TransactionRow({ children, transaction }: PropsWithChildren<Tran
                 : <UserAvatar
                     address={transaction.fromAddress}
                     size="l"
-                />} */}
-            <UserAvatar
-                as={transaction.type === ActivityType.MINT ? undefined : 'link'}
-                address={transaction.fromAddress}
-                size="l"
-            />
+                />}
 
             <div className={styles.info}>
                 <div className={styles.title}>
