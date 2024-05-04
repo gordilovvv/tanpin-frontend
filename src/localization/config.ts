@@ -2,7 +2,7 @@ import { Language } from './types';
 import enImage from '@/app/assets/images/locales/en.png';
 import ruImage from '@/app/assets/images/locales/ru.png';
 
-export const version = '1.01';
+export const version = '1.2';
 
 export const EN: Language = { locale: 'en', language: 'English', image: enImage };
 export const RU: Language = { locale: 'ru', language: 'Русский', image: ruImage };
