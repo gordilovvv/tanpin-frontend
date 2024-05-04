@@ -23,6 +23,7 @@ export function TransactionRow({ children, transaction }: PropsWithChildren<Tran
                 ? <CollectionLogo
                     image={transaction.data.gameLogoUrl}
                     size='s'
+                    className={styles.gameLogo}
                     style={{ borderRadius: '50%' }}
                 />
                 : <UserAvatar

@@ -68,6 +68,11 @@
 @include max767 {
     .row {
         gap: 8px;
+
+        .gameLogo {
+            width: 32px;
+            height: 32px;
+        }
     }
 
     .title {
