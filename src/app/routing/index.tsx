@@ -15,6 +15,7 @@ import { DepositInvoiceView } from '@/views/Deposit/DepositInvoice/DepositInvoic
 import { DepositSuccessView } from '@/views/Deposit/DepositSuccess/DepositSuccessView';
 import { DepositRejectedView } from '@/views/Deposit/DepositRejected/DepositRejectedView';
 import { TelegramAuthView } from '@/views/TelegramAuth/TelegramAuthView';
+import { BlackRussiaAuthView } from '@/views/Earn/BlackRussia/BlackRussiaAuthView';
 
 // Lazy components
 const SingleNftView = lazy(() => import('@/views/Nft/SingleNft/SingleNftView').then(module => ({ default: module.SingleNftView })));
@@ -111,6 +112,10 @@ export const router = createBrowserRouter([
             {
                 path: '/telegram/auth',
                 element: <TelegramAuthView />
+            },
+            {
+                path: '/earn/black-russia',
+                element: <BlackRussiaAuthView />
             },
         ]
     },
